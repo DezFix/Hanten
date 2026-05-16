@@ -886,4 +886,6 @@
     <string name="download_default_directory">下载漫画的默认目录</string>
     <string name="private_app_directory_warning">卸载本应用，此目录内的所有数据会被删除</string>
     <string name="available_pattern">%1$s 可用</string>
+    <string name="extensions_manager">扩展管理器</string>
+    <string name="extensions_manager_summary">管理、安装及卸载来自keiyoushi仓库的Tachiyomi扩展</string>
 </resources>
