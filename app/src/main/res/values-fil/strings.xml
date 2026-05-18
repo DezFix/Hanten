@@ -58,7 +58,7 @@
     <string name="enter_password">Ilagay ang password</string>
     <string name="protect_application_summary">Humingi ng password kapag sinimulan ang Futon</string>
     <string name="about">Tungkol rito</string>
-    <string name="check_for_updates">Maghanap ng update</string>
+    <string name="check_for_updates">Maghanap ng mga update: Tinitingnan nito ang mas bagong release ng GitHub. Kung na-install mo ang Futon mula sa isang store, mas mainam na gamitin ang client ng store para dito.</string>
     <string name="right_to_left">Kanan sa kaliwa</string>
     <string name="create_category">Bagong Kategorya</string>
     <string name="zoom_mode_fit_center">Pagkasyahin sa gitna</string>
@@ -861,7 +861,7 @@
     <string name="enter_name">Ipasok ang pangalan</string>
     <string name="reader_chapter_toast">Ipakita ang popup sa pagpalit ng kabanata</string>
     <string name="reader_chapter_toast_summary">Magpakita ng pop-up na mensahe na may pamagat ng kabanata kapag binago ito</string>
-    <string name="github_download_warning">Ang pag-download mula sa GitHub ay lalampas sa mga pagsusuri sa seguridad na isinasagawa ng IzzyOnDroid.</string>
+    <string name="github_download_warning">Ang pag-download mula sa GitHub ay lalampas sa mga pagsusuri sa seguridad na isinasagawa ng IzzyOnDroid at Fdroid.</string>
     <string name="pinned_sources_only">Naka-pin na source lamang</string>
     <string name="hide_empty_sources">Itago ang mga bakateng mga source</string>
     <string name="frequency_every_6_hours">Kada anim (6) na oras</string>
@@ -884,4 +884,13 @@
     <string name="available_pattern">Available ang %1$s</string>
     <string name="crash_reporting">Pag-uulat ng mga crash</string>
     <string name="crash_reporting_summary">Magpapadala ng mga hindi nagpapakilalang crash log para makatulong sa pagpapabuti ng app. Magkakabisa pagkatapos mag-restart.</string>
+    <string name="extensions_manager">Tagapamahala ng mg extension</string>
+    <string name="extensions_manager_summary">Pamahalaan, i-install at i-uninstall ang mga extension ng Tachiyomi mula sa keiyoushi repository</string>
+    <string name="enable_source_manga">Paganahin ang manga source</string>
+    <string name="domain_manga">Domain ng manga source</string>
+    <string name="download_option_whole_manga_manga">Buong manga</string>
+    <string name="recommendation_manga">inirerekomendang manga</string>
+    <string name="installed">Naka-install</string>
+    <string name="install">I-install</string>
+    <string name="uninstall">I-uninstall</string>
 </resources>
