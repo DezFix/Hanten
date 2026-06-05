@@ -30,7 +30,7 @@
     <string name="clear_cookies">清除 Cookies</string>
     <string name="new_sources_text">发现了新的可用图源</string>
     <string name="suggestions_summary">根据你的喜好推荐漫画</string>
-    <string name="suggestions_info">所有数据都在本地分析，不会发送至任何地方</string>
+    <string name="suggestions_info">所有数据仅在本地分析，不会被上传。</string>
     <string name="never">从不</string>
     <string name="show_notification_new_chapters_on">接收在读漫画的更新通知</string>
     <string name="nsfw">18+</string>
@@ -118,11 +118,11 @@
     <string name="favourites_categories">分类管理</string>
     <string name="remove_category">删除分类</string>
     <string name="text_empty_holder_primary">什么都没有…</string>
-    <string name="text_search_holder_secondary">试试换一个关键词再搜索</string>
+    <string name="text_search_holder_secondary">试试换一个关键词再搜索。</string>
     <string name="text_history_holder_primary">看过的漫画将在这里显示</string>
     <string name="text_history_holder_secondary">在【浏览】页面搜索想读的漫画</string>
     <string name="text_local_holder_primary">存点什么吧</string>
-    <string name="text_local_holder_secondary">可下载在线图源里的漫画或导入本地漫画</string>
+    <string name="text_local_holder_secondary">可下载在线图源里的漫画或导入本地漫画。</string>
     <string name="manga_shelf">收藏</string>
     <string name="recent_manga">最近</string>
     <string name="pages_animation">翻页动画</string>
@@ -153,7 +153,7 @@
     <string name="passwords_mismatch">密码不一致</string>
     <string name="about">关于</string>
     <string name="app_version">版本 %s</string>
-    <string name="check_for_updates">检查更新</string>
+    <string name="check_for_updates">检查更新：检查Gihub发布的更新。如果你是从应用商店安装的Futon，最好在应用商店检查更新。</string>
     <string name="no_update_available">已是最新版本</string>
     <string name="right_to_left">从右到左</string>
     <string name="create_category">添加分类</string>
@@ -182,7 +182,7 @@
     <string name="text_clear_search_history_prompt">确定永久清除所有搜索记录？</string>
     <string name="welcome">欢迎</string>
     <string name="backup_saved">备份已保存</string>
-    <string name="tracker_warning">不同设备及不同的系统调度可能会杀掉本应用的后台任务</string>
+    <string name="tracker_warning">部分设备存在不同的系统行为，可能会破坏后台任务。</string>
     <string name="read_more">了解详情</string>
     <string name="queued">等待</string>
     <string name="chapter_is_missing">该章缺失</string>
@@ -790,9 +790,9 @@
     <string name="unnamed_chapter">未命名章节</string>
     <string name="search_disabled_sources">在已禁用的图源中搜索</string>
     <string name="error_details">错误详细信息</string>
-    <string name="error_disclaimer_manga">尝试在网络浏览器中打开漫画，以确保此漫画在图源中可用</string>
-    <string name="error_disclaimer_report">可向开发者提交错误报告，将会帮助我们定位并修复错误</string>
-    <string name="error_disclaimer_app_outdated">您的 Futon 版本过旧，请下载最新版本以修复问题</string>
+    <string name="error_disclaimer_manga">尝试在网络浏览器中打开漫画，以确保此漫画在图源中可用。</string>
+    <string name="error_disclaimer_report">可向开发者提交错误报告，这将会帮助我们定位并修复错误。</string>
+    <string name="error_disclaimer_app_outdated">您的 Futon 版本过旧，请下载最新版本以修复问题。</string>
     <string name="clear_browser_data">清除浏览器数据</string>
     <string name="no_write_permission_to_file">写入文件权限被禁止</string>
     <string name="clear_browser_data_summary">点击后清除浏览器（如缓存、Cookies）数据，警告：图源授权可能变为无效</string>
@@ -866,7 +866,7 @@
     <string name="enable_pull_gesture_summary">条漫模式下使用推拉手势切换章节</string>
     <string name="auto_double_foldable">折叠设备自动双页</string>
     <string name="saved_filters">保存的筛选</string>
-    <string name="github_download_warning">从Github下载会跳过由IzzyOnDroid和F-Droid执行的安全检查</string>
+    <string name="github_download_warning">从Github下载会跳过由IzzyOnDroid和F-Droid执行的安全检查。</string>
     <string name="enter_name">输入名称</string>
     <string name="pinned_sources_only">仅置顶图源</string>
     <string name="hide_empty_sources">隐藏空白结果的图源</string>
@@ -886,4 +886,21 @@
     <string name="download_default_directory">下载漫画的默认目录</string>
     <string name="private_app_directory_warning">卸载本应用，此目录内的所有数据会被删除</string>
     <string name="available_pattern">%1$s 可用</string>
+    <string name="extensions_manager">扩展管理器</string>
+    <string name="extensions_manager_summary">管理、安装及卸载来自keiyoushi仓库的Tachiyomi扩展</string>
+    <string name="crash_reporting">崩溃报告</string>
+    <string name="crash_reporting_summary">发送匿名崩溃日志以改进本应用。重启生效。</string>
+    <string name="github_mirror_title">Gihub镜像</string>
+    <string name="github_mirror_native">本地</string>
+    <string name="github_mirror_keiyoushi">Keiyoushi</string>
+    <string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    <string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    <string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    <string name="enable_source_manga">启用漫画源</string>
+    <string name="domain_manga">漫画源域名</string>
+    <string name="download_option_whole_manga_manga">整本漫画</string>
+    <string name="recommendation_manga">推荐漫画</string>
+    <string name="installed">已安装</string>
+    <string name="install">安装</string>
+    <string name="uninstall">卸载</string>
 </resources>
