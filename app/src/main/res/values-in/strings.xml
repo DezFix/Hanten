@@ -213,7 +213,7 @@
     <string name="enter_password">Masukkan kata sandi</string>
     <string name="protect_application_summary">Tanya kata sandi ketika memulai Futon</string>
     <string name="about">Tentang</string>
-    <string name="check_for_updates">Periksa pembaruan</string>
+    <string name="check_for_updates">Periksa pembaruan: Ini memeriksa rilis GitHub yang lebih baru. Jika Anda memasang Futon dari toko aplikasi, sebaiknya gunakan klien toko tersebut untuk ini.</string>
     <string name="passwords_mismatch">Kata sandi tidak sama</string>
     <string name="app_version">Versi %s</string>
     <string name="internal_storage">Penyimpanan internal</string>
@@ -883,8 +883,25 @@
     <string name="available_pattern">%1$s tersedia</string>
     <string name="pinned_sources_only">Hanya sumber yang disematkan</string>
     <string name="hide_empty_sources">Sembunyikan sumber kosong</string>
-    <string name="github_download_warning">Mengunduh dari GitHub akan melewati pemeriksaan keamanan yang dilakukan oleh IzzyOnDroid.</string>
+    <string name="github_download_warning">Mengunduh dari GitHub akan melewati pemeriksaan keamanan yang dilakukan oleh IzzyOnDroid dan F-Droid.</string>
     <string name="auto_double_foldable">Otomatis Dua Halaman Pada Lipatan</string>
     <string name="crash_reporting">Pelaporan Kecelakaan</string>
     <string name="crash_reporting_summary">Kirim log kerusakan anonim untuk membantu meningkatkan aplikasi. Berlaku setelah aplikasi dimulai ulang.</string>
+    <string name="merge_with_existing_data">Gabungkan dengan data yang sudah ada</string>
+    <string name="manga">Manga</string>
+    <string name="extensions_manager">Pengelola ekstensi</string>
+    <string name="extensions_manager_summary">Kelola, pasang, dan copot pemasangan ekstensi Tachiyomi dari repositori keiyoushi</string>
+    <string name="github_mirror_title">Mirror GitHub</string>
+    <string name="github_mirror_native">Native</string>
+    <string name="github_mirror_keiyoushi">Keiyoushi</string>
+    <string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    <string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    <string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    <string name="enable_source_manga">Aktifkan sumber manga</string>
+    <string name="domain_manga">Domain sumber manga</string>
+    <string name="download_option_whole_manga_manga">Seluruh manga</string>
+    <string name="recommendation_manga">manga rekomendasi</string>
+    <string name="installed">Terpasang</string>
+    <string name="install">Pasang</string>
+    <string name="uninstall">Copot pemasangan</string>
 </resources>
