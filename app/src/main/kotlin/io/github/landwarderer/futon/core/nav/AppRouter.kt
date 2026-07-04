@@ -86,7 +86,6 @@ import io.github.landwarderer.futon.search.domain.SearchKind
 import io.github.landwarderer.futon.search.ui.MangaListActivity
 import io.github.landwarderer.futon.search.ui.multi.SearchActivity
 import io.github.landwarderer.futon.settings.SettingsActivity
-import io.github.landwarderer.futon.settings.about.AppUpdateActivity
 import io.github.landwarderer.futon.settings.override.OverrideConfigActivity
 import io.github.landwarderer.futon.settings.reader.ReaderTapGridConfigActivity
 import io.github.landwarderer.futon.settings.sources.TagsBlacklistActivity
@@ -127,8 +126,8 @@ class AppRouter private constructor(
 
     /** Activities **/
 
-    fun openList(source: MangaSource, filter: MangaListFilter?, sortOrder: SortOrder?) {
-        startActivity(listIntent(contextOrNull() ?: return, source, filter, sortOrder))
+    fun openList(source: MangaSource, filter: MangaListFilter?, sortOrder: SortOrder?, sourceTitle: String? = null) {
+        startActivity(listIntent(contextOrNull() ?: return, source, filter, sortOrder, sourceTitle))
     }
 
     fun openList(tag: MangaTag) = openList(tag.source, MangaListFilter(tags = setOf(tag)), null)
@@ -143,8 +142,8 @@ class AppRouter private constructor(
 
     fun openSearch(source: MangaSource, query: String) = openList(source, MangaListFilter(query = query), null)
 
-    fun openDetails(manga: Manga) {
-        startActivity(detailsIntent(contextOrNull() ?: return, manga))
+    fun openDetails(manga: Manga, sourceTitle: String? = null) {
+        startActivity(detailsIntent(contextOrNull() ?: return, manga, sourceTitle))
     }
 
     fun openDetails(mangaId: Long) {
@@ -201,7 +200,6 @@ class AppRouter private constructor(
 
     fun openBookmarks() = startActivity(AllBookmarksActivity::class.java)
 
-    fun openAppUpdate() = startActivity(AppUpdateActivity::class.java)
 
     fun openSuggestions() {
         startActivity(suggestionsIntent(contextOrNull() ?: return))
@@ -703,18 +701,20 @@ class AppRouter private constructor(
             (view.context.findActivity() as? FragmentActivity)?.let(::AppRouter)
         }
 
-        fun detailsIntent(context: Context, manga: Manga) = Intent(context, DetailsActivity::class.java)
+        fun detailsIntent(context: Context, manga: Manga, sourceTitle: String? = null) = Intent(context, DetailsActivity::class.java)
             .putExtra(KEY_MANGA, ParcelableManga(manga))
+            .putExtra(KEY_SOURCE_TITLE, sourceTitle)
             .setData(shortMangaUrl(manga.id))
 
         fun detailsIntent(context: Context, mangaId: Long) = Intent(context, DetailsActivity::class.java)
             .putExtra(KEY_ID, mangaId)
             .setData(shortMangaUrl(mangaId))
 
-        fun listIntent(context: Context, source: MangaSource, filter: MangaListFilter?, sortOrder: SortOrder?): Intent =
+        fun listIntent(context: Context, source: MangaSource, filter: MangaListFilter?, sortOrder: SortOrder?, sourceTitle: String? = null): Intent =
             Intent(context, MangaListActivity::class.java)
                 .setAction(ACTION_MANGA_EXPLORE)
                 .putExtra(KEY_SOURCE, source.name)
+                .putExtra(KEY_SOURCE_TITLE, sourceTitle)
                 .apply {
                     if (!filter.isNullOrEmpty()) {
                         putExtra(KEY_FILTER, ParcelableMangaListFilter(filter))
@@ -839,6 +839,7 @@ class AppRouter private constructor(
         const val KEY_READER_MODE = "reader_mode"
         const val KEY_SORT_ORDER = "sort_order"
         const val KEY_SOURCE = "source"
+        const val KEY_SOURCE_TITLE = "source_title"
         const val KEY_TAB = "tab"
         const val KEY_TITLE = "title"
         const val KEY_URL = "url"
