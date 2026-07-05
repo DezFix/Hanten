@@ -4,6 +4,7 @@ import androidx.collection.ArraySet
 import androidx.collection.LongLongMap
 import org.koitharu.kotatsu.parsers.model.MangaChapter
 import org.koitharu.kotatsu.parsers.util.mapNotNullToSet
+import org.koitharu.kotatsu.parsers.util.mapToSet
 
 interface ChaptersSelectMacro {
 
@@ -13,7 +14,8 @@ interface ChaptersSelectMacro {
 		val chaptersCount: Int,
 	) : ChaptersSelectMacro {
 
-		override fun getChaptersIds(mangaId: Long, chapters: List<MangaChapter>): Set<Long>? = null
+		override fun getChaptersIds(mangaId: Long, chapters: List<MangaChapter>): Set<Long> =
+			chapters.mapToSet { it.id }
 	}
 
 	class WholeBranch(
