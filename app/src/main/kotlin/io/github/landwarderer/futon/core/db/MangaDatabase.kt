@@ -45,6 +45,7 @@ import io.github.landwarderer.futon.core.db.migrations.Migration25To26
 import io.github.landwarderer.futon.core.db.migrations.Migration26To27
 import io.github.landwarderer.futon.core.db.migrations.Migration27To28
 import io.github.landwarderer.futon.core.db.migrations.Migration28To29
+import io.github.landwarderer.futon.core.db.migrations.Migration29To30
 import io.github.landwarderer.futon.core.db.migrations.Migration2To3
 import io.github.landwarderer.futon.core.db.migrations.Migration3To4
 import io.github.landwarderer.futon.core.db.migrations.Migration4To5
@@ -55,7 +56,9 @@ import io.github.landwarderer.futon.core.db.migrations.Migration8To9
 import io.github.landwarderer.futon.core.db.migrations.Migration9To10
 import io.github.landwarderer.futon.core.util.ext.processLifecycleScope
 import io.github.landwarderer.futon.download.data.dao.DownloadQueueDao
+import io.github.landwarderer.futon.download.data.dao.SmartDownloadDao
 import io.github.landwarderer.futon.download.data.entity.DownloadQueueEntity
+import io.github.landwarderer.futon.download.data.entity.SmartDownloadEntity
 import io.github.landwarderer.futon.favourites.data.FavouriteCategoriesDao
 import io.github.landwarderer.futon.favourites.data.FavouriteCategoryEntity
 import io.github.landwarderer.futon.favourites.data.FavouriteEntity
@@ -78,7 +81,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-const val DATABASE_VERSION = 29
+const val DATABASE_VERSION = 30
 
 @Database(
 	entities = [
@@ -86,7 +89,7 @@ const val DATABASE_VERSION = 29
 		FavouriteCategoryEntity::class, FavouriteEntity::class, MangaPrefsEntity::class, TrackEntity::class,
 		TrackLogEntity::class, SuggestionEntity::class, BookmarkEntity::class, ScrobblingEntity::class,
 		MangaSourceEntity::class, StatsEntity::class, LocalMangaIndexEntity::class, ExternalExtensionRepoEntity::class,
-		DownloadQueueEntity::class,
+		DownloadQueueEntity::class, SmartDownloadEntity::class,
 	],
 	version = DATABASE_VERSION,
 )
@@ -126,6 +129,8 @@ abstract class MangaDatabase : RoomDatabase() {
 	abstract fun getExternalExtensionRepoDao(): ExternalExtensionRepoDao
 
 	abstract fun getDownloadQueueDao(): DownloadQueueDao
+
+	abstract fun getSmartDownloadDao(): SmartDownloadDao
 }
 
 fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
@@ -158,6 +163,7 @@ fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
 	Migration26To27(),
 	Migration27To28(),
 	Migration28To29(),
+    Migration29To30(),
 )
 
 fun MangaDatabase(context: Context): MangaDatabase = Room

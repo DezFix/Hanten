@@ -354,8 +354,12 @@ class ReaderViewModel @Inject constructor(
             }
             val centerPos = (lowerPos + upperPos) / 2
             pages.getOrNull(centerPos)?.let { page ->
+                val oldChapterId = readingState.value?.chapterId
                 readingState.update { cs ->
                     cs?.copy(chapterId = page.chapterId, page = page.index)
+                }
+                if (oldChapterId != null && oldChapterId != page.chapterId) {
+                    saveCurrentState()
                 }
             }
             notifyStateChanged()
