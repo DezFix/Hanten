@@ -85,7 +85,7 @@
     <string name="create_category">Nuova categoria</string>
     <string name="right_to_left">Da destra a sinistra</string>
     <string name="no_update_available">Nessun aggiornamento disponibile</string>
-    <string name="check_for_updates">Controlla gli aggiornamenti</string>
+    <string name="check_for_updates">Controlla gli aggiornamenti: Controlla se ci sono nuovi rilasci su GitHub. Se hai installato Futon da uno store, è preferibile usare l\'app dello store per questa procedura.</string>
     <string name="app_version">Versione %s</string>
     <string name="about">Informazioni</string>
     <string name="passwords_mismatch">Le password non corrispondono</string>
@@ -882,4 +882,25 @@
     <string name="download_default_directory">Cartella predefinita per scaricare manga</string>
     <string name="private_app_directory_warning">Questa cartella e tutti i suoi dati verranno eliminati se disinstalli l\'applicazione</string>
     <string name="available_pattern">%1$s disponibile</string>
+    <string name="github_download_warning">Scaricare da GitHub eviterà i controlli di sicurezza effettuati da IzzyOnDroid e Fdroid.</string>
+    <string name="pinned_sources_only">Solo sorgenti fissate</string>
+    <string name="hide_empty_sources">Nascondi sorgenti vuote</string>
+    <string name="extensions_manager">Gestore delle estensioni</string>
+    <string name="extensions_manager_summary">Gestisci, installa e disinstalla estensioni di Tachiyomi dalla repository keiyoushi</string>
+    <string name="auto_double_foldable">Due pagine automatiche su dispositivi pieghevoli</string>
+    <string name="crash_reporting">Riporta un crash</string>
+    <string name="crash_reporting_summary">Invia log di crash anonimi per aiutare a migliorare l\'app. Ha effetto dopo il riavvio.</string>
+    <string name="github_mirror_title">Mirror di GitHub</string>
+    <string name="github_mirror_native">Nativo</string>
+    <string name="github_mirror_keiyoushi">Keiyoushi</string>
+    <string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    <string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    <string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    <string name="enable_source_manga">Abilita sorgente di manga</string>
+    <string name="domain_manga">Dominio della sorgente di manga</string>
+    <string name="download_option_whole_manga_manga">Manga intero</string>
+    <string name="recommendation_manga">Manga raccomandato</string>
+    <string name="installed">Installato</string>
+    <string name="install">Installa</string>
+    <string name="uninstall">Disinstalla</string>
 </resources>
