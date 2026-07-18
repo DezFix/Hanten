@@ -4,10 +4,22 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
-## 9.7.2[Unreleased]
-- Ui updates
-- New nav bar
-- New futon color scheme
+## 9.8
+Date: 2026-07-18
+
+### Highlights
+- Tag blacklisting in search
+- Download queue
+- Smart Downloads
+- Chapter deletion from downloads menu
+
+### Fixes
+- Fixed downloads from imported sources not working
+
+### Maintenance
+- Updated parsers and dependencies
+
+---
 
 ## 9.7.1
 Date: 2026-06-30
