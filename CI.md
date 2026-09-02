@@ -1,6 +1,6 @@
 # CI/CD Setup Guide
 
-This document describes the automated build and release process for Hanten (`hanten.wre.app`) вЂ” fork of Kotatsu/Futon.
+This document describes the automated build and release process for Hanten.
 
 ## Automated Workflows
 
@@ -45,7 +45,7 @@ To enable automated signing, configure the following secrets in your GitHub repo
    - Copy the output
 
 2. **Create GitHub Secrets**
-   Navigate to: **Settings в†’ Secrets and variables в†’ Actions в†’ New repository secret**
+   Navigate to: **Settings → Secrets and variables → Actions → New repository secret**
 
    Create these secrets:
    - **KEYSTORE_FILE**: Base64-encoded keystore file (entire output from step 1)
@@ -60,7 +60,7 @@ A new keystore was generated with:
 Key Alias: hanten-key
 Keystore Password: [from setup]
 Key Password: [from setup]
-SHA-256 Fingerprint: E0:FF:B8:DB:6A:CE:CC:B7:C9:F9:C7:8C:A4:B1:33:A0:E3:88:EC:E4:4C:6C:E1:87:9E:D9:2C:33:F5:76:5D:35
+SHA-256 Fingerprint: EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
 ```
 
 ## Local Development Setup
@@ -112,7 +112,7 @@ export KEY_PASSWORD=key-password
 
 - **Release builds**: Check GitHub Releases
 - **Nightly builds**: Check GitHub Releases (marked as pre-release)
-- **PR builds**: Check "Actions" tab в†’ "Debug Build" в†’ Artifacts section
+- **PR builds**: Check "Actions" tab → "Debug Build" → Artifacts section
 
 ## Troubleshooting
 
@@ -131,8 +131,7 @@ The workflow checks for commits since the last nightly release. If no commits ex
 
 Current release keystore SHA-256 fingerprint:
 ```
-E0:FF:B8:DB:6A:CE:CC:B7:C9:F9:C7:8C:A4:B1:33:A0:E3:88:EC:E4:4C:6C:E1:87:9E:D9:2C:33:F5:76:5D:35
+EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
 ```
 
-This matches the built-in app validator check in `AppValidator.kt (РїР°РєРµС‚ hanten.wre.app)`. All release builds must use a keystore with this fingerprint for Hanten signature validation.
-
+This matches the built-in app validator check in `AppValidator.kt`. All release builds must use a keystore with this fingerprint for proper app signature validation.

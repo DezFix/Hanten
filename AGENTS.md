@@ -1,6 +1,6 @@
 # Hanten - Agent Development Guide
 
-**Project:** Hanten (`hanten.wre.app`) вЂ” fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon) - Free and open-source manga reader for Android  
+**Project:** Hanten (`hanten.wre.app`) — fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon) - Free and open-source manga reader for Android  
 **Fork of:** [Kotatsu](https://github.com/KotatsuApp/Kotatsu)  
 **Language:** Kotlin  
 **Build System:** Gradle with Kotlin DSL  
@@ -129,15 +129,15 @@ disabled_rules = no-wildcard-imports, no-unused-imports
 
 #### Classes & Interfaces (PascalCase)
 Use suffixes to indicate purpose:
-- `*Activity`, `*Fragment`, `*Service` вЂ” Android components
-- `*ViewModel` вЂ” ViewModels
-- `*Repository` вЂ” Repositories
-- `*UseCase` вЂ” Domain use cases
-- `*Dao` вЂ” Room DAOs
-- `*Entity` вЂ” Database entities
-- `*AD` вЂ” Adapter Delegates (e.g., `BookmarkLargeAD`)
-- `*Helper` вЂ” Helper classes
-- `*Worker` вЂ” WorkManager workers
+- `*Activity`, `*Fragment`, `*Service` — Android components
+- `*ViewModel` — ViewModels
+- `*Repository` — Repositories
+- `*UseCase` — Domain use cases
+- `*Dao` — Room DAOs
+- `*Entity` — Database entities
+- `*AD` — Adapter Delegates (e.g., `BookmarkLargeAD`)
+- `*Helper` — Helper classes
+- `*Worker` — WorkManager workers
 
 #### Variables & Functions (camelCase)
 ```kotlin
@@ -195,7 +195,7 @@ runCatchingCancellable {
 ```
 
 #### Debug Stack Traces
-Use `printStackTraceDebug()` extension вЂ” prints only in debug builds:
+Use `printStackTraceDebug()` extension — prints only in debug builds:
 
 ```kotlin
 } catch (e: IllegalStateException) {
@@ -204,7 +204,7 @@ Use `printStackTraceDebug()` extension вЂ” prints only in debug builds:
 ```
 
 #### CancellationException Handling
-**Never swallow** `CancellationException` вЂ” always re-throw:
+**Never swallow** `CancellationException` — always re-throw:
 
 ```kotlin
 try {
@@ -388,31 +388,31 @@ semaphore.withPermit {
 
 ```
 app/src/main/kotlin/hanten/wre/app/
-в”њв”Ђв”Ђ <feature>/
-в”‚   в”њв”Ђв”Ђ data/           # Repositories, DAOs, Entities
-в”‚   в”њв”Ђв”Ђ domain/         # Use cases, Business logic
-в”‚   в””в”Ђв”Ђ ui/             # Activities, Fragments, ViewModels
-в”‚       в”њв”Ђв”Ђ adapter/    # RecyclerView adapters
-в”‚       в””в”Ђв”Ђ model/      # UI models
-в”њв”Ђв”Ђ core/               # Shared utilities
-в”‚   в”њв”Ђв”Ђ db/            # Database
-в”‚   в”њв”Ђв”Ђ network/       # OkHttp, interceptors
-в”‚   в”њв”Ђв”Ђ prefs/         # Settings
-в”‚   в”њв”Ђв”Ђ ui/            # Base UI classes
-в”‚   в””в”Ђв”Ђ util/          # Extensions
+├── <feature>/
+│   ├── data/           # Repositories, DAOs, Entities
+│   ├── domain/         # Use cases, Business logic
+│   └── ui/             # Activities, Fragments, ViewModels
+│       ├── adapter/    # RecyclerView adapters
+│       └── model/      # UI models
+├── core/               # Shared utilities
+│   ├── db/            # Database
+│   ├── network/       # OkHttp, interceptors
+│   ├── prefs/         # Settings
+│   ├── ui/            # Base UI classes
+│   └── util/          # Extensions
 ```
 
 ### Main Features
-- `tracker/` вЂ” Manga tracking
-- `reader/` вЂ” Manga reader
-- `favourites/` вЂ” Favorites management
-- `history/` вЂ” Reading history
-- `search/` вЂ” Search functionality
-- `download/` вЂ” Download manager
-- `local/` вЂ” Local manga storage
-- `bookmarks/` вЂ” Bookmarks
-- `scrobbling/` вЂ” External service integration
-- `settings/` вЂ” App configuration
+- `tracker/` — Manga tracking
+- `reader/` — Manga reader
+- `favourites/` — Favorites management
+- `history/` — Reading history
+- `search/` — Search functionality
+- `download/` — Download manager
+- `local/` — Local manga storage
+- `bookmarks/` — Bookmarks
+- `scrobbling/` — External service integration
+- `settings/` — App configuration
 
 ---
 
@@ -422,15 +422,15 @@ app/src/main/kotlin/hanten/wre/app/
 
 ```
 app/src/
-в”њв”Ђв”Ђ test/                    # Unit tests (JVM-only, fast)
-в”‚   в””в”Ђв”Ђ kotlin/hanten/wre/app/
-в”‚       в””в”Ђв”Ђ *Test.kt
-в””в”Ђв”Ђ androidTest/             # Instrumented tests (requires device)
-    в”њв”Ђв”Ђ assets/              # Test data (JSON, backups)
-    в””в”Ђв”Ђ kotlin/hanten/wre/app/
-        в”њв”Ђв”Ђ HiltTestRunner.kt     # Custom runner
-        в”њв”Ђв”Ђ SampleData.kt         # Test data loader
-        в””в”Ђв”Ђ *Test.kt
+├── test/                    # Unit tests (JVM-only, fast)
+│   └── kotlin/hanten/wre/app/
+│       └── *Test.kt
+└── androidTest/             # Instrumented tests (requires device)
+    ├── assets/              # Test data (JSON, backups)
+    └── kotlin/hanten/wre/app/
+        ├── HiltTestRunner.kt     # Custom runner
+        ├── SampleData.kt         # Test data loader
+        └── *Test.kt
 ```
 
 ### Unit Test Pattern
@@ -528,8 +528,8 @@ context.assets.open("futon_test.bak").use { input ->
 **From CONTRIBUTING.md:**
 1. **Assign issues** to yourself before working on them
 2. **Open discussion** for new features before implementation
-3. **Translations** вЂ” directly in `app/src/main/res/values*/strings.xml` (Weblate for Hanten pending)
-4. **Manga sources** go in [DezFix/hanten-parsers](https://github.com/DezFix/hanten-parsers)
+3. **Translations** — directly in `app/src/main/res/values*/strings.xml` (Weblate for Hanten pending)
+4. **Manga sources** go in [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers)
 5. **Do not modify** README or info files (except typos)
 6. **Avoid new dependencies** unless required
 
@@ -595,12 +595,11 @@ class MyWorker @AssistedInject constructor(
 ## Resources
 
 - **Releases (auto-update):** https://github.com/DezFix/Hanten/releases
-- **Parsers Repo:** https://github.com/DezFix/hanten-parsers (fork of AppFuton/hanten-parsers)
-- **Upstream:** Kotatsu https://github.com/KotatsuApp/Kotatsu вЂў Futon https://github.com/AppFuton/Futon
+- **Parsers Repo:** https://github.com/DezFix/futon-parsers (fork of AppFuton/futon-parsers)
+- **Upstream:** Kotatsu https://github.com/KotatsuApp/Kotatsu • Futon https://github.com/AppFuton/Futon
 - **CI/CD Setup:** See [CI.md](./CI.md)
 - **Contributing:** See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
 **Generated for AI coding agents operating in this repository.**
-

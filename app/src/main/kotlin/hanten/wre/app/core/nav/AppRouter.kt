@@ -763,8 +763,6 @@ class AppRouter private constructor(
             Intent(context, SettingsActivity::class.java)
                 .setAction(ACTION_PERIODIC_BACKUP)
 
-            Intent(context, SettingsActivity::class.java)
-
         fun proxySettingsIntent(context: Context) =
             Intent(context, SettingsActivity::class.java)
                 .setAction(ACTION_PROXY)
@@ -811,7 +809,7 @@ class AppRouter private constructor(
         }
 
         fun shortMangaUrl(mangaId: Long): Uri = Uri.Builder()
-            .scheme("futon")
+            .scheme("hanten")
             .path("manga")
             .appendQueryParameter("id", mangaId.toString())
             .build()

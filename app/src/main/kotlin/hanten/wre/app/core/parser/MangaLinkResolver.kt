@@ -26,7 +26,7 @@ class MangaLinkResolver @Inject constructor(
 ) {
 
 	suspend fun resolve(uri: Uri): Manga {
-		return if (uri.scheme == "futon" || uri.host == "futonapp.pages.dev") {
+		return if (uri.scheme == "futon" || uri.scheme == "hanten" || uri.host == "futonapp.pages.dev") {
 			resolveAppLink(uri)
 		} else {
 			resolveExternalLink(uri.toString())
@@ -118,7 +118,8 @@ class MangaLinkResolver @Inject constructor(
 	companion object {
 
 		fun isValidLink(str: String): Boolean {
-			return str.isHttpUrl() || str.startsWith("futon://", ignoreCase = true)
+			return str.isHttpUrl() || str.startsWith("futon://", ignoreCase = true) ||
+				str.startsWith("hanten://", ignoreCase = true)
 		}
 	}
 }
