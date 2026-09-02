@@ -26,7 +26,7 @@
 
 	</com.google.android.material.appbar.AppBarLayout>
 
-    <io.github.landwarderer.futon.image.ui.CoverImageView
+    <hanten.wre.app.image.ui.CoverImageView
         android:id="@+id/imageView_blur_background"
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -65,7 +65,7 @@
 				android:layout_height="match_parent"
 				android:paddingBottom="@dimen/margin_normal">
 
-				<io.github.landwarderer.futon.image.ui.CoverImageView
+				<hanten.wre.app.image.ui.CoverImageView
 					android:id="@+id/imageView_cover"
 					android:layout_width="0dp"
 					android:layout_height="0dp"
@@ -84,14 +84,14 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintWidth_percent="0.3"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover"
+					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover"
 					app:useExistingDrawable="true"
 					tools:background="@tools:sample/backgrounds/scenic[5]"
 					tools:ignore="ContentDescription,UnusedAttribute" />
 
 				<TextView
 					android:id="@+id/textView_nsfw_16"
-					style="@style/Widget.Futon.TextView.Badge"
+					style="@style/Widget.Hanten.TextView.Badge"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="@dimen/card_indicator_offset"
@@ -104,7 +104,7 @@
 
 				<TextView
 					android:id="@+id/textView_nsfw_18"
-					style="@style/Widget.Futon.TextView.Badge"
+					style="@style/Widget.Hanten.TextView.Badge"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="@dimen/card_indicator_offset"
@@ -114,7 +114,7 @@
 					app:layout_constraintBottom_toBottomOf="@id/imageView_cover"
 					app:layout_constraintEnd_toEndOf="@id/imageView_cover" />
 
-				<io.github.landwarderer.futon.core.ui.widgets.SelectableTextView
+				<hanten.wre.app.core.ui.widgets.SelectableTextView
 					android:id="@+id/textView_title"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
 					app:layout_constraintTop_toTopOf="parent"
 					tools:text="@tools:sample/lorem" />
 
-				<io.github.landwarderer.futon.core.ui.widgets.SelectableTextView
+				<hanten.wre.app.core.ui.widgets.SelectableTextView
 					android:id="@+id/textView_subtitle"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
 
 				<com.google.android.material.chip.Chip
 					android:id="@+id/chip_favorite"
-					style="@style/Widget.Futon.Chip.Dropdown"
+					style="@style/Widget.Hanten.Chip.Dropdown"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginStart="16dp"
@@ -186,7 +186,7 @@
 
 				<Button
 					android:id="@+id/button_description_more"
-					style="@style/Widget.Futon.Button.More"
+					style="@style/Widget.Hanten.Button.More"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp"
@@ -194,7 +194,7 @@
 					app:layout_constraintBaseline_toBaselineOf="@id/textView_description_title"
 					app:layout_constraintEnd_toEndOf="parent" />
 
-				<io.github.landwarderer.futon.core.ui.widgets.SelectableTextView
+				<hanten.wre.app.core.ui.widgets.SelectableTextView
 					android:id="@+id/textView_description"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
 					tools:ignore="UnusedAttribute"
 					tools:text="@tools:sample/lorem/random" />
 
-				<io.github.landwarderer.futon.core.ui.widgets.ChipsView
+				<hanten.wre.app.core.ui.widgets.ChipsView
 					android:id="@+id/chips_tags"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
 
 				<Button
 					android:id="@+id/button_scrobbling_more"
-					style="@style/Widget.Futon.Button.More"
+					style="@style/Widget.Hanten.Button.More"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp"
@@ -296,7 +296,7 @@
 
 				<Button
 					android:id="@+id/button_related_more"
-					style="@style/Widget.Futon.Button.More"
+					style="@style/Widget.Hanten.Button.More"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp"
@@ -336,7 +336,7 @@
 
 	<androidx.fragment.app.FragmentContainerView
 		android:id="@+id/container_bottom_sheet"
-		android:name="io.github.landwarderer.futon.details.ui.pager.ChaptersPagesSheet"
+		android:name="hanten.wre.app.details.ui.pager.ChaptersPagesSheet"
 		style="@style/Widget.Material3.BottomSheet"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

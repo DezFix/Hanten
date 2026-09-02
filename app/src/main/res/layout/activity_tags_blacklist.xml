@@ -42,13 +42,13 @@
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <io.github.landwarderer.futon.core.ui.widgets.ChipsView
+            <hanten.wre.app.core.ui.widgets.ChipsView
                 android:id="@+id/chips_blacklisted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                app:chipStyle="@style/Widget.Futon.Chip.Filter" />
+                app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
 
             <TextView
                 android:id="@+id/text_available_title"
@@ -57,12 +57,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/available" />
 
-            <io.github.landwarderer.futon.core.ui.widgets.ChipsView
+            <hanten.wre.app.core.ui.widgets.ChipsView
                 android:id="@+id/chips_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:chipStyle="@style/Widget.Futon.Chip.Filter" />
+                app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"

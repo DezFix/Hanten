@@ -3,9 +3,9 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	tools:parentTag="io.github.landwarderer.futon.core.ui.widgets.StackLayout">
+	tools:parentTag="hanten.wre.app.core.ui.widgets.StackLayout">
 
-	<io.github.landwarderer.futon.image.ui.CoverImageView
+	<hanten.wre.app.image.ui.CoverImageView
 		android:id="@+id/imageView_cover3"
 		android:layout_width="wrap_content"
 		android:layout_height="64dp"
@@ -15,13 +15,13 @@
 		android:backgroundTintMode="src_atop"
 		android:scaleType="centerCrop"
 		app:fallbackDrawable="@android:color/transparent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover.Small"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Small"
 		app:tintMode="src_atop"
 		tools:backgroundTint="#99FFFFFF"
 		tools:src="@tools:sample/backgrounds/scenic"
 		tools:tint="#99FFFFFF" />
 
-	<io.github.landwarderer.futon.image.ui.CoverImageView
+	<hanten.wre.app.image.ui.CoverImageView
 		android:id="@+id/imageView_cover2"
 		android:layout_width="wrap_content"
 		android:layout_height="64dp"
@@ -30,13 +30,13 @@
 		android:backgroundTintMode="src_atop"
 		android:scaleType="centerCrop"
 		app:fallbackDrawable="@android:color/transparent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover.Small"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Small"
 		app:tintMode="src_atop"
 		tools:backgroundTint="#4DFFFFFF"
 		tools:src="@tools:sample/backgrounds/scenic"
 		tools:tint="#4DFFFFFF" />
 
-	<io.github.landwarderer.futon.image.ui.CoverImageView
+	<hanten.wre.app.image.ui.CoverImageView
 		android:id="@+id/imageView_cover1"
 		android:layout_width="wrap_content"
 		android:layout_height="64dp"
@@ -45,7 +45,7 @@
 		android:backgroundTintMode="src_atop"
 		android:scaleType="centerCrop"
 		app:fallbackDrawable="@android:color/transparent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover.Small"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Small"
 		tools:src="@tools:sample/backgrounds/scenic" />
 
 </merge>

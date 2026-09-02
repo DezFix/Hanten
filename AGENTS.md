@@ -1,6 +1,6 @@
-# Futon - Agent Development Guide
+# Hanten - Agent Development Guide
 
-**Project:** Futon - Free and open-source manga reader for Android  
+**Project:** Hanten (`hanten.wre.app`) — fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon) - Free and open-source manga reader for Android  
 **Fork of:** [Kotatsu](https://github.com/KotatsuApp/Kotatsu)  
 **Language:** Kotlin  
 **Build System:** Gradle with Kotlin DSL  
@@ -53,18 +53,18 @@
 ./gradlew connectedDebugAndroidTest
 
 # Run a specific test class
-./gradlew test --tests "io.github.landwarderer.futon.core.github.VersionIdTest"
+./gradlew test --tests "hanten.wre.app.core.github.VersionIdTest"
 
 # Run a specific test method
-./gradlew test --tests "io.github.landwarderer.futon.core.github.VersionIdTest.testVersionIdParse"
+./gradlew test --tests "hanten.wre.app.core.github.VersionIdTest.testVersionIdParse"
 
 # Run instrumented test class
 ./gradlew connectedDebugAndroidTest \
-  -Pandroid.testInstrumentationRunnerArguments.class=io.github.landwarderer.futon.core.db.MangaDatabaseTest
+  -Pandroid.testInstrumentationRunnerArguments.class=hanten.wre.app.core.db.MangaDatabaseTest
 
 # Run specific instrumented test method
 ./gradlew connectedDebugAndroidTest \
-  -Pandroid.testInstrumentationRunnerArguments.class=io.github.landwarderer.futon.core.db.MangaDatabaseTest#migrateAll
+  -Pandroid.testInstrumentationRunnerArguments.class=hanten.wre.app.core.db.MangaDatabaseTest#migrateAll
 ```
 
 ### Clean & Rebuild
@@ -86,7 +86,7 @@
 Imports follow a strict order:
 1. Android/AndroidX imports (grouped by component)
 2. Third-party libraries (Hilt, Kotlin coroutines, etc.)
-3. Internal project imports (`io.github.landwarderer.futon.*`)
+3. Internal project imports (`hanten.wre.app.*`)
 4. `javax.inject` imports (always last)
 
 ```kotlin
@@ -95,8 +95,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import io.github.landwarderer.futon.R
-import io.github.landwarderer.futon.core.ui.BaseActivity
+import hanten.wre.app.R
+import hanten.wre.app.core.ui.BaseActivity
 import javax.inject.Inject
 ```
 
@@ -387,7 +387,7 @@ semaphore.withPermit {
 ### Feature-Based Architecture
 
 ```
-app/src/main/kotlin/io/github/landwarderer/futon/
+app/src/main/kotlin/hanten/wre/app/
 ├── <feature>/
 │   ├── data/           # Repositories, DAOs, Entities
 │   ├── domain/         # Use cases, Business logic
@@ -423,11 +423,11 @@ app/src/main/kotlin/io/github/landwarderer/futon/
 ```
 app/src/
 ├── test/                    # Unit tests (JVM-only, fast)
-│   └── kotlin/io/github/landwarderer/futon/
+│   └── kotlin/hanten/wre/app/
 │       └── *Test.kt
 └── androidTest/             # Instrumented tests (requires device)
     ├── assets/              # Test data (JSON, backups)
-    └── kotlin/io/github/landwarderer/futon/
+    └── kotlin/hanten/wre/app/
         ├── HiltTestRunner.kt     # Custom runner
         ├── SampleData.kt         # Test data loader
         └── *Test.kt
@@ -528,8 +528,8 @@ context.assets.open("futon_test.bak").use { input ->
 **From CONTRIBUTING.md:**
 1. **Assign issues** to yourself before working on them
 2. **Open discussion** for new features before implementation
-3. **Translations** go through [Weblate](https://hosted.weblate.org/engage/kotatsu/)
-4. **Manga sources** go in [futon-parsers](https://github.com/AppFuton/futon-parsers)
+3. **Translations** — directly in `app/src/main/res/values*/strings.xml` (Weblate for Hanten pending)
+4. **Manga sources** go in [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers)
 5. **Do not modify** README or info files (except typos)
 6. **Avoid new dependencies** unless required
 
@@ -594,9 +594,9 @@ class MyWorker @AssistedInject constructor(
 
 ## Resources
 
-- **Discord:** https://discord.gg/9sqBHXhwzz
-- **Parsers Repo:** https://github.com/AppFuton/futon-parsers
-- **Original Kotatsu:** https://github.com/KotatsuApp/Kotatsu
+- **Releases (auto-update):** https://github.com/DezFix/Hanten/releases
+- **Parsers Repo:** https://github.com/DezFix/futon-parsers (fork of AppFuton/futon-parsers)
+- **Upstream:** Kotatsu https://github.com/KotatsuApp/Kotatsu • Futon https://github.com/AppFuton/Futon
 - **CI/CD Setup:** See [CI.md](./CI.md)
 - **Contributing:** See [CONTRIBUTING.md](./CONTRIBUTING.md)
 

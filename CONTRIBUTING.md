@@ -1,13 +1,17 @@
-## Futon contribution guidelines
+## Hanten contribution guidelines
 
-+ If you want to **fix bugs** or **implement new features** that **already have an [issue card](https://github.com/AppFuton/Futon/issues):** please assign this issue to you and/or comment about it.
-+ If you want to **implement a new feature:** open an issue or discussion regarding it to ensure it will be accepted.
-+ **Community chat**: Join our Discord for support and discussion — https://discord.gg/9sqBHXhwzz
-+ In case you want to **add a new manga source,** refer to the [parsers repository](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo).
+> **Hanten** — форк [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon), пакет `hanten.wre.app`. Развивается на GitHub без Discord.
 
-**Refactoring** or some **dev-faces improvements** might also be accepted. However, please stick to the following principles:
++ Если хотите **исправить баг/фичу с issue** — назначьте её на себя и/или оставьте комментарий.
++ Если хотите **новую фичу** — сначала откройте issue/discussion, чтобы согласовать.
++ **Новые источники манги** — правятся не здесь, а в [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers) (форк `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
++ **Чат сообщества** — GitHub Discussions / Issues этого репо (Discord удалён).
++ **Обновления приложения** — доставляются напрямую из GitHub Releases (`Настройки → О программе → Проверить обновления`, `hanten.wre.app`).
 
-+ **Performance matters.** In the case of choosing between source code beauty and performance, performance should be a priority. 
-+ Please, **do not modify readme and other information files** (except for typos)(and if you are better at explaining it then thats also accepted)
-+ **Avoid adding new dependencies** unless required. APK size is important.
-+ **please explain your changes** atleast try to cause it just helps us work a lot faster than spending time figuring out what you did🥲.
+Принципы:
+
++ **Производительность важнее красоты кода.**
++ Не трогайте `README` и инфо-файлы без необходимости (кроме опечаток).
++ Не добавляйте зависимости без нужды — размер APK критичен.
++ Объясняйте изменения в PR.
++ Сборка без Android Studio: `./gradlew assembleDebug` (JDK 17, compileSdk 36, minSdk 23).

@@ -1,0 +1,21 @@
+package hanten.wre.app.download.ui.list
+
+import hanten.wre.app.core.ui.list.OnListItemClickListener
+import hanten.wre.app.download.ui.list.chapters.DownloadChapter
+
+interface DownloadItemListener : OnListItemClickListener<DownloadItemModel> {
+
+	fun onCancelClick(item: DownloadItemModel)
+
+	fun onPauseClick(item: DownloadItemModel)
+
+	fun onResumeClick(item: DownloadItemModel)
+
+	fun onSkipClick(item: DownloadItemModel)
+
+	fun onSkipAllClick(item: DownloadItemModel)
+
+	fun onExpandClick(item: DownloadItemModel)
+
+	fun onDeleteChapterClick(item: DownloadItemModel, chapter: DownloadChapter)
+}

@@ -1,0 +1,325 @@
+package hanten.wre.app.details.ui.pager
+
+import android.app.Activity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import hanten.wre.app.bookmarks.domain.BookmarksRepository
+import hanten.wre.app.core.model.toChipModel
+import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.observeAsStateFlow
+import hanten.wre.app.core.ui.BaseViewModel
+import hanten.wre.app.core.ui.util.ReversibleAction
+import hanten.wre.app.core.util.LocaleStringComparator
+import hanten.wre.app.core.util.ext.MutableEventFlow
+import hanten.wre.app.core.util.ext.call
+import hanten.wre.app.core.util.ext.combine
+import hanten.wre.app.core.util.ext.requireValue
+import hanten.wre.app.core.util.ext.sortedWithSafe
+import hanten.wre.app.details.data.MangaDetails
+import hanten.wre.app.details.domain.DetailsInteractor
+import hanten.wre.app.details.ui.DetailsActivity
+import hanten.wre.app.details.ui.DetailsViewModel
+import hanten.wre.app.details.ui.mapChapters
+import hanten.wre.app.details.ui.model.ChapterListItem
+import hanten.wre.app.download.ui.worker.DownloadTask
+import hanten.wre.app.download.ui.worker.DownloadWorker
+import hanten.wre.app.history.data.HistoryRepository
+import hanten.wre.app.list.domain.ListFilterOption
+import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
+import hanten.wre.app.local.domain.model.LocalManga
+import hanten.wre.app.reader.ui.ReaderActivity
+import hanten.wre.app.reader.ui.ReaderState
+import hanten.wre.app.reader.ui.ReaderViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.plus
+import okio.FileNotFoundException
+import org.koitharu.kotatsu.parsers.model.Manga
+import org.koitharu.kotatsu.parsers.model.MangaState
+
+abstract class ChaptersPagesViewModel(
+	@JvmField protected val settings: AppSettings,
+	@JvmField protected val interactor: DetailsInteractor,
+	private val bookmarksRepository: BookmarksRepository,
+	private val historyRepository: HistoryRepository,
+	private val downloadScheduler: DownloadWorker.Scheduler,
+	private val downloadQueueRepository: hanten.wre.app.download.data.repository.DownloadQueueRepository,
+	private val addUnreadToQueueUseCase: hanten.wre.app.download.domain.usecase.AddUnreadToQueueUseCase,
+	private val workManager: androidx.work.WorkManager,
+	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
+	private val localStorageChanges: SharedFlow<LocalManga?>,
+) : BaseViewModel() {
+
+	val mangaDetails = MutableStateFlow<MangaDetails?>(null)
+	val readingState = MutableStateFlow<ReaderState?>(null)
+
+	val onActionDone = MutableEventFlow<ReversibleAction>()
+	val onDownloadStarted = MutableEventFlow<Unit>()
+	val onMangaRemoved = MutableEventFlow<Manga>()
+
+	private val chaptersQuery = MutableStateFlow("")
+	val selectedBranch = MutableStateFlow<String?>(null)
+
+	val manga = mangaDetails.map { x -> x?.toManga() }
+		.withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, null)
+
+	val coverUrl = mangaDetails.map { x -> x?.coverUrl }
+		.withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, null)
+
+	val isChaptersReversed = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.IO,
+		key = AppSettings.KEY_REVERSE_CHAPTERS,
+		valueProducer = { isChaptersReverse },
+	)
+
+	val isChaptersInGridView = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.IO,
+		key = AppSettings.KEY_GRID_VIEW_CHAPTERS,
+		valueProducer = { isChaptersGridView },
+	)
+
+	val isDownloadedOnly = MutableStateFlow(false)
+
+	val newChaptersCount = mangaDetails.flatMapLatest { d ->
+		if (d?.isLocal == false) {
+			interactor.observeNewChapters(d.id)
+		} else {
+			flowOf(0)
+		}
+	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, 0)
+
+	val emptyReason: StateFlow<EmptyMangaReason?> = combine(
+		mangaDetails,
+		isLoading,
+		onError.onStart { emit(null) },
+	) { details, loading, error ->
+		when {
+			details == null || loading -> null
+			details.chapters.isNotEmpty() -> null
+			details.toManga().state == MangaState.RESTRICTED -> EmptyMangaReason.RESTRICTED
+			error != null -> EmptyMangaReason.LOADING_ERROR
+			else -> EmptyMangaReason.NO_CHAPTERS
+		}
+	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.WhileSubscribed(), null)
+
+	val bookmarks = mangaDetails.flatMapLatest {
+		if (it != null) {
+			bookmarksRepository.observeBookmarks(it.toManga()).withErrorHandling()
+		} else {
+			flowOf(emptyList())
+		}
+	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
+
+	val chapters = combine(
+		combine(
+			mangaDetails,
+			readingState.map { it?.chapterId ?: 0L }.distinctUntilChanged(),
+			selectedBranch,
+			newChaptersCount,
+			bookmarks,
+			isChaptersInGridView,
+			isDownloadedOnly,
+		) { manga, currentChapterId, branch, news, bookmarks, grid, downloadedOnly ->
+			manga?.mapChapters(
+				currentChapterId = currentChapterId,
+				newCount = news,
+				branch = branch,
+				bookmarks = bookmarks,
+				isGrid = grid,
+				isDownloadedOnly = downloadedOnly,
+			).orEmpty()
+		},
+		isChaptersReversed,
+		chaptersQuery,
+	) { list, reversed, query ->
+		(if (reversed) list.asReversed() else list).filterSearch(query)
+	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
+
+	val quickFilter = combine(
+		mangaDetails,
+		selectedBranch,
+	) { details, branch ->
+		val branches = details?.chapters?.toList()?.sortedWithSafe(
+			compareBy(LocaleStringComparator()) { it.first },
+		).orEmpty()
+		if (branches.size > 1) {
+			branches.map {
+				val option = ListFilterOption.Branch(titleText = it.first, chaptersCount = it.second.size)
+				option.toChipModel(isChecked = it.first == branch)
+			}
+		} else {
+			emptyList()
+		}
+	}
+
+	init {
+		launchJob(Dispatchers.IO) {
+			localStorageChanges
+				.collect { onDownloadComplete(it) }
+		}
+	}
+
+	fun setChaptersReversed(newValue: Boolean) {
+		settings.isChaptersReverse = newValue
+	}
+
+	fun setChaptersInGridView(newValue: Boolean) {
+		settings.isChaptersGridView = newValue
+	}
+
+	fun setSelectedBranch(branch: String?) {
+		selectedBranch.value = branch
+	}
+
+	fun performChapterSearch(query: String?) {
+		chaptersQuery.value = query?.trim().orEmpty()
+	}
+
+	fun getMangaOrNull(): Manga? = mangaDetails.value?.toManga()
+
+	fun requireManga() = mangaDetails.requireValue().toManga()
+
+	fun markChapterAsCurrent(chapterId: Long) {
+		launchJob(Dispatchers.IO) {
+			val manga = mangaDetails.requireValue()
+			val chapters = checkNotNull(manga.chapters[selectedBranch.value])
+			val chapterIndex = chapters.indexOfFirst { it.id == chapterId }
+			check(chapterIndex in chapters.indices) { "Chapter not found" }
+			val percent = chapterIndex / chapters.size.toFloat()
+			historyRepository.addOrUpdate(
+				manga = manga.toManga(),
+				chapterId = chapterId,
+				page = 0,
+				scroll = 0,
+				percent = percent,
+				force = true,
+			)
+		}
+	}
+
+	fun download(chaptersIds: Set<Long>?, allowMeteredNetwork: Boolean) {
+		launchJob(Dispatchers.IO) {
+			val manga = requireManga()
+			android.util.Log.d("ChaptersPagesVM", "Manual download start for manga: ${manga.title}, chapters: ${chaptersIds?.size ?: "all"}")
+			val task = DownloadTask(
+				mangaId = manga.id,
+				isPaused = false,
+				isSilent = false,
+				chaptersIds = chaptersIds?.toLongArray(),
+				destination = null,
+				format = null,
+				allowMeteredNetwork = allowMeteredNetwork,
+				requiresCharging = false,
+			)
+			downloadScheduler.schedule(setOf(manga to task))
+			onDownloadStarted.call(Unit)
+		}
+	}
+
+	fun scheduleDownload(
+		chaptersIds: Set<Long>?,
+		wifiOnly: Boolean,
+		chargingOnly: Boolean,
+		offPeakOnly: Boolean
+	) {
+		launchJob(Dispatchers.IO) {
+			val manga = requireManga()
+			android.util.Log.d("ChaptersPagesVM", "Scheduling download for manga: ${manga.title}, chapters: ${chaptersIds?.size ?: "unread"}")
+			if (chaptersIds == null) {
+				addUnreadToQueueUseCase(
+					manga = manga,
+					wifiOnly = wifiOnly,
+					chargingOnly = chargingOnly,
+					offPeakOnly = offPeakOnly
+				)
+			} else {
+				downloadQueueRepository.addToQueue(
+					manga = manga,
+					chaptersIds = chaptersIds.toLongArray(),
+					wifiOnly = wifiOnly,
+					chargingOnly = chargingOnly,
+					offPeakOnly = offPeakOnly
+				)
+			}
+			onDownloadStarted.call(Unit)
+		}
+	}
+
+	fun deleteLocal() {
+		val m = mangaDetails.value?.local?.manga
+		if (m == null) {
+			errorEvent.call(FileNotFoundException())
+			return
+		}
+		val isActuallyLocal = mangaDetails.value?.isLocal == true
+		launchLoadingJob(Dispatchers.IO) {
+			deleteLocalMangaUseCase(m)
+			if (isActuallyLocal) {
+				onMangaRemoved.call(m)
+			}
+		}
+	}
+
+	private fun List<ChapterListItem>.filterSearch(query: String): List<ChapterListItem> {
+		if (query.isEmpty() || this.isEmpty()) {
+			return this
+		}
+		return filter { it.contains(query) }
+	}
+
+	protected open suspend fun onDownloadComplete(downloadedManga: LocalManga?) {
+		mangaDetails.update {
+			if (downloadedManga == null) {
+				it?.copy(localManga = null)
+			} else if (it?.id == downloadedManga.manga.id) {
+				interactor.updateLocal(it, downloadedManga)
+			} else {
+				it
+			}
+		}
+	}
+
+	class ActivityVMLazy(
+		private val fragment: Fragment,
+	) : Lazy<ChaptersPagesViewModel> {
+		private var cached: ChaptersPagesViewModel? = null
+
+		override val value: ChaptersPagesViewModel
+			get() {
+				val viewModel = cached
+				return if (viewModel == null) {
+					val activity = fragment.requireActivity()
+					val vmClass = getViewModelClass(activity)
+					ViewModelProvider.create(
+						store = activity.viewModelStore,
+						factory = activity.defaultViewModelProviderFactory,
+						extras = activity.defaultViewModelCreationExtras,
+					)[vmClass].also { cached = it }
+				} else {
+					viewModel
+				}
+			}
+
+		override fun isInitialized(): Boolean = cached != null
+
+		private fun getViewModelClass(activity: Activity) = when (activity) {
+			is ReaderActivity -> ReaderViewModel::class.java
+			is DetailsActivity -> DetailsViewModel::class.java
+			else -> error("Wrong activity ${activity.javaClass.simpleName} for ${ChaptersPagesViewModel::class.java.simpleName}")
+		}
+	}
+}

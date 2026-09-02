@@ -75,14 +75,14 @@
 			android:summary="@string/download_off_peak_summary"
 			android:title="@string/download_off_peak" />
 
-		<io.github.landwarderer.futon.settings.utils.TimePreference
+		<hanten.wre.app.settings.utils.TimePreference
 			android:defaultValue="00:00"
 			android:dependency="download_off_peak_enabled"
 			android:key="download_off_peak_start"
             android:summary="@string/download_off_peak_start_description"
 			android:title="@string/download_off_peak_start" />
 
-		<io.github.landwarderer.futon.settings.utils.TimePreference
+		<hanten.wre.app.settings.utils.TimePreference
 			android:defaultValue="06:00"
 			android:dependency="download_off_peak_enabled"
 			android:key="download_off_peak_end"

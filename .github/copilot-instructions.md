@@ -1,4 +1,6 @@
-# AI Coding Agent Instructions (Futon / Kotatsu fork)
+# AI Coding Agent Instructions (Hanten — fork of Kotatsu and Futon)
+
+> **Hanten** (`hanten.wre.app`) is a fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon).
 
 These notes help AI agents work effectively in this Android/Kotlin codebase by capturing architecture, workflows, and project-specific patterns.
 
@@ -7,7 +9,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - DI: Hilt (`@HiltAndroidApp` in `BaseApp`), bindings/providers in `AppModule`.
 - Data: Room `MangaDatabase` with `InvalidationTracker` observers; WorkManager used for background tasks.
 - Networking & images: OkHttp client with custom interceptors; Coil v3 configured with SVG/GIF/AVIF decoders, CBZ fetcher, cache sizes.
-- External sources: Manga parsers via `com.github.AppFuton:futon-parsers:$parsersVersion` (JitPack).
+- External sources: Manga parsers via `com.github.DezFix:futon-parsers:$parsersVersion` (JitPack, fork of `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
 
 ## Build & Variants
 - Variants: `debug`, `release`, `nightly` (inherits `release`). Nightly auto-sets version to `NyyyyMMdd` and date-based `versionCode`.
@@ -17,7 +19,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
   - `./gradlew assembleNightly` → signed nightly APK.
 - Tests:
   - Unit: `./gradlew test` (Android resources enabled).
-  - Instrumented: `./gradlew connectedAndroidTest` (runner `io.github.landwarderer.futon.HiltTestRunner`).
+  - Instrumented: `./gradlew connectedAndroidTest` (runner `hanten.wre.app.HiltTestRunner`).
 - Lint: strict; certain rules disabled (e.g., `MissingTranslation`, `PrivateResource`).
 
 ## CI/CD & Signing
@@ -32,7 +34,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 ## Key Modules & Responsibilities
 - `BaseApp`: app init, theme, TLS provider (Conscrypt on < Android 10), lifecycle callbacks registration, database observers, WorkManager config.
 - `AppModule`: DI bindings for loader context, HTML image getter, OkHttp/Coil/Image components, caches (`PageCache`, `FaviconCache`), `NetworkState`, `WorkManager`, database observers and lifecycle callbacks.
-- Package layout under `io/github/landwarderer/futon/`:
+- Package layout under `hanten/wre/app/`:
   - `core/`: shared infra (`db/`, `network/`, `parser/`, `prefs/`, `ui/`, `util/`, `os/`).
   - Feature packages: `reader/`, `details/`, `main/`, `search/`, `download/`, `local/`, `favourites/`, `history/`, `bookmarks/`, `scrobbling/`, `sync/`, `widget/`, etc.
 
@@ -50,7 +52,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - Debug-only tooling: LeakCanary and WorkInspector active in `debug`/`nightly`.
 
 ## Integration & Deep Links
-- Manifest defines many deep links (`DetailsActivity`, `ReaderActivity`, etc.) and app-specific schemes (`futon://…`); validate flows when changing intents.
+- Manifest defines many deep links (`DetailsActivity`, `ReaderActivity`, etc.) and app-specific schemes (`hanten://…` + legacy `futon://…`); validate flows when changing intents.
 - Network security config and locale config present; keep them consistent when adding features requiring webviews or language-specific behavior.
 
 ## Examples & Tips

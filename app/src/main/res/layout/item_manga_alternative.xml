@@ -11,7 +11,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<io.github.landwarderer.futon.image.ui.CoverImageView
+		<hanten.wre.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
 			android:layout_width="98dp"
 			android:layout_height="0dp"
@@ -19,10 +19,10 @@
 			app:layout_constraintDimensionRatio="13:18"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover"
 			tools:src="@tools:sample/backgrounds/scenic" />
 
-		<io.github.landwarderer.futon.core.ui.widgets.IconsView
+		<hanten.wre.app.core.ui.widgets.IconsView
 			android:id="@+id/iconsView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 			app:layout_constraintStart_toStartOf="@id/imageView_cover"
 			app:layout_constraintTop_toTopOf="@id/imageView_cover" />
 
-		<io.github.landwarderer.futon.history.ui.util.ReadingProgressView
+		<hanten.wre.app.history.ui.util.ReadingProgressView
 			android:id="@+id/progressView"
 			android:layout_width="@dimen/card_indicator_size"
 			android:layout_height="@dimen/card_indicator_size"
@@ -76,7 +76,7 @@
 
 		<com.google.android.material.chip.Chip
 			android:id="@+id/chip_source"
-			style="@style/Widget.Futon.Chip.Assist"
+			style="@style/Widget.Hanten.Chip.Assist"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginHorizontal="12dp"

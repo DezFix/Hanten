@@ -9,7 +9,7 @@
 		android:persistent="false" />
 
 	<Preference
-		android:fragment="io.github.landwarderer.futon.settings.about.changelog.ChangelogFragment"
+		android:fragment="hanten.wre.app.settings.about.changelog.ChangelogFragment"
 		android:key="changelog"
 		android:persistent="false"
 		android:summary="@string/changelog_summary"

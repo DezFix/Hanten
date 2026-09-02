@@ -16,7 +16,7 @@ plugins {
 
 android {
 	compileSdk = 36
-	namespace = 'io.github.landwarderer.futon'
+	namespace = 'hanten.wre.app'
 
 	dependenciesInfo {
 		// Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
@@ -26,13 +26,13 @@ android {
 	}
 
 	defaultConfig {
-		applicationId 'io.github.landwarderer.futon'
+		applicationId 'hanten.wre.app'
 		minSdk = 23
 		targetSdk = 36
 		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 90801
         versionName project.hasProperty('versionName') ? project.property('versionName') : '9.8.1'
         generatedDensities = []
-		testInstrumentationRunner 'io.github.landwarderer.futon.HiltTestRunner'
+		testInstrumentationRunner 'hanten.wre.app.HiltTestRunner'
 		ksp {
 			arg('room.generateKotlin', 'true')
 		}

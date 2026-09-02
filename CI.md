@@ -1,6 +1,6 @@
 # CI/CD Setup Guide
 
-This document describes the automated build and release process for Futon.
+This document describes the automated build and release process for Hanten (`hanten.wre.app`) — fork of Kotatsu/Futon.
 
 ## Automated Workflows
 
@@ -57,7 +57,7 @@ To enable automated signing, configure the following secrets in your GitHub repo
 
 A new keystore was generated with:
 ```
-Key Alias: futon-key
+Key Alias: hanten-key
 Keystore Password: [from setup]
 Key Password: [from setup]
 SHA-256 Fingerprint: EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
@@ -81,7 +81,7 @@ To set up locally with a keystore:
 ```bash
 export KEYSTORE_FILE=/path/to/keystore.jks
 export KEYSTORE_PASSWORD=your-password
-export KEY_ALIAS=futon-key
+export KEY_ALIAS=hanten-key
 export KEY_PASSWORD=key-password
 
 ./gradlew assembleRelease
@@ -134,4 +134,4 @@ Current release keystore SHA-256 fingerprint:
 EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
 ```
 
-This matches the built-in app validator check in `AppValidator.kt`. All release builds must use a keystore with this fingerprint for proper app signature validation.
+This matches the built-in app validator check in `AppValidator.kt (пакет hanten.wre.app)`. All release builds must use a keystore with this fingerprint for Hanten signature validation.

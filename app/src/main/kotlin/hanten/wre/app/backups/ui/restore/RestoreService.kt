@@ -1,0 +1,125 @@
+package hanten.wre.app.backups.ui.restore
+
+import android.annotation.SuppressLint
+import android.app.Notification
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.net.Uri
+import androidx.annotation.CheckResult
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
+import hanten.wre.app.R
+import hanten.wre.app.backups.data.BackupRepository
+import hanten.wre.app.backups.domain.BackupSection
+import hanten.wre.app.backups.ui.BaseBackupRestoreService
+import hanten.wre.app.core.nav.AppRouter
+import hanten.wre.app.core.util.ext.checkNotificationPermission
+import hanten.wre.app.core.util.ext.getSerializableExtraCompat
+import hanten.wre.app.core.util.ext.powerManager
+import hanten.wre.app.core.util.ext.printStackTraceDebug
+import hanten.wre.app.core.util.ext.toUriOrNull
+import hanten.wre.app.core.util.ext.withPartialWakeLock
+import hanten.wre.app.core.util.progress.Progress
+import hanten.wre.app.local.ui.LocalIndexUpdateService
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import java.io.FileNotFoundException
+import java.util.zip.ZipInputStream
+import javax.inject.Inject
+import androidx.appcompat.R as appcompatR
+
+@AndroidEntryPoint
+@SuppressLint("InlinedApi")
+class RestoreService : BaseBackupRestoreService() {
+
+	override val notificationTag = TAG
+	override val isRestoreService = true
+
+	@Inject
+	lateinit var repository: BackupRepository
+
+	override suspend fun IntentJobContext.processIntent(intent: Intent) {
+		val notification = buildNotification(Progress.INDETERMINATE)
+		setForeground(
+			FOREGROUND_NOTIFICATION_ID,
+			notification,
+			ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
+		)
+		val source = intent.getStringExtra(AppRouter.KEY_DATA)?.toUriOrNull() ?: throw FileNotFoundException()
+		val sections =
+			requireNotNull(intent.getSerializableExtraCompat<Array<BackupSection>>(AppRouter.KEY_ENTRIES)?.toSet())
+        val isMerge = intent.getBooleanExtra(KEY_MERGE, false)
+		powerManager.withPartialWakeLock(TAG) {
+			val progress = MutableStateFlow(Progress.INDETERMINATE)
+			val progressUpdateJob = if (checkNotificationPermission(CHANNEL_ID)) {
+				launch {
+					progress.collect {
+						notificationManager.notify(FOREGROUND_NOTIFICATION_ID, buildNotification(it))
+					}
+				}
+			} else {
+				null
+			}
+			val result = ZipInputStream(contentResolver.openInputStream(source)).use { input ->
+                repository.restoreBackup(input, sections, progress, isMerge)
+			}
+			if (result.isAllSuccess && sections.contains(BackupSection.SETTINGS)) {
+				startService(Intent(this@RestoreService, LocalIndexUpdateService::class.java))
+			}
+			progressUpdateJob?.cancelAndJoin()
+			showResultNotification(source, result)
+		}
+	}
+
+	private fun IntentJobContext.buildNotification(progress: Progress): Notification {
+		return NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+			.setContentTitle(getString(R.string.restoring_backup))
+			.setPriority(NotificationCompat.PRIORITY_HIGH)
+			.setDefaults(0)
+			.setSilent(true)
+			.setOngoing(true)
+			.setProgress(
+				progress.total.coerceAtLeast(0),
+				progress.progress.coerceAtLeast(0),
+				progress.isIndeterminate,
+			)
+			.setContentText(
+				if (progress.isIndeterminate) {
+					getString(R.string.processing_)
+				} else {
+					getString(R.string.fraction_pattern, progress.progress, progress.total)
+				},
+			)
+			.setSmallIcon(android.R.drawable.stat_sys_upload)
+			.setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+			.setCategory(NotificationCompat.CATEGORY_PROGRESS)
+			.addAction(
+				appcompatR.drawable.abc_ic_clear_material,
+				applicationContext.getString(android.R.string.cancel),
+				getCancelIntent(),
+			).build()
+	}
+
+	companion object {
+
+		private const val TAG = "RESTORE"
+		private const val FOREGROUND_NOTIFICATION_ID = 39
+        private const val KEY_MERGE = "merge"
+
+		@CheckResult
+        fun start(context: Context, uri: Uri, sections: Set<BackupSection>, isMerge: Boolean): Boolean = try {
+			val intent = Intent(context, RestoreService::class.java)
+			intent.putExtra(AppRouter.KEY_DATA, uri.toString())
+			intent.putExtra(AppRouter.KEY_ENTRIES, sections.toTypedArray())
+            intent.putExtra(KEY_MERGE, isMerge)
+			ContextCompat.startForegroundService(context, intent)
+			true
+		} catch (e: Exception) {
+			e.printStackTraceDebug("RestoreService::start")
+			false
+		}
+	}
+}

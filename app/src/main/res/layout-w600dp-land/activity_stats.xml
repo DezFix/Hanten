@@ -46,7 +46,7 @@
 
 			<com.google.android.material.chip.Chip
 				android:id="@+id/chip_period"
-				style="@style/Widget.Futon.Chip.Dropdown"
+				style="@style/Widget.Hanten.Chip.Dropdown"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/week"
@@ -54,7 +54,7 @@
 
 			<com.google.android.material.chip.Chip
 				android:id="@+id/chip_type"
-				style="@style/Widget.Futon.Chip.Dropdown"
+				style="@style/Widget.Hanten.Chip.Dropdown"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/manga"
@@ -79,7 +79,7 @@
 		app:trackCornerRadius="0dp"
 		tools:visibility="visible" />
 
-	<io.github.landwarderer.futon.stats.ui.views.PieChartView
+	<hanten.wre.app.stats.ui.views.PieChartView
 		android:id="@+id/chart"
 		android:layout_width="0dp"
 		android:layout_height="0dp"

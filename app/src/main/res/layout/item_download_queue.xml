@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/ic_reorder_handle"
             app:tint="?colorOnSurfaceVariant" />
 
-        <io.github.landwarderer.futon.image.ui.CoverImageView
+        <hanten.wre.app.image.ui.CoverImageView
             android:id="@+id/imageView_cover"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageView_handle"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover.Medium"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView

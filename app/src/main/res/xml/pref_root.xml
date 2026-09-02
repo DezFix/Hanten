@@ -3,55 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.AppearanceSettingsFragment"
+        android:fragment="hanten.wre.app.settings.AppearanceSettingsFragment"
         android:icon="@drawable/ic_appearance"
         android:key="appearance"
         android:title="@string/appearance" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.sources.SourcesSettingsFragment"
+        android:fragment="hanten.wre.app.settings.sources.SourcesSettingsFragment"
         android:icon="@drawable/ic_manga_source"
         android:key="remote_sources"
         android:title="@string/remote_sources" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.ReaderSettingsFragment"
+        android:fragment="hanten.wre.app.settings.ReaderSettingsFragment"
         android:icon="@drawable/ic_book_page"
         android:key="reader"
         android:title="@string/reader_settings" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.StorageAndNetworkSettingsFragment"
+        android:fragment="hanten.wre.app.settings.StorageAndNetworkSettingsFragment"
         android:icon="@drawable/ic_usage"
         android:key="network"
         android:title="@string/storage_and_network" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.DownloadsSettingsFragment"
+        android:fragment="hanten.wre.app.settings.DownloadsSettingsFragment"
         android:icon="@drawable/ic_download"
         android:key="downloads"
         android:title="@string/downloads" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.tracker.TrackerSettingsFragment"
+        android:fragment="hanten.wre.app.settings.tracker.TrackerSettingsFragment"
         android:icon="@drawable/ic_feed"
         android:key="tracker"
         android:title="@string/check_for_new_chapters" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.ServicesSettingsFragment"
+        android:fragment="hanten.wre.app.settings.ServicesSettingsFragment"
         android:icon="@drawable/ic_services"
         android:key="services"
         android:title="@string/services" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.userdata.BackupsSettingsFragment"
+        android:fragment="hanten.wre.app.settings.userdata.BackupsSettingsFragment"
         android:icon="@drawable/ic_backup_restore"
         android:key="userdata"
         android:title="@string/backup_restore" />
 
     <PreferenceScreen
-        android:fragment="io.github.landwarderer.futon.settings.about.AboutSettingsFragment"
+        android:fragment="hanten.wre.app.settings.about.AboutSettingsFragment"
         android:icon="@drawable/ic_info_outline"
         android:key="about"
         android:title="@string/about" />

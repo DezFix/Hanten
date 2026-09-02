@@ -1,1 +1,1 @@
-Manga reader with online catalogues ( kotatsu fork )
+Manga reader with online catalogues (Hanten — fork of Kotatsu & Futon, hanten.wre.app)

@@ -16,25 +16,25 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
-		<io.github.landwarderer.futon.image.ui.CoverImageView
+		<hanten.wre.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="?colorSurfaceContainer"
 			android:orientation="horizontal"
 			app:allowRgb565="true"
-			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Futon.Cover"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover"
 			tools:ignore="ContentDescription"
 			tools:src="@tools:sample/backgrounds/scenic[5]" />
 
-		<io.github.landwarderer.futon.history.ui.util.ReadingProgressView
+		<hanten.wre.app.history.ui.util.ReadingProgressView
 			android:id="@+id/progressView"
 			android:layout_width="@dimen/card_indicator_size"
 			android:layout_height="@dimen/card_indicator_size"
 			android:layout_gravity="bottom|end"
 			android:layout_margin="@dimen/card_indicator_offset" />
 
-		<io.github.landwarderer.futon.core.ui.widgets.IconsView
+		<hanten.wre.app.core.ui.widgets.IconsView
 			android:id="@+id/iconsView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
 			app:iconSize="14dp"
 			app:iconSpacing="4dp" />
 
-		<io.github.landwarderer.futon.core.ui.widgets.BadgeView
+		<hanten.wre.app.core.ui.widgets.BadgeView
 			android:id="@+id/badge"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
