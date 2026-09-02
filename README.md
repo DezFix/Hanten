@@ -1,81 +1,81 @@
-<div align="center">
+﻿<div align="center">
 
-# Hanten — свободная читалка манги для Android
+# Hanten вЂ” СЃРІРѕР±РѕРґРЅР°СЏ С‡РёС‚Р°Р»РєР° РјР°РЅРіРё РґР»СЏ Android
 
-**Форк проектов [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) • Пакет `hanten.wre.app` • Прямые обновления из GitHub Releases**
+**Р¤РѕСЂРє РїСЂРѕРµРєС‚РѕРІ [Kotatsu](https://github.com/KotatsuApp/Kotatsu) Рё [Futon](https://github.com/AppFuton/Futon) вЂў РџР°РєРµС‚ `hanten.wre.app` вЂў РџСЂСЏРјС‹Рµ РѕР±РЅРѕРІР»РµРЅРёСЏ РёР· GitHub Releases**
 
-**Hanten is a fork of Kotatsu and Futon — free and open-source manga reader for Android with built-in sources.**
+**Hanten is a fork of Kotatsu and Futon вЂ” free and open-source manga reader for Android with built-in sources.**
 
 ![Android 6.0](https://img.shields.io/badge/android-6.0+-brightgreen) [![License](https://img.shields.io/github/license/DezFix/Hanten)](https://github.com/DezFix/Hanten/blob/main/LICENSE) [![GitHub Release](https://img.shields.io/github/v/release/DezFix/Hanten?sort=date&display_name=tag&style=flat&link=https%3A%2F%2Fgithub.com%2FDezFix%2FHanten%2Freleases%2Flatest)](https://github.com/DezFix/Hanten/releases/latest)
 
 </div>
 
-> **Происхождение:** [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) → [AppFuton/Futon](https://github.com/AppFuton/Futon) → **DezFix/Hanten** (`hanten.wre.app`).  
-> Оригинальный Kotatsu создал отличную базу, Futon продолжил развитие — Hanten продолжает эту линию с фокусом на стабильность, реверс-инжиниринг источников и обновления прямо из приложения без стора и без Discord.
+> **РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ:** [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) в†’ [AppFuton/Futon](https://github.com/AppFuton/Futon) в†’ **DezFix/Hanten** (`hanten.wre.app`).  
+> РћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ Kotatsu СЃРѕР·РґР°Р» РѕС‚Р»РёС‡РЅСѓСЋ Р±Р°Р·Сѓ, Futon РїСЂРѕРґРѕР»Р¶РёР» СЂР°Р·РІРёС‚РёРµ вЂ” Hanten РїСЂРѕРґРѕР»Р¶Р°РµС‚ СЌС‚Сѓ Р»РёРЅРёСЋ СЃ С„РѕРєСѓСЃРѕРј РЅР° СЃС‚Р°Р±РёР»СЊРЅРѕСЃС‚СЊ, СЂРµРІРµСЂСЃ-РёРЅР¶РёРЅРёСЂРёРЅРі РёСЃС‚РѕС‡РЅРёРєРѕРІ Рё РѕР±РЅРѕРІР»РµРЅРёСЏ РїСЂСЏРјРѕ РёР· РїСЂРёР»РѕР¶РµРЅРёСЏ Р±РµР· СЃС‚РѕСЂР° Рё Р±РµР· Discord.
 
-### Главные возможности
+### Р“Р»Р°РІРЅС‹Рµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё
 
 <div align="left">
 
-* Каталоги из [kotatsu-parsers](https://github.com/DezFix/futon-parsers) (1200+ источников) + поддержка расширений [Tachiyomi/keiyoushi](https://github.com/keiyoushi/extensions)
-* Поиск по названию, жанрам и фильтрам
-* Избранное с пользовательскими категориями
-* История, закладки, режим инкогнито
-* Скачивание манги и чтение офлайн (CBZ тоже)
-* Material You UI для телефонов, планшетов и десктопа
-* Читалка: стандартный и вебтун-режимы, жесты, фильтры
-* Лента обновлений, рекомендации
-* Интеграция с Shikimori, AniList, MyAnimeList, Kitsu
-* Защита приложения паролем/отпечатком
-* Синхронизация данных между устройствами
-* Поддержка Android 6.0+ (minSdk 23, targetSdk 36)
-* **Обновление в один тап прямо из GitHub Releases** — без Google Play / F-Droid (проверка в Настройки → О программе → Проверить обновления)
+* РљР°С‚Р°Р»РѕРіРё РёР· [kotatsu-parsers](https://github.com/DezFix/futon-parsers) (1200+ РёСЃС‚РѕС‡РЅРёРєРѕРІ) + РїРѕРґРґРµСЂР¶РєР° СЂР°СЃС€РёСЂРµРЅРёР№ [Tachiyomi/keiyoushi](https://github.com/keiyoushi/extensions)
+* РџРѕРёСЃРє РїРѕ РЅР°Р·РІР°РЅРёСЋ, Р¶Р°РЅСЂР°Рј Рё С„РёР»СЊС‚СЂР°Рј
+* РР·Р±СЂР°РЅРЅРѕРµ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёРјРё РєР°С‚РµРіРѕСЂРёСЏРјРё
+* РСЃС‚РѕСЂРёСЏ, Р·Р°РєР»Р°РґРєРё, СЂРµР¶РёРј РёРЅРєРѕРіРЅРёС‚Рѕ
+* РЎРєР°С‡РёРІР°РЅРёРµ РјР°РЅРіРё Рё С‡С‚РµРЅРёРµ РѕС„Р»Р°Р№РЅ (CBZ С‚РѕР¶Рµ)
+* Material You UI РґР»СЏ С‚РµР»РµС„РѕРЅРѕРІ, РїР»Р°РЅС€РµС‚РѕРІ Рё РґРµСЃРєС‚РѕРїР°
+* Р§РёС‚Р°Р»РєР°: СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ Рё РІРµР±С‚СѓРЅ-СЂРµР¶РёРјС‹, Р¶РµСЃС‚С‹, С„РёР»СЊС‚СЂС‹
+* Р›РµРЅС‚Р° РѕР±РЅРѕРІР»РµРЅРёР№, СЂРµРєРѕРјРµРЅРґР°С†РёРё
+* РРЅС‚РµРіСЂР°С†РёСЏ СЃ Shikimori, AniList, MyAnimeList, Kitsu
+* Р—Р°С‰РёС‚Р° РїСЂРёР»РѕР¶РµРЅРёСЏ РїР°СЂРѕР»РµРј/РѕС‚РїРµС‡Р°С‚РєРѕРј
+* РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РґР°РЅРЅС‹С… РјРµР¶РґСѓ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё
+* РџРѕРґРґРµСЂР¶РєР° Android 6.0+ (minSdk 23, targetSdk 36)
+* **РћР±РЅРѕРІР»РµРЅРёРµ РІ РѕРґРёРЅ С‚Р°Рї РїСЂСЏРјРѕ РёР· GitHub Releases** вЂ” Р±РµР· Google Play / F-Droid (РїСЂРѕРІРµСЂРєР° РІ РќР°СЃС‚СЂРѕР№РєРё в†’ Рћ РїСЂРѕРіСЂР°РјРјРµ в†’ РџСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёСЏ)
 
 </div>
 
-### Установка и обновления
+### РЈСЃС‚Р°РЅРѕРІРєР° Рё РѕР±РЅРѕРІР»РµРЅРёСЏ
 
-* **Скачать APK:** [Releases](https://github.com/DezFix/Hanten/releases/latest) → `app-release.apk`
-* **Обновление внутри приложения:** `Настройки → О программе → Проверить обновления` → скачать и установить (`REQUEST_INSTALL_PACKAGES`). Никакого Discord.
-* F-Droid/IzzyOnDroid — по желанию, но основной канал — GitHub Releases этого репозитория.
+* **РЎРєР°С‡Р°С‚СЊ APK:** [Releases](https://github.com/DezFix/Hanten/releases/latest) в†’ `app-release.apk`
+* **РћР±РЅРѕРІР»РµРЅРёРµ РІРЅСѓС‚СЂРё РїСЂРёР»РѕР¶РµРЅРёСЏ:** `РќР°СЃС‚СЂРѕР№РєРё в†’ Рћ РїСЂРѕРіСЂР°РјРјРµ в†’ РџСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёСЏ` в†’ СЃРєР°С‡Р°С‚СЊ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ (`REQUEST_INSTALL_PACKAGES`). РќРёРєР°РєРѕРіРѕ Discord.
+* F-Droid/IzzyOnDroid вЂ” РїРѕ Р¶РµР»Р°РЅРёСЋ, РЅРѕ РѕСЃРЅРѕРІРЅРѕР№ РєР°РЅР°Р» вЂ” GitHub Releases СЌС‚РѕРіРѕ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ.
 
-### Сборка без Android Studio
+### РЎР±РѕСЂРєР° Р±РµР· Android Studio
 
-#### Требования
+#### РўСЂРµР±РѕРІР°РЅРёСЏ
 
 - **JDK 17** (Temurin 17)
 - **Android SDK** (compileSdk 36, buildTools 35, minSdk 23)
-- **Git** + **Gradle Wrapper** (в репо)
+- **Git** + **Gradle Wrapper** (РІ СЂРµРїРѕ)
 
-> Android Studio **не требуется**. Достаточно командной строки.
+> Android Studio **РЅРµ С‚СЂРµР±СѓРµС‚СЃСЏ**. Р”РѕСЃС‚Р°С‚РѕС‡РЅРѕ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё.
 
-#### Клонирование
+#### РљР»РѕРЅРёСЂРѕРІР°РЅРёРµ
 
 ```bash
 git clone https://github.com/DezFix/Hanten.git
-# или если репо еще называется Futon:
+# РёР»Рё РµСЃР»Рё СЂРµРїРѕ РµС‰Рµ РЅР°Р·С‹РІР°РµС‚СЃСЏ Futon:
 git clone https://github.com/DezFix/Futon.git
 cd Hanten
 ```
 
-#### Варианты сборки
+#### Р’Р°СЂРёР°РЅС‚С‹ СЃР±РѕСЂРєРё
 
 ```bash
-# debug (для разработки)
+# debug (РґР»СЏ СЂР°Р·СЂР°Р±РѕС‚РєРё)
 ./gradlew assembleDebug
 # app/build/outputs/apk/debug/app-debug.apk
 
-# release (нужна подпись)
+# release (РЅСѓР¶РЅР° РїРѕРґРїРёСЃСЊ)
 ./gradlew assembleRelease
 # app/build/outputs/apk/release/app-release.apk
 
-# nightly (версия NYYYYMMDD)
+# nightly (РІРµСЂСЃРёСЏ NYYYYMMDD)
 ./gradlew assembleNightly
 ```
 
-#### Подпись release
+#### РџРѕРґРїРёСЃСЊ release
 
-Через переменные окружения (CI и локально одинаково):
+Р§РµСЂРµР· РїРµСЂРµРјРµРЅРЅС‹Рµ РѕРєСЂСѓР¶РµРЅРёСЏ (CI Рё Р»РѕРєР°Р»СЊРЅРѕ РѕРґРёРЅР°РєРѕРІРѕ):
 
 ```bash
 export KEYSTORE_FILE=/path/to/hanten.jks
@@ -86,9 +86,9 @@ export KEY_PASSWORD=...
 ./gradlew assembleRelease
 ```
 
-Если переменных нет — Gradle спросит интерактивно. В GitHub Actions это секреты `KEYSTORE_FILE` (base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
+Р•СЃР»Рё РїРµСЂРµРјРµРЅРЅС‹С… РЅРµС‚ вЂ” Gradle СЃРїСЂРѕСЃРёС‚ РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕ. Р’ GitHub Actions СЌС‚Рѕ СЃРµРєСЂРµС‚С‹ `KEYSTORE_FILE` (base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
 
-#### Проверки
+#### РџСЂРѕРІРµСЂРєРё
 
 ```bash
 ./gradlew lint
@@ -96,9 +96,9 @@ export KEY_PASSWORD=...
 ./gradlew check
 ```
 
-Подробнее: [CONTRIBUTING.md](./CONTRIBUTING.md), [CI.md](./CI.md), [AGENTS.md](./AGENTS.md).
+РџРѕРґСЂРѕР±РЅРµРµ: [CONTRIBUTING.md](./CONTRIBUTING.md), [CI.md](./CI.md), [AGENTS.md](./AGENTS.md).
 
-### Скриншоты
+### РЎРєСЂРёРЅС€РѕС‚С‹
 
 <div align="center">
     <img src="./metadata/en-US/images/phoneScreenshots/1.png" alt="Mobile view" width="250"/>
@@ -107,48 +107,49 @@ export KEY_PASSWORD=...
     <img src="./metadata/en-US/images/phoneScreenshots/4.png" alt="Mobile view" width="250"/>
 </div>
 
-### Локализация
+### Р›РѕРєР°Р»РёР·Р°С†РёСЏ
 
-Переводы — через Weblate (когда будет настроен для Hanten). Пока правьте `app/src/main/res/values*/strings.xml`.
+РџРµСЂРµРІРѕРґС‹ вЂ” С‡РµСЂРµР· Weblate (РєРѕРіРґР° Р±СѓРґРµС‚ РЅР°СЃС‚СЂРѕРµРЅ РґР»СЏ Hanten). РџРѕРєР° РїСЂР°РІСЊС‚Рµ `app/src/main/res/values*/strings.xml`.
 
-### Участие
+### РЈС‡Р°СЃС‚РёРµ
 
-PR приветствуются. См. [CONTRIBUTING.md](./CONTRIBUTING.md).  
-Источники манги правятся не здесь, а в [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers) (форк `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
+PR РїСЂРёРІРµС‚СЃС‚РІСѓСЋС‚СЃСЏ. РЎРј. [CONTRIBUTING.md](./CONTRIBUTING.md).  
+РСЃС‚РѕС‡РЅРёРєРё РјР°РЅРіРё РїСЂР°РІСЏС‚СЃСЏ РЅРµ Р·РґРµСЃСЊ, Р° РІ [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers) (С„РѕСЂРє `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
 
-### Отпечаток сертификата
+### РћС‚РїРµС‡Р°С‚РѕРє СЃРµСЂС‚РёС„РёРєР°С‚Р°
 
 ```plaintext
-# будет сгенерирован при первом релизе Hanten (см. CI.md)
-# пример: EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
+# Р±СѓРґРµС‚ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅ РїСЂРё РїРµСЂРІРѕРј СЂРµР»РёР·Рµ Hanten (СЃРј. CI.md)
+# РїСЂРёРјРµСЂ: E0:FF:B8:DB:6A:CE:CC:B7:C9:F9:C7:8C:A4:B1:33:A0:E3:88:EC:E4:4C:6C:E1:87:9E:D9:2C:33:F5:76:5D:35
 ```
 
-### Лицензия
+### Р›РёС†РµРЅР·РёСЏ
 
 [![GNU GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
-GPL-3.0 — копируйте и модифицируйте, сохраняя изменения и инструкции по сборке.
+GPL-3.0 вЂ” РєРѕРїРёСЂСѓР№С‚Рµ Рё РјРѕРґРёС„РёС†РёСЂСѓР№С‚Рµ, СЃРѕС…СЂР°РЅСЏСЏ РёР·РјРµРЅРµРЅРёСЏ Рё РёРЅСЃС‚СЂСѓРєС†РёРё РїРѕ СЃР±РѕСЂРєРµ.
 
 ### DMCA
 
-Разработчики не хранят и не распространяют контент. Приложение — как браузер. Все материалы берутся из открытых источников. Запросы DMCA — к владельцам сайтов-источников.
+Р Р°Р·СЂР°Р±РѕС‚С‡РёРєРё РЅРµ С…СЂР°РЅСЏС‚ Рё РЅРµ СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅСЏСЋС‚ РєРѕРЅС‚РµРЅС‚. РџСЂРёР»РѕР¶РµРЅРёРµ вЂ” РєР°Рє Р±СЂР°СѓР·РµСЂ. Р’СЃРµ РјР°С‚РµСЂРёР°Р»С‹ Р±РµСЂСѓС‚СЃСЏ РёР· РѕС‚РєСЂС‹С‚С‹С… РёСЃС‚РѕС‡РЅРёРєРѕРІ. Р—Р°РїСЂРѕСЃС‹ DMCA вЂ” Рє РІР»Р°РґРµР»СЊС†Р°Рј СЃР°Р№С‚РѕРІ-РёСЃС‚РѕС‡РЅРёРєРѕРІ.
 
 ---
 
-### Благодарности
+### Р‘Р»Р°РіРѕРґР°СЂРЅРѕСЃС‚Рё
 
 <div align="left">
 
-**Hanten стоит на плечах [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon).**
+**Hanten СЃС‚РѕРёС‚ РЅР° РїР»РµС‡Р°С… [Kotatsu](https://github.com/KotatsuApp/Kotatsu) Рё [Futon](https://github.com/AppFuton/Futon).**
 
-Спасибо:
+РЎРїР°СЃРёР±Рѕ:
 
-* Команде Kotatsu за оригинальный ридер
-* Команде Futon за продолжение проекта
-* Сообществам Kotatsu/Futon за тесты и переводы
-* [Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo) за парсеры
-* [Kototoro](https://github.com/Kototoro-app/Kototoro) за интеграцию расширений
+* РљРѕРјР°РЅРґРµ Kotatsu Р·Р° РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ СЂРёРґРµСЂ
+* РљРѕРјР°РЅРґРµ Futon Р·Р° РїСЂРѕРґРѕР»Р¶РµРЅРёРµ РїСЂРѕРµРєС‚Р°
+* РЎРѕРѕР±С‰РµСЃС‚РІР°Рј Kotatsu/Futon Р·Р° С‚РµСЃС‚С‹ Рё РїРµСЂРµРІРѕРґС‹
+* [Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo) Р·Р° РїР°СЂСЃРµСЂС‹
+* [Kototoro](https://github.com/Kototoro-app/Kototoro) Р·Р° РёРЅС‚РµРіСЂР°С†РёСЋ СЂР°СЃС€РёСЂРµРЅРёР№
 
-Оригиналы: [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) • [KotatsuApp/kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers) • [AppFuton/Futon](https://github.com/AppFuton/Futon) • [AppFuton/futon-parsers](https://github.com/AppFuton/futon-parsers)
+РћСЂРёРіРёРЅР°Р»С‹: [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) вЂў [KotatsuApp/kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers) вЂў [AppFuton/Futon](https://github.com/AppFuton/Futon) вЂў [AppFuton/futon-parsers](https://github.com/AppFuton/futon-parsers)
 
 </div>
+
