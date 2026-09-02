@@ -29,8 +29,8 @@ android {
 		applicationId 'hanten.wre.app'
 		minSdk = 23
 		targetSdk = 36
-		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 10000
-        versionName project.hasProperty('versionName') ? project.property('versionName') : '1.0.0'
+		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 10001
+        versionName project.hasProperty('versionName') ? project.property('versionName') : '1.0.1'
         generatedDensities = []
 		testInstrumentationRunner 'hanten.wre.app.HiltTestRunner'
 		ksp {
@@ -280,3 +280,4 @@ sentry {
 	includeDependenciesReport = false
 	telemetry = false
 }
+
