@@ -293,8 +293,6 @@ class AppRouter private constructor(
         startActivity(sourcesSettingsIntent(contextOrNull() ?: return))
     }
 
-    }
-
     fun openReaderTapGridSettings() = startActivity(ReaderTapGridConfigActivity::class.java)
 
     fun openScrobblerSettings(scrobbler: ScrobblerService) {

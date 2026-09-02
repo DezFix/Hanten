@@ -74,10 +74,6 @@ class SettingsSearchHelper @Inject constructor(
         )
         preferenceManager.inflateTo(
             result,
-            listOf(context.getString(R.string.services)),
-        )
-        preferenceManager.inflateTo(
-            result,
             R.xml.pref_sources,
             listOf(),
             SourcesSettingsFragment::class.java,
