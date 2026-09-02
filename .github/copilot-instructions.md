@@ -1,4 +1,4 @@
-# AI Coding Agent Instructions (Hanten — fork of Kotatsu and Futon)
+﻿# AI Coding Agent Instructions (Hanten вЂ” fork of Kotatsu and Futon)
 
 > **Hanten** (`hanten.wre.app`) is a fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon).
 
@@ -9,14 +9,14 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - DI: Hilt (`@HiltAndroidApp` in `BaseApp`), bindings/providers in `AppModule`.
 - Data: Room `MangaDatabase` with `InvalidationTracker` observers; WorkManager used for background tasks.
 - Networking & images: OkHttp client with custom interceptors; Coil v3 configured with SVG/GIF/AVIF decoders, CBZ fetcher, cache sizes.
-- External sources: Manga parsers via `com.github.DezFix:futon-parsers:$parsersVersion` (JitPack, fork of `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
+- External sources: Manga parsers via `com.github.DezFix:hanten-parsers:$parsersVersion` (JitPack, fork of `AppFuton/hanten-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
 
 ## Build & Variants
 - Variants: `debug`, `release`, `nightly` (inherits `release`). Nightly auto-sets version to `NyyyyMMdd` and date-based `versionCode`.
 - Commands:
-  - `./gradlew assembleDebug` → debug APK.
-  - `./gradlew assembleRelease` → signed release APK (requires keystore env vars).
-  - `./gradlew assembleNightly` → signed nightly APK.
+  - `./gradlew assembleDebug` в†’ debug APK.
+  - `./gradlew assembleRelease` в†’ signed release APK (requires keystore env vars).
+  - `./gradlew assembleNightly` в†’ signed nightly APK.
 - Tests:
   - Unit: `./gradlew test` (Android resources enabled).
   - Instrumented: `./gradlew connectedAndroidTest` (runner `hanten.wre.app.HiltTestRunner`).
@@ -24,7 +24,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 
 ## CI/CD & Signing
 - GitHub Actions:
-  - Tag `v*` → release build to GitHub Releases.
+  - Tag `v*` в†’ release build to GitHub Releases.
   - Weekly `nightly` with smart skip when no new commits.
   - PRs build `debug` and attach APK artifacts.
 - Required secrets: `KEYSTORE_FILE` (base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
@@ -39,10 +39,10 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
   - Feature packages: `reader/`, `details/`, `main/`, `search/`, `download/`, `local/`, `favourites/`, `history/`, `bookmarks/`, `scrobbling/`, `sync/`, `widget/`, etc.
 
 ## Parsers Dependency (Project-Specific)
-- Uses JitPack `futon-parsers` with version from `libs.versions.toml`.
+- Uses JitPack `hanten-parsers` with version from `libs.versions.toml`.
 - Override for testing:
   - `./gradlew assembleDebug -DparsersVersionOverride=<short-sha>`
-  - Example: `curl -s https://api.github.com/repos/appfuton/futon-parsers/commits/master -H "Accept: application/vnd.github.sha" | cut -c -10`.
+  - Example: `curl -s https://api.github.com/repos/appfuton/hanten-parsers/commits/master -H "Accept: application/vnd.github.sha" | cut -c -10`.
 - Interceptors add parser headers; captcha handling wired to Coil event listener.
 
 ## Conventions
@@ -52,7 +52,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - Debug-only tooling: LeakCanary and WorkInspector active in `debug`/`nightly`.
 
 ## Integration & Deep Links
-- Manifest defines many deep links (`DetailsActivity`, `ReaderActivity`, etc.) and app-specific schemes (`hanten://…` + legacy `futon://…`); validate flows when changing intents.
+- Manifest defines many deep links (`DetailsActivity`, `ReaderActivity`, etc.) and app-specific schemes (`hanten://вЂ¦` + legacy `futon://вЂ¦`); validate flows when changing intents.
 - Network security config and locale config present; keep them consistent when adding features requiring webviews or language-specific behavior.
 
 ## Examples & Tips
@@ -60,5 +60,6 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - New feature module: follow package-per-feature structure; inject services via Hilt; use `viewBinding` and adapter-delegates for lists.
 - Image pipelines: prefer Coil components configured in `AppModule`; avoid custom caches unless justified.
 
-—
-If any of the above seems off or incomplete (e.g., missing build lanes or undocumented modules), please leave notes and we’ll refine these instructions.
+вЂ”
+If any of the above seems off or incomplete (e.g., missing build lanes or undocumented modules), please leave notes and weвЂ™ll refine these instructions.
+

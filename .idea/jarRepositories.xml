@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
@@ -39,7 +39,7 @@
     <remote-repository>
       <option name="id" value="maven2" />
       <option name="name" value="maven2" />
-      <option name="url" value="https://maven.pkg.github.com/AppHanten/futon-parsers" />
+      <option name="url" value="https://maven.pkg.github.com/AppHanten/hanten-parsers" />
     </remote-repository>
   </component>
 </project>

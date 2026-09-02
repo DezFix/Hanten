@@ -17,7 +17,7 @@
 
 <div align="left">
 
-* РљР°С‚Р°Р»РѕРіРё РёР· [kotatsu-parsers](https://github.com/DezFix/futon-parsers) (1200+ РёСЃС‚РѕС‡РЅРёРєРѕРІ) + РїРѕРґРґРµСЂР¶РєР° СЂР°СЃС€РёСЂРµРЅРёР№ [Tachiyomi/keiyoushi](https://github.com/keiyoushi/extensions)
+* РљР°С‚Р°Р»РѕРіРё РёР· [kotatsu-parsers](https://github.com/DezFix/hanten-parsers) (1200+ РёСЃС‚РѕС‡РЅРёРєРѕРІ) + РїРѕРґРґРµСЂР¶РєР° СЂР°СЃС€РёСЂРµРЅРёР№ [Tachiyomi/keiyoushi](https://github.com/keiyoushi/extensions)
 * РџРѕРёСЃРє РїРѕ РЅР°Р·РІР°РЅРёСЋ, Р¶Р°РЅСЂР°Рј Рё С„РёР»СЊС‚СЂР°Рј
 * РР·Р±СЂР°РЅРЅРѕРµ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёРјРё РєР°С‚РµРіРѕСЂРёСЏРјРё
 * РСЃС‚РѕСЂРёСЏ, Р·Р°РєР»Р°РґРєРё, СЂРµР¶РёРј РёРЅРєРѕРіРЅРёС‚Рѕ
@@ -114,7 +114,7 @@ export KEY_PASSWORD=...
 ### РЈС‡Р°СЃС‚РёРµ
 
 PR РїСЂРёРІРµС‚СЃС‚РІСѓСЋС‚СЃСЏ. РЎРј. [CONTRIBUTING.md](./CONTRIBUTING.md).  
-РСЃС‚РѕС‡РЅРёРєРё РјР°РЅРіРё РїСЂР°РІСЏС‚СЃСЏ РЅРµ Р·РґРµСЃСЊ, Р° РІ [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers) (С„РѕСЂРє `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
+РСЃС‚РѕС‡РЅРёРєРё РјР°РЅРіРё РїСЂР°РІСЏС‚СЃСЏ РЅРµ Р·РґРµСЃСЊ, Р° РІ [DezFix/hanten-parsers](https://github.com/DezFix/hanten-parsers) (С„РѕСЂРє `AppFuton/hanten-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
 
 ### РћС‚РїРµС‡Р°С‚РѕРє СЃРµСЂС‚РёС„РёРєР°С‚Р°
 
@@ -149,7 +149,8 @@ GPL-3.0 вЂ” РєРѕРїРёСЂСѓР№С‚Рµ Рё РјРѕРґРёС�
 * [Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo) Р·Р° РїР°СЂСЃРµСЂС‹
 * [Kototoro](https://github.com/Kototoro-app/Kototoro) Р·Р° РёРЅС‚РµРіСЂР°С†РёСЋ СЂР°СЃС€РёСЂРµРЅРёР№
 
-РћСЂРёРіРёРЅР°Р»С‹: [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) вЂў [KotatsuApp/kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers) вЂў [AppFuton/Futon](https://github.com/AppFuton/Futon) вЂў [AppFuton/futon-parsers](https://github.com/AppFuton/futon-parsers)
+РћСЂРёРіРёРЅР°Р»С‹: [KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu) вЂў [KotatsuApp/kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers) вЂў [AppFuton/Futon](https://github.com/AppFuton/Futon) вЂў [AppFuton/hanten-parsers](https://github.com/AppFuton/hanten-parsers)
 
 </div>
+
 
