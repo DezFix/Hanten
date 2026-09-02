@@ -1,4 +1,4 @@
-﻿## Hanten contribution guidelines
+## Hanten contribution guidelines
 
 > **Hanten** вЂ” С„РѕСЂРє [Kotatsu](https://github.com/KotatsuApp/Kotatsu) Рё [Futon](https://github.com/AppFuton/Futon), РїР°РєРµС‚ `hanten.wre.app`. Р Р°Р·РІРёРІР°РµС‚СЃСЏ РЅР° GitHub Р±РµР· Discord.
 

@@ -1,4 +1,4 @@
-﻿import java.time.LocalDateTime
+import java.time.LocalDateTime
 
 plugins {
 	id 'com.android.application'

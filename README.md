@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Hanten вЂ” СЃРІРѕР±РѕРґРЅР°СЏ С‡РёС‚Р°Р»РєР° РјР°РЅРіРё РґР»СЏ Android
 

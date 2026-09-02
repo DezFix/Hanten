@@ -1,4 +1,4 @@
-﻿# CI/CD Setup Guide
+# CI/CD Setup Guide
 
 This document describes the automated build and release process for Hanten (`hanten.wre.app`) вЂ” fork of Kotatsu/Futon.
 

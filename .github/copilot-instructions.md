@@ -1,4 +1,4 @@
-﻿# AI Coding Agent Instructions (Hanten вЂ” fork of Kotatsu and Futon)
+# AI Coding Agent Instructions (Hanten вЂ” fork of Kotatsu and Futon)
 
 > **Hanten** (`hanten.wre.app`) is a fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon).
 

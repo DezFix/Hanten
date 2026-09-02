@@ -1,4 +1,4 @@
-﻿Hanten is a free and open source manga reader for Android. Fork of Kotatsu (KotatsuApp/Kotatsu) and Futon (AppFuton/Futon), package hanten.wre.app.
+Hanten is a free and open source manga reader for Android. Fork of Kotatsu (KotatsuApp/Kotatsu) and Futon (AppFuton/Futon), package hanten.wre.app.
 
 <strong>Main Features:</strong>
 

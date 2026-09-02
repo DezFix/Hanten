@@ -1,4 +1,4 @@
-﻿# Hanten - Agent Development Guide
+# Hanten - Agent Development Guide
 
 **Project:** Hanten (`hanten.wre.app`) вЂ” fork of [Kotatsu](https://github.com/KotatsuApp/Kotatsu) and [Futon](https://github.com/AppFuton/Futon) - Free and open-source manga reader for Android  
 **Fork of:** [Kotatsu](https://github.com/KotatsuApp/Kotatsu)  
