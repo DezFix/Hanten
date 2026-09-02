@@ -1,4 +1,4 @@
-name: Release Build
+﻿name: Release Build
 
 on:
   push:
@@ -78,12 +78,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        env:
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Build started for ${{ github.ref_name }}" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -95,12 +89,6 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-        env:
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Environment setup complete (Java 17, Android SDK)" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
 
       - name: Get version from tag
         id: version
@@ -118,12 +106,6 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > keystore.jks
 
-        env:
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Keystore decoded" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
-
       - name: Build release APK
         env:
           KEYSTORE_FILE: ${{ github.workspace }}/keystore.jks
@@ -138,17 +120,11 @@ jobs:
             -PversionCode=${{ steps.version.outputs.version_code }} \
             --no-build-cache --no-configuration-cache
 
-        env:
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Release APK build complete" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
-
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: Futon ${{ steps.version.outputs.version }}
+          name: Hanten ${{ steps.version.outputs.version }}
           draft: false
           prerelease: false
           files: |
@@ -156,20 +132,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        env:
-          RELEASE_URL: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Release published: ${{ github.ref_name }}\n$RELEASE_URL" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
-
       - name: Clean up keystore
         if: always()
         run: rm -f keystore.jks
 
-        if: failure()
-        env:
-        run: |
-          if [ -z "$WEBHOOK" ]; then exit 0; fi
-          payload=$(jq -n --arg content "Build failed for ${{ github.ref_name }}\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" '{content: $content}')
-          curl -s -H "Content-Type: application/json" -d "$payload" "$WEBHOOK" || true
