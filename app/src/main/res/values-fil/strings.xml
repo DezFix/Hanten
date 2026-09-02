@@ -835,12 +835,10 @@
     <string name="rpc_skip_nsfw_summary">Huwag gamitin ang RPC para sa pangmatandang content</string>
     <string name="read_on_s">Basahin sa %s</string>
     <string name="reading_s">Binabasa ng %s</string>
-    <string name="discord_rpc_description">Bumamasa ng manga sa Hanten - isang manga reader app</string>
     <string name="obtain">Kumuha</string>
-    <string name="discord_rpc_summary">Ipakita ng status ng pagbabasa sa Discord</string>
-    <string name="discord_token_hint">I-paste ang Discord Token dito</string>
-    <string name="discord_token_description">Ilagay ang iyong Discord Token o i-click ang %s para makuha ito gamit ang browser</string>
-    <string name="discord_token_summary">Ilagay ang iyong Discord Token para mapagana ang Rich Presence</string>
+
+
+
     <string name="error_corrupted_zip">Na-corrupt na ZIP archive (%s)</string>
     <string name="main_screen_fab_summary">Pinapayagan na magpatuloy sa pagbabasa sa isang click. Ang button na ito ay hindi lilitaw sa incognito na mode o kung walang laman ang kasaysayan</string>
     <string name="main_screen_fab">Ipakita ang lumulutang na Magpatuloy na button</string>
@@ -861,4 +859,191 @@
     <string name="enter_name">Ipasok ang pangalan</string>
     <string name="reader_chapter_toast">Ipakita ang popup sa pagpalit ng kabanata</string>
     <string name="reader_chapter_toast_summary">Magpakita ng pop-up na mensahe na may pamagat ng kabanata kapag binago ito</string>
+<string name="app_name" translatable="false">Hanten</string>
+    
+<string name="merge_with_existing_data">Merge with existing data</string>
+    
+<string name="manga">Manga</string>
+    
+<string name="queue_all_unread_from_favorites">Download unread from favorites</string>
+    
+<string name="github_download_warning">Downloading from GitHub will bypass security checks performed by IzzyOnDroid and Fdroid.</string>
+    
+<string name="pinned_sources_only">Pinned sources only</string>
+    
+<string name="hide_empty_sources">Hide empty sources</string>
+    
+<string name="shikimori" translatable="false">Shikimori</string>
+    
+<string name="anilist" translatable="false">AniList</string>
+    
+<string name="download_queue">Download queue</string>
+    
+<string name="clear_queue">Clear queue</string>
+    
+<string name="download_summary_pattern" translatable="false">%1$s · %2$s</string>
+    
+<string name="mal" translatable="false">MyAnimeList</string>
+    
+<string name="theme_name_expressive">Expressive (Test)</string>
+    
+<string name="downloads_charging_only">Download only when charging</string>
+    
+<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
+    
+<string name="remove_downloads_confirm">Remove selected downloads?</string>
+    
+<string name="delete_downloaded_files">Also delete downloaded files from storage</string>
+    
+<string name="delete_chapter">Delete chapter</string>
+    
+<string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
+    
+<string name="kitsu" translatable="false">Kitsu</string>
+    
+<string name="frequency_every_6_hours">Every 6 hours</string>
+    
+<string name="extensions_manager">Extensions manager</string>
+    
+<string name="extensions_manager_summary">Manage, install and uninstall extensions from repositories</string>
+    
+<string name="extension_repos_header">Repositories</string>
+    
+<string name="add_extension_repo">Add</string>
+    
+<string name="add_extension_repo_hint">Repository URL</string>
+    
+<string name="extension_repo_add_success">Repository added</string>
+    
+<string name="extension_repo_remove_confirm">Remove %s?</string>
+    
+<string name="extension_repos_empty">No repositories added. Add a repository URL above to browse extensions.</string>
+    
+<string name="installed_extensions_header">Installed</string>
+    
+<string name="available_extensions_header">Available</string>
+    
+<string name="invalid_repo_url">Invalid repository URL</string>
+    
+<string name="repo_already_exists">Repository already exists</string>
+    
+<string name="failed_to_add_repo">Failed to add repository: %s</string>
+    
+<string name="auto_double_foldable">Auto Two-Page On Foldable</string>
+    
+<string name="two_page_scroll_sensitivity">Two-Page Scroll Sensitivity</string>
+    
+<string name="fraction_pattern" translatable="false">%1$d/%2$d</string>
+    
+<string name="list_ellipsize_pattern" translatable="false">(+%d)</string>
+    
+    
+<string name="inline_preference_pattern" translatable="false">%1$s: %2$s</string>
+    
+<string name="breadcrumbs_separator" translatable="false">" &gt; "</string>
+    
+<string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+    
+<string name="theme_name_itsuka">Itsuka</string>
+    
+<string name="theme_name_totoro">Totoro</string>
+    
+<string name="telegram_integration">Telegram integration</string>
+    
+<string name="test_parser">Test manga source</string>
+    
+<string name="rename">Rename</string>
+    
+<string name="save_filter">Save filter</string>
+    
+<string name="overwrite">Overwrite</string>
+    
+<string name="filter_overwrite_confirm">A filter named \"%s\" already exists. Do you want to overwrite it?</string>
+    
+<string name="storage_and_network">Storage and network</string>
+    
+<string name="create_or_restore_backup">Create or restore a backup</string>
+    
+<string name="data_removal">Data removal</string>
+    
+<string name="privacy">Privacy</string>
+    
+<string name="source_broken_warning">This manga source has been marked as broken. Some features may not work</string>
+    
+<string name="download_default_directory">Default directory for downloading manga</string>
+    
+<string name="private_app_directory_warning">This directory with all data will be deleted if you uninstall the application</string>
+    
+<string name="available_pattern">%1$s available</string>
+    
+<string name="crash_reporting">Crash Reporting</string>
+    
+<string name="crash_reporting_summary">Send anonymous crash logs to help improve the app. Takes effect after restart.</string>
+    
+<string name="github_mirror_title">GitHub mirror</string>
+    
+<string name="github_mirror_native">Native</string>
+    
+<string name="github_mirror_keiyoushi">Keiyoushi</string>
+    
+<string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    
+<string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    
+<string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    
+<string name="enable_source_manga">Enable manga source</string>
+    
+<string name="domain_manga">Manga source domain</string>
+    
+<string name="download_option_whole_manga_manga">Whole manga</string>
+    
+<string name="recommendation_manga">recommended manga</string>
+    
+<string name="installed">Installed</string>
+    
+<string name="install">Install</string>
+    
+<string name="uninstall">Uninstall</string>
+    
+<string name="tags_blacklist">Blacklisted tags</string>
+    
+<string name="tags_blacklist_summary">Exclude manga containing these tags from lists and search results</string>
+    
+<string name="download_scheduling_and_limits">Download scheduling and limits</string>
+    
+<string name="download_off_peak">Off-peak downloads</string>
+    
+<string name="download_off_peak_summary">Download only during specified hours</string>
+    
+<string name="download_off_peak_start">Start time</string>
+    
+<string name="download_off_peak_end">End time</string>
+    
+<string name="download_storage_quota">Storage quota (MB)</string>
+    
+<string name="download_storage_quota_summary">Limit total download size. 0 for unlimited. Current oldest chapters will be deleted if exceeded.</string>
+    
+<string name="smart_downloads">Smart Downloads</string>
+    
+<string name="smart_downloads_summary">Automatically download next chapters and delete read ones</string>
+    
+<string name="download_off_peak_start_description">When downloads can start</string>
+    
+<string name="download_off_peak_end_description">When downloads must stop</string>
+    
+<string name="rescan">Rescan</string>
+    
+<string name="rescan_completed">Rescan completed</string>
+    
+<string name="rescan_started">Rescan started</string>
+    
+<string name="directory_inaccessible">This directory is inaccessible. Please check permissions or re-add it.</string>
+    
+<string name="download_only_on_charging_summary">Connect to a power source to start downloads</string>
+    
+<string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
+    
+<string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
+
 </resources>

@@ -31,7 +31,6 @@ import hanten.wre.app.core.util.ext.textAndVisible
 import hanten.wre.app.databinding.ActivitySettingsBinding
 import hanten.wre.app.main.ui.owners.AppBarOwner
 import hanten.wre.app.settings.about.AboutSettingsFragment
-import hanten.wre.app.settings.discord.DiscordSettingsFragment
 import hanten.wre.app.settings.search.SettingsItem
 import hanten.wre.app.settings.search.SettingsSearchFragment
 import hanten.wre.app.settings.search.SettingsSearchViewModel
@@ -150,7 +149,6 @@ class SettingsActivity :
 			AppRouter.ACTION_TRACKER -> TrackerSettingsFragment()
 			AppRouter.ACTION_PERIODIC_BACKUP -> PeriodicalBackupSettingsFragment()
 			AppRouter.ACTION_SOURCES -> SourcesSettingsFragment()
-			AppRouter.ACTION_MANAGE_DISCORD -> DiscordSettingsFragment()
 			AppRouter.ACTION_PROXY -> ProxySettingsFragment()
 			AppRouter.ACTION_MANAGE_DOWNLOADS -> DownloadsSettingsFragment()
 			AppRouter.ACTION_SOURCE -> SourceSettingsFragment.newInstance(

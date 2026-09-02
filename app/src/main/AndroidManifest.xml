@@ -374,11 +374,7 @@
 				<data android:mimeType="image/*" />
 			</intent-filter>
 		</activity>
-		<activity
-			android:name="hanten.wre.app.scrobbling.discord.ui.DiscordAuthActivity"
-			android:label="@string/discord" />
-
-		<service
+<service
 			android:name="androidx.work.impl.foreground.SystemForegroundService"
 			android:foregroundServiceType="dataSync"
 			tools:node="merge" />

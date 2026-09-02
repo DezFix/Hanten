@@ -463,7 +463,6 @@ class ExtensionRepoService @Inject constructor(
 	@Serializable
 	private data class ContactDto(
 		@ProtoNumber(1) val website: String = "",
-		@ProtoNumber(2) val discord: String? = null,
 	)
 
 	@Keep

@@ -44,7 +44,6 @@ import hanten.wre.app.reader.domain.DetectReaderModeUseCase
 import hanten.wre.app.reader.domain.PageLoader
 import hanten.wre.app.reader.ui.config.ReaderSettings
 import hanten.wre.app.reader.ui.pager.ReaderUiState
-import hanten.wre.app.scrobbling.discord.ui.DiscordRpc
 import hanten.wre.app.stats.domain.StatsCollector
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -92,8 +91,7 @@ class ReaderViewModel @Inject constructor(
     private val historyUpdateUseCase: HistoryUpdateUseCase,
     private val detectReaderModeUseCase: DetectReaderModeUseCase,
     private val progressUpdateUseCase: ProgressUpdateUseCase,
-    private val statsCollector: StatsCollector,
-    private val discordRpc: DiscordRpc,
+    private val statsCollector: StatsCollector
     @LocalStorageChanges localStorageChanges: SharedFlow<LocalManga?>,
     interactor: DetailsInteractor,
     deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
@@ -232,11 +230,9 @@ class ReaderViewModel @Inject constructor(
     }
 
     fun onStop() {
-        discordRpc.clearRpc()
     }
 
     fun onIdle() {
-        discordRpc.setIdle()
     }
 
     fun switchMode(newMode: ReaderMode) {
@@ -580,7 +576,6 @@ class ReaderViewModel @Inject constructor(
         uiState.value = newState
         if (isIncognitoMode.value == false) {
             statsCollector.onStateChanged(m.id, state)
-            discordRpc.updateRpc(m.toManga(), newState)
         }
     }
 

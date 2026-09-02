@@ -14,4 +14,4 @@ Hanten is a free and open source manga reader for Android. Fork of Kotatsu (Kota
 - Password/fingerprint protection
 - Auto-sync
 - Android 6.0+
-- Direct in-app updates from GitHub Releases (no store, no Discord)
+- Direct in-app updates from GitHub Releases (no store, no Hanten)

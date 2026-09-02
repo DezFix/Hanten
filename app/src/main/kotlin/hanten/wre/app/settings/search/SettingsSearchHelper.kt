@@ -19,7 +19,6 @@ import hanten.wre.app.settings.ServicesSettingsFragment
 import hanten.wre.app.settings.StorageAndNetworkSettingsFragment
 import hanten.wre.app.settings.SuggestionsSettingsFragment
 import hanten.wre.app.settings.about.AboutSettingsFragment
-import hanten.wre.app.settings.discord.DiscordSettingsFragment
 import hanten.wre.app.settings.sources.SourcesSettingsFragment
 import hanten.wre.app.settings.tracker.TrackerSettingsFragment
 import hanten.wre.app.settings.userdata.BackupsSettingsFragment
@@ -75,9 +74,7 @@ class SettingsSearchHelper @Inject constructor(
         )
         preferenceManager.inflateTo(
             result,
-            R.xml.pref_discord,
             listOf(context.getString(R.string.services)),
-            DiscordSettingsFragment::class.java,
         )
         preferenceManager.inflateTo(
             result,

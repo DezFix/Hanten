@@ -68,16 +68,7 @@
 			app:icon="@drawable/ic_shikimori" />
 
 	</PreferenceCategory>
-
-	<Preference
-		android:fragment="hanten.wre.app.settings.discord.DiscordSettingsFragment"
-		android:key="discord_rpc"
-		android:summary="@string/discord_rpc_summary"
-		android:title="@string/discord_rpc"
-		app:allowDividerAbove="true"
-		app:icon="@drawable/ic_discord" />
-
-	<SwitchPreferenceCompat
+<SwitchPreferenceCompat
 		android:defaultValue="false"
 		android:key="crash_analytics_enabled"
 		android:summary="@string/crash_reporting_summary"

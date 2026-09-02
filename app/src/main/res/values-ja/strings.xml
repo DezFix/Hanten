@@ -750,14 +750,12 @@
     <string name="main_screen_fab">フローティングの「続行」ボタンを表示</string>
     <string name="main_screen_fab_summary">ワンクリックで読み続けられます。このボタンはシークレットモード時や履歴が空の時には表示されません</string>
     <string name="error_corrupted_zip">破損したZIPアーカイブ(%s)</string>
-    <string name="discord_rpc">Discord リッチプレゼンス</string>
-    <string name="discord_token">Discordトークン</string>
-    <string name="discord_token_summary">リッチプレゼンスを有効にするには、Discordトークンを入力してください</string>
-    <string name="discord_token_description">Discord トークンを入力するか、%s をクリックしてブラウザーで取得します</string>
-    <string name="discord_token_hint">ここにDiscordトークンを貼り付けてください</string>
-    <string name="discord_rpc_summary">Discordで読み取りステータスを表示</string>
+
+
+
+
+
     <string name="obtain">アクセス</string>
-    <string name="discord_rpc_description">Hantenで漫画を読む - 漫画リーダーアプリ</string>
     <string name="reading_s">読書 %s</string>
     <string name="read_on_s">%s で読む</string>
     <string name="rpc_skip_nsfw_summary">成人向けコンテンツに RPC を使用しないでください</string>
@@ -813,4 +811,286 @@
     <string name="pin">ピン</string>
     <string name="unpin">ピンを外す</string>
     <string name="source_pinned">ソース ピン留め</string>
+<string name="app_name" translatable="false">Hanten</string>
+    
+<string name="merge_with_existing_data">Merge with existing data</string>
+    
+<string name="manga">Manga</string>
+    
+<string name="queue_all_unread_from_favorites">Download unread from favorites</string>
+    
+<string name="github_download_warning">Downloading from GitHub will bypass security checks performed by IzzyOnDroid and Fdroid.</string>
+    
+<string name="pinned_sources_only">Pinned sources only</string>
+    
+<string name="hide_empty_sources">Hide empty sources</string>
+    
+<string name="shikimori" translatable="false">Shikimori</string>
+    
+<string name="anilist" translatable="false">AniList</string>
+    
+<string name="download_queue">Download queue</string>
+    
+<string name="clear_queue">Clear queue</string>
+    
+<string name="download_summary_pattern" translatable="false">%1$s · %2$s</string>
+    
+<string name="mal" translatable="false">MyAnimeList</string>
+    
+<string name="downloads_charging_only">Download only when charging</string>
+    
+<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
+    
+<string name="remove_downloads_confirm">Remove selected downloads?</string>
+    
+<string name="delete_downloaded_files">Also delete downloaded files from storage</string>
+    
+<string name="delete_chapter">Delete chapter</string>
+    
+<string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
+    
+<string name="kitsu" translatable="false">Kitsu</string>
+    
+<string name="source_summary_pattern" translatable="false">%1$s, %2$s</string>
+    
+<string name="extensions_manager">Extensions manager</string>
+    
+<string name="extensions_manager_summary">Manage, install and uninstall extensions from repositories</string>
+    
+<string name="extension_repos_header">Repositories</string>
+    
+<string name="add_extension_repo">Add</string>
+    
+<string name="add_extension_repo_hint">Repository URL</string>
+    
+<string name="extension_repo_add_success">Repository added</string>
+    
+<string name="extension_repo_remove_confirm">Remove %s?</string>
+    
+<string name="extension_repos_empty">No repositories added. Add a repository URL above to browse extensions.</string>
+    
+<string name="installed_extensions_header">Installed</string>
+    
+<string name="available_extensions_header">Available</string>
+    
+<string name="invalid_repo_url">Invalid repository URL</string>
+    
+<string name="repo_already_exists">Repository already exists</string>
+    
+<string name="failed_to_add_repo">Failed to add repository: %s</string>
+    
+<string name="remaining_time_pattern" translatable="false">%1$s %2$s</string>
+    
+<string name="auto_double_foldable">Auto Two-Page On Foldable</string>
+    
+<string name="fraction_pattern" translatable="false">%1$d/%2$d</string>
+    
+<string name="list_ellipsize_pattern" translatable="false">(+%d)</string>
+    
+    
+<string name="new_chapters_pattern" translatable="false">%1$s: %2$d</string>
+    
+<string name="inline_preference_pattern" translatable="false">%1$s: %2$s</string>
+    
+<string name="source_unpinned">Source unpinned</string>
+    
+<string name="sources_unpinned">Sources unpinned</string>
+    
+<string name="sources_pinned">Sources pinned</string>
+    
+<string name="recent_sources">Recent sources</string>
+    
+<string name="percent_left">Percent left</string>
+    
+<string name="chapters_read">Chapters read</string>
+    
+<string name="chapters_left">Chapters left</string>
+    
+<string name="external_source">External/plugin</string>
+    
+<string name="show_quick_filters_summary">Provides the ability to filter manga lists by certain parameters</string>
+    
+<string name="stuck">Stuck</string>
+    
+<string name="not_in_favorites">Not in favorites</string>
+    
+<string name="manga_with_downloaded_chapters">Manga with downloaded chapters</string>
+    
+<string name="popular_in_hour">Popular this hour</string>
+    
+<string name="popular_today">Popular today</string>
+    
+<string name="popular_in_week">Popular this week</string>
+    
+<string name="popular_in_month">Popular this month</string>
+    
+<string name="popular_in_year">Popular this year</string>
+    
+<string name="original_language">Original language</string>
+    
+<string name="year">Year</string>
+    
+<string name="demographics">Demographics</string>
+    
+<string name="years">Years</string>
+    
+<string name="any">Any</string>
+    
+<string name="demographic_kodomo">Kodomo</string>
+    
+<string name="content_type_one_shot">One shot</string>
+    
+<string name="content_type_image_set">Image set</string>
+    
+<string name="content_type_artist_cg">Artist CG</string>
+    
+<string name="content_type_game_cg">Game CG</string>
+    
+<string name="telegram_group">Telegram group</string>
+    
+<string name="more_options">More options</string>
+    
+<string name="destination_directory">Destination directory</string>
+    
+<string name="chapters_all">All</string>
+    
+<string name="download_over_cellular">Downloading over cellular network</string>
+    
+<string name="download_cellular_confirm">Allow downloads over cellular network?</string>
+    
+<string name="dont_allow">Don\'t allow</string>
+    
+<string name="allow_always">Allow always</string>
+    
+<string name="allow_once">Allow once</string>
+    
+<string name="breadcrumbs_separator" translatable="false">" &gt; "</string>
+    
+<string name="access_denied_403">Access denied (403)</string>
+    
+<string name="max_backups_count">Max number of backups</string>
+    
+<string name="delete_old_backups">Delete old backups</string>
+    
+<string name="delete_old_backups_summary">Automatically delete old backup files to save storage space</string>
+    
+<string name="handle_links">Handle links</string>
+    
+<string name="handle_links_summary">Handle manga links from external applications (e.g. web browser). You may also need to enable it manually in the application\'s system settings</string>
+    
+<string name="email">Email</string>
+    
+<string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+    
+<string name="show_slider">Show slider</string>
+    
+    
+<string name="incognito">Incognito</string>
+    
+<string name="error_connection_reset">Connection reset by remote host</string>
+    
+<string name="backup_tg_check">Check if API works</string>
+    
+<string name="backup_tg_echo">Test message</string>
+    
+<string name="backup_tg_id_not_set">Chat ID is not set</string>
+    
+<string name="telegram_chat_id">Telegram chat ID</string>
+    
+<string name="reader_chapter_toast">Show chapter change popup</string>
+    
+<string name="reader_chapter_toast_summary">Show a pop-up message with a chapter title when it is changed</string>
+    
+<string name="reader_info_bar_transparent">Transparent reader information bar</string>
+    
+<string name="backup_restored_background">The backup will be restored in the background</string>
+    
+<string name="restoring_backup">Restoring backup</string>
+    
+<string name="reader_controls_in_bottom_bar">Reader controls in bottom bar</string>
+    
+<string name="chapters_and_pages">Chapters and pages</string>
+    
+<string name="pages_slider">Page switch slider</string>
+    
+<string name="screen_rotation_locked">Screen rotation has been locked</string>
+    
+<string name="screen_rotation_unlocked">Screen rotation has been unlocked</string>
+    
+<string name="badges_in_lists">Badges in lists</string>
+    
+<string name="search_everywhere">Search everywhere</string>
+    
+<string name="simple">Simple</string>
+    
+<string name="crash_reporting">Crash Reporting</string>
+    
+<string name="crash_reporting_summary">Send anonymous crash logs to help improve the app. Takes effect after restart.</string>
+    
+<string name="github_mirror_title">GitHub mirror</string>
+    
+<string name="github_mirror_native">Native</string>
+    
+<string name="github_mirror_keiyoushi">Keiyoushi</string>
+    
+<string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    
+<string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    
+<string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    
+<string name="enable_source_manga">Enable manga source</string>
+    
+<string name="domain_manga">Manga source domain</string>
+    
+<string name="download_option_whole_manga_manga">Whole manga</string>
+    
+<string name="recommendation_manga">recommended manga</string>
+    
+<string name="installed">Installed</string>
+    
+<string name="install">Install</string>
+    
+<string name="uninstall">Uninstall</string>
+    
+<string name="tags_blacklist">Blacklisted tags</string>
+    
+<string name="tags_blacklist_summary">Exclude manga containing these tags from lists and search results</string>
+    
+<string name="download_scheduling_and_limits">Download scheduling and limits</string>
+    
+<string name="download_off_peak">Off-peak downloads</string>
+    
+<string name="download_off_peak_summary">Download only during specified hours</string>
+    
+<string name="download_off_peak_start">Start time</string>
+    
+<string name="download_off_peak_end">End time</string>
+    
+<string name="download_storage_quota">Storage quota (MB)</string>
+    
+<string name="download_storage_quota_summary">Limit total download size. 0 for unlimited. Current oldest chapters will be deleted if exceeded.</string>
+    
+<string name="smart_downloads">Smart Downloads</string>
+    
+<string name="smart_downloads_summary">Automatically download next chapters and delete read ones</string>
+    
+<string name="download_off_peak_start_description">When downloads can start</string>
+    
+<string name="download_off_peak_end_description">When downloads must stop</string>
+    
+<string name="rescan">Rescan</string>
+    
+<string name="rescan_completed">Rescan completed</string>
+    
+<string name="rescan_started">Rescan started</string>
+    
+<string name="directory_inaccessible">This directory is inaccessible. Please check permissions or re-add it.</string>
+    
+<string name="download_only_on_charging_summary">Connect to a power source to start downloads</string>
+    
+<string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
+    
+<string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
+
 </resources>

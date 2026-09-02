@@ -78,9 +78,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Notify Discord - Build Started
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
           payload=$(jq -n --arg content "Build started for ${{ github.ref_name }}" '{content: $content}')
@@ -98,9 +96,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Notify Discord - Environment Setup Complete
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
           payload=$(jq -n --arg content "Environment setup complete (Java 17, Android SDK)" '{content: $content}')
@@ -122,9 +118,7 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > keystore.jks
 
-      - name: Notify Discord - Keystore Decoded
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
           payload=$(jq -n --arg content "Keystore decoded" '{content: $content}')
@@ -144,9 +138,7 @@ jobs:
             -PversionCode=${{ steps.version.outputs.version_code }} \
             --no-build-cache --no-configuration-cache
 
-      - name: Notify Discord - APK Build Complete
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
           payload=$(jq -n --arg content "Release APK build complete" '{content: $content}')
@@ -164,9 +156,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Notify Discord - Release Published
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
           RELEASE_URL: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
@@ -177,10 +167,8 @@ jobs:
         if: always()
         run: rm -f keystore.jks
 
-      - name: Notify Discord - Build Failed
         if: failure()
         env:
-          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_BUILD }}
         run: |
           if [ -z "$WEBHOOK" ]; then exit 0; fi
           payload=$(jq -n --arg content "Build failed for ${{ github.ref_name }}\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" '{content: $content}')

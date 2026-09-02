@@ -668,4 +668,576 @@
     <string name="retry">पुनः प्रयत्न करें</string>
     <string name="nsfw_16">१६+</string>
     <string name="too_many_requests_message_retry">बहुत अधिक अनुरोध. %s बाद में फिर से प्रयास करें</string>
+<string name="app_name" translatable="false">Hanten</string>
+    
+<string name="saved_filters">Saved filters</string>
+    
+<string name="merge_with_existing_data">Merge with existing data</string>
+    
+<string name="manga">Manga</string>
+    
+<string name="queue_all_unread_from_favorites">Download unread from favorites</string>
+    
+<string name="github_download_warning">Downloading from GitHub will bypass security checks performed by IzzyOnDroid and Fdroid.</string>
+    
+<string name="enter_name">Enter name</string>
+    
+<string name="pinned_sources_only">Pinned sources only</string>
+    
+<string name="hide_empty_sources">Hide empty sources</string>
+    
+<string name="shikimori" translatable="false">Shikimori</string>
+    
+<string name="anilist" translatable="false">AniList</string>
+    
+<string name="download_queue">Download queue</string>
+    
+<string name="clear_queue">Clear queue</string>
+    
+<string name="download_summary_pattern" translatable="false">%1$s · %2$s</string>
+    
+<string name="mal" translatable="false">MyAnimeList</string>
+    
+<string name="theme_name_expressive">Expressive (Test)</string>
+    
+<string name="downloads_charging_only">Download only when charging</string>
+    
+<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
+    
+<string name="remove_downloads_confirm">Remove selected downloads?</string>
+    
+<string name="delete_downloaded_files">Also delete downloaded files from storage</string>
+    
+<string name="delete_chapter">Delete chapter</string>
+    
+<string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
+    
+<string name="kitsu" translatable="false">Kitsu</string>
+    
+<string name="pull_to_prev_chapter">Release to open previous chapter</string>
+    
+<string name="pull_to_next_chapter">Release to open next chapter</string>
+    
+<string name="pull_top_no_prev">No previous chapter</string>
+    
+<string name="pull_bottom_no_next">No next chapter</string>
+    
+<string name="frequency_every_6_hours">Every 6 hours</string>
+    
+<string name="extensions_manager">Extensions manager</string>
+    
+<string name="extensions_manager_summary">Manage, install and uninstall extensions from repositories</string>
+    
+<string name="extension_repos_header">Repositories</string>
+    
+<string name="add_extension_repo">Add</string>
+    
+<string name="add_extension_repo_hint">Repository URL</string>
+    
+<string name="extension_repo_add_success">Repository added</string>
+    
+<string name="extension_repo_remove_confirm">Remove %s?</string>
+    
+<string name="extension_repos_empty">No repositories added. Add a repository URL above to browse extensions.</string>
+    
+<string name="installed_extensions_header">Installed</string>
+    
+<string name="available_extensions_header">Available</string>
+    
+<string name="invalid_repo_url">Invalid repository URL</string>
+    
+<string name="repo_already_exists">Repository already exists</string>
+    
+<string name="failed_to_add_repo">Failed to add repository: %s</string>
+    
+<string name="reader_navigation_inverted">Invert navigation controls</string>
+    
+<string name="reader_navigation_inverted_summary">Swap the direction of volume button and directional hardware key navigation (left/up/down/right)</string>
+    
+<string name="auto_double_foldable">Auto Two-Page On Foldable</string>
+    
+<string name="two_page_scroll_sensitivity">Two-Page Scroll Sensitivity</string>
+    
+<string name="fraction_pattern" translatable="false">%1$d/%2$d</string>
+    
+<string name="list_ellipsize_pattern" translatable="false">(+%d)</string>
+    
+    
+<string name="seconds_short">%d s</string>
+    
+    
+<string name="minutes_seconds_short">%1$d m %2$d s</string>
+    
+<string name="enable_pull_gesture_title">Enable pull gesture</string>
+    
+<string name="enable_pull_gesture_summary">Use pull gesture to switch chapters in webtoon</string>
+    
+<string name="inline_preference_pattern" translatable="false">%1$s: %2$s</string>
+    
+<string name="plugin_incompatible_with_cause">Plugin error: %s\n Make sure you are using the latest version of the plugin and Hanten</string>
+    
+<string name="sfw">SFW</string>
+    
+<string name="skip_all">Skip all</string>
+    
+<string name="stuck">Stuck</string>
+    
+<string name="not_in_favorites">Not in favorites</string>
+    
+<string name="updated_long_ago">Updated long ago</string>
+    
+<string name="unpopular">Unpopular</string>
+    
+<string name="low_rating">Low rating</string>
+    
+<string name="sort_order_asc">Ascending</string>
+    
+<string name="sort_order_desc">Descending</string>
+    
+<string name="by_date">Date</string>
+    
+<string name="popularity">Popularity</string>
+    
+<string name="scrobbler_auth_required">Sign in to %s to continue</string>
+    
+<string name="scrobbler_auth_intro">Sign in to set up integration with %s. This will allow you to track your manga reading progress and status</string>
+    
+<string name="unstable_feature">Unstable feature</string>
+    
+<string name="unstable_feature_summary">This function is experimental. Please make sure you have a backup to avoid data loss</string>
+    
+<string name="downloads_background">Background downloads</string>
+    
+<string name="download_new_chapters">Download new chapters</string>
+    
+<string name="manga_with_downloaded_chapters">Manga with downloaded chapters</string>
+    
+<string name="manga_replaced">Manga \"%1$s\" (%2$s) replaced with \"%3$s\" (%4$s)</string>
+    
+<string name="fixing_manga">Fixing manga</string>
+    
+<string name="fixed">Fixed successfully</string>
+    
+<string name="no_fix_required">No fix required for \"%s\"</string>
+    
+<string name="no_alternatives_found">No alternatives found for \"%s\"</string>
+    
+<string name="manga_fix_prompt">This function will find alternative sources for the selected manga. The task will take some time and will proceed in the background</string>
+    
+<string name="content_type_novel">Novel</string>
+    
+<string name="content_type_manhua">Manhua</string>
+    
+<string name="content_type_manhwa">Manhwa</string>
+    
+<string name="recently_added">Recently added</string>
+    
+<string name="added_long_ago">Added long ago</string>
+    
+<string name="popular_in_hour">Popular this hour</string>
+    
+<string name="popular_today">Popular today</string>
+    
+<string name="popular_in_week">Popular this week</string>
+    
+<string name="popular_in_month">Popular this month</string>
+    
+<string name="popular_in_year">Popular this year</string>
+    
+<string name="original_language">Original language</string>
+    
+<string name="year">Year</string>
+    
+<string name="demographics">Demographics</string>
+    
+<string name="demographic_shounen">Shounen</string>
+    
+<string name="demographic_shoujo">Shoujo</string>
+    
+<string name="demographic_seinen">Seinen</string>
+    
+<string name="demographic_josei">Josei</string>
+    
+<string name="years">Years</string>
+    
+<string name="any">Any</string>
+    
+<string name="filter_search_warning">This source does not support search with filters. Your filters have been cleared</string>
+    
+<string name="demographic_kodomo">Kodomo</string>
+    
+<string name="content_type_one_shot">One shot</string>
+    
+<string name="content_type_doujinshi">Doujinshi</string>
+    
+<string name="content_type_image_set">Image set</string>
+    
+<string name="content_type_artist_cg">Artist CG</string>
+    
+<string name="content_type_game_cg">Game CG</string>
+    
+<string name="debug">Debug</string>
+    
+<string name="source_code">Source code</string>
+    
+<string name="user_manual">User manual</string>
+    
+<string name="telegram_group">Telegram group</string>
+    
+<string name="error_image_format">Unsupported image format: %s</string>
+    
+<string name="error_not_image">Invalid format: expected image but got %s</string>
+    
+<string name="start_download">Start download</string>
+    
+<string name="save_manga_confirm">Save selected manga? This may consume traffic and disk space</string>
+    
+<string name="save_manga">Save manga</string>
+    
+<string name="genre">Genre</string>
+    
+<string name="download_added">Download added</string>
+    
+<string name="more_options">More options</string>
+    
+<string name="destination_directory">Destination directory</string>
+    
+<string name="chapter_selection_hint">You can select chapters to download by long click on item in the chapter list.</string>
+    
+    
+<string name="chapters_all">All</string>
+    
+<string name="download_over_cellular">Downloading over cellular network</string>
+    
+<string name="download_cellular_confirm">Allow downloads over cellular network?</string>
+    
+<string name="dont_allow">Don\'t allow</string>
+    
+<string name="allow_always">Allow always</string>
+    
+<string name="allow_once">Allow once</string>
+    
+<string name="ask_every_time">Ask every time</string>
+    
+<string name="screen_orientation">Screen orientation</string>
+    
+<string name="portrait">Portrait</string>
+    
+<string name="landscape">Landscape</string>
+    
+<string name="breadcrumbs_separator" translatable="false">" &gt; "</string>
+    
+<string name="access_denied_403">Access denied (403)</string>
+    
+<string name="max_backups_count">Max number of backups</string>
+    
+<string name="delete_old_backups">Delete old backups</string>
+    
+<string name="delete_old_backups_summary">Automatically delete old backup files to save storage space</string>
+    
+<string name="handle_links">Handle links</string>
+    
+<string name="handle_links_summary">Handle manga links from external applications (e.g. web browser). You may also need to enable it manually in the application\'s system settings</string>
+    
+<string name="email">Email</string>
+    
+<string name="captcha_required_message">This source requires solving a captcha to continue</string>
+    
+<string name="author">Author</string>
+    
+<string name="rating">Rating</string>
+    
+<string name="source">Source</string>
+    
+<string name="translation">Translation</string>
+    
+<string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+    
+<string name="show_slider">Show slider</string>
+    
+    
+<string name="incognito">Incognito</string>
+    
+<string name="error_connection_reset">Connection reset by remote host</string>
+    
+<string name="backup_tg_check">Check if API works</string>
+    
+<string name="backup_tg_echo">Test message</string>
+    
+<string name="backup_tg_id_not_set">Chat ID is not set</string>
+    
+<string name="telegram_chat_id">Telegram chat ID</string>
+    
+<string name="open_telegram_bot">Open the Telegram bot</string>
+    
+<string name="send_backups_telegram">Send backups in Telegram</string>
+    
+<string name="test_connection">Test connection</string>
+    
+<string name="telegram_chat_id_summary">Enter the chat ID where backups should be sent</string>
+    
+<string name="open_telegram_bot_summary">Press to open chat with Hanten Backup Bot</string>
+    
+<string name="clear_database">Clear database</string>
+    
+<string name="clear_database_summary">Delete information about manga that is not used</string>
+    
+<string name="enable_all_sources">Enable all manga sources</string>
+    
+<string name="enable_all_sources_summary">All available manga sources will be enabled permanently</string>
+    
+<string name="all_sources_enabled">All sources are enabled</string>
+    
+<string name="reader_chapter_toast">Show chapter change popup</string>
+    
+<string name="reader_chapter_toast_summary">Show a pop-up message with a chapter title when it is changed</string>
+    
+<string name="reader_info_bar_transparent">Transparent reader information bar</string>
+    
+<string name="backup_restored_background">The backup will be restored in the background</string>
+    
+<string name="restoring_backup">Restoring backup</string>
+    
+<string name="reader_controls_in_bottom_bar">Reader controls in bottom bar</string>
+    
+<string name="chapters_and_pages">Chapters and pages</string>
+    
+<string name="pages_slider">Page switch slider</string>
+    
+<string name="screen_rotation_locked">Screen rotation has been locked</string>
+    
+<string name="screen_rotation_unlocked">Screen rotation has been unlocked</string>
+    
+<string name="badges_in_lists">Badges in lists</string>
+    
+<string name="search_everywhere">Search everywhere</string>
+    
+<string name="simple">Simple</string>
+    
+<string name="global_search">Global search</string>
+    
+<string name="disable_captcha_notifications">Disable captcha notifications</string>
+    
+<string name="disable_captcha_notifications_summary">You will not receive notifications about solving CAPTCHA for this source but this can lead to breaking background operations (checking for new chapters, obtaining recommendations, etc)</string>
+    
+<string name="chapter_volume_number">Vol %1$s Chapter %2$s</string>
+    
+<string name="chapter_number">Chapter %s</string>
+    
+<string name="unnamed_chapter">Unnamed chapter</string>
+    
+<string name="search_disabled_sources">Search through disabled sources</string>
+    
+<string name="error_details">Error details</string>
+    
+<string name="error_disclaimer_manga">Try to open manga in a web browser to ensure it is available on its source.</string>
+    
+<string name="error_disclaimer_app_outdated">It looks like your version of Hanten is out of date. Please install the latest version to get all available fixes.</string>
+    
+<string name="error_disclaimer_report">You can submit a bug report to the developers. This will help us investigate and fix the issue.</string>
+    
+<string name="link_to_manga_on_s">Link to manga on %s</string>
+    
+<string name="link_to_manga_in_app">Link to manga in Hanten</string>
+    
+<string name="clear_browser_data">Clear browser data</string>
+    
+<string name="clear_browser_data_summary">Clear browser data such as cache and cookies. Warning: Authorization in manga sources may become invalid</string>
+    
+<string name="no_write_permission_to_file">Does not have permission to write a file</string>
+    
+<string name="exclude_nsfw_from_suggestions_summary">Adult manga will not be shown in suggestions. This option may work inaccurate with some sources</string>
+    
+<string name="include_disabled_sources">Include disabled sources</string>
+    
+<string name="suggestions_disabled_sources_summary">Show suggestions from all manga sources, including disabled ones</string>
+    
+<string name="error_non_file_uri">The selected path cannot be used because it does not denote a file or directory</string>
+    
+<string name="manga_override_hint">These changes will affect how manga is displayed in the app</string>
+    
+<string name="use_default_cover">Use default cover</string>
+    
+<string name="pick_manga_page">Pick manga page</string>
+    
+<string name="pick_custom_file">Pick custom file</string>
+    
+<string name="change_cover">Change cover</string>
+    
+<string name="page_switch_timer">The page will switch every ~%d seconds</string>
+    
+<string name="dont_ask_again">Don\'t ask again</string>
+    
+<string name="incognito_mode_hint_nsfw">This manga may contain adult content. Do you want to use incognito mode?</string>
+    
+<string name="incognito_for_nsfw">Incognito mode for NSFW manga</string>
+    
+<string name="additional_action_required">Additional action is required</string>
+    
+<string name="hide_from_main_screen">Hide from main screen</string>
+    
+<string name="changelog">Changelog</string>
+    
+<string name="changelog_summary">Changes history for recently released versions</string>
+    
+<string name="collapse">Collapse</string>
+    
+<string name="expand">Expand</string>
+    
+<string name="adblock">Block ads in browser</string>
+    
+<string name="adblock_summary">Block advertisement in the built-in browser (beta)</string>
+    
+<string name="collapse_long_description">Collapse long description</string>
+    
+<string name="creating_backup">Creating backup</string>
+    
+<string name="share_backup">Share backup</string>
+    
+<string name="reader_multitask">Open reader in a separate task</string>
+    
+<string name="reader_multitask_summary">Allows you to keep multiple readers with different manga open at the same time</string>
+    
+<string name="theme_name_itsuka">Itsuka</string>
+    
+<string name="theme_name_totoro">Totoro</string>
+    
+<string name="book_effect">Yellowish background (blue filter)</string>
+    
+<string name="local_storage_cleanup">Local storage cleanup</string>
+    
+<string name="packup_creation_failed">Failed to create backup</string>
+    
+<string name="main_screen">Main screen</string>
+    
+<string name="main_screen_fab">Show floating Continue button</string>
+    
+<string name="main_screen_fab_summary">Allows to continue reading in a one click. This button will not appear in incognito mode or when the history is empty</string>
+    
+<string name="error_corrupted_zip">Corrupted ZIP archive (%s)</string>
+
+
+
+
+
+
+    
+<string name="obtain">Obtain</string>
+    
+<string name="reading_s">Reading %s</string>
+    
+<string name="read_on_s">Read on %s</string>
+    
+<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
+    
+<string name="invalid_token">Invalid token: %s</string>
+    
+<string name="show_floating_control_button">Show floating control button</string>
+    
+<string name="unavailable">Unavailable</string>
+    
+<string name="manga_restricted_description">This manga is not available to read in this source. Try searching for it in other sources or opening it in a browser for more information</string>
+    
+<string name="no_chapters_in_manga">This manga does not contain any chapters</string>
+    
+<string name="chapters_load_failed">Failed to load chapter list</string>
+    
+<string name="telegram_integration">Telegram integration</string>
+    
+<string name="test_parser">Test manga source</string>
+    
+<string name="rename">Rename</string>
+    
+<string name="save_filter">Save filter</string>
+    
+<string name="overwrite">Overwrite</string>
+    
+<string name="filter_overwrite_confirm">A filter named \"%s\" already exists. Do you want to overwrite it?</string>
+    
+<string name="storage_and_network">Storage and network</string>
+    
+<string name="create_or_restore_backup">Create or restore a backup</string>
+    
+<string name="data_removal">Data removal</string>
+    
+<string name="privacy">Privacy</string>
+    
+<string name="source_broken_warning">This manga source has been marked as broken. Some features may not work</string>
+    
+<string name="download_default_directory">Default directory for downloading manga</string>
+    
+<string name="private_app_directory_warning">This directory with all data will be deleted if you uninstall the application</string>
+    
+<string name="available_pattern">%1$s available</string>
+    
+<string name="crash_reporting">Crash Reporting</string>
+    
+<string name="crash_reporting_summary">Send anonymous crash logs to help improve the app. Takes effect after restart.</string>
+    
+<string name="github_mirror_title">GitHub mirror</string>
+    
+<string name="github_mirror_native">Native</string>
+    
+<string name="github_mirror_keiyoushi">Keiyoushi</string>
+    
+<string name="github_mirror_kkgithub">KKGitHub (raw.kkgithub.com)</string>
+    
+<string name="github_mirror_ghproxy">GHProxy (mirror.ghproxy.com)</string>
+    
+<string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
+    
+<string name="enable_source_manga">Enable manga source</string>
+    
+<string name="domain_manga">Manga source domain</string>
+    
+<string name="download_option_whole_manga_manga">Whole manga</string>
+    
+<string name="recommendation_manga">recommended manga</string>
+    
+<string name="installed">Installed</string>
+    
+<string name="install">Install</string>
+    
+<string name="uninstall">Uninstall</string>
+    
+<string name="tags_blacklist">Blacklisted tags</string>
+    
+<string name="tags_blacklist_summary">Exclude manga containing these tags from lists and search results</string>
+    
+<string name="download_scheduling_and_limits">Download scheduling and limits</string>
+    
+<string name="download_off_peak">Off-peak downloads</string>
+    
+<string name="download_off_peak_summary">Download only during specified hours</string>
+    
+<string name="download_off_peak_start">Start time</string>
+    
+<string name="download_off_peak_end">End time</string>
+    
+<string name="download_storage_quota">Storage quota (MB)</string>
+    
+<string name="download_storage_quota_summary">Limit total download size. 0 for unlimited. Current oldest chapters will be deleted if exceeded.</string>
+    
+<string name="smart_downloads">Smart Downloads</string>
+    
+<string name="smart_downloads_summary">Automatically download next chapters and delete read ones</string>
+    
+<string name="download_off_peak_start_description">When downloads can start</string>
+    
+<string name="download_off_peak_end_description">When downloads must stop</string>
+    
+<string name="rescan">Rescan</string>
+    
+<string name="rescan_completed">Rescan completed</string>
+    
+<string name="rescan_started">Rescan started</string>
+    
+<string name="directory_inaccessible">This directory is inaccessible. Please check permissions or re-add it.</string>
+    
+<string name="download_only_on_charging_summary">Connect to a power source to start downloads</string>
+    
+<string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
+    
+<string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
+
 </resources>
