@@ -5,7 +5,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import hanten.wre.app.core.network.cookies.MutableCookieJar
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.network.CloudFlareHelper
 import kotlin.coroutines.Continuation
 import okhttp3.OkHttpClient
 import okhttp3.Request

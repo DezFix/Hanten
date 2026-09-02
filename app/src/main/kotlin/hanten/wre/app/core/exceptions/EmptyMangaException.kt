@@ -1,7 +1,7 @@
 package hanten.wre.app.core.exceptions
 
 import hanten.wre.app.details.ui.pager.EmptyMangaReason
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 class EmptyMangaException(
     val reason: EmptyMangaReason?,

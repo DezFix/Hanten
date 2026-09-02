@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.history.data.HistoryRepository
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 @Reusable

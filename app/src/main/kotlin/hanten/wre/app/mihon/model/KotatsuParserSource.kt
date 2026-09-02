@@ -2,7 +2,7 @@ package hanten.wre.app.mihon.model
 
 import hanten.wre.app.mihon.parsers.model.ContentSource
 import hanten.wre.app.mihon.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaParserSource
 
 data class KotatsuParserSource(
     val mangaSource: MangaParserSource
@@ -10,18 +10,18 @@ data class KotatsuParserSource(
     override val name: String get() = mangaSource.name
     override val locale: String get() = mangaSource.locale
     override val contentType: ContentType get() = when (mangaSource.contentType) {
-        org.koitharu.kotatsu.parsers.model.ContentType.MANGA -> ContentType.MANGA
-        org.koitharu.kotatsu.parsers.model.ContentType.HENTAI -> ContentType.HENTAI_MANGA
-        org.koitharu.kotatsu.parsers.model.ContentType.COMICS -> ContentType.COMICS
-        org.koitharu.kotatsu.parsers.model.ContentType.OTHER -> ContentType.OTHER
-        org.koitharu.kotatsu.parsers.model.ContentType.MANHWA -> ContentType.MANHWA
-        org.koitharu.kotatsu.parsers.model.ContentType.MANHUA -> ContentType.MANHUA
-        org.koitharu.kotatsu.parsers.model.ContentType.NOVEL -> ContentType.NOVEL
-        org.koitharu.kotatsu.parsers.model.ContentType.ONE_SHOT -> ContentType.ONE_SHOT
-        org.koitharu.kotatsu.parsers.model.ContentType.DOUJINSHI -> ContentType.DOUJINSHI
-        org.koitharu.kotatsu.parsers.model.ContentType.IMAGE_SET -> ContentType.IMAGE_SET
-        org.koitharu.kotatsu.parsers.model.ContentType.ARTIST_CG -> ContentType.ARTIST_CG
-        org.koitharu.kotatsu.parsers.model.ContentType.GAME_CG -> ContentType.GAME_CG
+        hanten.wre.app.parsers.model.ContentType.MANGA -> ContentType.MANGA
+        hanten.wre.app.parsers.model.ContentType.HENTAI -> ContentType.HENTAI_MANGA
+        hanten.wre.app.parsers.model.ContentType.COMICS -> ContentType.COMICS
+        hanten.wre.app.parsers.model.ContentType.OTHER -> ContentType.OTHER
+        hanten.wre.app.parsers.model.ContentType.MANHWA -> ContentType.MANHWA
+        hanten.wre.app.parsers.model.ContentType.MANHUA -> ContentType.MANHUA
+        hanten.wre.app.parsers.model.ContentType.NOVEL -> ContentType.NOVEL
+        hanten.wre.app.parsers.model.ContentType.ONE_SHOT -> ContentType.ONE_SHOT
+        hanten.wre.app.parsers.model.ContentType.DOUJINSHI -> ContentType.DOUJINSHI
+        hanten.wre.app.parsers.model.ContentType.IMAGE_SET -> ContentType.IMAGE_SET
+        hanten.wre.app.parsers.model.ContentType.ARTIST_CG -> ContentType.ARTIST_CG
+        hanten.wre.app.parsers.model.ContentType.GAME_CG -> ContentType.GAME_CG
     }
     val isBroken: Boolean get() = mangaSource.isBroken
 }

@@ -25,7 +25,7 @@ import hanten.wre.app.core.util.ext.isLowRamDevice
 import hanten.wre.app.core.util.ext.isSerializable
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.databinding.LayoutPageInfoBinding
-import org.koitharu.kotatsu.parsers.util.ifZero
+import hanten.wre.app.parsers.util.ifZero
 import hanten.wre.app.reader.domain.PageLoader
 import hanten.wre.app.reader.ui.config.ReaderSettings
 import hanten.wre.app.reader.ui.pager.vm.PageState

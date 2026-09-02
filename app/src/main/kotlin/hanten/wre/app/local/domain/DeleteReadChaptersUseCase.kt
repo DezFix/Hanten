@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.recoverCatchingCancellable
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.recoverCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
 
 class DeleteReadChaptersUseCase @Inject constructor(

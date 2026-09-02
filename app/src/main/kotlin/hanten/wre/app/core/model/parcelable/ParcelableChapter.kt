@@ -5,7 +5,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import hanten.wre.app.core.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 
 @Parcelize
 data class ParcelableChapter(

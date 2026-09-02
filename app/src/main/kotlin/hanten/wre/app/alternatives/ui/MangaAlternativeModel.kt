@@ -3,7 +3,7 @@ package hanten.wre.app.alternatives.ui
 import hanten.wre.app.core.model.chaptersCount
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.MangaGridModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 data class MangaAlternativeModel(
 	val mangaModel: MangaGridModel,

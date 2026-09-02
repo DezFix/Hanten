@@ -17,7 +17,7 @@ import hanten.wre.app.core.ui.BaseActivity
 import hanten.wre.app.core.ui.util.DefaultTextWatcher
 import hanten.wre.app.core.util.ext.consume
 import hanten.wre.app.databinding.ActivityKitsuAuthBinding
-import org.koitharu.kotatsu.parsers.util.urlEncoded
+import hanten.wre.app.parsers.util.urlEncoded
 
 class KitsuAuthActivity : BaseActivity<ActivityKitsuAuthBinding>(),
 	View.OnClickListener,

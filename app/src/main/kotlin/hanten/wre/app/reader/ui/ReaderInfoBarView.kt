@@ -29,7 +29,7 @@ import hanten.wre.app.core.util.ext.getThemeColorStateList
 import hanten.wre.app.core.util.ext.isNightMode
 import hanten.wre.app.core.util.ext.measureDimension
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.util.format
 import hanten.wre.app.reader.ui.pager.ReaderUiState
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter

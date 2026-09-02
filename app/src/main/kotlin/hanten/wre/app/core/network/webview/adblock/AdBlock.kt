@@ -10,9 +10,9 @@ import hanten.wre.app.core.network.CommonHeaders
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.isNotEmpty
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.requireBody
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.requireBody
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient

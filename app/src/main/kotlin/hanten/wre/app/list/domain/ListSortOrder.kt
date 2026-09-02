@@ -2,7 +2,7 @@ package hanten.wre.app.list.domain
 
 import androidx.annotation.StringRes
 import hanten.wre.app.R
-import org.koitharu.kotatsu.parsers.util.find
+import hanten.wre.app.parsers.util.find
 import java.util.EnumSet
 
 enum class ListSortOrder(

@@ -3,7 +3,7 @@ package hanten.wre.app.settings.sources.catalog
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 sealed interface SourceCatalogItem : ListModel {
 

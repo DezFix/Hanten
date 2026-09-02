@@ -12,7 +12,7 @@ import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.download.ui.list.chapters.DownloadChapter
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.time.Instant
 import java.util.UUID
 import androidx.appcompat.R as appcompatR

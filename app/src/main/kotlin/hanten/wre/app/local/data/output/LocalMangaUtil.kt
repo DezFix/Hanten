@@ -3,7 +3,7 @@ package hanten.wre.app.local.data.output
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import hanten.wre.app.core.model.isLocal
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 class LocalMangaUtil(
 	private val manga: Manga,

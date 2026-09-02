@@ -24,11 +24,11 @@ import hanten.wre.app.history.domain.model.MangaWithHistory
 import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.list.domain.ReadingProgress
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.levenshteinDistance
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.tryScrobble
 import hanten.wre.app.search.domain.SearchKind

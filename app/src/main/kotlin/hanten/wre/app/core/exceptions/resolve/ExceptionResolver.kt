@@ -27,10 +27,10 @@ import hanten.wre.app.core.ui.dialog.buildAlertDialog
 import hanten.wre.app.core.util.ext.isHttpUrl
 import hanten.wre.app.core.util.ext.restartApplication
 import hanten.wre.app.details.ui.pager.EmptyMangaReason
-import org.koitharu.kotatsu.parsers.exception.AuthRequiredException
-import org.koitharu.kotatsu.parsers.exception.NotFoundException
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.exception.AuthRequiredException
+import hanten.wre.app.parsers.exception.NotFoundException
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.ui.ScrobblerAuthHelper
 import hanten.wre.app.settings.sources.auth.SourceAuthActivity

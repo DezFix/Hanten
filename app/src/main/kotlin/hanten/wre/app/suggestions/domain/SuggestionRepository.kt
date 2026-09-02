@@ -10,9 +10,9 @@ import hanten.wre.app.core.db.entity.toMangaTagsList
 import hanten.wre.app.core.model.toMangaSources
 import hanten.wre.app.core.util.ext.mapItems
 import hanten.wre.app.list.domain.ListFilterOption
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.suggestions.data.SuggestionEntity
 import hanten.wre.app.suggestions.data.SuggestionWithManga
 import javax.inject.Inject

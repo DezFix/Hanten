@@ -32,7 +32,7 @@ import hanten.wre.app.core.util.ext.parentView
 import hanten.wre.app.core.util.ext.showOrHide
 import hanten.wre.app.databinding.DialogDownloadBinding
 import hanten.wre.app.main.ui.owners.BottomNavOwner
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.util.format
 import hanten.wre.app.settings.storage.DirectoryModel
 
 @AndroidEntryPoint

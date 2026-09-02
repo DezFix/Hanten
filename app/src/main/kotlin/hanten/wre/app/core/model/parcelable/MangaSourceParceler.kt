@@ -3,7 +3,7 @@ package hanten.wre.app.core.model.parcelable
 import android.os.Parcel
 import kotlinx.parcelize.Parceler
 import hanten.wre.app.core.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 class MangaSourceParceler : Parceler<MangaSource> {
 

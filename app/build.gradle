@@ -127,7 +127,7 @@ android {
 		unitTests.includeAndroidResources true
 		unitTests.returnDefaultValues false
 		kotlinOptions {
-			freeCompilerArgs += ['-opt-in=org.koitharu.kotatsu.parsers.InternalParsersApi']
+			freeCompilerArgs += ['-opt-in=hanten.wre.app.parsers.InternalParsersApi']
 		}
 	}
 	applicationVariants.configureEach { variant ->
@@ -148,7 +148,7 @@ dependencies {
 		parsersVersion = System.getProperty('parsersVersionOverride')
 	}
 	//noinspection UseTomlInstead
-	implementation("com.github.DezFix:kotatsu-parsers-redo:$parsersVersion") {
+	implementation("com.github.DezFix:hanten-parsers:$parsersVersion") {
 		exclude group: 'org.json', module: 'json'
 	}
 

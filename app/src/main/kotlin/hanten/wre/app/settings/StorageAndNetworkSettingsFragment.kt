@@ -15,7 +15,7 @@ import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
-import org.koitharu.kotatsu.parsers.util.names
+import hanten.wre.app.parsers.util.names
 import hanten.wre.app.settings.userdata.storage.StorageUsagePreference
 import java.net.Proxy
 

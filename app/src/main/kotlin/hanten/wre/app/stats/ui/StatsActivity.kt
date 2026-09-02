@@ -40,7 +40,7 @@ import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.stats.domain.StatsPeriod
 import hanten.wre.app.stats.domain.StatsRecord
 import hanten.wre.app.stats.ui.views.PieChartView
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 @AndroidEntryPoint
 class StatsActivity : BaseActivity<ActivityStatsBinding>(),

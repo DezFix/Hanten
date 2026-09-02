@@ -38,7 +38,7 @@ import hanten.wre.app.list.ui.adapter.ListStateHolderListener
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.list.ui.model.ListHeader
 import hanten.wre.app.main.ui.owners.AppBarOwner
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.reader.ui.PageSaveHelper
 import javax.inject.Inject
 

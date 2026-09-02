@@ -19,8 +19,8 @@ import hanten.wre.app.core.ui.widgets.StackLayout
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.databinding.ViewCoverStackBinding
 import hanten.wre.app.favourites.domain.model.Cover
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 
 class CoverStackView @JvmOverloads constructor(
 	context: Context,

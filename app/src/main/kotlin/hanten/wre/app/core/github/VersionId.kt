@@ -1,6 +1,6 @@
 package hanten.wre.app.core.github
 
-import org.koitharu.kotatsu.parsers.util.digits
+import hanten.wre.app.parsers.util.digits
 import java.util.Locale
 
 data class VersionId(

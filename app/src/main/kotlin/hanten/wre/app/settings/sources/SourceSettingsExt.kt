@@ -18,9 +18,9 @@ import hanten.wre.app.settings.utils.EditTextBindListener
 import hanten.wre.app.settings.utils.EditTextDefaultSummaryProvider
 import hanten.wre.app.settings.utils.validation.DomainValidator
 import hanten.wre.app.settings.utils.validation.HeaderValidator
-import org.koitharu.kotatsu.parsers.config.ConfigKey
-import org.koitharu.kotatsu.parsers.network.UserAgents
-import org.koitharu.kotatsu.parsers.util.mapToArray
+import hanten.wre.app.parsers.config.ConfigKey
+import hanten.wre.app.parsers.network.UserAgents
+import hanten.wre.app.parsers.util.mapToArray
 
 fun PreferenceFragmentCompat.addPreferencesFromRepository(repository: MangaRepository) = when (repository) {
 	is ParserMangaRepository -> addPreferencesFromParserRepository(repository)

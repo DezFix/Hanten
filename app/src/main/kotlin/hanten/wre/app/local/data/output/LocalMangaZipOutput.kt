@@ -13,8 +13,8 @@ import hanten.wre.app.core.util.ext.deleteAwait
 import hanten.wre.app.core.util.ext.readText
 import hanten.wre.app.core.zip.ZipOutput
 import hanten.wre.app.local.data.MangaIndex
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
 import java.io.File
 import java.util.zip.ZipFile
 

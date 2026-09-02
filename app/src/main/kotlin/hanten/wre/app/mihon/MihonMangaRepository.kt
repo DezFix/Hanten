@@ -21,13 +21,13 @@ import hanten.wre.app.mihon.model.toMihonChapter
 import hanten.wre.app.mihon.model.toMihonManga
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaListFilterCapabilities
-import org.koitharu.kotatsu.parsers.model.MangaListFilterOptions
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.SortOrder as ContentSortOrder
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaListFilterOptions
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.SortOrder as ContentSortOrder
 
 /**
  * Repository that adapts a Mihon CatalogueSource to app's ContentRepository interface.
@@ -351,7 +351,7 @@ class MihonMangaRepository(
     
     override suspend fun getRelatedMangaImpl(seed: Manga): List<Manga> = emptyList()
 
-    suspend fun getFavicons(): org.koitharu.kotatsu.parsers.model.Favicons {
-        return org.koitharu.kotatsu.parsers.model.Favicons(emptyList(), "")
+    suspend fun getFavicons(): hanten.wre.app.parsers.model.Favicons {
+        return hanten.wre.app.parsers.model.Favicons(emptyList(), "")
     }
 }

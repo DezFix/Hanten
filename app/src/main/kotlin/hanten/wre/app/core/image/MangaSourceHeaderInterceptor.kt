@@ -6,7 +6,7 @@ import coil3.request.ImageResult
 import hanten.wre.app.core.model.unwrap
 import hanten.wre.app.core.network.CommonHeaders
 import hanten.wre.app.core.util.ext.mangaSourceKey
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaParserSource
 
 class MangaSourceHeaderInterceptor : Interceptor {
 

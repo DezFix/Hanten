@@ -1,7 +1,7 @@
 package hanten.wre.app.filter.ui.model
 
 import hanten.wre.app.core.ui.widgets.ChipsView
-import org.koitharu.kotatsu.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.SortOrder
 
 data class FilterHeaderModel(
 	val chips: Collection<ChipsView.ChipModel>,

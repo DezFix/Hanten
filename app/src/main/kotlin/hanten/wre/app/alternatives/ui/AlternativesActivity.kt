@@ -29,7 +29,7 @@ import hanten.wre.app.list.ui.adapter.emptyStateListAD
 import hanten.wre.app.list.ui.adapter.loadingFooterAD
 import hanten.wre.app.list.ui.adapter.loadingStateAD
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 @AndroidEntryPoint

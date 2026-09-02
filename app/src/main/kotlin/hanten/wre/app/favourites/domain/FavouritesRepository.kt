@@ -25,9 +25,9 @@ import hanten.wre.app.favourites.data.toMangaList
 import hanten.wre.app.favourites.domain.model.Cover
 import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.list.domain.ListSortOrder
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.levenshteinDistance
 import hanten.wre.app.search.domain.SearchKind
 import javax.inject.Inject
 

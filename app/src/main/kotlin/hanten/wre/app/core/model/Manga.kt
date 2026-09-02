@@ -14,15 +14,15 @@ import hanten.wre.app.R
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.core.util.ext.iterator
 import hanten.wre.app.details.ui.model.ChapterListItem
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.Demographic
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.Demographic
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.mapToSet
 import com.google.android.material.R as materialR
 
 @JvmName("mangaIds")

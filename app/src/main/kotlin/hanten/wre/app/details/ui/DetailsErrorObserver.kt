@@ -8,8 +8,8 @@ import hanten.wre.app.core.exceptions.resolve.ExceptionResolver
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.isNetworkError
 import hanten.wre.app.core.util.ext.isSerializable
-import org.koitharu.kotatsu.parsers.exception.NotFoundException
-import org.koitharu.kotatsu.parsers.exception.ParseException
+import hanten.wre.app.parsers.exception.NotFoundException
+import hanten.wre.app.parsers.exception.ParseException
 
 class DetailsErrorObserver(
 	override val activity: DetailsActivity,

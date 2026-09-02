@@ -19,9 +19,9 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.getDrawableOrThrow
 import hanten.wre.app.core.util.ext.mangaExtra
 import hanten.wre.app.history.data.HistoryRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.replaceWith
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.replaceWith
+import hanten.wre.app.parsers.util.runCatchingCancellable
 
 class RecentListFactory(
 	private val context: Context,

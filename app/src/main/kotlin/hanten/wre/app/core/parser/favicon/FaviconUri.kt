@@ -1,7 +1,7 @@
 package hanten.wre.app.core.parser.favicon
 
 import android.net.Uri
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 const val URI_SCHEME_FAVICON = "favicon"
 

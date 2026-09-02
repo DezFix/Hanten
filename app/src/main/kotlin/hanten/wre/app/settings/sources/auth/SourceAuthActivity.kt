@@ -19,9 +19,9 @@ import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.ParserMangaRepository
 import hanten.wre.app.core.util.ext.getDisplayMessage
-import org.koitharu.kotatsu.parsers.MangaParserAuthProvider
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.MangaParserAuthProvider
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.runCatchingCancellable
 
 @AndroidEntryPoint
 class SourceAuthActivity : BaseBrowserActivity(), BrowserCallback {

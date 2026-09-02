@@ -6,10 +6,10 @@ import okhttp3.Response
 import okhttp3.internal.closeQuietly
 import okio.IOException
 import hanten.wre.app.core.network.CommonHeaders
-import org.koitharu.kotatsu.parsers.util.mimeType
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
-import org.koitharu.kotatsu.parsers.util.parseHtml
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.mimeType
+import hanten.wre.app.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.parseHtml
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService

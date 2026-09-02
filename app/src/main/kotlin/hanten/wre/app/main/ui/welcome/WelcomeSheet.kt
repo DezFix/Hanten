@@ -28,7 +28,7 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.tryLaunch
 import hanten.wre.app.databinding.SheetWelcomeBinding
 import hanten.wre.app.filter.ui.model.FilterProperty
-import org.koitharu.kotatsu.parsers.model.ContentType
+import hanten.wre.app.parsers.model.ContentType
 import java.util.Locale
 
 @AndroidEntryPoint

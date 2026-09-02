@@ -18,8 +18,8 @@ import hanten.wre.app.core.prefs.ReaderControl
 import hanten.wre.app.core.prefs.ReaderMode
 import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.names
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.names
 import hanten.wre.app.settings.utils.MultiSummaryProvider
 import hanten.wre.app.settings.utils.PercentSummaryProvider
 import hanten.wre.app.settings.utils.SliderPreference

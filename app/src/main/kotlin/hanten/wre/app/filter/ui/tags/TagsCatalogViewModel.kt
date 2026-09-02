@@ -23,8 +23,8 @@ import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.list.ui.model.toErrorFooter
 import hanten.wre.app.list.ui.model.toErrorState
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaTag
 
 @HiltViewModel(assistedFactory = TagsCatalogViewModel.Factory::class)
 class TagsCatalogViewModel @AssistedInject constructor(

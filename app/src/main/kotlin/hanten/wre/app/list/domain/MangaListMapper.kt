@@ -19,8 +19,8 @@ import hanten.wre.app.list.ui.model.MangaDetailedListModel
 import hanten.wre.app.list.ui.model.MangaGridModel
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.local.data.index.LocalMangaIndex
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.tracker.domain.TrackingRepository
 import hanten.wre.app.tracker.domain.model.TrackingLogItem
 import hanten.wre.app.tracker.ui.feed.model.FeedItem

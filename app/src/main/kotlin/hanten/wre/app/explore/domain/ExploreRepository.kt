@@ -7,11 +7,11 @@ import hanten.wre.app.core.util.ext.asArrayList
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.history.data.HistoryRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.almostEquals
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.almostEquals
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.suggestions.domain.TagsBlacklist
 import javax.inject.Inject
 

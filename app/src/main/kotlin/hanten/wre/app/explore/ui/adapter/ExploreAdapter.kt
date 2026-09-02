@@ -8,7 +8,7 @@ import hanten.wre.app.list.ui.adapter.emptyHintAD
 import hanten.wre.app.list.ui.adapter.listHeaderAD
 import hanten.wre.app.list.ui.adapter.loadingStateAD
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 class ExploreAdapter(
 	listener: ExploreListEventListener,

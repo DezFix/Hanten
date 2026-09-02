@@ -3,7 +3,7 @@ package hanten.wre.app.scrobbling.common.data
 import android.content.Context
 import androidx.core.content.edit
 import org.jsoup.internal.StringUtil.StringJoiner
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.nullIfEmpty
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 

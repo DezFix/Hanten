@@ -24,7 +24,7 @@ import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.databinding.ActivityPickerBinding
 import hanten.wre.app.main.ui.owners.AppBarOwner
 import hanten.wre.app.main.ui.owners.SnackbarOwner
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.picker.ui.manga.MangaPickerFragment
 import hanten.wre.app.picker.ui.page.PagePickerFragment
 import hanten.wre.app.reader.ui.PageSaveHelper

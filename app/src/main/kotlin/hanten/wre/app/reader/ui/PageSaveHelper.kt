@@ -34,8 +34,8 @@ import hanten.wre.app.core.util.ext.isZipUri
 import hanten.wre.app.core.util.ext.toFileNameSafe
 import hanten.wre.app.core.util.ext.toFileOrNull
 import hanten.wre.app.core.util.ext.writeAllCancellable
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.reader.domain.PageLoader
 import java.io.File
 import java.text.SimpleDateFormat

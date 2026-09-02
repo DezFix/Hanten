@@ -9,7 +9,7 @@ import android.os.Bundle
 import dagger.hilt.android.EntryPointAccessors
 import hanten.wre.app.R
 import hanten.wre.app.core.util.ext.onError
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.sync.domain.SyncController
 import hanten.wre.app.sync.ui.SyncAdapterEntryPoint
 

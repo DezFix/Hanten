@@ -23,8 +23,8 @@ import hanten.wre.app.core.util.ext.openSource
 import hanten.wre.app.core.util.ext.require
 import hanten.wre.app.core.util.ext.toMimeTypeOrNull
 import hanten.wre.app.core.util.ext.toUriOrNull
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.md5
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.md5
 import java.io.File
 import javax.inject.Inject
 

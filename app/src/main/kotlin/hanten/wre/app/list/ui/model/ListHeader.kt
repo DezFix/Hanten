@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import hanten.wre.app.core.model.getLocalizedTitle
 import hanten.wre.app.core.ui.model.DateTimeAgo
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 
 data class ListHeader private constructor(
 	private val textRaw: Any,

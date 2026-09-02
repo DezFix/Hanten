@@ -14,9 +14,9 @@ import hanten.wre.app.core.util.ext.subdir
 import hanten.wre.app.core.util.ext.takeIfReadable
 import hanten.wre.app.core.util.ext.takeIfWriteable
 import hanten.wre.app.core.util.ext.writeAllCancellable
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
-import org.koitharu.kotatsu.parsers.util.suspendlazy.suspendLazy
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext

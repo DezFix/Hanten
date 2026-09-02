@@ -10,7 +10,7 @@ import hanten.wre.app.core.nav.AppRouter.Companion.KEY_MANGA
 import hanten.wre.app.core.nav.AppRouter.Companion.KEY_SOURCE_TITLE
 import hanten.wre.app.core.util.ext.getParcelableCompat
 import hanten.wre.app.core.util.ext.getParcelableExtraCompat
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 class MangaIntent private constructor(
 	@JvmField val manga: Manga?,

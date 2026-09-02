@@ -12,10 +12,10 @@ import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.bookmarkKey
 import hanten.wre.app.core.util.ext.mangaKey
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.Collections
 import javax.inject.Inject
 

@@ -62,7 +62,7 @@ import hanten.wre.app.core.util.ext.toUriOrNull
 import hanten.wre.app.core.util.ext.zipWithPrevious
 import hanten.wre.app.databinding.ActivityReaderBinding
 import hanten.wre.app.details.ui.pager.pages.PagesSavedObserver
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.reader.data.TapGridSettings
 import hanten.wre.app.reader.domain.TapGridArea
 import hanten.wre.app.reader.ui.config.ReaderConfigSheet

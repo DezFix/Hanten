@@ -19,7 +19,7 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.awaitWorkInfosByTag
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.download.data.repository.DownloadQueueRepository
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 

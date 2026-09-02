@@ -7,9 +7,9 @@ import androidx.core.net.toUri
 import com.google.android.material.search.SearchView
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.MangaLinkResolver
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.search.domain.SearchKind
 
 class SearchSuggestionListenerImpl(

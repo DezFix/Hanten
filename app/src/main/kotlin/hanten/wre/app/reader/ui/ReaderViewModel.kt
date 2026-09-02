@@ -65,12 +65,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
-import org.koitharu.kotatsu.parsers.util.sizeOrZero
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.sizeOrZero
 import java.time.Instant
 import javax.inject.Inject
 

@@ -15,7 +15,7 @@ import androidx.core.view.PointerIconCompat
 import androidx.core.view.ViewCompat
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.resolveDp
-import org.koitharu.kotatsu.parsers.util.replaceWith
+import hanten.wre.app.parsers.util.replaceWith
 import kotlin.math.atan2
 import kotlin.math.sqrt
 

@@ -15,7 +15,7 @@ import hanten.wre.app.R
 import hanten.wre.app.core.util.ext.getThemeColorStateList
 import hanten.wre.app.core.util.ext.measureDimension
 import hanten.wre.app.core.util.ext.resolveDp
-import org.koitharu.kotatsu.parsers.util.toIntUp
+import hanten.wre.app.parsers.util.toIntUp
 import com.google.android.material.R as materialR
 
 class DotsIndicator @JvmOverloads constructor(

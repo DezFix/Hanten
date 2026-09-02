@@ -15,7 +15,7 @@ import hanten.wre.app.core.image.CoilImageView
 import hanten.wre.app.core.parser.favicon.faviconUri
 import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.mangaSourceExtra
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 class FaviconView @JvmOverloads constructor(
 	context: Context,

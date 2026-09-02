@@ -22,16 +22,16 @@ import hanten.wre.app.core.prefs.SourceSettings
 import hanten.wre.app.core.util.ext.toList
 import hanten.wre.app.core.util.ext.toMimeType
 import hanten.wre.app.core.util.ext.use
-import org.koitharu.kotatsu.parsers.MangaLoaderContext
-import org.koitharu.kotatsu.parsers.MangaParser
-import org.koitharu.kotatsu.parsers.bitmap.Bitmap
-import org.koitharu.kotatsu.parsers.config.MangaSourceConfig
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.MangaLoaderContext
+import hanten.wre.app.parsers.MangaParser
+import hanten.wre.app.parsers.bitmap.Bitmap
+import hanten.wre.app.parsers.config.MangaSourceConfig
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.core.network.webview.WebViewRequestInterceptorExecutor
-import org.koitharu.kotatsu.parsers.webview.InterceptedRequest
-import org.koitharu.kotatsu.parsers.webview.InterceptionConfig as ParsersInterceptionConfig
-import org.koitharu.kotatsu.parsers.network.UserAgents
-import org.koitharu.kotatsu.parsers.util.map
+import hanten.wre.app.parsers.webview.InterceptedRequest
+import hanten.wre.app.parsers.webview.InterceptionConfig as ParsersInterceptionConfig
+import hanten.wre.app.parsers.network.UserAgents
+import hanten.wre.app.parsers.util.map
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

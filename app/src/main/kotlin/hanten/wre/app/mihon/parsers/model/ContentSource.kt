@@ -1,6 +1,6 @@
 package hanten.wre.app.mihon.parsers.model
 
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 interface ContentSource : MangaSource {
 

@@ -3,7 +3,7 @@ package hanten.wre.app.download.domain
 import androidx.work.Data
 import hanten.wre.app.list.domain.ReadingProgress.Companion.PROGRESS_NONE
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.time.Instant
 
 data class DownloadState(

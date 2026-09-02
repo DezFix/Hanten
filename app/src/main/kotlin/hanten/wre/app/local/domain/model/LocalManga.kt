@@ -5,8 +5,8 @@ import androidx.core.net.toFile
 import androidx.core.net.toUri
 import hanten.wre.app.core.util.ext.contains
 import hanten.wre.app.core.util.ext.creationTime
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaTag
 import java.io.File
 
 data class LocalManga(

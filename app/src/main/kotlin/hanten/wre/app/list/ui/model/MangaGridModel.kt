@@ -4,7 +4,7 @@ import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.list.domain.ReadingProgress
 import hanten.wre.app.list.ui.ListModelDiffCallback.Companion.PAYLOAD_ANYTHING_CHANGED
 import hanten.wre.app.list.ui.ListModelDiffCallback.Companion.PAYLOAD_PROGRESS_CHANGED
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 data class MangaGridModel(
 	override val manga: Manga,

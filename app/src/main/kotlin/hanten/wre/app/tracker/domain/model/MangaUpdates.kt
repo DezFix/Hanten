@@ -1,9 +1,9 @@
 package hanten.wre.app.tracker.domain.model
 
-import org.koitharu.kotatsu.parsers.exception.TooManyRequestExceptions
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.util.ifZero
+import hanten.wre.app.parsers.exception.TooManyRequestExceptions
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.util.ifZero
 
 sealed interface MangaUpdates {
 

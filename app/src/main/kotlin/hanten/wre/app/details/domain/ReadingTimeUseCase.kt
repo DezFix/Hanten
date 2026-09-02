@@ -4,7 +4,7 @@ import hanten.wre.app.core.model.MangaHistory
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
-import org.koitharu.kotatsu.parsers.util.findById
+import hanten.wre.app.parsers.util.findById
 import hanten.wre.app.stats.data.StatsRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

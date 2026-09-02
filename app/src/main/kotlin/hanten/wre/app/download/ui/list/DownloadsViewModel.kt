@@ -44,9 +44,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.plus
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.LinkedList
 import java.util.UUID
 import javax.inject.Inject

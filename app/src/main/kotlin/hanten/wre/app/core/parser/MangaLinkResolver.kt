@@ -7,15 +7,15 @@ import hanten.wre.app.core.model.MangaSource
 import hanten.wre.app.core.model.UnknownMangaSource
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.util.ext.isHttpUrl
-import org.koitharu.kotatsu.parsers.MangaLoaderContext
-import org.koitharu.kotatsu.parsers.exception.NotFoundException
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.almostEquals
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.levenshteinDistance
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.MangaLoaderContext
+import hanten.wre.app.parsers.exception.NotFoundException
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.almostEquals
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
 
 @Reusable

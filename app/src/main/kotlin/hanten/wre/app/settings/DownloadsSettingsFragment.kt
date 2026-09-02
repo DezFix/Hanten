@@ -30,7 +30,7 @@ import hanten.wre.app.settings.utils.DozeHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koitharu.kotatsu.parsers.util.names
+import hanten.wre.app.parsers.util.names
 import javax.inject.Inject
 
 @AndroidEntryPoint

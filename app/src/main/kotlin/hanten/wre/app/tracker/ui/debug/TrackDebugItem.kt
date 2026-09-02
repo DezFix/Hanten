@@ -1,7 +1,7 @@
 package hanten.wre.app.tracker.ui.debug
 
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.time.Instant
 
 data class TrackDebugItem(

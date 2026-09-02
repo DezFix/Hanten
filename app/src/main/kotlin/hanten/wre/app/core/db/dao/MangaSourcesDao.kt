@@ -16,8 +16,8 @@ import kotlinx.coroutines.isActive
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.db.entity.MangaSourceEntity
 import hanten.wre.app.explore.data.SourcesSortOrder
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper.PROTECTION_CAPTCHA
+import hanten.wre.app.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.network.CloudFlareHelper.PROTECTION_CAPTCHA
 
 @Dao
 abstract class MangaSourcesDao {

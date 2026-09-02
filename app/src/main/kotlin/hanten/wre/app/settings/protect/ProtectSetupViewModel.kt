@@ -12,8 +12,8 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
-import org.koitharu.kotatsu.parsers.util.isNumeric
-import org.koitharu.kotatsu.parsers.util.md5
+import hanten.wre.app.parsers.util.isNumeric
+import hanten.wre.app.parsers.util.md5
 import javax.inject.Inject
 
 @HiltViewModel

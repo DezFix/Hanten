@@ -15,10 +15,10 @@ import hanten.wre.app.R
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.network.BaseHttpClient
 import hanten.wre.app.core.prefs.AppSettings
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.json.getBooleanOrDefault
-import org.koitharu.kotatsu.parsers.util.json.getStringOrNull
-import org.koitharu.kotatsu.parsers.util.parseJson
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.json.getBooleanOrDefault
+import hanten.wre.app.parsers.util.json.getStringOrNull
+import hanten.wre.app.parsers.util.parseJson
 import java.io.File
 import javax.inject.Inject
 

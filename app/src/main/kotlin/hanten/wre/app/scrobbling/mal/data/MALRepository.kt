@@ -10,10 +10,10 @@ import okhttp3.Request
 import org.json.JSONObject
 import hanten.wre.app.R
 import hanten.wre.app.core.db.MangaDatabase
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.json.getStringOrNull
-import org.koitharu.kotatsu.parsers.util.json.mapJSONNotNull
-import org.koitharu.kotatsu.parsers.util.parseJson
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.json.getStringOrNull
+import hanten.wre.app.parsers.util.json.mapJSONNotNull
+import hanten.wre.app.parsers.util.parseJson
 import hanten.wre.app.scrobbling.common.data.ScrobblerRepository
 import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.data.ScrobblingEntity

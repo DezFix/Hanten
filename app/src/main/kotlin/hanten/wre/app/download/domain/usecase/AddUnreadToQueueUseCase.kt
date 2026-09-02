@@ -5,7 +5,7 @@ import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.download.data.repository.DownloadQueueRepository
 import hanten.wre.app.mihon.parsers.util.runCatchingCancellable
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 class AddUnreadToQueueUseCase @Inject constructor(

@@ -12,9 +12,9 @@ import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.toInstantOrNull
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.tracker.domain.model.MangaTracking
 import hanten.wre.app.tracker.domain.model.MangaUpdates
 import java.time.Instant

@@ -7,8 +7,8 @@ import dagger.Reusable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.core.util.ext.observeChanges
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

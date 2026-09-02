@@ -4,8 +4,8 @@ import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.io.IOException
 import javax.inject.Inject
 

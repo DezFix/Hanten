@@ -2,7 +2,7 @@ package hanten.wre.app.reader.ui.pager
 
 import android.content.res.Resources
 import hanten.wre.app.core.model.getLocalizedTitle
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 
 data class ReaderUiState(
 	val mangaName: String?,

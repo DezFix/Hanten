@@ -7,8 +7,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.details.data.MangaDetails
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.reader.ui.pager.ReaderPage
 import javax.inject.Inject
 

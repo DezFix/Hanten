@@ -1,7 +1,7 @@
 package hanten.wre.app.core.exceptions
 
 import okio.IOException
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 class InteractiveActionRequiredException(
 	val source: MangaSource,

@@ -20,7 +20,7 @@ import hanten.wre.app.core.ui.util.ActivityRecreationHandle
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.main.ui.MainActivity
 import hanten.wre.app.main.ui.MainNavigationDelegate
-import org.koitharu.kotatsu.parsers.util.move
+import hanten.wre.app.parsers.util.move
 import hanten.wre.app.settings.nav.model.NavItemAddModel
 import hanten.wre.app.settings.nav.model.NavItemConfigModel
 import javax.inject.Inject

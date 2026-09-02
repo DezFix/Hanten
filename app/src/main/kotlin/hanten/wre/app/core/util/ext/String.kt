@@ -3,8 +3,8 @@ package hanten.wre.app.core.util.ext
 import android.content.Context
 import androidx.collection.arraySetOf
 import hanten.wre.app.R
-import org.koitharu.kotatsu.parsers.util.ellipsize
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.ellipsize
+import hanten.wre.app.parsers.util.nullIfEmpty
 import java.util.UUID
 
 fun String.toUUIDOrNull(): UUID? = try {

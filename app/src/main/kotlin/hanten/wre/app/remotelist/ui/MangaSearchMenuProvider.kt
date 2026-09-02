@@ -11,7 +11,7 @@ import hanten.wre.app.core.ui.util.ReversibleAction
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.filter.ui.FilterCoordinator
 import hanten.wre.app.list.ui.MangaListViewModel
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaListFilter
 
 class MangaSearchMenuProvider(
 	private val filter: FilterCoordinator,

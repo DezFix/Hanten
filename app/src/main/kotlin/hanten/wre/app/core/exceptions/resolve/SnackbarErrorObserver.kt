@@ -9,7 +9,7 @@ import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.isSerializable
 import hanten.wre.app.main.ui.owners.BottomNavOwner
 import hanten.wre.app.main.ui.owners.BottomSheetOwner
-import org.koitharu.kotatsu.parsers.exception.ParseException
+import hanten.wre.app.parsers.exception.ParseException
 
 class SnackbarErrorObserver(
 	host: View,

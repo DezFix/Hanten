@@ -6,9 +6,9 @@ import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.MangaListModel
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.SortOrder
 
 data class SearchResultsListModel(
 	@StringRes val titleResId: Int,

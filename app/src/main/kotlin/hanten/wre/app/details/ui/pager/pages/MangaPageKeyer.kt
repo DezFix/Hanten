@@ -2,7 +2,7 @@ package hanten.wre.app.details.ui.pager.pages
 
 import coil3.key.Keyer
 import coil3.request.Options
-import org.koitharu.kotatsu.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaPage
 
 class MangaPageKeyer : Keyer<MangaPage> {
 

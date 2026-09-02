@@ -17,8 +17,8 @@ import hanten.wre.app.core.ui.BaseActivity
 import hanten.wre.app.core.util.ext.configureForParser
 import hanten.wre.app.core.util.ext.consumeAll
 import hanten.wre.app.databinding.ActivityBrowserBinding
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.nullIfEmpty
 import javax.inject.Inject
 
 @AndroidEntryPoint

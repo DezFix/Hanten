@@ -63,7 +63,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import okhttp3.OkHttpClient
-import org.koitharu.kotatsu.parsers.MangaLoaderContext
+import hanten.wre.app.parsers.MangaLoaderContext
 import javax.inject.Provider
 import javax.inject.Singleton
 

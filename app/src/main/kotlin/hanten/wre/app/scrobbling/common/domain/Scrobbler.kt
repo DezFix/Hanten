@@ -9,9 +9,9 @@ import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.findKeyByValue
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.sanitize
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.findById
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.findById
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.scrobbling.common.data.ScrobblerRepository
 import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga

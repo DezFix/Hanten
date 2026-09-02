@@ -3,7 +3,7 @@ package hanten.wre.app.search.ui.suggestion.adapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.core.ui.widgets.ChipsView
 import hanten.wre.app.databinding.ItemSearchSuggestionTagsBinding
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.search.ui.suggestion.SearchSuggestionListener
 import hanten.wre.app.search.ui.suggestion.model.SearchSuggestionItem
 

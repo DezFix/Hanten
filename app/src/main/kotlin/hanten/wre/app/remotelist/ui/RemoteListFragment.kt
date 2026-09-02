@@ -25,7 +25,7 @@ import hanten.wre.app.core.util.ext.withArgs
 import hanten.wre.app.databinding.FragmentListBinding
 import hanten.wre.app.filter.ui.FilterCoordinator
 import hanten.wre.app.list.ui.MangaListFragment
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.search.domain.SearchKind
 
 @AndroidEntryPoint

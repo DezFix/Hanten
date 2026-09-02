@@ -7,9 +7,9 @@ import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.model.withOverride
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.list.ui.ListModelDiffCallback.Companion.PAYLOAD_ANYTHING_CHANGED
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 
 sealed class MangaListModel : ListModel {
 

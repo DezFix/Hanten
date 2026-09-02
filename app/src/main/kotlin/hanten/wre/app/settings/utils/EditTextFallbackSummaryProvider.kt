@@ -3,7 +3,7 @@ package hanten.wre.app.settings.utils
 import androidx.annotation.StringRes
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 
 class EditTextFallbackSummaryProvider(
 	@StringRes private val fallbackResId: Int,

@@ -9,11 +9,11 @@ import hanten.wre.app.core.util.ext.readEnumSet
 import hanten.wre.app.core.util.ext.readParcelableCompat
 import hanten.wre.app.core.util.ext.readSerializableCompat
 import hanten.wre.app.core.util.ext.writeEnumSet
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.Demographic
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaState
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.Demographic
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaState
 
 object MangaListFilterParceler : Parceler<MangaListFilter> {
 

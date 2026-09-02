@@ -13,9 +13,9 @@ import hanten.wre.app.core.prefs.ReaderMode
 import hanten.wre.app.core.util.ext.isFileUri
 import hanten.wre.app.core.util.ext.isZipUri
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.reader.ui.ReaderState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible

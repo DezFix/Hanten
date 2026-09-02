@@ -51,10 +51,10 @@ import hanten.wre.app.core.util.progress.ProgressDeferred
 import hanten.wre.app.download.ui.worker.DownloadSlowdownDispatcher
 import hanten.wre.app.local.data.LocalStorageCache
 import hanten.wre.app.local.data.PageCache
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.requireBody
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.requireBody
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.reader.ui.pager.ReaderPage
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Deferred

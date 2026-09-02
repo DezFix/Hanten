@@ -24,7 +24,7 @@ import hanten.wre.app.core.prefs.TrackerDownloadStrategy
 import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
-import org.koitharu.kotatsu.parsers.util.names
+import hanten.wre.app.parsers.util.names
 import hanten.wre.app.settings.utils.DozeHelper
 import hanten.wre.app.settings.utils.MultiSummaryProvider
 import hanten.wre.app.tracker.ui.debug.TrackerDebugActivity

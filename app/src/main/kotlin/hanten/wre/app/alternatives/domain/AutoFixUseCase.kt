@@ -16,8 +16,8 @@ import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.concat
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException

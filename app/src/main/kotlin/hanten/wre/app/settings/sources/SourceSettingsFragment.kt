@@ -25,7 +25,7 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.withArgs
 import hanten.wre.app.mihon.MihonMangaRepository
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 import java.io.File
 
 @AndroidEntryPoint

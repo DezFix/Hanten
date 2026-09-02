@@ -16,10 +16,10 @@ import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.core.util.ext.toLocaleOrNull
 import hanten.wre.app.mihon.model.MihonMangaSource
 import hanten.wre.app.mihon.parsers.model.ContentType as MihonContentType
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.splitTwoParts
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.splitTwoParts
 import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
 

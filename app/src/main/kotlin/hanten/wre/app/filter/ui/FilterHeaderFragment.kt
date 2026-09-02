@@ -18,12 +18,12 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.databinding.FragmentFilterHeaderBinding
 import hanten.wre.app.filter.data.PersistableFilter
 import hanten.wre.app.filter.ui.model.FilterHeaderModel
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.Demographic
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.model.YEAR_UNKNOWN
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.Demographic
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.YEAR_UNKNOWN
 import java.util.Locale
 import javax.inject.Inject
 

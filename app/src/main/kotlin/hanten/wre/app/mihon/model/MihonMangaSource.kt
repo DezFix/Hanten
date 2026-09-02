@@ -4,7 +4,7 @@ import eu.kanade.tachiyomi.source.CatalogueSource
 import hanten.wre.app.mihon.extensions.runtime.getExternalExtensionLanguageDisplayName
 import hanten.wre.app.mihon.parsers.model.ContentSource
 import hanten.wre.app.mihon.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 
 /**
  * Wrapper that adapts a Mihon CatalogueSource to App's ContentSource interface.

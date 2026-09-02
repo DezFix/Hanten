@@ -10,8 +10,8 @@ import android.view.View
 import androidx.annotation.ColorInt
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.resolveDp
-import org.koitharu.kotatsu.parsers.util.replaceWith
-import org.koitharu.kotatsu.parsers.util.toIntUp
+import hanten.wre.app.parsers.util.replaceWith
+import hanten.wre.app.parsers.util.toIntUp
 import kotlin.math.roundToInt
 import kotlin.random.Random
 import androidx.appcompat.R as appcompatR

@@ -34,7 +34,7 @@ import hanten.wre.app.core.ui.image.ChipIconTarget
 import hanten.wre.app.core.util.ext.enqueueWith
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.setProgressIcon
-import org.koitharu.kotatsu.parsers.util.ifZero
+import hanten.wre.app.parsers.util.ifZero
 import javax.inject.Inject
 import com.google.android.material.R as materialR
 

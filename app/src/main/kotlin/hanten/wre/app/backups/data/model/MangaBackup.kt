@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import hanten.wre.app.core.db.entity.MangaEntity
 import hanten.wre.app.core.db.entity.MangaWithTags
-import org.koitharu.kotatsu.parsers.model.RATING_UNKNOWN
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.model.RATING_UNKNOWN
+import hanten.wre.app.parsers.util.mapToSet
 
 @Serializable
 class MangaBackup(

@@ -8,11 +8,11 @@ import kotlinx.coroutines.withContext
 import hanten.wre.app.R
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.parser.ParserMangaRepository
-import org.koitharu.kotatsu.parsers.config.ConfigKey
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.mapToArray
-import org.koitharu.kotatsu.parsers.util.suspendlazy.getOrNull
-import org.koitharu.kotatsu.parsers.util.suspendlazy.suspendLazy
+import hanten.wre.app.parsers.config.ConfigKey
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.mapToArray
+import hanten.wre.app.parsers.util.suspendlazy.getOrNull
+import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 import kotlin.coroutines.resume
 
 class ImageServerDelegate(

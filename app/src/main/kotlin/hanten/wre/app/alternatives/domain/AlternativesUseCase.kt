@@ -9,10 +9,10 @@ import kotlinx.coroutines.sync.withPermit
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.explore.data.MangaSourcesRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.search.domain.SearchKind
 import hanten.wre.app.search.domain.SearchV2Helper
 import java.util.Locale

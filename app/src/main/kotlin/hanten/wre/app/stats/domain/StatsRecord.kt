@@ -2,7 +2,7 @@ package hanten.wre.app.stats.domain
 
 import hanten.wre.app.details.data.ReadingTime
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.util.concurrent.TimeUnit
 
 data class StatsRecord(

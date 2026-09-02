@@ -14,7 +14,7 @@ import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.readByteBuffer
 import hanten.wre.app.core.util.ext.toByteBuffer
 import hanten.wre.app.core.util.ext.toMimeTypeOrNull
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import okio.IOException
 import okio.buffer
 import okio.source

@@ -5,9 +5,9 @@ import android.webkit.MimeTypeMap
 import org.jetbrains.annotations.Blocking
 import hanten.wre.app.core.util.ext.MimeType
 import hanten.wre.app.core.util.ext.toMimeTypeOrNull
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
-import org.koitharu.kotatsu.parsers.util.removeSuffix
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.removeSuffix
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.io.File
 import java.nio.file.Files
 import coil3.util.MimeTypeMap as CoilMimeTypeMap

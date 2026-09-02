@@ -8,9 +8,9 @@ import okhttp3.Request
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.prefs.AppSettings
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.EnumSet
 import javax.inject.Inject
 

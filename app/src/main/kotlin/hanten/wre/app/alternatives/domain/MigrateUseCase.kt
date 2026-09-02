@@ -9,9 +9,9 @@ import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.history.data.HistoryEntity
 import hanten.wre.app.history.data.toMangaHistory
 import hanten.wre.app.list.domain.ReadingProgress.Companion.PROGRESS_NONE
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
 import hanten.wre.app.tracker.data.TrackEntity

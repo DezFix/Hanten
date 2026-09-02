@@ -16,7 +16,7 @@ import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.parser.ParserMangaRepository
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

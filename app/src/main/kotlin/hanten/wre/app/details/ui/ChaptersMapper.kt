@@ -8,7 +8,7 @@ import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.details.ui.model.toListItem
 import hanten.wre.app.list.ui.model.ListHeader
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.mapToSet
 
 fun MangaDetails.mapChapters(
 	currentChapterId: Long,

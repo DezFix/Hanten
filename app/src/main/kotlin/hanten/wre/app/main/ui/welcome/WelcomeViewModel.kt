@@ -15,9 +15,9 @@ import hanten.wre.app.core.util.ext.toList
 import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.filter.ui.model.FilterProperty
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.util.mapToSet
 import java.util.EnumSet
 import java.util.Locale
 import javax.inject.Inject

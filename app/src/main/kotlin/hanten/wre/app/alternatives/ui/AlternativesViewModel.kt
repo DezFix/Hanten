@@ -32,9 +32,9 @@ import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingFooter
 import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.list.ui.model.MangaGridModel
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.suspendlazy.getOrDefault
-import org.koitharu.kotatsu.parsers.util.suspendlazy.suspendLazy
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.suspendlazy.getOrDefault
+import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 import javax.inject.Inject
 
 @HiltViewModel

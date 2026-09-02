@@ -3,7 +3,7 @@ package hanten.wre.app.reader.ui
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import hanten.wre.app.core.model.MangaHistory
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 @Parcelize
 data class ReaderState(

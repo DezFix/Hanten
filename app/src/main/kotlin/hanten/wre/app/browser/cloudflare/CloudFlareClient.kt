@@ -5,7 +5,7 @@ import android.webkit.WebView
 import hanten.wre.app.browser.BrowserClient
 import hanten.wre.app.core.network.cookies.MutableCookieJar
 import hanten.wre.app.core.network.webview.adblock.AdBlock
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.network.CloudFlareHelper
 
 private const val LOOP_COUNTER = 3
 

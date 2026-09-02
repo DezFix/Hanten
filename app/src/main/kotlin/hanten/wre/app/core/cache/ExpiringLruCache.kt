@@ -1,7 +1,7 @@
 package hanten.wre.app.core.cache
 
 import hanten.wre.app.core.util.SynchronizedSieveCache
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaSource
 import java.util.concurrent.TimeUnit
 import hanten.wre.app.core.cache.MemoryContentCache.Key as CacheKey
 

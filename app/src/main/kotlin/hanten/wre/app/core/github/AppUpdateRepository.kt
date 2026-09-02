@@ -5,8 +5,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.R
 import hanten.wre.app.core.network.BaseHttpClient
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

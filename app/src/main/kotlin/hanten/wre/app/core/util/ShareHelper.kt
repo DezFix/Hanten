@@ -8,7 +8,7 @@ import androidx.core.content.FileProvider
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
 import hanten.wre.app.core.model.appUrl
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.io.File
 
 private const val TYPE_TEXT = "text/plain"

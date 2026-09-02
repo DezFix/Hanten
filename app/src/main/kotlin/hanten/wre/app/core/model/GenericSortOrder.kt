@@ -2,7 +2,7 @@ package hanten.wre.app.core.model
 
 import androidx.annotation.StringRes
 import hanten.wre.app.R
-import org.koitharu.kotatsu.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.SortOrder
 
 @Deprecated("")
 enum class GenericSortOrder(

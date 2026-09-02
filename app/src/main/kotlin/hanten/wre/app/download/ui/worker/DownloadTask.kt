@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.work.Data
 import hanten.wre.app.core.prefs.DownloadFormat
 import kotlinx.parcelize.Parcelize
-import org.koitharu.kotatsu.parsers.util.find
+import hanten.wre.app.parsers.util.find
 import java.io.File
 
 @Parcelize

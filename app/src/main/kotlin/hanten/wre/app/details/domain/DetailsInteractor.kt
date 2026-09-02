@@ -16,8 +16,8 @@ import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.tracker.domain.TrackingRepository

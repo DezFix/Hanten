@@ -17,7 +17,7 @@ import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.main.domain.ReadingResumeEnabledUseCase
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.tracker.domain.TrackingRepository
 import javax.inject.Inject
 

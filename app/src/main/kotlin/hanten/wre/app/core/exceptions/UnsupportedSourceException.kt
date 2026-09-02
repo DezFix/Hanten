@@ -1,7 +1,7 @@
 package hanten.wre.app.core.exceptions
 
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 
 class UnsupportedSourceException(
 	message: String?,

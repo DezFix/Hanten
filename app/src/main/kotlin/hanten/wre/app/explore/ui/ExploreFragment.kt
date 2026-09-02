@@ -43,8 +43,8 @@ import hanten.wre.app.explore.ui.adapter.ExploreListEventListener
 import hanten.wre.app.explore.ui.model.MangaSourceItem
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.list.ui.model.ListHeader
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaParserSource
 
 @AndroidEntryPoint
 class ExploreFragment :

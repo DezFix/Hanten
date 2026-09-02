@@ -24,8 +24,8 @@ import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.mihon.MihonMangaRepository
-import org.koitharu.kotatsu.parsers.MangaParserAuthProvider
-import org.koitharu.kotatsu.parsers.exception.AuthRequiredException
+import hanten.wre.app.parsers.MangaParserAuthProvider
+import hanten.wre.app.parsers.exception.AuthRequiredException
 import javax.inject.Inject
 
 @HiltViewModel

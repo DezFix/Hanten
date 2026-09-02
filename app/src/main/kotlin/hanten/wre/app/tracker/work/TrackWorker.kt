@@ -47,8 +47,8 @@ import hanten.wre.app.core.util.ext.trySetForeground
 import hanten.wre.app.download.ui.worker.DownloadTask
 import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.local.data.LocalMangaRepository
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
-import org.koitharu.kotatsu.parsers.util.toIntUp
+import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.toIntUp
 import hanten.wre.app.settings.work.PeriodicWorkScheduler
 import hanten.wre.app.tracker.domain.CheckNewChaptersUseCase
 import hanten.wre.app.tracker.domain.GetTracksUseCase

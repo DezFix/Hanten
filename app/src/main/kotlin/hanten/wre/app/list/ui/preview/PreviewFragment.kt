@@ -19,9 +19,9 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.textAndVisible
 import hanten.wre.app.databinding.FragmentPreviewBinding
 import hanten.wre.app.filter.ui.FilterCoordinator
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 import hanten.wre.app.search.ui.MangaListActivity
 
 @AndroidEntryPoint

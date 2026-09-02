@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.withContext
 import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.util.move
+import hanten.wre.app.parsers.util.move
 import java.util.LinkedList
 
 open class ReorderableListAdapter<T : ListModel> : ListDelegationAdapter<List<T>>(), FlowCollector<List<T>?> {

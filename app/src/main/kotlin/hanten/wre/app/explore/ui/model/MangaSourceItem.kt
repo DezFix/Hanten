@@ -2,7 +2,7 @@ package hanten.wre.app.explore.ui.model
 
 import hanten.wre.app.core.model.MangaSourceInfo
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.util.longHashCode
+import hanten.wre.app.parsers.util.longHashCode
 
 data class MangaSourceItem(
 	val source: MangaSourceInfo,

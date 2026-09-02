@@ -16,7 +16,7 @@ import hanten.wre.app.core.ui.AlertDialogFragment
 import hanten.wre.app.core.util.ext.isHttpUrl
 import hanten.wre.app.core.util.ext.withArgs
 import hanten.wre.app.databinding.PreferenceDialogAutocompletetextviewBinding
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 import hanten.wre.app.settings.utils.validation.UrlValidator
 import hanten.wre.app.sync.data.SyncSettings
 import javax.inject.Inject

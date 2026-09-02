@@ -26,10 +26,10 @@ import hanten.wre.app.core.os.AppShortcutManager
 import hanten.wre.app.core.prefs.ReaderMode
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.core.util.ext.toFileOrNull
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.nullIfEmpty
 import hanten.wre.app.reader.domain.ReaderColorFilter
 import javax.inject.Inject
 import javax.inject.Provider

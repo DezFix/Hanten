@@ -46,8 +46,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.plus
 import okio.FileNotFoundException
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaState
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaState
 
 abstract class ChaptersPagesViewModel(
 	@JvmField protected val settings: AppSettings,

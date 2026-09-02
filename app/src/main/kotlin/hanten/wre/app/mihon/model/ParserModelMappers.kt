@@ -9,14 +9,14 @@ import hanten.wre.app.mihon.parsers.model.ContentRating
 import hanten.wre.app.mihon.parsers.model.ContentSource
 import hanten.wre.app.mihon.parsers.model.ContentState
 import hanten.wre.app.mihon.parsers.model.ContentTag
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaListFilterOptions
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaListFilterOptions
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.MangaTag
 
 
 fun Content.toManga(): Manga {
@@ -28,14 +28,14 @@ fun Content.toManga(): Manga {
         publicUrl = Url,
         rating = rating,
         contentRating = when (contentRating) {
-            ContentRating.SAFE -> org.koitharu.kotatsu.parsers.model.ContentRating.SAFE
-            ContentRating.SUGGESTIVE -> org.koitharu.kotatsu.parsers.model.ContentRating.SUGGESTIVE
-            ContentRating.ADULT -> org.koitharu.kotatsu.parsers.model.ContentRating.ADULT
+            ContentRating.SAFE -> hanten.wre.app.parsers.model.ContentRating.SAFE
+            ContentRating.SUGGESTIVE -> hanten.wre.app.parsers.model.ContentRating.SUGGESTIVE
+            ContentRating.ADULT -> hanten.wre.app.parsers.model.ContentRating.ADULT
             null -> null
         },
         coverUrl = coverUrl,
         tags = tags.map { it.toMangaTag() }.toSet(),
-        state = state?.toMangaState() ?: org.koitharu.kotatsu.parsers.model.MangaState.ONGOING,
+        state = state?.toMangaState() ?: hanten.wre.app.parsers.model.MangaState.ONGOING,
         authors = authors,
         largeCoverUrl = largeCoverUrl,
         description = description,
@@ -53,9 +53,9 @@ fun Manga.toContent(source: ContentSource): Content {
         Url = publicUrl,
         rating = rating,
         contentRating = when (contentRating) {
-            org.koitharu.kotatsu.parsers.model.ContentRating.SAFE -> ContentRating.SAFE
-            org.koitharu.kotatsu.parsers.model.ContentRating.SUGGESTIVE -> ContentRating.SUGGESTIVE
-            org.koitharu.kotatsu.parsers.model.ContentRating.ADULT -> ContentRating.ADULT
+            hanten.wre.app.parsers.model.ContentRating.SAFE -> ContentRating.SAFE
+            hanten.wre.app.parsers.model.ContentRating.SUGGESTIVE -> ContentRating.SUGGESTIVE
+            hanten.wre.app.parsers.model.ContentRating.ADULT -> ContentRating.ADULT
             null -> null
         },
         coverUrl = coverUrl,

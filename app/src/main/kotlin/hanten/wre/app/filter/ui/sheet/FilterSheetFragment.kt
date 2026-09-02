@@ -46,15 +46,15 @@ import hanten.wre.app.filter.data.PersistableFilter
 import hanten.wre.app.filter.data.PersistableFilter.Companion.MAX_TITLE_LENGTH
 import hanten.wre.app.filter.ui.FilterCoordinator
 import hanten.wre.app.filter.ui.model.FilterProperty
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.Demographic
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.model.YEAR_UNKNOWN
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.toIntUp
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.Demographic
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.YEAR_UNKNOWN
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.toIntUp
 import java.util.Locale
 import java.util.TreeSet
 

@@ -26,8 +26,8 @@ import hanten.wre.app.core.util.ext.setValueRounded
 import hanten.wre.app.core.util.ext.systemBarsInsets
 import hanten.wre.app.core.util.progress.ImageRequestIndicatorListener
 import hanten.wre.app.databinding.ActivityColorFilterBinding
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.util.format
 import hanten.wre.app.reader.domain.ReaderColorFilter
 import javax.inject.Inject
 

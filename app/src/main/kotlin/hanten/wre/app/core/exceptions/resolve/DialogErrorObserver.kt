@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import hanten.wre.app.R
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.isSerializable
-import org.koitharu.kotatsu.parsers.exception.ParseException
+import hanten.wre.app.parsers.exception.ParseException
 
 class DialogErrorObserver(
 	host: View,

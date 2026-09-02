@@ -2,7 +2,7 @@ package hanten.wre.app.core.db.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.koitharu.kotatsu.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.SortOrder
 
 class Migration8To9 : Migration(8, 9) {
 

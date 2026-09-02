@@ -12,8 +12,8 @@ import okio.buffer
 import okio.source
 import hanten.wre.app.core.model.FavouriteCategory
 import hanten.wre.app.core.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 import java.time.Instant
 import java.util.Date
 import kotlin.reflect.KClass

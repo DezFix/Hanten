@@ -32,7 +32,7 @@ import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.data.LocalStorageManager
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.remotelist.ui.RemoteListViewModel
 import javax.inject.Inject
 

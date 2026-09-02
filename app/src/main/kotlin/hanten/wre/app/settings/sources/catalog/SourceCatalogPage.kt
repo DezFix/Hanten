@@ -2,7 +2,7 @@ package hanten.wre.app.settings.sources.catalog
 
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.ContentType
+import hanten.wre.app.parsers.model.ContentType
 
 data class SourceCatalogPage(
 	val type: ContentType,

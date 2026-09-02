@@ -10,7 +10,7 @@ import okhttp3.Response
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.observeAsStateFlow
 import hanten.wre.app.core.util.ext.processLifecycleScope
-import org.koitharu.kotatsu.parsers.util.await
+import hanten.wre.app.parsers.util.await
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -32,8 +32,8 @@ import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.list.ui.model.ListHeader
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.list.ui.size.DynamicItemSizeResolver
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.search.domain.SearchKind
 import hanten.wre.app.search.ui.multi.adapter.SearchAdapter
 import javax.inject.Inject

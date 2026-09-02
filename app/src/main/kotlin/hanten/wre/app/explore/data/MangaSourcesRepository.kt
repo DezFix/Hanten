@@ -39,12 +39,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
-import org.koitharu.kotatsu.parsers.util.mapNotNullToSet
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.util.mapNotNullToSet
+import hanten.wre.app.parsers.util.mapToSet
 import java.util.Collections
 import java.util.EnumSet
 import java.util.concurrent.atomic.AtomicBoolean
@@ -172,17 +172,17 @@ class MangaSourcesRepository @Inject constructor(
 						val mihonType = it.contentType
 						types.any { kotatsuType ->
 							when (kotatsuType) {
-								org.koitharu.kotatsu.parsers.model.ContentType.MANGA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANGA
-								org.koitharu.kotatsu.parsers.model.ContentType.HENTAI -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.HENTAI_MANGA
-								org.koitharu.kotatsu.parsers.model.ContentType.COMICS -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.COMICS
-								org.koitharu.kotatsu.parsers.model.ContentType.MANHWA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANHWA
-								org.koitharu.kotatsu.parsers.model.ContentType.MANHUA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANHUA
-								org.koitharu.kotatsu.parsers.model.ContentType.NOVEL -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.NOVEL
-								org.koitharu.kotatsu.parsers.model.ContentType.ONE_SHOT -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.ONE_SHOT
-								org.koitharu.kotatsu.parsers.model.ContentType.DOUJINSHI -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.DOUJINSHI
-								org.koitharu.kotatsu.parsers.model.ContentType.IMAGE_SET -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.IMAGE_SET
-								org.koitharu.kotatsu.parsers.model.ContentType.ARTIST_CG -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.ARTIST_CG
-								org.koitharu.kotatsu.parsers.model.ContentType.GAME_CG -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.GAME_CG
+								hanten.wre.app.parsers.model.ContentType.MANGA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANGA
+								hanten.wre.app.parsers.model.ContentType.HENTAI -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.HENTAI_MANGA
+								hanten.wre.app.parsers.model.ContentType.COMICS -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.COMICS
+								hanten.wre.app.parsers.model.ContentType.MANHWA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANHWA
+								hanten.wre.app.parsers.model.ContentType.MANHUA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANHUA
+								hanten.wre.app.parsers.model.ContentType.NOVEL -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.NOVEL
+								hanten.wre.app.parsers.model.ContentType.ONE_SHOT -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.ONE_SHOT
+								hanten.wre.app.parsers.model.ContentType.DOUJINSHI -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.DOUJINSHI
+								hanten.wre.app.parsers.model.ContentType.IMAGE_SET -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.IMAGE_SET
+								hanten.wre.app.parsers.model.ContentType.ARTIST_CG -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.ARTIST_CG
+								hanten.wre.app.parsers.model.ContentType.GAME_CG -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.GAME_CG
 								else -> false
 							}
 						}

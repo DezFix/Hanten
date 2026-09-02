@@ -7,7 +7,7 @@ import hanten.wre.app.core.ui.list.OnListItemClickListener
 import hanten.wre.app.core.util.FutonColors
 import hanten.wre.app.databinding.ItemStatsBinding
 import hanten.wre.app.stats.domain.StatsRecord
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 fun statsAD(
 	listener: OnListItemClickListener<Manga>,

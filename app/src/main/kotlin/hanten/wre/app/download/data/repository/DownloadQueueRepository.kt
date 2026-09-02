@@ -8,7 +8,7 @@ import hanten.wre.app.download.data.dao.DownloadQueueDao
 import hanten.wre.app.download.data.entity.DownloadQueueEntity
 import hanten.wre.app.download.ui.worker.DownloadSchedulerWorker
 import kotlinx.coroutines.flow.Flow
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 import javax.inject.Singleton
 

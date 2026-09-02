@@ -5,7 +5,7 @@ import android.text.format.DateUtils
 import org.jsoup.internal.StringUtil.StringJoiner
 import hanten.wre.app.core.model.getLocalizedTitle
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 import kotlin.experimental.and
 
 data class ChapterListItem(

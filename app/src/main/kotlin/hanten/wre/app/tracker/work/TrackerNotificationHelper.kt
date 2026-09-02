@@ -24,8 +24,8 @@ import hanten.wre.app.core.util.ext.checkNotificationPermission
 import hanten.wre.app.core.util.ext.getQuantityStringSafe
 import hanten.wre.app.core.util.ext.mangaSourceExtra
 import hanten.wre.app.core.util.ext.toBitmapOrNull
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
 import javax.inject.Inject
 
 class TrackerNotificationHelper @Inject constructor(

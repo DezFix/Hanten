@@ -9,7 +9,7 @@ import hanten.wre.app.core.prefs.TriStateOption
 import hanten.wre.app.download.data.repository.DownloadQueueRepository
 import hanten.wre.app.download.data.repository.SmartDownloadRepository
 import hanten.wre.app.local.data.LocalMangaRepository
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 import javax.inject.Singleton
 

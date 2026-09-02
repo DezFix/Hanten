@@ -16,7 +16,7 @@ import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.viewLifecycleScope
-import org.koitharu.kotatsu.parsers.util.await
+import hanten.wre.app.parsers.util.await
 import hanten.wre.app.settings.utils.EditTextBindListener
 import hanten.wre.app.settings.utils.PasswordSummaryProvider
 import hanten.wre.app.settings.utils.validation.DomainValidator

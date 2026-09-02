@@ -7,10 +7,10 @@ import org.json.JSONObject
 import hanten.wre.app.core.exceptions.SyncApiException
 import hanten.wre.app.core.network.BaseHttpClient
 import hanten.wre.app.core.util.ext.toRequestBody
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.parseJson
-import org.koitharu.kotatsu.parsers.util.parseRaw
-import org.koitharu.kotatsu.parsers.util.removeSurrounding
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.parseJson
+import hanten.wre.app.parsers.util.parseRaw
+import hanten.wre.app.parsers.util.removeSurrounding
 import javax.inject.Inject
 
 @Reusable

@@ -7,8 +7,8 @@ import hanten.wre.app.core.util.ext.printStackTraceDebug
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.IOException
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.network.CloudFlareHelper
 
 class CloudFlareInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

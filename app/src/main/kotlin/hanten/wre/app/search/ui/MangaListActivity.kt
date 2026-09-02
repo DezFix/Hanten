@@ -46,10 +46,10 @@ import hanten.wre.app.filter.ui.sheet.FilterSheetFragment
 import hanten.wre.app.list.ui.preview.PreviewFragment
 import hanten.wre.app.local.ui.LocalListFragment
 import hanten.wre.app.main.ui.owners.AppBarOwner
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.SortOrder
 import hanten.wre.app.remotelist.ui.RemoteListFragment
 import kotlin.math.absoluteValue
 import com.google.android.material.R as materialR

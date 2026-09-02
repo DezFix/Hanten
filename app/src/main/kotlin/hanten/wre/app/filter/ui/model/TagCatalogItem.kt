@@ -2,7 +2,7 @@ package hanten.wre.app.filter.ui.model
 
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.MangaTag
 
 data class TagCatalogItem(
 	val tag: MangaTag,

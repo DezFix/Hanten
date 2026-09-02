@@ -22,7 +22,7 @@ import hanten.wre.app.download.ui.list.chapters.downloadChapterAD
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.util.format
 
 fun downloadItemAD(
 	lifecycleOwner: LifecycleOwner,

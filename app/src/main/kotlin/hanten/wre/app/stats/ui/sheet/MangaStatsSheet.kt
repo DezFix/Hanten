@@ -17,7 +17,7 @@ import hanten.wre.app.core.util.ext.consume
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.textAndVisible
 import hanten.wre.app.databinding.SheetStatsMangaBinding
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.util.format
 import hanten.wre.app.stats.ui.views.BarChartView
 
 @AndroidEntryPoint

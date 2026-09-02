@@ -93,5 +93,5 @@ class DownloadQueueViewModel @Inject constructor(
 
 data class DownloadQueueItem(
     val entity: DownloadQueueEntity,
-    val manga: org.koitharu.kotatsu.parsers.model.Manga?,
+    val manga: hanten.wre.app.parsers.model.Manga?,
 )

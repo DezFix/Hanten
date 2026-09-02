@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import hanten.wre.app.core.model.toChipModel
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.list.ui.model.QuickFilter
-import org.koitharu.kotatsu.parsers.util.suspendlazy.getOrNull
-import org.koitharu.kotatsu.parsers.util.suspendlazy.suspendLazy
+import hanten.wre.app.parsers.util.suspendlazy.getOrNull
+import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 
 abstract class MangaListQuickFilter(
 	private val settings: AppSettings,

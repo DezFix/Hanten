@@ -5,7 +5,7 @@ import android.content.Intent
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.core.model.parcelable.ParcelableManga
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.reader.ui.ReaderActivity
 import hanten.wre.app.reader.ui.ReaderState
 

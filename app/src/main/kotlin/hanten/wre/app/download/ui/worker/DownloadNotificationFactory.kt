@@ -32,9 +32,9 @@ import hanten.wre.app.core.util.ext.mangaSourceExtra
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.download.domain.DownloadState
 import hanten.wre.app.download.ui.list.DownloadsActivity
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.format
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.format
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.UUID

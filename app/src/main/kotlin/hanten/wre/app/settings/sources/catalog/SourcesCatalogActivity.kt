@@ -32,7 +32,7 @@ import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.databinding.ActivitySourcesCatalogBinding
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.main.ui.owners.AppBarOwner
-import org.koitharu.kotatsu.parsers.model.ContentType
+import hanten.wre.app.parsers.model.ContentType
 
 @AndroidEntryPoint
 class SourcesCatalogActivity : BaseActivity<ActivitySourcesCatalogBinding>(),

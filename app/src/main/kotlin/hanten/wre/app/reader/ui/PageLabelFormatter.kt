@@ -1,7 +1,7 @@
 package hanten.wre.app.reader.ui
 
 import com.google.android.material.slider.LabelFormatter
-import org.koitharu.kotatsu.parsers.util.format
+import hanten.wre.app.parsers.util.format
 
 class PageLabelFormatter : LabelFormatter {
 

@@ -14,7 +14,7 @@ import hanten.wre.app.core.db.entity.toManga
 import hanten.wre.app.core.ui.util.ReversibleHandle
 import hanten.wre.app.core.util.ext.mapItems
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

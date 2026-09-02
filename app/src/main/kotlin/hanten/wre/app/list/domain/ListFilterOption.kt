@@ -9,9 +9,9 @@ import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.model.unwrap
 import hanten.wre.app.core.parser.external.ExternalMangaSource
 import hanten.wre.app.core.parser.favicon.faviconUri
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
 
 sealed interface ListFilterOption {
 

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import hanten.wre.app.bookmarks.data.BookmarkEntity
 import hanten.wre.app.core.db.entity.MangaWithTags
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.mapToSet
 
 @Serializable
 class BookmarkBackup(

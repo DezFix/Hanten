@@ -22,8 +22,8 @@ import hanten.wre.app.core.util.ext.getDrawableOrThrow
 import hanten.wre.app.core.util.ext.mangaExtra
 import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.history.data.HistoryRepository
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.replaceWith
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.replaceWith
 
 class ShelfListFactory(
 	private val context: Context,

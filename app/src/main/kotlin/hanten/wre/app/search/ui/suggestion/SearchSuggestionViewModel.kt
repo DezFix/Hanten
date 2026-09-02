@@ -10,10 +10,10 @@ import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.ui.widgets.ChipsView
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.explore.data.MangaSourcesRepository
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.search.domain.MangaSearchRepository
 import hanten.wre.app.search.ui.suggestion.model.SearchSuggestionItem
 import kotlinx.coroutines.Dispatchers

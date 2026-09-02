@@ -37,7 +37,7 @@ import hanten.wre.app.list.ui.model.EmptyState
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.list.ui.model.toErrorState
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import hanten.wre.app.local.data.LocalStorageChanges

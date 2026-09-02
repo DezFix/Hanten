@@ -13,8 +13,8 @@ import hanten.wre.app.core.ui.util.ReversibleAction
 import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.explore.data.MangaSourcesRepository
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.move
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.move
 import hanten.wre.app.settings.sources.model.SourceConfigItem
 import javax.inject.Inject
 

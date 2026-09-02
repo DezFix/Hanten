@@ -46,10 +46,10 @@ import hanten.wre.app.core.util.ext.mangaSourceExtra
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.processLifecycleScope
 import hanten.wre.app.core.util.ext.toBitmapOrNull
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
-import org.koitharu.kotatsu.parsers.util.mapToArray
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.util.mapToArray
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

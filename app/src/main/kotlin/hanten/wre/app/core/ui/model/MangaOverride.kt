@@ -1,6 +1,6 @@
 package hanten.wre.app.core.ui.model
 
-import org.koitharu.kotatsu.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.ContentRating
 
 data class MangaOverride(
 	val coverUrl: String?,

@@ -29,9 +29,9 @@ import hanten.wre.app.core.util.ext.postDelayed
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
 import hanten.wre.app.core.util.ext.sortedWithSafe
 import hanten.wre.app.core.util.ext.toList
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.names
-import org.koitharu.kotatsu.parsers.util.toTitleCase
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.names
+import hanten.wre.app.parsers.util.toTitleCase
 import hanten.wre.app.settings.protect.ProtectSetupActivity
 import hanten.wre.app.settings.utils.ActivityListPreference
 import hanten.wre.app.settings.utils.MultiSummaryProvider

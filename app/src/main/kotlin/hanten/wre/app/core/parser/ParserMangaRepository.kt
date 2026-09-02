@@ -8,21 +8,21 @@ import hanten.wre.app.core.exceptions.CloudFlareProtectedException
 import hanten.wre.app.core.exceptions.InteractiveActionRequiredException
 import hanten.wre.app.core.exceptions.ProxyConfigException
 import hanten.wre.app.core.prefs.SourceSettings
-import org.koitharu.kotatsu.parsers.MangaParser
-import org.koitharu.kotatsu.parsers.MangaParserAuthProvider
-import org.koitharu.kotatsu.parsers.config.ConfigKey
-import org.koitharu.kotatsu.parsers.exception.AuthRequiredException
-import org.koitharu.kotatsu.parsers.model.Favicons
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaListFilterCapabilities
-import org.koitharu.kotatsu.parsers.model.MangaListFilterOptions
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
-import org.koitharu.kotatsu.parsers.util.suspendlazy.suspendLazy
+import hanten.wre.app.parsers.MangaParser
+import hanten.wre.app.parsers.MangaParserAuthProvider
+import hanten.wre.app.parsers.config.ConfigKey
+import hanten.wre.app.parsers.exception.AuthRequiredException
+import hanten.wre.app.parsers.model.Favicons
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaListFilterOptions
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 
 class ParserMangaRepository(
 	private val parser: MangaParser,

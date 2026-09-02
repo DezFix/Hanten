@@ -6,7 +6,7 @@ import hanten.wre.app.core.os.NetworkState
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.list.domain.ReadingProgress.Companion.PROGRESS_NONE
 import hanten.wre.app.local.data.LocalMangaRepository
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 class ProgressUpdateUseCase @Inject constructor(

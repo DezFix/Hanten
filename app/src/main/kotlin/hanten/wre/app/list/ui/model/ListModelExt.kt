@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import hanten.wre.app.R
 import hanten.wre.app.core.exceptions.resolve.ExceptionResolver
 import hanten.wre.app.core.util.ext.getDisplayIcon
-import org.koitharu.kotatsu.parsers.util.ifZero
+import hanten.wre.app.parsers.util.ifZero
 
 fun Throwable.toErrorState(canRetry: Boolean = true, @StringRes secondaryAction: Int = 0) = ErrorState(
 	exception = this,

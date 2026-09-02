@@ -11,7 +11,7 @@ import hanten.wre.app.core.ui.list.decor.SpacingItemDecoration
 import hanten.wre.app.core.util.RecyclerViewScrollCallback
 import hanten.wre.app.core.util.ext.setTooltipCompat
 import hanten.wre.app.databinding.ItemSearchSuggestionMangaGridBinding
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.search.ui.suggestion.SearchSuggestionListener
 import hanten.wre.app.search.ui.suggestion.model.SearchSuggestionItem
 

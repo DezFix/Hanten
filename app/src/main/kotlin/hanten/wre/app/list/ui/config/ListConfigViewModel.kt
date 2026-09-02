@@ -12,7 +12,7 @@ import hanten.wre.app.core.util.ext.sortedByOrdinal
 import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.favourites.ui.list.FavouritesListFragment.Companion.NO_ID
 import hanten.wre.app.list.domain.ListSortOrder
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
 
 @HiltViewModel

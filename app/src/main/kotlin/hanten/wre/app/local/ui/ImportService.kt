@@ -29,8 +29,8 @@ import hanten.wre.app.core.util.ext.toBitmapOrNull
 import hanten.wre.app.core.util.ext.toUriOrNull
 import hanten.wre.app.core.util.ext.withPartialWakeLock
 import hanten.wre.app.local.data.importer.SingleMangaImporter
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 

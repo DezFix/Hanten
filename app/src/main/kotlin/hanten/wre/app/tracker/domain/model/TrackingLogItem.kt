@@ -1,6 +1,6 @@
 package hanten.wre.app.tracker.domain.model
 
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import java.time.Instant
 
 data class TrackingLogItem(

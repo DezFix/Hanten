@@ -58,7 +58,7 @@ import hanten.wre.app.local.ui.LocalIndexUpdateService
 import hanten.wre.app.local.ui.LocalStorageCleanupWorker
 import hanten.wre.app.main.ui.owners.AppBarOwner
 import hanten.wre.app.main.ui.owners.BottomNavOwner
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.remotelist.ui.MangaSearchMenuProvider
 import hanten.wre.app.search.ui.suggestion.SearchSuggestionItemCallback
 import hanten.wre.app.search.ui.suggestion.SearchSuggestionListenerImpl

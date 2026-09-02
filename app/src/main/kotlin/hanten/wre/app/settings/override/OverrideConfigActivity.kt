@@ -21,8 +21,8 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.tryLaunch
 import hanten.wre.app.databinding.ActivityOverrideEditBinding
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 import hanten.wre.app.picker.ui.PageImagePickContract
 import com.google.android.material.R as materialR
 

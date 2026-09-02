@@ -6,12 +6,12 @@ import androidx.core.content.edit
 import hanten.wre.app.core.util.ext.getEnumValue
 import hanten.wre.app.core.util.ext.putEnumValue
 import hanten.wre.app.core.util.ext.sanitizeHeaderValue
-import org.koitharu.kotatsu.parsers.config.ConfigKey
-import org.koitharu.kotatsu.parsers.config.MangaSourceConfig
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.config.ConfigKey
+import hanten.wre.app.parsers.config.MangaSourceConfig
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.nullIfEmpty
 import hanten.wre.app.settings.utils.validation.DomainValidator
 import java.io.File
 

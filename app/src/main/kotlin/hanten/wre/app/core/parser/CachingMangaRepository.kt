@@ -14,10 +14,10 @@ import hanten.wre.app.core.cache.MemoryContentCache
 import hanten.wre.app.core.cache.SafeDeferred
 import hanten.wre.app.core.util.MultiMutex
 import hanten.wre.app.core.util.ext.processLifecycleScope
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.util.runCatchingCancellable
 
 abstract class CachingMangaRepository(
 	private val cache: MemoryContentCache,

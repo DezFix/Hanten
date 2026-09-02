@@ -16,12 +16,12 @@ import hanten.wre.app.core.db.entity.toMangaTag
 import hanten.wre.app.core.db.entity.toMangaTagsList
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.explore.data.MangaSourcesRepository
-import org.koitharu.kotatsu.parsers.model.ContentType
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.levenshteinDistance
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.util.mapToSet
 import hanten.wre.app.search.ui.MangaSuggestionsProvider
 import javax.inject.Inject
 

@@ -16,7 +16,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import hanten.wre.app.core.util.ext.getAnimationDuration
 import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.resolveDp
-import org.koitharu.kotatsu.parsers.util.replaceWith
+import hanten.wre.app.parsers.util.replaceWith
 
 class SegmentedBarView @JvmOverloads constructor(
 	context: Context,

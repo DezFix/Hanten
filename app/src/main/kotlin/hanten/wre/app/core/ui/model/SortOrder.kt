@@ -3,25 +3,25 @@ package hanten.wre.app.core.ui.model
 import androidx.annotation.StringRes
 import hanten.wre.app.R
 import hanten.wre.app.core.model.SortDirection
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.model.SortOrder.ADDED
-import org.koitharu.kotatsu.parsers.model.SortOrder.ADDED_ASC
-import org.koitharu.kotatsu.parsers.model.SortOrder.ALPHABETICAL
-import org.koitharu.kotatsu.parsers.model.SortOrder.ALPHABETICAL_DESC
-import org.koitharu.kotatsu.parsers.model.SortOrder.NEWEST
-import org.koitharu.kotatsu.parsers.model.SortOrder.NEWEST_ASC
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_ASC
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_HOUR
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_MONTH
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_TODAY
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_WEEK
-import org.koitharu.kotatsu.parsers.model.SortOrder.POPULARITY_YEAR
-import org.koitharu.kotatsu.parsers.model.SortOrder.RATING
-import org.koitharu.kotatsu.parsers.model.SortOrder.RATING_ASC
-import org.koitharu.kotatsu.parsers.model.SortOrder.RELEVANCE
-import org.koitharu.kotatsu.parsers.model.SortOrder.UPDATED
-import org.koitharu.kotatsu.parsers.model.SortOrder.UPDATED_ASC
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.model.SortOrder.ADDED
+import hanten.wre.app.parsers.model.SortOrder.ADDED_ASC
+import hanten.wre.app.parsers.model.SortOrder.ALPHABETICAL
+import hanten.wre.app.parsers.model.SortOrder.ALPHABETICAL_DESC
+import hanten.wre.app.parsers.model.SortOrder.NEWEST
+import hanten.wre.app.parsers.model.SortOrder.NEWEST_ASC
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_ASC
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_HOUR
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_MONTH
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_TODAY
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_WEEK
+import hanten.wre.app.parsers.model.SortOrder.POPULARITY_YEAR
+import hanten.wre.app.parsers.model.SortOrder.RATING
+import hanten.wre.app.parsers.model.SortOrder.RATING_ASC
+import hanten.wre.app.parsers.model.SortOrder.RELEVANCE
+import hanten.wre.app.parsers.model.SortOrder.UPDATED
+import hanten.wre.app.parsers.model.SortOrder.UPDATED_ASC
 
 @get:StringRes
 val SortOrder.titleRes: Int

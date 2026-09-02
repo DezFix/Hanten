@@ -3,8 +3,8 @@ package hanten.wre.app.core.util.ext
 import android.content.Context
 import androidx.core.os.LocaleListCompat
 import hanten.wre.app.R
-import org.koitharu.kotatsu.parsers.util.Set
-import org.koitharu.kotatsu.parsers.util.toTitleCase
+import hanten.wre.app.parsers.util.Set
+import hanten.wre.app.parsers.util.toTitleCase
 import java.util.Locale
 
 operator fun LocaleListCompat.iterator(): ListIterator<Locale> = LocaleListCompatIterator(this)

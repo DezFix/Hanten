@@ -5,8 +5,8 @@ import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.ui.widgets.ChipsView
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 
 sealed interface SearchSuggestionItem : ListModel {
 

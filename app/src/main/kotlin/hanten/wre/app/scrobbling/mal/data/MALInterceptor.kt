@@ -4,8 +4,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import okio.IOException
 import hanten.wre.app.core.network.CommonHeaders
-import org.koitharu.kotatsu.parsers.util.mimeType
-import org.koitharu.kotatsu.parsers.util.parseHtml
+import hanten.wre.app.parsers.util.mimeType
+import hanten.wre.app.parsers.util.parseHtml
 import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService

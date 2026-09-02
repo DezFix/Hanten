@@ -6,7 +6,7 @@ import hanten.wre.app.details.ui.model.ChapterListItem.Companion.FLAG_DOWNLOADED
 import hanten.wre.app.details.ui.model.ChapterListItem.Companion.FLAG_GRID
 import hanten.wre.app.details.ui.model.ChapterListItem.Companion.FLAG_NEW
 import hanten.wre.app.details.ui.model.ChapterListItem.Companion.FLAG_UNREAD
-import org.koitharu.kotatsu.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaChapter
 import kotlin.experimental.or
 
 fun MangaChapter.toListItem(

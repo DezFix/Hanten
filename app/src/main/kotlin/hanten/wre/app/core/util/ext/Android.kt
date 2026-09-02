@@ -46,7 +46,7 @@ import androidx.work.CoroutineWorker
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
 import hanten.wre.app.main.ui.MainActivity
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

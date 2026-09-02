@@ -26,10 +26,10 @@ import hanten.wre.app.core.util.ext.isNetworkUri
 import hanten.wre.app.core.util.ext.toMimeTypeOrNull
 import hanten.wre.app.local.data.LocalStorageCache
 import hanten.wre.app.local.data.PageCache
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.util.mimeType
-import org.koitharu.kotatsu.parsers.util.requireBody
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.util.mimeType
+import hanten.wre.app.parsers.util.requireBody
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.reader.domain.PageLoader
 import javax.inject.Inject
 

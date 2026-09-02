@@ -99,15 +99,15 @@ import hanten.wre.app.stats.ui.StatsActivity
 import hanten.wre.app.stats.ui.sheet.MangaStatsSheet
 import hanten.wre.app.suggestions.ui.SuggestionsActivity
 import hanten.wre.app.tracker.ui.updates.UpdatesActivity
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.util.ellipsize
-import org.koitharu.kotatsu.parsers.util.isNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.mapToArray
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.ellipsize
+import hanten.wre.app.parsers.util.isNullOrEmpty
+import hanten.wre.app.parsers.util.mapToArray
 import java.io.File
 import androidx.appcompat.R as appcompatR
 

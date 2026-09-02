@@ -28,11 +28,11 @@ import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.explore.domain.RecoverMangaUseCase
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.exception.NotFoundException
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
-import org.koitharu.kotatsu.parsers.util.recoverNotNull
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.exception.NotFoundException
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.recoverNotNull
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
 
 class DetailsLoadUseCase @Inject constructor(

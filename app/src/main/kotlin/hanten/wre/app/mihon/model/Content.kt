@@ -222,9 +222,9 @@ fun Content.withOverride(override: ContentOverride?) = if (override != null) {
 		coverUrl = override.coverUrl.ifNullOrEmpty { coverUrl },
 		largeCoverUrl = override.coverUrl.ifNullOrEmpty { largeCoverUrl },
 		contentRating = when (override.contentRating) {
-			org.koitharu.kotatsu.parsers.model.ContentRating.SAFE -> ContentRating.SAFE
-			org.koitharu.kotatsu.parsers.model.ContentRating.SUGGESTIVE -> ContentRating.SUGGESTIVE
-			org.koitharu.kotatsu.parsers.model.ContentRating.ADULT -> ContentRating.ADULT
+			hanten.wre.app.parsers.model.ContentRating.SAFE -> ContentRating.SAFE
+			hanten.wre.app.parsers.model.ContentRating.SUGGESTIVE -> ContentRating.SUGGESTIVE
+			hanten.wre.app.parsers.model.ContentRating.ADULT -> ContentRating.ADULT
 			null -> contentRating
 		},
 	)

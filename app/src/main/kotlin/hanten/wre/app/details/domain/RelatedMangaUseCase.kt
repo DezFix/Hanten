@@ -2,8 +2,8 @@ package hanten.wre.app.details.domain
 
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
 
 class RelatedMangaUseCase @Inject constructor(

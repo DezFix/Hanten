@@ -1,17 +1,17 @@
 package hanten.wre.app.core.db.entity
 
 import hanten.wre.app.core.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.ContentRating
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.util.longHashCode
-import org.koitharu.kotatsu.parsers.util.mapToSet
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
-import org.koitharu.kotatsu.parsers.util.toArraySet
-import org.koitharu.kotatsu.parsers.util.toTitleCase
+import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.longHashCode
+import hanten.wre.app.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.toArraySet
+import hanten.wre.app.parsers.util.toTitleCase
 
 private const val VALUES_DIVIDER = '\n'
 

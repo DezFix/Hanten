@@ -23,9 +23,9 @@ import hanten.wre.app.core.parser.ParserMangaRepository
 import hanten.wre.app.core.util.ext.configureForParser
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.sanitizeHeaderValue
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Provider

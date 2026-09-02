@@ -8,7 +8,7 @@ import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.RetainedLifecycleCoroutineScope
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.stats.data.StatsEntity
 import kotlinx.coroutines.Dispatchers

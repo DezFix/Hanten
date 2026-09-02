@@ -21,7 +21,7 @@ import hanten.wre.app.list.ui.model.ListHeader
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.list.ui.model.toErrorState
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.reader.ui.PageSaveHelper
 import javax.inject.Inject
 

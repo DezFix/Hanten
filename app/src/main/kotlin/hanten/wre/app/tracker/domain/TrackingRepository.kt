@@ -18,9 +18,9 @@ import hanten.wre.app.core.util.ext.mapItems
 import hanten.wre.app.core.util.ext.toInstantOrNull
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.list.domain.ListFilterOption
-import org.koitharu.kotatsu.parsers.config.ConfigKey
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.util.ifZero
+import hanten.wre.app.parsers.config.ConfigKey
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.util.ifZero
 import hanten.wre.app.tracker.data.TrackEntity
 import hanten.wre.app.tracker.data.TrackLogEntity
 import hanten.wre.app.tracker.data.toTrackingLogItem

@@ -17,7 +17,7 @@ import hanten.wre.app.core.util.ext.getQuantityStringSafe
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
 import hanten.wre.app.explore.data.SourcesSortOrder
-import org.koitharu.kotatsu.parsers.util.names
+import hanten.wre.app.parsers.util.names
 
 @AndroidEntryPoint
 class SourcesSettingsFragment : BasePreferenceFragment(R.string.remote_sources),

@@ -1,7 +1,7 @@
 package hanten.wre.app.list.ui.model
 
 import hanten.wre.app.core.ui.model.MangaOverride
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 data class MangaCompactListModel(
 	override val manga: Manga,

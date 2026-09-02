@@ -3,8 +3,8 @@ package hanten.wre.app.bookmarks.domain
 import hanten.wre.app.core.util.MimeTypes
 import hanten.wre.app.core.util.ext.isImage
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaPage
 import java.time.Instant
 
 data class Bookmark(

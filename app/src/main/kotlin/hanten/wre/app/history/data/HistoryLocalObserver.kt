@@ -9,7 +9,7 @@ import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.local.data.index.LocalMangaIndex
 import hanten.wre.app.local.domain.LocalObserveMapper
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 @Reusable

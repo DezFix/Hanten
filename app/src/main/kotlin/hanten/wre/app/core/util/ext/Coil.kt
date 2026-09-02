@@ -18,8 +18,8 @@ import coil3.toBitmap
 import okio.buffer
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.core.image.RegionBitmapDecoder
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaSource
 
 fun ImageRequest.Builder.enqueueWith(loader: ImageLoader) = loader.enqueue(build())
 

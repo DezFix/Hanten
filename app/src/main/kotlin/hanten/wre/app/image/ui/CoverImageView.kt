@@ -38,12 +38,12 @@ import hanten.wre.app.core.util.ext.isNetworkError
 import hanten.wre.app.core.util.ext.mangaExtra
 import hanten.wre.app.core.util.ext.mangaSourceExtra
 import hanten.wre.app.favourites.domain.model.Cover
-import org.koitharu.kotatsu.parsers.exception.ContentUnavailableException
-import org.koitharu.kotatsu.parsers.exception.ParseException
-import org.koitharu.kotatsu.parsers.exception.TooManyRequestExceptions
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaPage
-import org.koitharu.kotatsu.parsers.model.MangaSource
+import hanten.wre.app.parsers.exception.ContentUnavailableException
+import hanten.wre.app.parsers.exception.ParseException
+import hanten.wre.app.parsers.exception.TooManyRequestExceptions
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.reader.ui.pager.ReaderPage
 import kotlin.coroutines.resume
 import androidx.appcompat.R as appcompatR

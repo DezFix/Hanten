@@ -17,9 +17,9 @@ import org.jsoup.HttpStatusException
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.exceptions.CloudFlareBlockedException
 import hanten.wre.app.core.util.ext.ensureSuccess
-import org.koitharu.kotatsu.parsers.util.await
-import org.koitharu.kotatsu.parsers.util.isHttpOrHttps
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.await
+import hanten.wre.app.parsers.util.isHttpOrHttps
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.net.HttpURLConnection
 import java.util.Collections
 

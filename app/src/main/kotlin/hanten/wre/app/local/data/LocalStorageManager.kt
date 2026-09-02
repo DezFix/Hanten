@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 import okhttp3.Cache
-import org.koitharu.kotatsu.parsers.util.mapToSet
+import hanten.wre.app.parsers.util.mapToSet
 import java.io.File
 import javax.inject.Inject
 

@@ -16,9 +16,9 @@ import hanten.wre.app.core.util.ext.toFileNameSafe
 import hanten.wre.app.core.zip.ZipOutput
 import hanten.wre.app.local.data.MangaIndex
 import hanten.wre.app.local.data.input.LocalMangaParser
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.util.nullIfEmpty
 import java.io.File
 
 class LocalMangaDirOutput(

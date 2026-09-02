@@ -2,8 +2,8 @@ package hanten.wre.app.core.exceptions
 
 import okhttp3.Headers
 import hanten.wre.app.core.model.UnknownMangaSource
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.network.CloudFlareHelper
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.network.CloudFlareHelper
 
 class CloudFlareProtectedException(
 	override val url: String,

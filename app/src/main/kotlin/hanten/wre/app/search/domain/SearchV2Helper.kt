@@ -9,13 +9,13 @@ import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.contains
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaListFilter
-import org.koitharu.kotatsu.parsers.model.MangaSource
-import org.koitharu.kotatsu.parsers.model.SortOrder
-import org.koitharu.kotatsu.parsers.util.almostEquals
-import org.koitharu.kotatsu.parsers.util.levenshteinDistance
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaSource
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.almostEquals
+import hanten.wre.app.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.util.runCatchingCancellable
 
 private const val MATCH_THRESHOLD_DEFAULT = 0.2f
 

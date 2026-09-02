@@ -30,7 +30,7 @@ import hanten.wre.app.list.ui.GridSpanResolver
 import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.list.ui.model.ListModel
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.ifNullOrEmpty
 import hanten.wre.app.picker.ui.PageImagePickActivity
 import javax.inject.Inject
 

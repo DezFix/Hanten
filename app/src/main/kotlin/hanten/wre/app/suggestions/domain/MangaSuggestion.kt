@@ -1,7 +1,7 @@
 package hanten.wre.app.suggestions.domain
 
 import androidx.annotation.FloatRange
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 data class MangaSuggestion(
 	val manga: Manga,

@@ -5,11 +5,11 @@ import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.model.withOverride
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaChapter
-import org.koitharu.kotatsu.parsers.model.MangaState
-import org.koitharu.kotatsu.parsers.util.ifNullOrEmpty
-import org.koitharu.kotatsu.parsers.util.nullIfEmpty
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.util.ifNullOrEmpty
+import hanten.wre.app.parsers.util.nullIfEmpty
 import hanten.wre.app.reader.data.filterChapters
 import java.util.Locale
 

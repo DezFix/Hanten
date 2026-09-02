@@ -19,8 +19,8 @@ import hanten.wre.app.list.domain.ReadingProgress
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingFooter
 import hanten.wre.app.list.ui.model.LoadingState
-import org.koitharu.kotatsu.parsers.util.ifZero
-import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import hanten.wre.app.parsers.util.ifZero
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus

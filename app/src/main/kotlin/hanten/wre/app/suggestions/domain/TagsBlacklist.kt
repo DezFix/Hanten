@@ -1,9 +1,9 @@
 package hanten.wre.app.suggestions.domain
 
 import android.util.Log
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaTag
-import org.koitharu.kotatsu.parsers.util.almostEquals
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaTag
+import hanten.wre.app.parsers.util.almostEquals
 
 class TagsBlacklist(
 	private val tags: Set<String>,

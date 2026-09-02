@@ -27,7 +27,7 @@ import hanten.wre.app.explore.ui.model.RecommendationsItem
 import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.MangaCompactListModel
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 fun exploreButtonsAD(
 	clickListener: View.OnClickListener,

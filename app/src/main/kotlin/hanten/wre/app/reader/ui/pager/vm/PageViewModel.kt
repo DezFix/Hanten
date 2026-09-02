@@ -9,7 +9,7 @@ import hanten.wre.app.core.exceptions.resolve.ExceptionResolver
 import hanten.wre.app.core.os.NetworkState
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.throttle
-import org.koitharu.kotatsu.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.reader.domain.PageLoader
 import hanten.wre.app.reader.ui.config.ReaderSettings
 import kotlinx.coroutines.CancellationException

@@ -2,8 +2,8 @@ package hanten.wre.app.core.parser
 
 import android.graphics.Canvas
 import androidx.core.graphics.createBitmap
-import org.koitharu.kotatsu.parsers.bitmap.Bitmap
-import org.koitharu.kotatsu.parsers.bitmap.Rect
+import hanten.wre.app.parsers.bitmap.Bitmap
+import hanten.wre.app.parsers.bitmap.Rect
 import java.io.OutputStream
 import android.graphics.Bitmap as AndroidBitmap
 import android.graphics.Rect as AndroidRect

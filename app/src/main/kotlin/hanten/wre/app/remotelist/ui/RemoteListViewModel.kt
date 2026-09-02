@@ -28,9 +28,9 @@ import hanten.wre.app.list.ui.model.toErrorFooter
 import hanten.wre.app.list.ui.model.toErrorState
 import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.domain.model.LocalManga
-import org.koitharu.kotatsu.parsers.model.Manga
-import org.koitharu.kotatsu.parsers.model.MangaParserSource
-import org.koitharu.kotatsu.parsers.util.sizeOrZero
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.util.sizeOrZero
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

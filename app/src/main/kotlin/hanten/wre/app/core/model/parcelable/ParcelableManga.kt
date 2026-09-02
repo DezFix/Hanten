@@ -9,7 +9,7 @@ import hanten.wre.app.core.util.ext.readParcelableCompat
 import hanten.wre.app.core.util.ext.readSerializableCompat
 import hanten.wre.app.core.util.ext.readStringSet
 import hanten.wre.app.core.util.ext.writeStringSet
-import org.koitharu.kotatsu.parsers.model.Manga
+import hanten.wre.app.parsers.model.Manga
 
 @Parcelize
 data class ParcelableManga(
