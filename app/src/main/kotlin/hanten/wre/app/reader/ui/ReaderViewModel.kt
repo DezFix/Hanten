@@ -91,8 +91,9 @@ class ReaderViewModel @Inject constructor(
     private val historyUpdateUseCase: HistoryUpdateUseCase,
     private val detectReaderModeUseCase: DetectReaderModeUseCase,
     private val progressUpdateUseCase: ProgressUpdateUseCase,
-    private val statsCollector: StatsCollector
-    @LocalStorageChanges localStorageChanges: SharedFlow<LocalManga?>,
+    private val statsCollector: StatsCollector,
+    @LocalStorageChanges private val localStorageChanges: SharedFlow<LocalManga?>,
+
     interactor: DetailsInteractor,
     deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
     downloadScheduler: DownloadWorker.Scheduler,
