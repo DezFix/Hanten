@@ -25,8 +25,13 @@ jobs:
       - name: Get version from tag
         id: tag
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG#v}
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG#v}
+          else
+            VERSION="${{ inputs.version }}"
+            VERSION=${VERSION#v}
+          fi
           echo "Tag version: $VERSION"
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
           PATCH=${PATCH:-0}
@@ -57,8 +62,13 @@ jobs:
       - name: Compare tag with files
         run: |
           set -e
-          TAG=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG#v}
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG#v}
+          else
+            VERSION="${{ inputs.version }}"
+            VERSION=${VERSION#v}
+          fi
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
           PATCH=${PATCH:-0}
           EXPECTED_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
@@ -99,8 +109,13 @@ jobs:
       - name: Get version from tag
         id: version
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG#v}
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG#v}
+          else
+            VERSION="${{ inputs.version }}"
+            VERSION=${VERSION#v}
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           # Extract major.minor.patch and calculate version code
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION" 
