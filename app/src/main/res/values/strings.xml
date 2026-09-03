@@ -971,4 +971,13 @@
     <string name="frequency_every_hour">Every hour</string>
     <string name="frequency_every_3_days">Every 3 days</string>
     <string name="suggestions_update_interval">Update interval</string>
+    <string name="update_download_and_install">Download and install</string>
+    <string name="update_downloading_title">Downloading update: %1$s</string>
+    <string name="update_cancel">Cancel</string>
+    <string name="update_download_progress">%1$d%% · %2$s / %3$s</string>
+    <string name="update_download_failed">Update download failed: %1$s</string>
+    <string name="update_open_in_browser">Open in browser</string>
+    <string name="update_install_untrusted">APK signature mismatch, update aborted</string>
+    <string name="update_allow_unknown">Allow installing from unknown sources to update</string>
+    <string name="update_open_settings">Open settings</string>
 </resources>

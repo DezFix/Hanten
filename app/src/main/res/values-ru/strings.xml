@@ -1038,4 +1038,13 @@
     <string name="frequency_every_hour">Каждый час</string>
     <string name="frequency_every_3_days">Каждые 3 дня</string>
     <string name="suggestions_update_interval">Интервал обновления</string>
+    <string name="update_download_and_install">Скачать и установить</string>
+    <string name="update_downloading_title">Загрузка обновления: %1$s</string>
+    <string name="update_cancel">Отмена</string>
+    <string name="update_download_progress">%1$d%% · %2$s / %3$s</string>
+    <string name="update_download_failed">Не удалось скачать обновление: %1$s</string>
+    <string name="update_open_in_browser">Открыть в браузере</string>
+    <string name="update_install_untrusted">Подпись APK не совпадает, установка отменена</string>
+    <string name="update_allow_unknown">Разрешите установку из неизвестных источников для обновления</string>
+    <string name="update_open_settings">Открыть настройки</string>
 </resources>
