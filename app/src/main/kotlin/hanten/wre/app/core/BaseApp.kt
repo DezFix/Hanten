@@ -10,6 +10,7 @@ import androidx.room.InvalidationTracker
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import hanten.wre.app.BuildConfig
+import hanten.wre.app.core.crash.TelegramCrashReporter
 import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.os.AppValidator
 import hanten.wre.app.core.prefs.AppSettings
@@ -53,6 +54,9 @@ open class BaseApp : Application(), Configuration.Provider {
 	lateinit var appValidator: AppValidator
 
 	@Inject
+	lateinit var telegramCrashReporter: TelegramCrashReporter
+
+	@Inject
 	lateinit var workScheduleManager: WorkScheduleManager
 
 	@Inject
@@ -71,6 +75,7 @@ open class BaseApp : Application(), Configuration.Provider {
 		super.onCreate()
 		PlatformRegistry.applicationContext = this // TODO replace with OkHttp.initialize
 		AppCompatDelegate.setDefaultNightMode(settings.theme)
+		telegramCrashReporter.install()
 		// Initialize Sentry only if user has opted in
 		if (settings.isCrashAnalyticsEnabled) {
 			initializeSentry()

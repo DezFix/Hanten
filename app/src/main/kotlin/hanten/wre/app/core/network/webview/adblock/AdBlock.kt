@@ -59,26 +59,47 @@ class AdBlock @Inject constructor(
 
 	@WorkerThread
 	private fun parseRules() = runCatchingCancellable {
-		listFile(context).useLines { lines ->
-			val rules = RulesList()
-			lines.forEach { line -> rules.add(line) }
-			rules.trimToSize()
-			rules
+		val rules = RulesList()
+		listsDir(context).listFiles { file ->
+			file.isFile && file.extension == "txt"
+		}?.sortedBy { it.name }?.forEach { file ->
+			file.useLines { lines ->
+				lines.forEach { line -> rules.add(line) }
+			}
 		}
+		rules.trimToSize()
+		rules
 	}.onFailure { e ->
 		e.printStackTraceDebug("AdBlock::parseRules")
 	}.getOrNull()
 
+	internal fun onListsUpdated() {
+		synchronized(this) {
+			rules = null
+		}
+	}
+
 	class Updater @Inject constructor(
 		@ApplicationContext private val context: Context,
 		@BaseHttpClient private val okHttpClient: OkHttpClient,
+		private val adBlock: AdBlock,
 	) {
 
 		suspend fun updateList() {
-			val file = listFile(context)
+			LIST_URLS.forEach { (fileName, url) ->
+				runCatchingCancellable {
+					downloadList(url, File(listsDir(context), fileName))
+				}.onFailure { e ->
+					e.printStackTraceDebug("AdBlock::updateList $url")
+				}
+			}
+			adBlock.onListsUpdated()
+		}
+
+		private suspend fun downloadList(url: String, file: File) {
 			val dateFormat = SimpleDateFormat(CommonHeaders.DATE_FORMAT, Locale.ENGLISH)
 			val requestBuilder = Request.Builder()
-				.url(EASYLIST_URL)
+				.url(url)
 				.get()
 			if (file.exists() && file.isNotEmpty()) {
 				val lastModified = file.lastModified()
@@ -108,15 +129,20 @@ class AdBlock @Inject constructor(
 
 	private companion object {
 
-		fun listFile(context: Context): File {
+		fun listsDir(context: Context): File {
 			val root = File(context.externalCacheDir ?: context.cacheDir, LIST_DIR)
 			root.mkdir()
-			return File(root, LIST_FILENAME)
+			return root
 		}
 
-		private const val LIST_FILENAME = "easylist.txt"
 		private const val LIST_DIR = "adblock"
-		private const val EASYLIST_URL = "https://easylist.to/easylist/easylist.txt"
 		private const val TAG = "AdBlock"
+
+		// (file name, url): EasyList + EasyPrivacy + RU AdList (our priority locales)
+		private val LIST_URLS = arrayOf(
+			"easylist.txt" to "https://easylist.to/easylist/easylist.txt",
+			"easyprivacy.txt" to "https://easylist.to/easylist/easyprivacy.txt",
+			"ruadlist.txt" to "https://easylist-downloads.adblockplus.org/ruadlist.txt",
+		)
 	}
 }
