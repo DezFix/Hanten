@@ -963,7 +963,7 @@
     
 <string name="crash_reporting">Отчёты о сбоях</string>
     
-<string name="crash_reporting_summary">Отправлять журналы сбоев разработчику в Telegram, чтобы помочь улучшить приложение. Вступит в силу после перезапуска.</string>
+<string name="crash_reporting_summary">Отправлять анонимные журналы сбоев, чтобы помочь улучшить приложение. Вступит в силу после перезапуска.</string>
     
 <string name="github_mirror_title">Зеркало GitHub</string>
     

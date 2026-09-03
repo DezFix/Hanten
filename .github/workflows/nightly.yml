@@ -75,8 +75,6 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          TG_CRASH_BOT_TOKEN: ${{ secrets.TG_CRASH_BOT_TOKEN }}
-          TG_CRASH_CHAT_ID: ${{ secrets.TG_CRASH_CHAT_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: ./gradlew assembleNightly --no-build-cache --no-configuration-cache
 
