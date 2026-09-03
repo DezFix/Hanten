@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.2
+Date: 2026-09-03
+
+### Highlights
+- In-app update: APK download with progress dialog and direct install, signature check
+- New launcher icon
+
+### Fixes
+- Usagi anti-bot: retry only transient codes, no IP-hammering retries
+
+### Maintenance
+- Parsers 60aeb077
+- versionName 1.1.2 / versionCode 10102
+
 ## 1.1.1
 Date: 2026-09-03
 
