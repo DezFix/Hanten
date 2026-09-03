@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.3
+Date: 2026-09-03
+
+### Highlights
+- In-app update: APK download with progress and direct install, signature check
+- New launcher icon
+
+### Fixes
+- Usagi anti-bot: full browser headers, retry only transient codes
+
+### Maintenance
+- AdBlock: EasyList + EasyPrivacy + RU AdList
+- Parsers b7bacfd6
+- versionName 1.1.3 / versionCode 10103
+
 ## 1.1.2
 Date: 2026-09-03
 
