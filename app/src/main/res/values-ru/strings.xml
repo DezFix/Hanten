@@ -300,7 +300,7 @@
     <string name="last_2_hours">Последние 2 часа</string>
     <string name="categories_delete_confirm">Вы уверены, что хотите удалить выбранные категории избранного? \nВся манга в них будет потеряна и это не может быть отменено.</string>
     <string name="pages_cache">Кэш страниц</string>
-    <string name="memory_usage_pattern">%s - %s</string>
+    <string name="memory_usage_pattern" translatable="false">%1$s - %2$s</string>
     <string name="storage_usage">Использование хранилища</string>
     <string name="available">Доступно</string>
     <string name="saved_manga">Сохранённая манга</string>
@@ -880,75 +880,75 @@
     <string name="enter_name">Введите имя</string>
 <string name="app_name" translatable="false">Hanten</string>
     
-<string name="saved_filters">Saved filters</string>
+<string name="saved_filters">Сохранённые фильтры</string>
     
-<string name="merge_with_existing_data">Merge with existing data</string>
+<string name="merge_with_existing_data">Объединить с существующими данными</string>
     
-<string name="manga">Manga</string>
+<string name="manga">Манга</string>
     
-<string name="queue_all_unread_from_favorites">Download unread from favorites</string>
+<string name="queue_all_unread_from_favorites">Скачать непрочитанное из избранного</string>
     
-<string name="github_download_warning">Downloading from GitHub will bypass security checks performed by IzzyOnDroid and Fdroid.</string>
+<string name="github_download_warning">Скачивание с GitHub обойдёт проверки безопасности IzzyOnDroid и F-Droid.</string>
     
-<string name="pinned_sources_only">Pinned sources only</string>
+<string name="pinned_sources_only">Только закреплённые источники</string>
     
-<string name="hide_empty_sources">Hide empty sources</string>
+<string name="hide_empty_sources">Скрывать пустые источники</string>
     
 <string name="shikimori" translatable="false">Shikimori</string>
     
 <string name="anilist" translatable="false">AniList</string>
     
-<string name="download_queue">Download queue</string>
+<string name="download_queue">Очередь загрузок</string>
     
-<string name="clear_queue">Clear queue</string>
+<string name="clear_queue">Очистить очередь</string>
     
 <string name="download_summary_pattern" translatable="false">%1$s · %2$s</string>
     
 <string name="mal" translatable="false">MyAnimeList</string>
     
-<string name="downloads_charging_only">Download only when charging</string>
+<string name="downloads_charging_only">Скачивать только при зарядке</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
+<string name="downloads_charging_only_summary">Элементы будут скачиваться только во время зарядки устройства</string>
     
-<string name="remove_downloads_confirm">Remove selected downloads?</string>
+<string name="remove_downloads_confirm">Удалить выбранные загрузки?</string>
     
-<string name="delete_downloaded_files">Also delete downloaded files from storage</string>
+<string name="delete_downloaded_files">Также удалить скачанные файлы из хранилища</string>
     
-<string name="delete_chapter">Delete chapter</string>
+<string name="delete_chapter">Удалить главу</string>
     
-<string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
+<string name="delete_chapter_confirm">Удалить главу \“%1$s\” из локального хранилища?</string>
     
 <string name="kitsu" translatable="false">Kitsu</string>
     
-<string name="frequency_every_6_hours">Every 6 hours</string>
+<string name="frequency_every_6_hours">Каждые 6 часов</string>
     
-<string name="extensions_manager">Extensions manager</string>
+<string name="extensions_manager">Менеджер расширений</string>
     
-<string name="extensions_manager_summary">Manage, install and uninstall extensions from repositories</string>
+<string name="extensions_manager_summary">Управление, установка и удаление расширений из репозиториев</string>
     
-<string name="extension_repos_header">Repositories</string>
+<string name="extension_repos_header">Репозитории</string>
     
-<string name="add_extension_repo">Add</string>
+<string name="add_extension_repo">Добавить</string>
     
-<string name="add_extension_repo_hint">Repository URL</string>
+<string name="add_extension_repo_hint">URL репозитория</string>
     
-<string name="extension_repo_add_success">Repository added</string>
+<string name="extension_repo_add_success">Репозиторий добавлен</string>
     
-<string name="extension_repo_remove_confirm">Remove %s?</string>
+<string name="extension_repo_remove_confirm">Удалить %s?</string>
     
-<string name="extension_repos_empty">No repositories added. Add a repository URL above to browse extensions.</string>
+<string name="extension_repos_empty">Репозитории не добавлены. Добавьте URL репозитория выше, чтобы просматривать расширения.</string>
     
-<string name="installed_extensions_header">Installed</string>
+<string name="installed_extensions_header">Установленные</string>
     
-<string name="available_extensions_header">Available</string>
+<string name="available_extensions_header">Доступные</string>
     
-<string name="invalid_repo_url">Invalid repository URL</string>
+<string name="invalid_repo_url">Неверный URL репозитория</string>
     
-<string name="repo_already_exists">Repository already exists</string>
+<string name="repo_already_exists">Репозиторий уже существует</string>
     
-<string name="failed_to_add_repo">Failed to add repository: %s</string>
+<string name="failed_to_add_repo">Не удалось добавить репозиторий: %s</string>
     
-<string name="auto_double_foldable">Auto Two-Page On Foldable</string>
+<string name="auto_double_foldable">Авто-двухстраничный режим на складных</string>
     
 <string name="fraction_pattern" translatable="false">%1$d/%2$d</string>
     
@@ -961,11 +961,11 @@
     
 <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
     
-<string name="crash_reporting">Crash Reporting</string>
+<string name="crash_reporting">Отчёты о сбоях</string>
     
-<string name="crash_reporting_summary">Send anonymous crash logs to help improve the app. Takes effect after restart.</string>
+<string name="crash_reporting_summary">Отправлять анонимные журналы сбоев, чтобы помочь улучшить приложение. Вступит в силу после перезапуска.</string>
     
-<string name="github_mirror_title">GitHub mirror</string>
+<string name="github_mirror_title">Зеркало GitHub</string>
     
 <string name="github_mirror_native">Native</string>
     
@@ -977,58 +977,62 @@
     
 <string name="github_mirror_ghproxy_net">GHProxy.net (ghproxy.net)</string>
     
-<string name="enable_source_manga">Enable manga source</string>
+<string name="enable_source_manga">Включить источник манги</string>
     
-<string name="domain_manga">Manga source domain</string>
+<string name="domain_manga">Домен источника манги</string>
     
-<string name="download_option_whole_manga_manga">Whole manga</string>
+<string name="download_option_whole_manga_manga">Вся манга</string>
     
-<string name="recommendation_manga">recommended manga</string>
+<string name="recommendation_manga">рекомендованная манга</string>
     
-<string name="installed">Installed</string>
+<string name="installed">Установлено</string>
     
-<string name="install">Install</string>
+<string name="install">Установить</string>
     
-<string name="uninstall">Uninstall</string>
+<string name="uninstall">Удалить</string>
     
-<string name="tags_blacklist">Blacklisted tags</string>
+<string name="tags_blacklist">Заблокированные теги</string>
     
-<string name="tags_blacklist_summary">Exclude manga containing these tags from lists and search results</string>
+<string name="tags_blacklist_summary">Исключать мангу с этими тегами из списков и результатов поиска</string>
     
-<string name="download_scheduling_and_limits">Download scheduling and limits</string>
+<string name="download_scheduling_and_limits">Расписание и лимиты загрузок</string>
     
-<string name="download_off_peak">Off-peak downloads</string>
+<string name="download_off_peak">Загрузки в непиковые часы</string>
     
-<string name="download_off_peak_summary">Download only during specified hours</string>
+<string name="download_off_peak_summary">Скачивать только в указанные часы</string>
     
-<string name="download_off_peak_start">Start time</string>
+<string name="download_off_peak_start">Время начала</string>
     
-<string name="download_off_peak_end">End time</string>
+<string name="download_off_peak_end">Время окончания</string>
     
-<string name="download_storage_quota">Storage quota (MB)</string>
+<string name="download_storage_quota">Квота хранилища (МБ)</string>
     
-<string name="download_storage_quota_summary">Limit total download size. 0 for unlimited. Current oldest chapters will be deleted if exceeded.</string>
+<string name="download_storage_quota_summary">Ограничить общий размер загрузок. 0 — без ограничений. При превышении самые старые главы будут удалены.</string>
     
-<string name="smart_downloads">Smart Downloads</string>
+<string name="smart_downloads">Умные загрузки</string>
     
-<string name="smart_downloads_summary">Automatically download next chapters and delete read ones</string>
+<string name="smart_downloads_summary">Автоматически скачивать следующие главы и удалять прочитанные</string>
     
-<string name="download_off_peak_start_description">When downloads can start</string>
+<string name="download_off_peak_start_description">Когда загрузки могут начинаться</string>
     
-<string name="download_off_peak_end_description">When downloads must stop</string>
+<string name="download_off_peak_end_description">Когда загрузки должны останавливаться</string>
     
-<string name="rescan">Rescan</string>
+<string name="rescan">Пересканировать</string>
     
-<string name="rescan_completed">Rescan completed</string>
+<string name="rescan_completed">Пересканирование завершено</string>
     
-<string name="rescan_started">Rescan started</string>
+<string name="rescan_started">Пересканирование начато</string>
     
-<string name="directory_inaccessible">This directory is inaccessible. Please check permissions or re-add it.</string>
+<string name="directory_inaccessible">Этот каталог недоступен. Проверьте разрешения или добавьте его заново.</string>
     
-<string name="download_only_on_charging_summary">Connect to a power source to start downloads</string>
+<string name="download_only_on_charging_summary">Подключите источник питания, чтобы начать загрузки</string>
     
-<string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
+<string name="error_quota_too_low">Квота хранилища не может быть меньше текущего использования</string>
     
-<string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
-
+<string name="download_quota_reached">Квота хранилища исчерпана. Загрузки приостановлены.</string>
+    <string name="update_available_title">Доступно обновление: %1$s</string>
+    <string name="update_now">Обновить</string>
+    <string name="update_later">Позже</string>
+    <string name="update_skip_version">Пропустить эту версию</string>
+    <string name="update_no_changelog">Список изменений отсутствует.</string>
 </resources>

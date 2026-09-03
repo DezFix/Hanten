@@ -5,6 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
 import android.os.Bundle
+import androidx.core.net.toUri
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import hanten.wre.app.BuildConfig
+import hanten.wre.app.core.github.AppUpdateRepository
+import hanten.wre.app.core.github.VersionId
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.viewModels
@@ -88,6 +93,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 
 	@Inject
 	lateinit var settings: AppSettings
+
+	@Inject
+	lateinit var appUpdateRepository: AppUpdateRepository
 
 	private val viewModel by viewModels<MainViewModel>()
 	private val searchSuggestionViewModel by viewModels<SearchSuggestionViewModel>()
@@ -307,6 +315,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 				if (settings.isAdBlockEnabled) {
 					startService(Intent(this@MainActivity, AdListUpdateService::class.java))
 				}
+				checkForAppUpdate()
 			}
 		}
 	} catch (e: IllegalStateException) {
@@ -353,6 +362,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		adjustFabVisibility(isSearchOpened = isOpened)
 		bottomNav?.showOrHide(!isOpened)
 		updateContainerBottomMargin()
+	}
+
+	private fun checkForAppUpdate() {
+		if (BuildConfig.VERSION_NAME.startsWith('n', ignoreCase = true)) {
+			return // nightly builds have their own update flow
+		}
+		lifecycleScope.launch {
+			val release = withContext(Dispatchers.IO) {
+				appUpdateRepository.fetchLatestRelease()
+			} ?: return@launch
+			val latest = VersionId(release.tag.trimStart('v', 'V'))
+			val current = VersionId(BuildConfig.VERSION_NAME.trimStart('v', 'V'))
+			if (latest <= current) return@launch
+			val prefs = getSharedPreferences(PREFS_APP_UPDATES, MODE_PRIVATE)
+			if (prefs.getString(KEY_SKIPPED_UPDATE_TAG, null) == release.tag) return@launch
+			withResumed {
+				val changelog = release.changelog.ifBlank { getString(R.string.update_no_changelog) }
+				MaterialAlertDialogBuilder(this@MainActivity)
+					.setTitle(getString(R.string.update_available_title, release.tag))
+					.setMessage(changelog)
+					.setPositiveButton(R.string.update_now) { _, _ ->
+						val url = release.apkUrl ?: release.pageUrl
+						startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+					}
+					.setNeutralButton(R.string.update_skip_version) { _, _ ->
+						prefs.edit().putString(KEY_SKIPPED_UPDATE_TAG, release.tag).apply()
+					}
+					.setNegativeButton(R.string.update_later, null)
+					.show()
+			}
+		}
 	}
 
 	private fun requestNotificationsPermission() {
@@ -439,5 +479,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		}
 		addTransitionListener(listener)
 		awaitClose { removeTransitionListener(listener) }
+	}
+
+	private companion object {
+		const val PREFS_APP_UPDATES = "app_updates"
+		const val KEY_SKIPPED_UPDATE_TAG = "skipped_update_tag"
 	}
 }

@@ -55,13 +55,15 @@ To enable automated signing, configure the following secrets in your GitHub repo
 
 ### Example for Fresh Setup
 
-A new keystore was generated with:
+The single stable release keystore (generated 2026-09-03, valid until 2056):
 ```
+Location (local): C:\Users\Raven\hanten-keystore\hanten-release.jks (NOT in repo)
 Key Alias: hanten-key
-Keystore Password: [from setup]
-Key Password: [from setup]
-SHA-256 Fingerprint: EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
+Keystore/ Key Password: stored in password manager + GitHub secrets (KEYSTORE_PASSWORD / KEY_PASSWORD)
+SHA-256 Fingerprint: D3:F2:AB:2D:82:AF:A0:AB:02:D5:F6:83:98:26:84:7D:85:0B:39:F8:02:65:77:7D:EB:DE:AB:E6:79:E3:CC:67
 ```
+Local builds pick it up automatically via user env vars `KEYSTORE_FILE` / `KEYSTORE_PASSWORD` / `KEY_ALIAS` / `KEY_PASSWORD`.
+CI uses the same key via GitHub secrets (`KEYSTORE_FILE` = base64 of the same file).
 
 ## Local Development Setup
 
@@ -131,7 +133,7 @@ The workflow checks for commits since the last nightly release. If no commits ex
 
 Current release keystore SHA-256 fingerprint:
 ```
-EF:48:B2:2E:F2:C5:40:45:53:1F:6E:76:00:C2:7E:C3:D0:3B:71:22:1E:0B:05:FF:B6:8E:33:57:CF:8E:4D:40
+D3:F2:AB:2D:82:AF:A0:AB:02:D5:F6:83:98:26:84:7D:85:0B:39:F8:02:65:77:7D:EB:DE:AB:E6:79:E3:CC:67
 ```
 
 This matches the built-in app validator check in `AppValidator.kt`. All release builds must use a keystore with this fingerprint for proper app signature validation.
