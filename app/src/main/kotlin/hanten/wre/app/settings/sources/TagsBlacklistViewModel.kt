@@ -45,7 +45,7 @@ class TagsBlacklistViewModel @Inject constructor(
 		launchJob(Dispatchers.IO) {
 			try {
 				val request = Request.Builder()
-					.url("https://raw.githubusercontent.com/AppFuton/filters/refs/heads/main/data/tags.json")
+					.url("https://raw.githubusercontent.com/DezFix/filters/refs/heads/main/data/tags.json")
 					.build()
 				okHttpClient.newCall(request).execute().use { response ->
 					if (response.isSuccessful) {

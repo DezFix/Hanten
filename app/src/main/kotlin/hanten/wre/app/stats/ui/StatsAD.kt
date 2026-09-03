@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.R
 import hanten.wre.app.core.ui.list.OnListItemClickListener
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.databinding.ItemStatsBinding
 import hanten.wre.app.stats.domain.StatsRecord
 import hanten.wre.app.parsers.model.Manga
@@ -22,7 +22,7 @@ fun statsAD(
 	bind {
 		binding.textViewTitle.text = item.manga?.title ?: item.tagName ?: getString(R.string.other_manga)
 		binding.textViewSummary.text = item.time.format(context.resources)
-		binding.imageViewBadge.imageTintList = ColorStateList.valueOf(FutonColors.ofManga(context, item.manga))
+		binding.imageViewBadge.imageTintList = ColorStateList.valueOf(HantenColors.ofManga(context, item.manga))
 		binding.root.isClickable = item.manga != null
 	}
 }

@@ -1035,4 +1035,7 @@
     <string name="update_later">Позже</string>
     <string name="update_skip_version">Пропустить эту версию</string>
     <string name="update_no_changelog">Список изменений отсутствует.</string>
+    <string name="frequency_every_hour">Каждый час</string>
+    <string name="frequency_every_3_days">Каждые 3 дня</string>
+    <string name="suggestions_update_interval">Интервал обновления</string>
 </resources>

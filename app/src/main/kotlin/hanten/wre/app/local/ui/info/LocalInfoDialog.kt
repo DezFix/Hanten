@@ -15,7 +15,7 @@ import hanten.wre.app.R
 import hanten.wre.app.core.ui.AlertDialogFragment
 import hanten.wre.app.core.ui.widgets.SegmentedBarView
 import hanten.wre.app.core.util.FileSize
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.core.util.ext.getQuantityStringSafe
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
@@ -86,7 +86,7 @@ class LocalInfoDialog : AlertDialogFragment<DialogLocalInfoBinding>(), View.OnCl
 		val total = size + available
 		val segment = SegmentedBarView.Segment(
 			percent = (size.toDouble() / total.toDouble()).toFloat(),
-			color = FutonColors.segmentColor(view.context, appcompatR.attr.colorPrimary),
+			color = HantenColors.segmentColor(view.context, appcompatR.attr.colorPrimary),
 		)
 		requireViewBinding().labelUsed.text = view.context.getString(
 			R.string.memory_usage_pattern,

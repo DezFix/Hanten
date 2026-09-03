@@ -170,8 +170,8 @@ class MangaSourcesRepository @Inject constructor(
 					is MangaParserSource -> it.contentType in types
 					is hanten.wre.app.mihon.model.MihonMangaSource -> {
 						val mihonType = it.contentType
-						types.any { kotatsuType ->
-							when (kotatsuType) {
+						types.any { parsersType ->
+							when (parsersType) {
 								hanten.wre.app.parsers.model.ContentType.MANGA -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.MANGA
 								hanten.wre.app.parsers.model.ContentType.HENTAI -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.HENTAI_MANGA
 								hanten.wre.app.parsers.model.ContentType.COMICS -> mihonType == hanten.wre.app.mihon.parsers.model.ContentType.COMICS
@@ -440,9 +440,13 @@ class MangaSourcesRepository @Inject constructor(
 	}
 
 	fun getExternalSources(): List<MangaSource> {
-		return context.packageManager.queryIntentContentProviders(
-			Intent("app.futon.parser.PROVIDE_MANGA"), 0,
-		).map { resolveInfo ->
+		val intents = listOf(
+			Intent("app.hanten.parser.PROVIDE_MANGA"),
+			Intent("app.futon.parser.PROVIDE_MANGA"),
+		)
+		return intents.flatMap { intent ->
+			context.packageManager.queryIntentContentProviders(intent, 0)
+		}.distinctBy { it.providerInfo.packageName }.map { resolveInfo ->
 			ExternalMangaSource(
 				packageName = resolveInfo.providerInfo.packageName,
 				authority = resolveInfo.providerInfo.authority,

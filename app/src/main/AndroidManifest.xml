@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="hanten.wre.app"
-	android:versionCode="10100"
-	android:versionName="1.1.0"
+	android:versionCode="10101"
+	android:versionName="1.1.1"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
@@ -92,15 +92,7 @@
 
 				<data
 					android:scheme="https"
-					android:host="futon.app"
-					android:pathPrefix="/manga" />
-				<data
-					android:scheme="https"
 					android:host="hanten.wre.app"
-					android:pathPrefix="/manga" />
-				<data
-					android:scheme="http"
-					android:host="futon.app"
 					android:pathPrefix="/manga" />
 				<data
 					android:scheme="http"
@@ -115,15 +107,7 @@
 
 				<data
 					android:scheme="https"
-					android:host="futonapp.pages.dev"
-					android:pathPrefix="/manga" />
-				<data
-					android:scheme="https"
 					android:host="hanten.pages.dev"
-					android:pathPrefix="/manga" />
-				<data
-					android:scheme="http"
-					android:host="futonapp.pages.dev"
 					android:pathPrefix="/manga" />
 				<data
 					android:scheme="http"
@@ -136,7 +120,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" android:host="manga" />
 				<data android:scheme="hanten" android:host="manga" />
 			</intent-filter>
 		</activity>
@@ -190,7 +173,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" android:host="about" />
 				<data android:scheme="hanten" android:host="about" />
 			</intent-filter>
 			<intent-filter>
@@ -199,7 +181,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" android:host="sync-settings" />
 				<data android:scheme="hanten" android:host="sync-settings" />
 			</intent-filter>
 			<intent-filter>
@@ -208,7 +189,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" android:host="about" />
 				<data android:scheme="hanten" android:host="about" />
 			</intent-filter>
 			<intent-filter>
@@ -217,7 +197,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" android:host="sync-settings" />
 				<data android:scheme="hanten" android:host="sync-settings" />
 			</intent-filter>
 		</activity>
@@ -303,7 +282,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="futon" />
 				<data android:scheme="hanten" />
 				<data android:host="shikimori-auth" />
 				<data android:host="anilist-auth" />
@@ -327,11 +305,8 @@
 				<data android:scheme="mihon" android:host="add-repo" />
 				<data android:scheme="tachiyomi" android:host="extension-repo" />
 				<data android:scheme="tachiyomi" android:host="add-repo" />
-				<data android:scheme="futon" android:host="extension-repo" />
 				<data android:scheme="hanten" android:host="extension-repo" />
-				<data android:scheme="futon" android:host="extension-store" />
 				<data android:scheme="hanten" android:host="extension-store" />
-				<data android:scheme="futon" android:host="add-repo" />
 				<data android:scheme="hanten" android:host="add-repo" />
 			</intent-filter>
 		</activity>
@@ -343,7 +318,6 @@
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<data android:scheme="futon+kitsu" />
 				<data android:scheme="hanten+kitsu" />
 			</intent-filter>
 		</activity>
@@ -494,7 +468,7 @@
 			android:name="hanten.wre.app.core.exceptions.resolve.CaptchaHandler$DiscardReceiver"
 			android:exported="false">
 			<intent-filter>
-				<action android:name="org.koitharu.futon.CAPTCHA_DISCARD" />
+				<action android:name="hanten.wre.app.CAPTCHA_DISCARD" />
 			</intent-filter>
 		</receiver>
 		<receiver

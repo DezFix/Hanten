@@ -16,6 +16,7 @@
 	<string name="kitsu_clientSecret" translatable="false">54d7307928f63414defd96399fc31ba847961ceaecef3a5fd93144e960c0e151</string>
 	<string name="sync_authority_history" translatable="false">hanten.wre.app.history</string>
 	<string name="sync_authority_favourites" translatable="false">hanten.wre.app.favourites</string>
+	<!-- Foreign bot, unused: Telegram upload is force-disabled in TelegramBackupUploader -->
 	<string name="tg_backup_bot_name" translatable="false">futon_backup_bot</string>
 	<string name="app_icon_url" translatable="false">https://raw.githubusercontent.com/DezFix/Hanten/refs/heads/devel/metadata/en-US/icon.png</string>
 	<string-array name="values_theme" translatable="false">
@@ -40,6 +41,7 @@
 		<item>0</item>
 		<item>1</item>
 	</string-array>
+	<!-- Foreign sync servers, unused while is_sync_enabled=false -->
 	<string-array name="sync_url_list" translatable="false">
 		<item>https://sync.futonapp.pages.dev</item>
 		<item>https://moe.shirizu.org</item>

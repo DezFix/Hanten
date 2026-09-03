@@ -10,7 +10,7 @@ import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.parsers.model.Manga
 import kotlin.math.absoluteValue
 
-object FutonColors {
+object HantenColors {
 
 	@ColorInt
 	@Deprecated("")

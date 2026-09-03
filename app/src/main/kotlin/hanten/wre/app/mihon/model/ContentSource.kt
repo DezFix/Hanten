@@ -89,7 +89,6 @@ fun contentSource(name: String?): ContentSource {
 		val parts = name.substringAfter(':').splitTwoParts('/') ?: return UnknownContentSource
 		return ExternalContentSource(packageName = parts.first, authority = parts.second)
 	}
-	// GlobalExtensionManager.mangaSources.value.find { it.name == name }?.let { return hanten.wre.app.core.parser.kotatsu.KotatsuParserSource(it) }
 	// GlobalExtensionManager.contentSources.value.find { it.name == name }?.let { return it }
 
 	// Fallbacks: If not loaded yet, return stable AnonymousContentSource
@@ -227,7 +226,7 @@ val ContentSource.isBroken: Boolean
 	get() {
 		val unwrapped = this.unwrap()
 		return when (unwrapped) {
-			is KotatsuParserSource -> unwrapped.isBroken
+			is HantenParserSource -> unwrapped.isBroken
 			else -> {
 				// hanten.wre.app.core.extensions.GlobalExtensionManager.contentSources.value.find { it.originalSource == unwrapped || it.name == unwrapped.name }?.isBroken == true ||
 				// hanten.wre.app.core.extensions.GlobalExtensionManager.mangaSources.value.find { it.originalSource == unwrapped || it.name == unwrapped.name }?.isBroken == true

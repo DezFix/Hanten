@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import hanten.wre.app.R
 import hanten.wre.app.core.ui.widgets.SegmentedBarView
 import hanten.wre.app.core.util.FileSize
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.databinding.PreferenceMemoryUsageBinding
 
 class StorageUsagePreference @JvmOverloads constructor(
@@ -34,15 +34,15 @@ class StorageUsagePreference @JvmOverloads constructor(
 		val binding = PreferenceMemoryUsageBinding.bind(holder.itemView)
 		val storageSegment = SegmentedBarView.Segment(
 			usage?.savedManga?.percent ?: 0f,
-			FutonColors.segmentColorRandom(context, Color.BLUE),
+			HantenColors.segmentColorRandom(context, Color.BLUE),
 		)
 		val pagesSegment = SegmentedBarView.Segment(
 			usage?.pagesCache?.percent ?: 0f,
-			FutonColors.segmentColorRandom(context, Color.GREEN),
+			HantenColors.segmentColorRandom(context, Color.GREEN),
 		)
 		val otherSegment = SegmentedBarView.Segment(
 			usage?.otherCache?.percent ?: 0f,
-			FutonColors.segmentColorRandom(context, Color.GRAY),
+			HantenColors.segmentColorRandom(context, Color.GRAY),
 		)
 
 		with(binding) {

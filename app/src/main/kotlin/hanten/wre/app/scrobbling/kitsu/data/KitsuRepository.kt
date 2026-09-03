@@ -41,7 +41,7 @@ class KitsuRepository(
 	private val clientId = context.getString(R.string.kitsu_clientId)
 	private val clientSecret = context.getString(R.string.kitsu_clientSecret)
 
-	override val oauthUrl: String = "futon+kitsu://auth"
+	override val oauthUrl: String = "hanten+kitsu://auth"
 
 	override val isAuthorized: Boolean
 		get() = storage.accessToken != null

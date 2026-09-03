@@ -17,6 +17,14 @@
 		android:summary="@string/suggestions_wifi_only_summary"
 		android:title="@string/only_using_wifi" />
 
+	<ListPreference
+		android:defaultValue="24"
+		android:dependency="suggestions"
+		android:entries="@array/suggestions_update_interval"
+		android:entryValues="@array/values_suggestions_update_interval"
+		android:key="suggestions_update_interval"
+		android:title="@string/suggestions_update_interval" />
+
 	<SwitchPreferenceCompat
 		android:defaultValue="false"
 		android:dependency="suggestions"

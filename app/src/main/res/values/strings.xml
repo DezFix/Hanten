@@ -968,4 +968,7 @@
     <string name="update_later">Later</string>
     <string name="update_skip_version">Skip this version</string>
     <string name="update_no_changelog">No changelog provided.</string>
+    <string name="frequency_every_hour">Every hour</string>
+    <string name="frequency_every_3_days">Every 3 days</string>
+    <string name="suggestions_update_interval">Update interval</string>
 </resources>

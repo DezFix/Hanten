@@ -4,8 +4,10 @@
 
 **Форк проектов [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) • Пакет `hanten.wre.app` • Прямые обновления из GitHub Releases**
 
+**В приоритете — поддержка русскоязычных и украиноязычных источников.**
+
 ![Android 6.0](https://img.shields.io/badge/android-6.0+-brightgreen)
-[![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FKotatsu-Redo%2Fkotatsu-parsers-redo%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C)](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)
+[![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDezFix%2Fhanten-parsers%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C)](https://github.com/DezFix/hanten-parsers)
 [![License](https://img.shields.io/github/license/DezFix/Hanten)](https://github.com/DezFix/Hanten/blob/devel/LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/DezFix/Hanten?sort=date&display_name=tag&style=flat)](https://github.com/DezFix/Hanten/releases/latest)
 
@@ -15,7 +17,7 @@
 
 <div align="left">
 
-* Online [manga catalogues](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo) (with 1200+ manga sources)
+* Online [manga catalogues](https://github.com/DezFix/hanten-parsers) (130+ manga sources, incl. Senkuro) with priority support for Russian and Ukrainian sources
 * Support for [Tachiyomi keiyoushi](https://github.com/keiyoushi/extensions) extensions
 * Search manga by name, genres and more filters
 * Favorites organized by user-defined categories
@@ -88,7 +90,7 @@ Pull requests are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 ### Certificate fingerprints
 
 ```plaintext
-E0:FF:B8:DB:6A:CE:CC:B7:C9:F9:C7:8C:A4:B1:33:A0:E3:88:EC:E4:4C:6C:E1:87:9E:D9:2C:33:F5:76:5D:35
+D3:F2:AB:2D:82:AF:A0:AB:02:D5:F6:83:98:26:84:7D:85:0B:39:F8:02:65:77:7D:EB:DE:AB:E6:79:E3:CC:67
 ```
 
 ### License

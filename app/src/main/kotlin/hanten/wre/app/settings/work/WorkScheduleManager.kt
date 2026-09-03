@@ -31,7 +31,8 @@ class WorkScheduleManager @Inject constructor(
 			)
 
 			AppSettings.KEY_SUGGESTIONS,
-			AppSettings.KEY_SUGGESTIONS_WIFI_ONLY -> updateWorker(
+			AppSettings.KEY_SUGGESTIONS_WIFI_ONLY,
+			AppSettings.KEY_SUGGESTIONS_UPDATE_INTERVAL -> updateWorker(
 				scheduler = suggestionScheduler,
 				isEnabled = settings.isSuggestionsEnabled,
 				force = key != AppSettings.KEY_SUGGESTIONS,

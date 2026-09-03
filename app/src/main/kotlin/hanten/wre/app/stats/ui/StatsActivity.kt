@@ -27,7 +27,7 @@ import hanten.wre.app.core.ui.BaseListAdapter
 import hanten.wre.app.core.ui.dialog.buildAlertDialog
 import hanten.wre.app.core.ui.list.OnListItemClickListener
 import hanten.wre.app.core.ui.util.ReversibleActionObserver
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.core.util.ext.end
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
@@ -85,7 +85,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
                         value = (v.duration / 1000).toInt(),
                         label = v.manga?.title ?: v.tagName ?: getString(R.string.other_manga),
                         percent = (v.duration.toDouble() / sum).toFloat(),
-                        color = FutonColors.ofManga(this, v.manga),
+                        color = HantenColors.ofManga(this, v.manga),
                         tag = v.manga,
                     )
                 },

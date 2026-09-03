@@ -20,7 +20,7 @@ import coil3.request.ImageRequest
 import com.google.android.material.color.MaterialColors
 import hanten.wre.app.R
 import hanten.wre.app.core.model.getTitle
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.core.util.ext.hasFocusStateSpecified
 import hanten.wre.app.core.util.ext.mangaSourceKey
 
@@ -57,7 +57,7 @@ open class FaviconDrawable(
 		}
 		paint.textAlign = Paint.Align.CENTER
 		paint.isFakeBoldText = true
-		colorForeground = FutonColors.random(name)
+		colorForeground = HantenColors.random(name)
 		currentForegroundColor = MaterialColors.harmonize(colorForeground, colorBackground.defaultColor)
 		onStateChange(state)
 	}

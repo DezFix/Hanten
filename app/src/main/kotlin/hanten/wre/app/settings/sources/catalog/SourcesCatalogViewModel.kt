@@ -160,7 +160,7 @@ class SourcesCatalogViewModel @Inject constructor(
 				}
 			}
 		}.toList().sortedByDescending { type ->
-			val kotatsuCount = repository.allMangaSources.count { it.contentType == type }
+			val parsersCount = repository.allMangaSources.count { it.contentType == type }
 			val mihonCount = mihonExtensionManager.getMihonMangaSources().count { 
 				when(it.contentType) {
 					hanten.wre.app.mihon.parsers.model.ContentType.MANGA -> type == ContentType.MANGA
@@ -177,7 +177,7 @@ class SourcesCatalogViewModel @Inject constructor(
 					else -> false
 				}
 			}
-			kotatsuCount + mihonCount
+			parsersCount + mihonCount
 		}
 		return if (isNsfwDisabled) {
 			result.filterNot { it == ContentType.HENTAI }

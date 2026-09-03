@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.ui.sheet.BaseAdaptiveSheet
-import hanten.wre.app.core.util.FutonColors
+import hanten.wre.app.core.util.HantenColors
 import hanten.wre.app.core.util.ext.consume
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.textAndVisible
@@ -32,7 +32,7 @@ class MangaStatsSheet : BaseAdaptiveSheet<SheetStatsMangaBinding>(), View.OnClic
 	override fun onViewBindingCreated(binding: SheetStatsMangaBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
 		binding.textViewTitle.text = viewModel.manga.title
-		binding.chartView.barColor = FutonColors.ofManga(binding.root.context, viewModel.manga)
+		binding.chartView.barColor = HantenColors.ofManga(binding.root.context, viewModel.manga)
 		viewModel.stats.observe(viewLifecycleOwner, ::onStatsChanged)
 		viewModel.startDate.observe(viewLifecycleOwner) {
 			binding.textViewStart.textAndVisible = it?.format(binding.root.context)

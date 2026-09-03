@@ -4,7 +4,7 @@ import hanten.wre.app.mihon.parsers.model.ContentSource
 import hanten.wre.app.mihon.parsers.model.ContentType
 import hanten.wre.app.parsers.model.MangaParserSource
 
-data class KotatsuParserSource(
+data class HantenParserSource(
     val mangaSource: MangaParserSource
 ) : ContentSource {
     override val name: String get() = mangaSource.name

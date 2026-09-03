@@ -9,7 +9,7 @@ import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import java.net.HttpURLConnection
 
-private const val USER_AGENT_SHIKIMORI = "Futon"
+private const val USER_AGENT_SHIKIMORI = "Hanten"
 
 class ShikimoriInterceptor(private val storage: ScrobblerStorage) : Interceptor {
 

@@ -166,11 +166,31 @@ fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
     Migration29To30(),
 )
 
-fun MangaDatabase(context: Context): MangaDatabase = Room
-	.databaseBuilder(context, MangaDatabase::class.java, "futon-db")
-	.addMigrations(*getDatabaseMigrations(context))
-	.addCallback(DatabasePrePopulateCallback(context.resources))
-	.build()
+fun MangaDatabase(context: Context): MangaDatabase {
+	migrateDatabaseFile(context, oldName = "futon-db", newName = "hanten-db")
+	return Room
+		.databaseBuilder(context, MangaDatabase::class.java, "hanten-db")
+		.addMigrations(*getDatabaseMigrations(context))
+		.addCallback(DatabasePrePopulateCallback(context.resources))
+		.build()
+}
+
+private fun migrateDatabaseFile(context: Context, oldName: String, newName: String) {
+	runCatching {
+		val newFile = context.getDatabasePath(newName)
+		if (newFile.exists()) return
+		val oldFile = context.getDatabasePath(oldName)
+		if (!oldFile.exists()) return
+		newFile.parentFile?.mkdirs()
+		oldFile.copyTo(newFile, overwrite = false)
+		arrayOf("-shm", "-wal").forEach { suffix ->
+			val oldExtra = java.io.File(oldFile.path + suffix)
+			if (oldExtra.exists()) {
+				oldExtra.copyTo(java.io.File(newFile.path + suffix), overwrite = false)
+			}
+		}
+	}
+}
 
 fun InvalidationTracker.removeObserverAsync(observer: InvalidationTracker.Observer) {
 	val scope = processLifecycleScope
