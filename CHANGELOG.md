@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.4
+Date: 2026-09-04
+
+### Highlights
+- Own simple ad blocker (domain-based, third-party only, never breaks pages)
+- Alternatives tab searches all known titles (RU/EN/KR)
+
+### Fixes
+- Browser: adblock toggle in menu, no filtering on Cloudflare checks
+- RU sources: dropped dead BestManga and parked mirrors, refreshed working mirrors
+
+### Maintenance
+- Parsers 29ed80e1
+- versionName 1.1.4 / versionCode 10104
+
 ## 1.1.3
 Date: 2026-09-03
 

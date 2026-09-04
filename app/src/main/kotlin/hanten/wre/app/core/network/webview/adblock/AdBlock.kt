@@ -25,13 +25,24 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
+/**
+ * Our own simple ad blocker.
+ *
+ * Blocks third-party requests to known ad/tracker/popunder/cryptominer
+ * domains (suffix match). Deliberately minimal so it can never break
+ * page logic:
+ * - first-party requests (same host as the page) are never blocked,
+ * - main frames are handled by the caller (see [BrowserClient]),
+ * - no script injection, no cosmetic rules, no regex filters.
+ */
 @Reusable
 class AdBlock @Inject constructor(
 	@ApplicationContext private val context: Context,
 	private val settings: AppSettings,
 ) {
 
-	private var rules: RulesList? = null
+	@Volatile
+	private var suffixes: Set<String>? = null
 
 	@WorkerThread
 	fun shouldLoadUrl(url: String, baseUrl: String?): Boolean {
@@ -46,36 +57,37 @@ class AdBlock @Inject constructor(
 		if (!settings.isAdBlockEnabled) {
 			return true
 		}
-		return synchronized(this) {
-			rules ?: parseRules().also { rules = it }
-		}?.let {
-			val rule = it[url, baseUrl]
-			if (rule != null) {
-				Log.i(TAG, "Blocked $url by $rule")
-			}
-			rule == null
-		} ?: true
+		val host = url.host.lowercase()
+		val pageHost = baseUrl?.host?.lowercase()
+		if (pageHost != null && host == pageHost) {
+			return true // never block first-party
+		}
+		val list = synchronized(this) {
+			suffixes ?: loadSuffixes().also { suffixes = it }
+		} ?: return true
+		val blocked = list.any { suffix -> host == suffix || host.endsWith(".$suffix") }
+		if (blocked) {
+			Log.i(TAG, "Blocked $url (page: $baseUrl)")
+		}
+		return !blocked
 	}
 
 	@WorkerThread
-	private fun parseRules() = runCatchingCancellable {
-		val rules = RulesList()
-		listsDir(context).listFiles { file ->
-			file.isFile && file.extension == "txt"
-		}?.sortedBy { it.name }?.forEach { file ->
-			file.useLines { lines ->
-				lines.forEach { line -> rules.add(line) }
-			}
+	private fun loadSuffixes(): Set<String>? = runCatchingCancellable {
+		val file = cachedFile(context)
+		val lines = if (file.exists() && file.isNotEmpty()) {
+			file.readLines()
+		} else {
+			context.assets.open(ASSET_NAME).bufferedReader().readLines()
 		}
-		rules.trimToSize()
-		rules
+		lines.mapNotNullTo(HashSet()) { parseHost(it) }
 	}.onFailure { e ->
-		e.printStackTraceDebug("AdBlock::parseRules")
+		e.printStackTraceDebug("AdBlock::loadSuffixes")
 	}.getOrNull()
 
 	internal fun onListsUpdated() {
 		synchronized(this) {
-			rules = null
+			suffixes = null
 		}
 	}
 
@@ -86,13 +98,15 @@ class AdBlock @Inject constructor(
 	) {
 
 		suspend fun updateList() {
-			LIST_URLS.forEach { (fileName, url) ->
-				runCatchingCancellable {
-					downloadList(url, File(listsDir(context), fileName))
-				}.onFailure { e ->
-					e.printStackTraceDebug("AdBlock::updateList $url")
-				}
+			runCatchingCancellable {
+				downloadList(LIST_URL, cachedFile(context))
+			}.onFailure { e ->
+				e.printStackTraceDebug("AdBlock::updateList $LIST_URL")
 			}
+			// drop legacy EasyList-era files, they are superseded by adservers.txt
+			cachedFile(context).parentFile?.listFiles { file ->
+				file.isFile && file.name != CACHE_FILENAME
+			}?.forEach { it.delete() }
 			adBlock.onListsUpdated()
 		}
 
@@ -129,20 +143,30 @@ class AdBlock @Inject constructor(
 
 	private companion object {
 
-		fun listsDir(context: Context): File {
+		fun parseHost(line: String): String? {
+			var s = line.trim().lowercase()
+			if (s.isEmpty() || s.startsWith('#') || s.startsWith('!') || s.startsWith('[')) {
+				return null
+			}
+			s = s.removePrefix("||").removePrefix("|").removePrefix("@@")
+			s = s.substringBefore('$').substringBefore('/').substringBefore('^').trim().trimEnd('.')
+			if (s.isEmpty() || '.' !in s || ' ' in s || '*' in s || '%' in s) {
+				return null
+			}
+			return s
+		}
+
+		fun cachedFile(context: Context): File {
 			val root = File(context.externalCacheDir ?: context.cacheDir, LIST_DIR)
 			root.mkdir()
-			return root
+			return File(root, CACHE_FILENAME)
 		}
 
 		private const val LIST_DIR = "adblock"
+		private const val CACHE_FILENAME = "adservers.txt"
+		private const val ASSET_NAME = "adservers.txt"
+		private const val LIST_URL =
+			"https://raw.githubusercontent.com/DezFix/filters/refs/heads/main/adservers.txt"
 		private const val TAG = "AdBlock"
-
-		// (file name, url): EasyList + EasyPrivacy + RU AdList (our priority locales)
-		private val LIST_URLS = arrayOf(
-			"easylist.txt" to "https://easylist.to/easylist/easylist.txt",
-			"easyprivacy.txt" to "https://easylist.to/easylist/easyprivacy.txt",
-			"ruadlist.txt" to "https://easylist-downloads.adblockplus.org/ruadlist.txt",
-		)
 	}
 }

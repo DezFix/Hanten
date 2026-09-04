@@ -19,6 +19,8 @@ import java.util.Locale
 import javax.inject.Inject
 
 private const val MAX_PARALLELISM = 4
+private const val MAX_QUERIES = 5
+private const val MAX_RESULTS_PER_SOURCE = 10
 
 class AlternativesUseCase @Inject constructor(
 	private val sourcesRepository: MangaSourcesRepository,
@@ -31,17 +33,28 @@ class AlternativesUseCase @Inject constructor(
 		if (sources.isEmpty()) {
 			return emptyFlow()
 		}
+		val queries = (listOf(manga.title) + manga.altTitles)
+			.map { it.trim() }
+			.filter { it.isNotEmpty() }
+			.distinct()
+			.take(MAX_QUERIES)
 		val semaphore = Semaphore(MAX_PARALLELISM)
 		return channelFlow {
 			for (source in sources) {
 				launch {
 					val searchHelper = searchHelperFactory.create(source)
-					val list = runCatchingCancellable {
+					val found = linkedMapOf<Long, Manga>()
+					runCatchingCancellable {
 						semaphore.withPermit {
-							searchHelper(manga.title, SearchKind.TITLE)?.manga
+							for (query in queries) {
+								val list = searchHelper(query, SearchKind.TITLE)?.manga
+								if (list.isNullOrEmpty()) continue
+								list.forEach { found.putIfAbsent(it.id, it) }
+								if (found.size >= MAX_RESULTS_PER_SOURCE) break
+							}
 						}
 					}.getOrNull()
-					list?.forEach { m ->
+					found.values.forEach { m ->
 						if (m.id != manga.id) {
 							launch {
 								val details = runCatchingCancellable {
