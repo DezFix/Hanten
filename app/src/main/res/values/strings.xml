@@ -985,4 +985,6 @@
     <string name="check_updates_summary">Check for a new version on GitHub</string>
     <string name="update_uptodate">You have the latest version</string>
     <string name="donate_title">Support development</string>
+    <string name="source_error_reports">Source error reports</string>
+    <string name="source_error_reports_summary">Send source failure details (source, error, app version) to the developer to help fix broken sources</string>
 </resources>

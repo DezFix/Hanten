@@ -66,7 +66,8 @@ class AppUpdateFlow @Inject constructor(
 		release: AppRelease,
 	) {
 		val changelog = release.changelog.ifBlank { activity.getString(R.string.update_no_changelog) }
-		MaterialAlertDialogBuilder(activity)
+		val dialog = MaterialAlertDialogBuilder(activity)
+			.setIcon(R.mipmap.ic_launcher)
 			.setTitle(activity.getString(R.string.update_available_title, release.tag))
 			.setMessage(changelog)
 			.setPositiveButton(R.string.update_download_and_install) { _, _ ->
@@ -77,6 +78,25 @@ class AppUpdateFlow @Inject constructor(
 			}
 			.setNegativeButton(R.string.update_later, null)
 			.show()
+		dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.let { button ->
+			val density = activity.resources.displayMetrics.density
+			button.background = android.graphics.drawable.GradientDrawable().apply {
+				shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+				cornerRadius = 20 * density
+				setColor(
+					com.google.android.material.color.MaterialColors.getColor(
+						button,
+						com.google.android.material.R.attr.colorPrimaryContainer,
+					),
+				)
+			}
+			button.setTextColor(
+				com.google.android.material.color.MaterialColors.getColor(
+					button,
+					com.google.android.material.R.attr.colorOnPrimaryContainer,
+				),
+			)
+		}
 	}
 
 	fun handlePermissionResult(

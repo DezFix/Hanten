@@ -20,6 +20,7 @@ import hanten.wre.app.core.exceptions.EmptyMangaException
 import hanten.wre.app.core.exceptions.InteractiveActionRequiredException
 import hanten.wre.app.core.exceptions.ProxyConfigException
 import hanten.wre.app.core.exceptions.UnsupportedSourceException
+import hanten.wre.app.core.crash.SourceErrorReporter
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
@@ -46,6 +47,7 @@ class ExceptionResolver private constructor(
     private val host: Host,
     private val settings: AppSettings,
     private val scrobblerAuthHelperProvider: Provider<ScrobblerAuthHelper>,
+    private val errorReporter: SourceErrorReporter,
 ) {
     private val continuations = MutableScatterMap<String, Continuation<Boolean>>(1)
 
@@ -64,6 +66,7 @@ class ExceptionResolver private constructor(
     }
 
     suspend fun resolve(e: Throwable): Boolean = host.lifecycleScope.async {
+        errorReporter.report(e, e.findSource())
         when (e) {
             is CloudFlareProtectedException -> resolveCF(e)
             is AuthRequiredException -> resolveAuthException(e.source)
@@ -166,19 +169,28 @@ class ExceptionResolver private constructor(
     class Factory @Inject constructor(
         private val settings: AppSettings,
         private val scrobblerAuthHelperProvider: Provider<ScrobblerAuthHelper>,
+        private val errorReporter: SourceErrorReporter,
     ) {
 
         fun create(fragment: Fragment) = ExceptionResolver(
             host = Host.FragmentHost(fragment),
             settings = settings,
             scrobblerAuthHelperProvider = scrobblerAuthHelperProvider,
+            errorReporter = errorReporter,
         )
 
         fun create(activity: FragmentActivity) = ExceptionResolver(
             host = Host.ActivityHost(activity),
             settings = settings,
             scrobblerAuthHelperProvider = scrobblerAuthHelperProvider,
+            errorReporter = errorReporter,
         )
+    }
+
+    private fun Throwable.findSource(): MangaSource? = when (this) {
+        is EmptyMangaException -> manga.source
+        is UnsupportedSourceException -> manga?.source
+        else -> (cause as? AuthRequiredException)?.source
     }
 
     private sealed interface Host : ActivityResultCaller, LifecycleOwner {

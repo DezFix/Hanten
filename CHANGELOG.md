@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.6
+Date: 2026-09-04
+
+### Highlights
+- Source error reports: separate toggle, failures go to Bugsink with source context
+- Update dialog restyled (icon, accent install button)
+
+### Fixes
+- Usagi single-flight requests, MangaChan im. domain
+
+### Maintenance
+- Parsers 641e0b59
+- versionName 1.1.6 / versionCode 10106
+
 ## 1.1.5
 Date: 2026-09-04
 

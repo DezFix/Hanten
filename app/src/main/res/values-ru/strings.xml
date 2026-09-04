@@ -1052,4 +1052,6 @@
     <string name="check_updates_summary">Проверить новую версию на GitHub</string>
     <string name="update_uptodate">У вас последняя версия</string>
     <string name="donate_title">Поддержать разработку</string>
+    <string name="source_error_reports">Отчёты об ошибках источников</string>
+    <string name="source_error_reports_summary">Отправлять разработчику детали сбоев источников (источник, ошибка, версия), чтобы помочь чинить сломанные источники</string>
 </resources>

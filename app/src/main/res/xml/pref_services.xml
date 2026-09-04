@@ -75,4 +75,10 @@
 		android:title="@string/crash_reporting"
 		app:allowDividerAbove="true" />
 
+<SwitchPreferenceCompat
+		android:defaultValue="false"
+		android:key="source_error_reports"
+		android:summary="@string/source_error_reports_summary"
+		android:title="@string/source_error_reports" />
+
 </PreferenceScreen>
