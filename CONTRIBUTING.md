@@ -5,7 +5,7 @@
 + Если хотите **исправить баг/фичу с issue** — назначьте её на себя и/или оставьте комментарий.
 + Если хотите **новую фичу** — сначала откройте issue/discussion, чтобы согласовать.
 + **Новые источники манги** — правятся не здесь, а в [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers) (форк `AppFuton/futon-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
-+ **Чат сообщества** — GitHub Discussions / Issues этого репо (Discord удалён).
++ **Чат сообщества** — GitHub Discussions / Issues этого репо.
 + **Обновления приложения** — доставляются напрямую из GitHub Releases (`Настройки → О программе → Проверить обновления`, `hanten.wre.app`).
 
 Принципы:
