@@ -14,7 +14,9 @@ open class CloudFlareClient(
 	private val callback: CloudFlareCallback,
 	adBlock: AdBlock,
 	private val targetUrl: String,
-) : BrowserClient(callback, adBlock) {
+	// AdBlock is intentionally disabled during Cloudflare clearance:
+	// challenge scripts must load untouched or verification never passes.
+) : BrowserClient(callback, null) {
 
 	private val oldClearance = getClearance()
 	private var counter = 0

@@ -20,6 +20,9 @@ open class BrowserClient(
 	private val adBlock: AdBlock?,
 ) : WebViewClient() {
 
+	@Volatile
+	var isAdBlockEnabled: Boolean = true
+
 	/**
 	 * https://stackoverflow.com/questions/57414530/illegalstateexception-reasonphrase-cant-be-empty-with-android-webview
 	 */
@@ -64,7 +67,7 @@ open class BrowserClient(
 	override fun shouldInterceptRequest(
 		view: WebView?,
 		url: String?
-	): WebResourceResponse? = if (url.isNullOrEmpty() || adBlock?.shouldLoadUrl(url, view?.getUrlSafe()) ?: true) {
+	): WebResourceResponse? = if (!isAdBlockEnabled || url.isNullOrEmpty() || adBlock?.shouldLoadUrl(url, view?.getUrlSafe()) ?: true) {
 		super.shouldInterceptRequest(view, url)
 	} else {
 		emptyResponse()
@@ -75,7 +78,7 @@ open class BrowserClient(
 		view: WebView?,
 		request: WebResourceRequest?
 	): WebResourceResponse? =
-		if (request == null || adBlock?.shouldLoadUrl(request.url.toString(), view?.getUrlSafe()) ?: true) {
+		if (!isAdBlockEnabled || request == null || adBlock?.shouldLoadUrl(request.url.toString(), view?.getUrlSafe()) ?: true) {
 			super.shouldInterceptRequest(view, request)
 		} else {
 			emptyResponse()

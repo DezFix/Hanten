@@ -9,4 +9,11 @@
 		android:title="@string/open_in_browser"
 		app:showAsAction="ifRoom" />
 
+	<item
+		android:id="@+id/action_adblock"
+		android:checkable="true"
+		android:checked="true"
+		android:title="@string/adblock_toggle"
+		app:showAsAction="never" />
+
 </menu>

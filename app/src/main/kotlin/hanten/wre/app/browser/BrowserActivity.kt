@@ -22,9 +22,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class BrowserActivity : BaseBrowserActivity() {
 
+	private var browserClient: BrowserClient? = null
+
 	override fun onCreate2(savedInstanceState: Bundle?, source: MangaSource, repository: ParserMangaRepository?) {
 		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = true)
-		viewBinding.webView.webViewClient = BrowserClient(this, adBlock)
+		browserClient = BrowserClient(this, adBlock).also {
+			viewBinding.webView.webViewClient = it
+		}
 		lifecycleScope.launch {
 			try {
 				proxyProvider.applyWebViewConfig()
@@ -50,6 +54,7 @@ class BrowserActivity : BaseBrowserActivity() {
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		super.onCreateOptionsMenu(menu)
 		menuInflater.inflate(R.menu.opt_browser, menu)
+		menu.findItem(R.id.action_adblock)?.isChecked = browserClient?.isAdBlockEnabled ?: true
 		return true
 	}
 
@@ -63,6 +68,16 @@ class BrowserActivity : BaseBrowserActivity() {
 		R.id.action_browser -> {
 			if (!router.openExternalBrowser(viewBinding.webView.url.orEmpty(), item.title)) {
 				Snackbar.make(viewBinding.webView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
+			}
+			true
+		}
+
+		R.id.action_adblock -> {
+			val client = browserClient
+			if (client != null) {
+				client.isAdBlockEnabled = !client.isAdBlockEnabled
+				item.isChecked = client.isAdBlockEnabled
+				viewBinding.webView.reload()
 			}
 			true
 		}

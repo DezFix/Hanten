@@ -1047,4 +1047,5 @@
     <string name="update_install_untrusted">Подпись APK не совпадает, установка отменена</string>
     <string name="update_allow_unknown">Разрешите установку из неизвестных источников для обновления</string>
     <string name="update_open_settings">Открыть настройки</string>
+    <string name="adblock_toggle">Блокировка рекламы</string>
 </resources>

@@ -980,4 +980,5 @@
     <string name="update_install_untrusted">APK signature mismatch, update aborted</string>
     <string name="update_allow_unknown">Allow installing from unknown sources to update</string>
     <string name="update_open_settings">Open settings</string>
+    <string name="adblock_toggle">Ad blocking</string>
 </resources>
