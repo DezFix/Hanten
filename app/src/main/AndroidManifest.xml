@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="hanten.wre.app"
-	android:versionCode="10104"
-	android:versionName="1.1.4"
+	android:versionCode="10105"
+	android:versionName="1.1.5"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 

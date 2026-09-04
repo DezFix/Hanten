@@ -4,6 +4,16 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.5
+Date: 2026-09-04
+
+### Fixes
+- Anti-bot 404 stubs no longer disguised as login prompts (honest errors instead)
+
+### Maintenance
+- Parsers 5df05138
+- versionName 1.1.5 / versionCode 10105
+
 ## 1.1.4
 Date: 2026-09-04
 
