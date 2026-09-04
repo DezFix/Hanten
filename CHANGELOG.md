@@ -4,6 +4,17 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.8
+Date: 2026-09-05
+
+### Fixes
+- HoneyManga chapters: tolerant parsing, fixed frames URL, empty-list diagnostics
+- ChanParser: new im. markup chapters, no crash on missing container
+
+### Maintenance
+- Parsers 188cb1fd
+- versionName 1.1.8 / versionCode 10108
+
 ## 1.1.7
 Date: 2026-09-04
 
