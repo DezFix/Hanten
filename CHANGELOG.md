@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.7
+Date: 2026-09-04
+
+### Highlights
+- Usagi served via a.zazaza.me mirror (same catalog, no anti-bot wall)
+
+### Fixes
+- HoneyManga: WebView fallback for API posts, correct frames URL, resilient chapters
+- Manga-Chan chapter pages via fullimg lists
+
+### Maintenance
+- Parsers 877230aa
+- versionName 1.1.7 / versionCode 10107
+
 ## 1.1.6
 Date: 2026-09-04
 
