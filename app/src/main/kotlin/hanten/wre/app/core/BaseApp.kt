@@ -110,13 +110,13 @@ open class BaseApp : Application(), Configuration.Provider {
 	private fun initializeSentry() {
 		try {
 			io.sentry.android.core.SentryAndroid.init(this) { options ->
-				// DSN is read from BuildConfig which gets it from SENTRY_DSN environment variable
-				// Only set if DSN is provided (non-empty)
-				if (BuildConfig.SENTRY_DSN.isNotEmpty()) {
-					options.dsn = BuildConfig.SENTRY_DSN
-					options.isEnableAutoSessionTracking = true
-					options.environment = if (BuildConfig.DEBUG) "debug" else "production"
-				}
+				// DSN comes from SENTRY_DSN environment variable at build time,
+				// falling back to our own self-hosted Bugsink instance.
+				// The DSN holds a public key only, it is safe to embed.
+				val dsn = BuildConfig.SENTRY_DSN.ifEmpty { BUGSINK_DSN }
+				options.dsn = dsn
+				options.isEnableAutoSessionTracking = true
+				options.environment = if (BuildConfig.DEBUG) "debug" else "production"
 				options.beforeSend = io.sentry.SentryOptions.BeforeSendCallback { event, _ ->
 					val exceptions = event.exceptions
 					if (exceptions != null && exceptions.any { it.isHttpError() }) null else event
@@ -137,5 +137,10 @@ open class BaseApp : Application(), Configuration.Provider {
 			name == "UnknownHostException" ||
 			name == "ConnectException" ||
 			name == "SSLException"
+	}
+
+	private companion object {
+		// Own self-hosted Bugsink instance (Sentry-compatible). Public key, safe to embed.
+		const val BUGSINK_DSN = "https://57116ae6fb41473fa5176a5c7aa3e299@wrebug.bugsink.com/2"
 	}
 }
