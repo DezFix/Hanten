@@ -1048,4 +1048,8 @@
     <string name="update_allow_unknown">Разрешите установку из неизвестных источников для обновления</string>
     <string name="update_open_settings">Открыть настройки</string>
     <string name="adblock_toggle">Блокировка рекламы</string>
+    <string name="check_updates">Проверить обновления</string>
+    <string name="check_updates_summary">Проверить новую версию на GitHub</string>
+    <string name="update_uptodate">У вас последняя версия</string>
+    <string name="donate_title">Поддержать разработку</string>
 </resources>

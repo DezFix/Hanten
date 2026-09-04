@@ -10,6 +10,7 @@ import android.text.format.Formatter
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -17,11 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import hanten.wre.app.BuildConfig
-import hanten.wre.app.core.github.AppRelease
-import hanten.wre.app.core.github.AppUpdateDownloader
-import hanten.wre.app.core.github.AppUpdateRepository
-import hanten.wre.app.core.github.VersionId
-import hanten.wre.app.core.os.AppValidator
+import hanten.wre.app.core.github.AppUpdateFlow
 import java.io.File
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -110,13 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	lateinit var settings: AppSettings
 
 	@Inject
-	lateinit var appUpdateRepository: AppUpdateRepository
-
-	@Inject
-	lateinit var appUpdateDownloader: AppUpdateDownloader
-
-	@Inject
-	lateinit var appValidator: AppValidator
+	lateinit var appUpdateFlow: AppUpdateFlow
 
 	private val viewModel by viewModels<MainViewModel>()
 	private val searchSuggestionViewModel by viewModels<SearchSuggestionViewModel>()
@@ -385,19 +376,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		updateContainerBottomMargin()
 	}
 
-	private var pendingUpdateRelease: AppRelease? = null
-	private var pendingUpdateFile: File? = null
-
-	private val installPermissionLauncher =
+	private val installPermissionLauncher: ActivityResultLauncher<Intent> =
 		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-			val file = pendingUpdateFile
-			pendingUpdateFile = null
-			if (file != null && file.exists()) {
-				installUpdate(file)
-			} else {
-				pendingUpdateRelease?.let { downloadUpdate(it) }
-				pendingUpdateRelease = null
-			}
+			appUpdateFlow.handlePermissionResult(
+				this@MainActivity,
+				viewBinding.container,
+				installPermissionLauncher,
+			)
 		}
 
 	private fun checkForAppUpdate() {
@@ -405,165 +390,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 			return // nightly builds have their own update flow
 		}
 		lifecycleScope.launch {
-			val release = withContext(Dispatchers.IO) {
-				appUpdateRepository.fetchLatestRelease()
-			} ?: return@launch
-			val latest = VersionId(release.tag.trimStart('v', 'V'))
-			val current = VersionId(BuildConfig.VERSION_NAME.trimStart('v', 'V'))
-			if (latest <= current) return@launch
-			val prefs = getSharedPreferences(PREFS_APP_UPDATES, MODE_PRIVATE)
-			if (prefs.getString(KEY_SKIPPED_UPDATE_TAG, null) == release.tag) return@launch
+			val release = appUpdateFlow.checkForUpdate(ignoreSkippedTag = false) ?: return@launch
 			withResumed {
-				val changelog = release.changelog.ifBlank { getString(R.string.update_no_changelog) }
-				MaterialAlertDialogBuilder(this@MainActivity)
-					.setTitle(getString(R.string.update_available_title, release.tag))
-					.setMessage(changelog)
-					.setPositiveButton(R.string.update_download_and_install) { _, _ ->
-						startUpdate(release)
-					}
-					.setNeutralButton(R.string.update_skip_version) { _, _ ->
-						prefs.edit().putString(KEY_SKIPPED_UPDATE_TAG, release.tag).apply()
-					}
-					.setNegativeButton(R.string.update_later, null)
-					.show()
+				appUpdateFlow.showUpdateDialog(
+					this@MainActivity,
+					viewBinding.container,
+					installPermissionLauncher,
+					release,
+				)
 			}
 		}
 	}
-
-	private fun startUpdate(release: AppRelease) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !packageManager.canRequestPackageInstalls()) {
-			pendingUpdateRelease = release
-			Snackbar.make(viewBinding.container, R.string.update_allow_unknown, Snackbar.LENGTH_LONG)
-				.setAction(R.string.update_open_settings) { openUnknownSourcesSettings() }
-				.show()
-			return
-		}
-		downloadUpdate(release)
-	}
-
-	private fun openUnknownSourcesSettings() {
-		runCatching {
-			val intent = Intent(
-				Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
-				"package:$packageName".toUri(),
-			)
-			installPermissionLauncher.launch(intent)
-		}.onFailure {
-			it.printStackTraceDebug("MainActivity::openUnknownSourcesSettings")
-		}
-	}
-
-	private fun downloadUpdate(release: AppRelease) {
-		val apkUrl = release.apkUrl
-		if (apkUrl.isNullOrEmpty()) {
-			startActivity(Intent(Intent.ACTION_VIEW, release.pageUrl.toUri()))
-			return
-		}
-		val destFile = File(File(cacheDir, DIR_UPDATES), "Hanten-${release.tag}.apk")
-		val density = resources.displayMetrics.density
-		val padding = (24 * density).toInt()
-		val layout = LinearLayout(this).apply {
-			orientation = LinearLayout.VERTICAL
-			setPadding(padding, (padding / 2), padding, 0)
-		}
-		val progress = LinearProgressIndicator(this).apply {
-			isIndeterminate = true
-			layoutParams = ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-			)
-		}
-		val percentView = TextView(this).apply {
-			text = getString(R.string.update_download_progress, 0, "", "")
-		}
-		layout.addView(progress)
-		layout.addView(percentView)
-		var downloadJob: Job? = null
-		val dialog = MaterialAlertDialogBuilder(this@MainActivity)
-			.setTitle(getString(R.string.update_downloading_title, release.tag))
-			.setView(layout)
-			.setNegativeButton(R.string.update_cancel) { _, _ ->
-				downloadJob?.cancel()
-			}
-			.setCancelable(false)
-			.show()
-		downloadJob = lifecycleScope.launch {
-			try {
-				val file = withContext(Dispatchers.IO) {
-					destFile.parentFile?.listFiles()?.forEach { old ->
-						if (old != destFile) old.delete()
-					}
-					appUpdateDownloader.downloadUpdate(apkUrl, destFile) { done, total ->
-						layout.post {
-							if (total != null && total > 0) {
-								val pct = ((done * 100) / total).toInt().coerceIn(0, 100)
-								progress.isIndeterminate = false
-								progress.max = 100
-								progress.progress = pct
-								percentView.text = getString(
-									R.string.update_download_progress,
-									pct,
-									formatSize(done),
-									formatSize(total),
-								)
-							} else {
-								percentView.text = formatSize(done)
-							}
-						}
-					}
-				}
-				dialog.dismiss()
-				installUpdate(file)
-			} catch (e: CancellationException) {
-				dialog.dismiss()
-				throw e
-			} catch (e: Exception) {
-				dialog.dismiss()
-				e.printStackTraceDebug("MainActivity::downloadUpdate")
-				showDownloadError(release, e)
-			}
-		}
-	}
-
-	private fun installUpdate(file: File) {
-		if (!appValidator.isTrustedApk(file)) {
-			file.delete()
-			Snackbar.make(viewBinding.container, R.string.update_install_untrusted, Snackbar.LENGTH_LONG).show()
-			return
-		}
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !packageManager.canRequestPackageInstalls()) {
-			pendingUpdateFile = file
-			Snackbar.make(viewBinding.container, R.string.update_allow_unknown, Snackbar.LENGTH_LONG)
-				.setAction(R.string.update_open_settings) { openUnknownSourcesSettings() }
-				.show()
-			return
-		}
-		runCatching {
-			val uri = FileProvider.getUriForFile(this, "$packageName.files", file)
-			val intent = Intent(Intent.ACTION_VIEW)
-				.setDataAndType(uri, "application/vnd.android.package-archive")
-				.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-			startActivity(intent)
-		}.onFailure {
-			it.printStackTraceDebug("MainActivity::installUpdate")
-			Snackbar.make(viewBinding.container, R.string.update_download_failed, Snackbar.LENGTH_LONG).show()
-		}
-	}
-
-	private fun showDownloadError(release: AppRelease, e: Throwable) {
-		val message = getString(
-			R.string.update_download_failed,
-			e.message?.takeIf { it.isNotBlank() } ?: e.javaClass.simpleName,
-		)
-		Snackbar.make(viewBinding.container, message, Snackbar.LENGTH_LONG)
-			.setAction(R.string.update_open_in_browser) {
-				startActivity(Intent(Intent.ACTION_VIEW, release.pageUrl.toUri()))
-			}
-			.show()
-	}
-
-	private fun formatSize(bytes: Long): String =
-		Formatter.formatShortFileSize(this, bytes)
 
 	private fun requestNotificationsPermission() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(
@@ -651,9 +488,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		awaitClose { removeTransitionListener(listener) }
 	}
 
-	private companion object {
-		const val PREFS_APP_UPDATES = "app_updates"
-		const val KEY_SKIPPED_UPDATE_TAG = "skipped_update_tag"
-		const val DIR_UPDATES = "updates"
-	}
 }

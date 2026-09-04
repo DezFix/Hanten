@@ -981,4 +981,8 @@
     <string name="update_allow_unknown">Allow installing from unknown sources to update</string>
     <string name="update_open_settings">Open settings</string>
     <string name="adblock_toggle">Ad blocking</string>
+    <string name="check_updates">Check for updates</string>
+    <string name="check_updates_summary">Check for a new version on GitHub</string>
+    <string name="update_uptodate">You have the latest version</string>
+    <string name="donate_title">Support development</string>
 </resources>

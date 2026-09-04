@@ -7,24 +7,40 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
+import hanten.wre.app.core.github.AppUpdateFlow
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BasePreferenceFragment
+import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.core.models.Shape
 import nl.dionsegijn.konfetti.xml.KonfettiView
 import nl.dionsegijn.konfetti.xml.image.DrawableImage
+import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
 class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
 	private val viewModel by viewModels<AboutSettingsViewModel>()
+
+	@Inject
+	lateinit var updateFlow: AppUpdateFlow
+
+	private val installPermissionLauncher: ActivityResultLauncher<Intent> =
+		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+			updateFlow.handlePermissionResult(requireActivity(), listView, installPermissionLauncher)
+		}
+
 	private var versionClickCount = 0
 	private lateinit var konfettiView: KonfettiView
 
@@ -103,7 +119,28 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 				true
 			}
 
+			"check_updates" -> {
+				checkForUpdates()
+				true
+			}
+
+			"about_donate" -> {
+				openLink(R.string.url_donate, preference.title)
+				true
+			}
+
 			else -> super.onPreferenceTreeClick(preference)
+		}
+	}
+
+	private fun checkForUpdates() {
+		lifecycleScope.launch {
+			val release = updateFlow.checkForUpdate(ignoreSkippedTag = true)
+			if (release == null) {
+				Snackbar.make(listView, R.string.update_uptodate, Snackbar.LENGTH_SHORT).show()
+			} else {
+				updateFlow.showUpdateDialog(requireActivity(), listView, installPermissionLauncher, release)
+			}
 		}
 	}
 

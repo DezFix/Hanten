@@ -282,7 +282,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		set(value) = prefs.edit { putBoolean(KEY_PROTECT_APP_BIOMETRIC, value) }
 
 	val isMirrorSwitchingEnabled: Boolean
-		get() = prefs.getBoolean(KEY_MIRROR_SWITCHING, false)
+		get() = prefs.getBoolean(KEY_MIRROR_SWITCHING, true)
 
 	val isExitConfirmationEnabled: Boolean
 		get() = prefs.getBoolean(KEY_EXIT_CONFIRM, false)
