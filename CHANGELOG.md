@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 1.1.9
+Date: 2026-09-05
+
+### Highlights
+- New source: ReComics (recomics.org, Remanga-compatible API)
+
+### Fixes
+- HoneyManga chapters: pagination instead of rejected pageSize=999999 (root cause of empty chapters)
+- HoneyManga pages via v2 frames URL (old two-segment path returns 404)
+- HoneyManga statuses, authors, covers fallback
+
+### Maintenance
+- Parsers v2026.09.05
+- versionName 1.1.9 / versionCode 10109
+
 ## 1.1.8
 Date: 2026-09-05
 
