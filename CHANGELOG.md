@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.1.1
+Date: 2026-09-05
+
+### Починили источники
+- Com-X: каталог снова показывает мангу (добили обход защиты сайта)
+
 ## 2.1
 Date: 2026-09-05
 
