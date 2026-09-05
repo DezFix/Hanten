@@ -4,20 +4,34 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.0
+Date: 2026-09-05
+
+### Новое
+- Новый источник: ReComics
+- Экран «О программе»: иконки у пунктов и шапка с логотипом
+
+### Починили источники
+- Com-X: переписан под новый сайт (каталог снова показывает мангу)
+- HoneyManga: у глав без названий теперь подписаны том и раздел
+- MANGA Plus (русский): в списке теперь весь каталог, а не одна манга
+- WaManga: повторная попытка при обрывах соединения
+- MangaMammy: переезд на новое зеркало
+- MangaOneLove: переезд на новые зеркала
+- Яой-тян: добавлено новое зеркало
+
+### Убрали мёртвые источники
+- Mangazavr — сайт мёртв, рабочих зеркал нет
+- WeebDex (все языки) — сервис закрылся
+
 ## 1.1.9
 Date: 2026-09-05
 
-### Highlights
-- New source: ReComics (recomics.org, Remanga-compatible API)
+### Новое
+- Новый источник: ReComics
 
-### Fixes
-- HoneyManga chapters: pagination instead of rejected pageSize=999999 (root cause of empty chapters)
-- HoneyManga pages via v2 frames URL (old two-segment path returns 404)
-- HoneyManga statuses, authors, covers fallback
-
-### Maintenance
-- Parsers v2026.09.05
-- versionName 1.1.9 / versionCode 10109
+### Починили источники
+- HoneyManga: главы грузятся все, починили страницы, статусы и обложки
 
 ## 1.1.8
 Date: 2026-09-05

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="hanten.wre.app"
-	android:versionCode="10109"
-	android:versionName="1.1.9"
+	android:versionCode="20000"
+	android:versionName="2.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
@@ -1148,8 +1148,10 @@
 				<data android:host="yuri.live" />
 				<data android:host="bestmanga.club" />
 				<data android:host="mangamammy.ru" />
+				<data android:host="p.nimanga.com" />
 				<data android:host="mangaonelove.site" />
-				<data android:host="mangazavr.ru" />
+				<data android:host="mangaonelove.space" />
+				<data android:host="mangaonelove.website" />
 				<data android:host="bakaman.net" />
 				<data android:host="cat300.net" />
 				<data android:host="doujinza.com" />
@@ -1602,10 +1604,13 @@
 				<data android:host="x.henchan.pro" />
 				<data android:host="hentaichan.live" />
 				<data android:host="manga-chan.me" />
+				<data android:host="v18.yaoi-chan.me" />
+				<data android:host="v12.yaoi-chan.me" />
+				<data android:host="v9.yaoi-chan.me" />
+				<data android:host="v10.yaoi-chan.me" />
 				<data android:host="v3.yaoi-chan.me" />
 				<data android:host="v2.yaoi-chan.me" />
 				<data android:host="v1.yaoi-chan.me" />
-				<data android:host="yaoi-chan.me" />
 				<data android:host="lib.social" />
 				<data android:host="lib.social" />
 				<data android:host="lib.social" />

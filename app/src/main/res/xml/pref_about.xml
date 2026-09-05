@@ -5,11 +5,20 @@
 	android:title="@string/about">
 
 	<Preference
+		android:key="about_header"
+		android:layout="@layout/preference_about_header"
+		android:persistent="false"
+		android:selectable="false"
+		app:allowDividerBelow="false" />
+
+	<Preference
 		android:key="app_version"
+		android:icon="@drawable/ic_info_outline"
 		android:persistent="false" />
 
 	<Preference
 		android:fragment="hanten.wre.app.settings.about.changelog.ChangelogFragment"
+		android:icon="@drawable/ic_history"
 		android:key="changelog"
 		android:persistent="false"
 		android:summary="@string/changelog_summary"
@@ -17,18 +26,21 @@
 
 	<Preference
 		android:key="check_updates"
+		android:icon="@drawable/ic_app_update"
 		android:persistent="false"
 		android:summary="@string/check_updates_summary"
 		android:title="@string/check_updates" />
 
 	<Preference
 		android:key="about_donate"
+		android:icon="@drawable/ic_heart"
 		android:persistent="false"
 		android:summary="@string/url_donate"
 		android:title="@string/donate_title" />
 
 	<Preference
 		android:key="about_help"
+		android:icon="@drawable/ic_book_page"
 		android:persistent="false"
 		android:summary="@string/url_user_manual"
 		android:title="@string/user_manual"
@@ -36,18 +48,21 @@
 
 	<Preference
 		android:key="about_github"
+		android:icon="@drawable/ic_web"
 		android:persistent="false"
 		android:summary="@string/url_github"
 		android:title="@string/source_code" />
 
 	<Preference
 		android:key="about_app_translation"
+		android:icon="@drawable/ic_language"
 		android:persistent="false"
 		android:summary="@string/url_weblate"
 		android:title="@string/about_app_translation_summary" />
 
 	<Preference
 		android:key="about_telegram"
+		android:icon="@drawable/ic_send"
 		android:persistent="false"
 		android:summary="@string/url_telegram_web"
 		android:title="@string/telegram_group" />
