@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.1.4
+Date: 2026-09-06
+
+### Починили источники
+- JoiMang: обход Vercel-защиты через WebView
+- MangaLib.com: починка каталога и поиска
+
 ## 2.1.3
 Date: 2026-09-06
 
