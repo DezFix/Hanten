@@ -75,7 +75,9 @@ import hanten.wre.app.suggestions.domain.MangaSuggestion
 import hanten.wre.app.suggestions.domain.SuggestionRepository
 import hanten.wre.app.suggestions.domain.TagsBlacklist
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -411,6 +413,11 @@ class SuggestionsWorker @AssistedInject constructor(
 	) : PeriodicWorkScheduler {
 
 		override suspend fun schedule() {
+			if (settings.suggestionsUpdateIntervalHours <= 0) {
+				// Manual mode: no periodic updates, the user refreshes on demand
+				unschedule()
+				return
+			}
 			val request = PeriodicWorkRequestBuilder<SuggestionsWorker>(
 				settings.suggestionsUpdateIntervalHours.toLong(),
 				TimeUnit.HOURS,
@@ -435,6 +442,10 @@ class SuggestionsWorker @AssistedInject constructor(
 				.awaitUniqueWorkInfoByName(TAG)
 				.any { !it.state.isFinished }
 		}
+
+		fun observeIsRunning(): Flow<Boolean> = workManager.getWorkInfosByTagFlow(TAG_ONESHOT)
+			.map { infos -> infos.any { !it.state.isFinished } }
+			.distinctUntilChanged()
 
 		suspend fun startNow() {
 			if (workManager.awaitWorkInfosByTag(TAG_ONESHOT).any { !it.state.isFinished }) {

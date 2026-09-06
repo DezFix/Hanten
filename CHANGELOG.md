@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.1.3
+Date: 2026-09-06
+
+### Новое
+- Новые источники: Zenko, DgManga (украинские), Mangaddict (английский), MangaLib.com, JoiMang
+- Рекомендации: интервал обновления «Вручную» (без автообновления) и обновление свайпом
+
+### Починили источники
+- Usagi скрыт из списка: сайт блокирует страницы манги антиботом («Ошибка =)» 500)
+
+### Исправления
+- Избранное: в фильтрах больше не показываются источники, с которых нет манги
+
 ## 2.1.2
 Date: 2026-09-05
 

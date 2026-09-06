@@ -42,6 +42,9 @@ class SuggestionsViewModel @Inject constructor(
 	override val listMode = settings.observeAsFlow(AppSettings.KEY_LIST_MODE_SUGGESTIONS) { suggestionsListMode }
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, settings.suggestionsListMode)
 
+	val isUpdating = suggestionsScheduler.observeIsRunning()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, false)
+
 	override val content = combine(
 		quickFilter.appliedOptions.combineWithSettings().flatMapLatest { repository.observeAll(0, it) },
 		quickFilter.appliedOptions,
@@ -82,7 +85,9 @@ class SuggestionsViewModel @Inject constructor(
 		emit(listOf(it.toErrorState(canRetry = false)))
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, listOf(LoadingState))
 
-	override fun onRefresh() = Unit
+	override fun onRefresh() {
+		updateSuggestions()
+	}
 
 	override fun onRetry() = Unit
 

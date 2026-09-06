@@ -11,17 +11,21 @@ import hanten.wre.app.R
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.ui.list.ListSelectionController
 import hanten.wre.app.core.util.ext.addMenuProvider
+import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.databinding.FragmentListBinding
 import hanten.wre.app.list.ui.MangaListFragment
 
 class SuggestionsFragment : MangaListFragment() {
 
 	override val viewModel by viewModels<SuggestionsViewModel>()
-	override val isSwipeRefreshEnabled = false
+	override val isSwipeRefreshEnabled = true
 
 	override fun onViewBindingCreated(binding: FragmentListBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
 		addMenuProvider(SuggestionMenuProvider())
+		viewModel.isUpdating.observe(viewLifecycleOwner) {
+			binding.swipeRefreshLayout.isRefreshing = it
+		}
 	}
 
 	override fun onScrolledToEnd() = Unit

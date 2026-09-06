@@ -100,12 +100,14 @@
 		<item>@string/more_frequently</item>
 	</string-array>
 	<string-array name="suggestions_update_interval" translatable="false">
+		<item>@string/manual</item>
 		<item>@string/frequency_every_hour</item>
 		<item>@string/frequency_every_day</item>
 		<item>@string/frequency_every_3_days</item>
 		<item>@string/frequency_once_per_week</item>
 	</string-array>
 	<string-array name="values_suggestions_update_interval" translatable="false">
+		<item>0</item>
 		<item>1</item>
 		<item>24</item>
 		<item>72</item>
