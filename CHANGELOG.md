@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.1.6
+Date: 2026-09-07
+
+### Исправления
+- Цифры оценки рядом со звёздами теперь видно
+- TomiloLib: полный список глав (пагинация по флагу сервера)
+
 ## 2.1.5
 Date: 2026-09-07
 
