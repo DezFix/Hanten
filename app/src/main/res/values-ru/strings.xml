@@ -1031,6 +1031,8 @@
     
 <string name="download_quota_reached">Квота хранилища исчерпана. Загрузки приостановлены.</string>
     <string name="update_available_title">Доступно обновление: %1$s</string>
+    <string name="update_available_heading">Вышло новое обновление</string>
+    <string name="update_install_now">Обновить сейчас</string>
     <string name="update_now">Обновить</string>
     <string name="update_later">Позже</string>
     <string name="update_skip_version">Пропустить эту версию</string>

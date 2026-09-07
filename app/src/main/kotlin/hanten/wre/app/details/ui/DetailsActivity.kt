@@ -444,9 +444,12 @@ class DetailsActivity :
 				ratingBarRating.rating = manga.rating * ratingBarRating.numStars
 				ratingBarRating.isVisible = true
 				textViewRatingLabel.isVisible = true
+				textViewRatingValue.text = String.format("%.1f", manga.rating * 10)
+				textViewRatingValue.isVisible = true
 			} else {
 				ratingBarRating.isVisible = false
 				textViewRatingLabel.isVisible = false
+				textViewRatingValue.isVisible = false
 			}
 			manga.state?.let { state ->
 				textViewState.textAndVisible = resources.getString(state.titleResId)

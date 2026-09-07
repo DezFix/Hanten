@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.1.5
+Date: 2026-09-07
+
+### Новое
+- На экране манги рядом со звёздами теперь цифры оценки
+- Новый диалог обновления: заголовок по центру, блок чейнджлога, кнопки с иконками
+
+### Починили источники
+- Readmanga, Mintmanga, Seimanga: вернули описания, оценки и статус (сайты сменили вёрстку); у Readmanga живой домен readmanga.me
+- Senkuro: оценки из API
+- Com-X: оценки в деталях
+- TomiloLib: ретраи и постраничная загрузка глав
+- WaManga: чтение оценки из API
+
 ## 2.1.4
 Date: 2026-09-06
 

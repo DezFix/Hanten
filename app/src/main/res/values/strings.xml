@@ -964,6 +964,8 @@
     <string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
     <string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
     <string name="update_available_title">Update available: %1$s</string>
+    <string name="update_available_heading">A new update is available</string>
+    <string name="update_install_now">Update now</string>
     <string name="update_now">Update</string>
     <string name="update_later">Later</string>
     <string name="update_skip_version">Skip this version</string>

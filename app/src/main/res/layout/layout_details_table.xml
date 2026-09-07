@@ -121,18 +121,30 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/margin_normal"
-		android:layout_marginEnd="@dimen/screen_padding"
 		android:isIndicator="true"
 		android:max="1"
 		android:numStars="5"
 		android:stepSize="0.5"
 		android:textAppearance="?textAppearanceBodyMedium"
 		app:layout_constraintBottom_toBottomOf="@id/textView_rating_label"
-		app:layout_constraintEnd_toEndOf="@id/card_details"
 		app:layout_constraintHorizontal_bias="0"
 		app:layout_constraintStart_toEndOf="@id/barrier_table"
 		app:layout_constraintTop_toTopOf="@id/textView_rating_label"
 		tools:text="Author name" />
+
+	<TextView
+		android:id="@+id/textView_rating_value"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_marginEnd="@dimen/screen_padding"
+		android:singleLine="true"
+		android:textAppearance="?textAppearanceBodyMedium"
+		app:layout_constraintBaseline_toBaselineOf="@id/ratingBar_rating"
+		app:layout_constraintEnd_toEndOf="@id/card_details"
+		app:layout_constraintHorizontal_bias="0"
+		app:layout_constraintStart_toEndOf="@id/ratingBar_rating"
+		tools:text="8.5" />
 
 	<TextView
 		android:id="@+id/textView_state_label"

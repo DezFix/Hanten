@@ -2,18 +2,24 @@ package hanten.wre.app.core.github
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.provider.Settings
 import android.text.format.Formatter
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -65,37 +71,90 @@ class AppUpdateFlow @Inject constructor(
 		permissionLauncher: ActivityResultLauncher<Intent>,
 		release: AppRelease,
 	) {
+		val density = activity.resources.displayMetrics.density
+		val pad = (20 * density).toInt()
+		val titleLayout = LinearLayout(activity).apply {
+			orientation = LinearLayout.VERTICAL
+			gravity = Gravity.CENTER_HORIZONTAL
+			setPadding(pad, pad, pad, (4 * density).toInt())
+		}
+		val iconSize = (56 * density).toInt()
+		titleLayout.addView(
+			AppCompatImageView(activity).apply {
+				setImageResource(R.mipmap.ic_launcher)
+				layoutParams = LinearLayout.LayoutParams(iconSize, iconSize).apply {
+					bottomMargin = (12 * density).toInt()
+				}
+			},
+		)
+		titleLayout.addView(
+			TextView(activity).apply {
+				text = activity.getString(R.string.update_available_heading)
+				textAlignment = View.TEXT_ALIGNMENT_CENTER
+				textSize = 20f
+				setTypeface(typeface, Typeface.BOLD)
+			},
+		)
 		val changelog = release.changelog.ifBlank { activity.getString(R.string.update_no_changelog) }
+		val changelogView = TextView(activity).apply {
+			text = changelog
+			val innerPad = (12 * density).toInt()
+			setPadding(innerPad, innerPad, innerPad, innerPad)
+		}
+		changelogView.background = GradientDrawable().apply {
+			shape = GradientDrawable.RECTANGLE
+			cornerRadius = 16 * density
+			setColor(
+				MaterialColors.getColor(
+					changelogView,
+					com.google.android.material.R.attr.colorSurfaceContainerHigh,
+				),
+			)
+		}
+		val bodyLayout = LinearLayout(activity).apply {
+			orientation = LinearLayout.VERTICAL
+			setPadding(pad, (8 * density).toInt(), pad, 0)
+			addView(
+				changelogView,
+				LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+				),
+			)
+		}
 		val dialog = MaterialAlertDialogBuilder(activity)
-			.setIcon(R.mipmap.ic_launcher)
-			.setTitle(activity.getString(R.string.update_available_title, release.tag))
-			.setMessage(changelog)
-			.setPositiveButton(R.string.update_download_and_install) { _, _ ->
+			.setCustomTitle(titleLayout)
+			.setView(bodyLayout)
+			.setPositiveButton(R.string.update_install_now) { _, _ ->
 				startUpdate(activity, anchor, permissionLauncher, release)
 			}
-			.setNeutralButton(R.string.update_skip_version) { _, _ ->
+			.setNegativeButton(R.string.update_skip_version) { _, _ ->
 				prefs().edit().putString(KEY_SKIPPED_UPDATE_TAG, release.tag).apply()
 			}
-			.setNegativeButton(R.string.update_later, null)
 			.show()
-		dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.let { button ->
-			val density = activity.resources.displayMetrics.density
-			button.background = android.graphics.drawable.GradientDrawable().apply {
-				shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.let { button ->
+			button.background = GradientDrawable().apply {
+				shape = GradientDrawable.RECTANGLE
 				cornerRadius = 20 * density
 				setColor(
-					com.google.android.material.color.MaterialColors.getColor(
+					MaterialColors.getColor(
 						button,
 						com.google.android.material.R.attr.colorPrimaryContainer,
 					),
 				)
 			}
 			button.setTextColor(
-				com.google.android.material.color.MaterialColors.getColor(
+				MaterialColors.getColor(
 					button,
 					com.google.android.material.R.attr.colorOnPrimaryContainer,
 				),
 			)
+			button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_download, 0, 0, 0)
+			button.compoundDrawablePadding = (8 * density).toInt()
+		}
+		dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.let { button ->
+			button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_skip, 0, 0, 0)
+			button.compoundDrawablePadding = (8 * density).toInt()
 		}
 	}
 
