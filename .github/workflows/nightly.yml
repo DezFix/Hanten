@@ -63,6 +63,13 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # 'tools' package was removed from the SDK repo and breaks the
+          # action's default install list, skip it and install manually
+          packages: ''
+
+      - name: Install Android packages
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
       - name: Decode keystore
         run: |
