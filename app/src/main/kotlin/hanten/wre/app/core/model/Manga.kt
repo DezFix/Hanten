@@ -130,11 +130,12 @@ val Manga.isBroken: Boolean
 	get() = source == UnknownMangaSource
 
 val Manga.appUrl: Uri
-	get() = "https://hanten-link.hantenapp.workers.dev/m".toUri()
+	get() = "https://dezfix.github.io/manga".toUri()
 		.buildUpon()
 		.appendQueryParameter("s", source.name)
 		.appendQueryParameter("u", url)
 		.appendQueryParameter("n", title.transliterate())
+		.apply { if (!coverUrl.isNullOrEmpty()) appendQueryParameter("c", coverUrl) }
 		.build()
 
 private fun String.transliterate(): String {
