@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="hanten.wre.app"
-	android:versionCode="20107"
-	android:versionName="2.1.7"
+	android:versionCode="20108"
+	android:versionName="2.1.8"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
@@ -105,14 +105,14 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data
+			<data
 					android:scheme="https"
-					android:host="hanten.pages.dev"
+					android:host="dezfix.github.io"
 					android:pathPrefix="/manga" />
-				<data
-					android:scheme="http"
-					android:host="hanten.pages.dev"
-					android:pathPrefix="/manga" />
+			<data
+				android:scheme="http"
+				android:host="dezfix.github.io"
+				android:pathPrefix="/manga" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

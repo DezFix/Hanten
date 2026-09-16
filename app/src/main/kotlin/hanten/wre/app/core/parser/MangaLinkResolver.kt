@@ -27,6 +27,7 @@ class MangaLinkResolver @Inject constructor(
 
 	suspend fun resolve(uri: Uri): Manga {
 		return if (uri.scheme == "hanten" || uri.scheme == "futon" || uri.host == "hanten.pages.dev" ||
+			uri.host == "dezfix.github.io" ||
 			uri.host == "hanten.wre.app" || uri.host == "futonapp.pages.dev") {
 			resolveAppLink(uri)
 		} else {

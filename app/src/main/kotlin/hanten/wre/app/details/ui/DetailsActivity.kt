@@ -398,7 +398,8 @@ class DetailsActivity :
 					router.openDetails(item.toMangaWithOverride())
 				},
 			).also { rv.adapter = it }
-		adapter.items = related
+		adapter.items = related.take(RELATED_PREVIEW_LIMIT)
+		viewBinding.buttonRelatedMore.isVisible = related.size > RELATED_PREVIEW_LIMIT
 		viewBinding.groupRelated.isVisible = true
 	}
 
@@ -588,5 +589,6 @@ class DetailsActivity :
 	companion object {
 
 		private const val FAV_LABEL_LIMIT = 16
+		private const val RELATED_PREVIEW_LIMIT = 3
 	}
 }

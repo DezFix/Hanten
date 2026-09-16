@@ -16,6 +16,7 @@ import hanten.wre.app.core.util.MultiMutex
 import hanten.wre.app.core.util.ext.processLifecycleScope
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
 import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.parsers.util.runCatchingCancellable
 
@@ -41,7 +42,12 @@ abstract class CachingMangaRepository(
 	final override suspend fun getRelated(seed: Manga): List<Manga> = relatedMangaMutex.withLock(seed.id) {
 		cache.getRelatedManga(source, seed.url)?.let { return it }
 		val related = asyncSafe {
-			getRelatedMangaImpl(seed).filterNot { it.id == seed.id }
+			val primary = getRelatedMangaImpl(seed).filterNot { it.id == seed.id }
+			if (primary.isNotEmpty()) {
+				primary
+			} else {
+				findSimilarByTags(seed)
+			}
 		}
 		cache.putRelatedManga(source, seed.url, related)
 		related
@@ -74,6 +80,27 @@ abstract class CachingMangaRepository(
 
 	protected abstract suspend fun getPagesImpl(chapter: MangaChapter): List<MangaPage>
 
+	/**
+	 * Tag-based fallback when a source provides no related titles:
+	 * queries the same source by the seed's tags and ranks by tag overlap.
+	 */
+	private suspend fun findSimilarByTags(seed: Manga): List<Manga> {
+		val seedKeys = seed.tags.mapToSet { it.key }
+		if (seedKeys.isEmpty()) {
+			return emptyList()
+		}
+		return runCatchingCancellable {
+			getList(0, null, MangaListFilter(tags = seed.tags.take(MAX_SIMILAR_TAGS).toSet()))
+				.filterNot { it.id == seed.id }
+				.distinctBy { it.id }
+				.map { it to it.tags.count { tag -> tag.key in seedKeys } }
+				.filter { (_, shared) -> shared > 0 }
+				.sortedByDescending { (_, shared) -> shared }
+				.take(MAX_SIMILAR_RESULTS)
+				.map { (manga, _) -> manga }
+		}.getOrDefault(emptyList())
+	}
+
 	private suspend fun <T> asyncSafe(block: suspend CoroutineScope.() -> T): SafeDeferred<T> {
 		var dispatcher = currentCoroutineContext()[CoroutineDispatcher.Key]
 		if (dispatcher == null || dispatcher is MainCoroutineDispatcher) {
@@ -100,5 +127,11 @@ abstract class CachingMangaRepository(
 			}
 		}
 		return result
+	}
+
+	companion object {
+
+		private const val MAX_SIMILAR_TAGS = 5
+		private const val MAX_SIMILAR_RESULTS = 8
 	}
 }
