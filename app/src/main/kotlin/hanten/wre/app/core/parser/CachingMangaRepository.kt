@@ -85,7 +85,7 @@ abstract class CachingMangaRepository(
 	 * queries the same source by the seed's tags and ranks by tag overlap.
 	 */
 	private suspend fun findSimilarByTags(seed: Manga): List<Manga> {
-		val seedKeys = seed.tags.mapToSet { it.key }
+		val seedKeys = seed.tags.map { it.key }.toSet()
 		if (seedKeys.isEmpty()) {
 			return emptyList()
 		}
