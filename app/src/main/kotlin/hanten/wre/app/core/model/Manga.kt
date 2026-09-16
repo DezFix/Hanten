@@ -156,6 +156,7 @@ private fun String.transliterate(): String {
 		'Ґ' to "G", 'ґ' to "g",
 	)
 	return map { map[it] ?: it.toString() }.joinToString("")
+}
 
 fun Manga.chaptersCount(): Int {
 	if (chapters.isNullOrEmpty()) {
