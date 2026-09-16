@@ -27,7 +27,7 @@ class MangaLinkResolver @Inject constructor(
 
 	suspend fun resolve(uri: Uri): Manga {
 		return if (uri.scheme == "hanten" || uri.scheme == "futon" || uri.host == "hanten.pages.dev" ||
-			uri.host == "dezfix.github.io" ||
+			uri.host == "dezfix.github.io" || uri.host == "hanten-link.hantenapp.workers.dev" ||
 			uri.host == "hanten.wre.app" || uri.host == "futonapp.pages.dev") {
 			resolveAppLink(uri)
 		} else {
@@ -41,13 +41,16 @@ class MangaLinkResolver @Inject constructor(
 			// short url
 			return dataRepository.findMangaById(mangaId.toLong(), withChapters = false)
 		}
-		val sourceName = requireNotNull(uri.getQueryParameter("source")) { "Source is not specified" }
+		// short keys (s/u/n), with fallback to legacy full names
+		val sourceName = requireNotNull(
+			uri.getQueryParameter("s") ?: uri.getQueryParameter("source"),
+		) { "Source is not specified" }
 		val source = MangaSource(sourceName)
 		require(source != UnknownMangaSource) { "Manga source $sourceName is not supported" }
 		val repo = repositoryFactory.create(source)
 		return repo.findExact(
-			url = uri.getQueryParameter("url"),
-			title = uri.getQueryParameter("name"),
+			url = uri.getQueryParameter("u") ?: uri.getQueryParameter("url"),
+			title = uri.getQueryParameter("n") ?: uri.getQueryParameter("name"),
 		)
 	}
 

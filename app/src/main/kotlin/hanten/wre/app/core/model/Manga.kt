@@ -130,12 +130,11 @@ val Manga.isBroken: Boolean
 	get() = source == UnknownMangaSource
 
 val Manga.appUrl: Uri
-	get() = "https://dezfix.github.io/manga".toUri()
+	get() = "https://hanten-link.hantenapp.workers.dev/m".toUri()
 		.buildUpon()
-		.appendQueryParameter("source", source.name)
-		.appendQueryParameter("name", title)
-		.appendQueryParameter("url", url)
-		.appendQueryParameter("publicUrl", publicUrl)
+		.appendQueryParameter("s", source.name)
+		.appendQueryParameter("u", url)
+		.appendQueryParameter("p", publicUrl)
 		.build()
 
 fun Manga.chaptersCount(): Int {

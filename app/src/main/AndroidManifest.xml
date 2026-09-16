@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="hanten.wre.app"
-	android:versionCode="20108"
-	android:versionName="2.1.8"
+	android:versionCode="20109"
+	android:versionName="2.1.9"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
@@ -105,6 +105,14 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
+			<data
+					android:scheme="https"
+					android:host="hanten-link.hantenapp.workers.dev"
+					android:pathPrefix="/m" />
+			<data
+				android:scheme="http"
+				android:host="hanten-link.hantenapp.workers.dev"
+				android:pathPrefix="/m" />
 			<data
 					android:scheme="https"
 					android:host="dezfix.github.io"
