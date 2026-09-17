@@ -135,7 +135,10 @@ val Manga.appUrl: Uri
 		.appendQueryParameter("s", source.name)
 		.appendQueryParameter("u", url)
 		.appendQueryParameter("n", title)
-		.apply { if (!coverUrl.isNullOrEmpty()) appendQueryParameter("c", coverUrl) }
+		.apply {
+			if (!coverUrl.isNullOrEmpty()) appendQueryParameter("c", coverUrl)
+			publicUrl.toUri().host?.takeUnless { it.isEmpty() }?.let { appendQueryParameter("d", it) }
+		}
 		.build()
 
 fun Manga.chaptersCount(): Int {
