@@ -16,6 +16,7 @@ import hanten.wre.app.core.util.ext.mapItems
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.parsers.model.Manga
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -26,10 +27,12 @@ class BookmarksRepository @Inject constructor(
 
 	fun observeBookmark(manga: Manga, chapterId: Long, page: Int): Flow<Bookmark?> {
 		return db.getBookmarksDao().observe(manga.id, chapterId, page).map { it?.toBookmark(manga) }
+			.distinctUntilChanged()
 	}
 
 	fun observeBookmarks(manga: Manga): Flow<List<Bookmark>> {
 		return db.getBookmarksDao().observe(manga.id).mapItems { it.toBookmark(manga) }
+			.distinctUntilChanged()
 	}
 
 	fun observeBookmarks(): Flow<Map<Manga, List<Bookmark>>> {
@@ -40,7 +43,7 @@ class BookmarksRepository @Inject constructor(
 				res[manga] = v.toBookmarks(manga)
 			}
 			res
-		}
+		}.distinctUntilChanged()
 	}
 
 	suspend fun addBookmark(bookmark: Bookmark) {

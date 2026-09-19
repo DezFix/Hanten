@@ -14,6 +14,7 @@ import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.os.AppValidator
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.processLifecycleScope
+import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.data.index.LocalMangaIndex
 import hanten.wre.app.local.domain.model.LocalManga
@@ -125,7 +126,7 @@ open class BaseApp : Application(), Configuration.Provider {
 			}
 		} catch (e: Exception) {
 			// Log error but don't crash if Sentry initialization fails
-			e.printStackTrace()
+			e.printStackTraceDebug("BaseApp::initializeSentry")
 		}
 	}
 

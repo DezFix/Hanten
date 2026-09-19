@@ -74,19 +74,19 @@ class HistoryRepository @Inject constructor(
 		return db.getHistoryDao().observeAll(1).map {
 			val first = it.firstOrNull()
 			first?.toManga()
-		}
+		}.distinctUntilChanged()
 	}
 
 	fun observeAll(): Flow<List<Manga>> {
 		return db.getHistoryDao().observeAll().mapItems {
 			it.toManga()
-		}
+		}.distinctUntilChanged()
 	}
 
 	fun observeAll(limit: Int): Flow<List<Manga>> {
 		return db.getHistoryDao().observeAll(limit).mapItems {
 			it.toManga()
-		}
+		}.distinctUntilChanged()
 	}
 
 	fun observeAllWithHistory(
@@ -102,13 +102,13 @@ class HistoryRepository @Inject constructor(
 				it.toManga(),
 				it.history.toMangaHistory(),
 			)
-		}
+		}.distinctUntilChanged()
 	}
 
 	fun observeOne(id: Long): Flow<MangaHistory?> {
 		return db.getHistoryDao().observe(id).map {
 			it?.toMangaHistory()
-		}
+		}.distinctUntilChanged()
 	}
 
 	suspend fun addOrUpdate(manga: Manga, chapterId: Long, page: Int, scroll: Int, percent: Float, force: Boolean) {

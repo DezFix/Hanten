@@ -9,6 +9,7 @@ import hanten.wre.app.parsers.network.CloudFlareHelper
 import kotlin.coroutines.Continuation
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.internal.closeQuietly
 import java.util.concurrent.TimeUnit
 import kotlin.toString
 
@@ -59,15 +60,20 @@ class CaptchaContinuationClient(
             }
 
             val response = client.newCall(requestBuilder.build()).execute()
+            try {
+                val contentType = response.header("Content-Type", "text/html")
+                val mimeType = contentType?.split(";")?.get(0)?.trim() ?: "text/html"
+                val charset = contentType?.substringAfter("charset=", "UTF-8")?.trim() ?: "UTF-8"
 
-            val contentType = response.header("Content-Type", "text/html")
-            val mimeType = contentType?.split(";")?.get(0)?.trim() ?: "text/html"
-            val charset = contentType?.substringAfter("charset=", "UTF-8")?.trim() ?: "UTF-8"
-
-            return WebResourceResponse(mimeType, charset, response.body?.byteStream()).apply {
-                val headers = mutableMapOf<String, String>()
-                response.headers.forEach { headers[it.first] = it.second }
-                setResponseHeaders(headers)
+                return WebResourceResponse(mimeType, charset, response.body?.byteStream()).apply {
+                    val headers = mutableMapOf<String, String>()
+                    response.headers.forEach { headers[it.first] = it.second }
+                    setResponseHeaders(headers)
+                }
+            } catch (e: Exception) {
+                // The stream was not handed to WebView — release the connection.
+                response.closeQuietly()
+                return null
             }
         } catch (e: Exception) {
             return null

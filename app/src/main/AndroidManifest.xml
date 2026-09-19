@@ -191,22 +191,6 @@
 
 				<data android:scheme="hanten" android:host="sync-settings" />
 			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-
-				<data android:scheme="hanten" android:host="about" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-
-				<data android:scheme="hanten" android:host="sync-settings" />
-			</intent-filter>
 		</activity>
 		<activity
 			android:name="hanten.wre.app.settings.reader.ReaderTapGridConfigActivity"

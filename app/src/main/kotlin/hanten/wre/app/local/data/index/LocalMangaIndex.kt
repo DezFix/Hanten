@@ -1,9 +1,11 @@
 package hanten.wre.app.local.data.index
 
 import android.content.Context
+import android.util.Log
 import androidx.core.content.edit
 import androidx.room.withTransaction
 import dagger.hilt.android.qualifiers.ApplicationContext
+import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
@@ -41,20 +43,26 @@ class LocalMangaIndex @Inject constructor(
 	}
 
 	suspend fun update() = mutex.withLock {
-		println("LocalMangaIndex: Starting update")
+		if (BuildConfig.DEBUG) {
+			Log.d("LocalMangaIndex", "Starting update")
+		}
 		runCatchingCancellable {
 			db.withTransaction {
 				val dao = db.getLocalMangaIndexDao()
 				dao.clear()
 				localMangaRepositoryProvider.get()
 					.getRawListAsFlow()
-					.collect { 
-						println("LocalMangaIndex: Found manga ${it.manga.title} at ${it.file.path}")
+					.collect {
+						if (BuildConfig.DEBUG) {
+							Log.d("LocalMangaIndex", "Found manga ${it.manga.title} at ${it.file.path}")
+						}
 						upsert(it) 
 					}
 			}
 			currentVersion = VERSION
-			println("LocalMangaIndex: Update completed")
+			if (BuildConfig.DEBUG) {
+				Log.d("LocalMangaIndex", "Update completed")
+			}
 		}.onFailure {
 			it.printStackTraceDebug("LocalMangaIndex::update")
 		}

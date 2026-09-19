@@ -39,4 +39,3 @@ replay_pid*.log
 *.jks
 *.keystore
 .idea/
-gradle.properties

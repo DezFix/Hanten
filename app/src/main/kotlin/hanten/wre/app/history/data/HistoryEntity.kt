@@ -3,12 +3,17 @@ package hanten.wre.app.history.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import hanten.wre.app.core.db.TABLE_HISTORY
 import hanten.wre.app.core.db.entity.MangaEntity
 
 @Entity(
 	tableName = TABLE_HISTORY,
+	indices = [
+		Index(value = ["deleted_at", "updated_at"]),
+		Index(value = ["updated_at"]),
+	],
 	foreignKeys = [
 		ForeignKey(
 			entity = MangaEntity::class,

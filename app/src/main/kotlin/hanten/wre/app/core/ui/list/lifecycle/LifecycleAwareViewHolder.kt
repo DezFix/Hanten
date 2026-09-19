@@ -18,8 +18,14 @@ abstract class LifecycleAwareViewHolder(
 	private var isCurrent = false
 
 	init {
-		itemView.post {
+		// If the view is already attached, subscribing via post() would needlessly
+		// keep itemView (and its Activity context) in the main message queue.
+		if (itemView.isAttachedToWindow) {
 			parentLifecycleOwner.lifecycle.addObserver(ParentLifecycleObserver())
+		} else {
+			itemView.post {
+				parentLifecycleOwner.lifecycle.addObserver(ParentLifecycleObserver())
+			}
 		}
 	}
 

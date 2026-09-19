@@ -38,6 +38,8 @@ open class DoubleReaderFragment : BaseReaderFragment<FragmentReaderDoubleBinding
 	lateinit var settings: AppSettings
 
 	private var recyclerLifecycleDispatcher: RecyclerViewLifecycleDispatcher? = null
+	private var snapHelper: DoublePageSnapHelper? = null
+	private var pageScrollListener: PageScrollListener? = null
 
 	override fun onCreateViewBinding(
 		inflater: LayoutInflater,
@@ -54,13 +56,24 @@ open class DoubleReaderFragment : BaseReaderFragment<FragmentReaderDoubleBinding
 			recyclerLifecycleDispatcher = RecyclerViewLifecycleDispatcher().also {
 				addOnScrollListener(it)
 			}
-			addOnScrollListener(PageScrollListener())
-			DoublePageSnapHelper(settings).attachToRecyclerView(this)
+			pageScrollListener = PageScrollListener().also {
+				addOnScrollListener(it)
+			}
+			snapHelper = DoublePageSnapHelper(settings).also {
+				it.attachToRecyclerView(this)
+			}
 		}
 	}
 
 	override fun onDestroyView() {
+		viewBinding?.recyclerView?.let { rv ->
+			pageScrollListener?.let { rv.removeOnScrollListener(it) }
+			recyclerLifecycleDispatcher?.let { rv.removeOnScrollListener(it) }
+			snapHelper?.attachToRecyclerView(null)
+		}
+		pageScrollListener = null
 		recyclerLifecycleDispatcher = null
+		snapHelper = null
 		requireViewBinding().recyclerView.adapter = null
 		super.onDestroyView()
 	}

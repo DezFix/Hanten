@@ -2,10 +2,17 @@ package hanten.wre.app.core.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import hanten.wre.app.core.db.TABLE_MANGA
 
-@Entity(tableName = TABLE_MANGA)
+@Entity(
+	tableName = TABLE_MANGA,
+	indices = [
+		Index(value = ["source"]),
+		Index(value = ["public_url"]),
+	],
+)
 data class MangaEntity(
 	@PrimaryKey(autoGenerate = false)
 	@ColumnInfo(name = "manga_id") val id: Long,

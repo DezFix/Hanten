@@ -34,6 +34,7 @@ class HistoryUpdateUseCase @Inject constructor(
 	private val smartDownloadUseCase: SmartDownloadUseCase,
 ) {
 
+	@Volatile
 	private var lastCheckedChapterId: Long = -1L
 
 	suspend operator fun invoke(manga: Manga, readerState: ReaderState, percent: Float) {

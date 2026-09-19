@@ -235,12 +235,20 @@ fun Throwable.isNetworkError(): Boolean {
 fun Throwable.report(silent: Boolean = false) {
 	val exception = CaughtException(this)
 	// ACRA removed: use logging as a placeholder for crash reporting
-	if (!silent) {
-		exception.printStackTrace()
-		Log.e("Hanten", "Exception reported", exception)
-	} else if (!BuildConfig.DEBUG) {
-		exception.printStackTrace()
-		Log.w("Hanten", "Silent exception reported", exception)
+	if (BuildConfig.DEBUG) {
+		if (!silent) {
+			exception.printStackTrace()
+			Log.e("Hanten", "Exception reported", exception)
+		} else {
+			Log.w("Hanten", "Silent exception reported", exception)
+		}
+	} else {
+		// Release: never write stacktraces/PII to logcat, report to Sentry instead
+		runCatching {
+			io.sentry.Sentry.captureException(exception)
+		}.onFailure {
+			// Sentry not initialized — ignore, do not fall back to logcat
+		}
 	}
 }
 

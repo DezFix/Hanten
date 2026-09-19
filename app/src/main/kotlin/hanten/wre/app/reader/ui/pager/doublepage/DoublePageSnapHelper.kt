@@ -54,15 +54,18 @@ class DoublePageSnapHelper(private val settings: AppSettings) : SnapHelper() {
 
 	@Throws(IllegalStateException::class)
 	override fun attachToRecyclerView(target: RecyclerView?) {
-		if (target != null) {
-			recyclerView = target
-			val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-			check(layoutManager.canScrollHorizontally()) { "RecyclerView must be scrollable" }
-			orientationHelper = OrientationHelper.createHorizontalHelper(layoutManager)
-			layoutDirectionHelper = LayoutDirectionHelper(recyclerView.layoutDirection)
-			scroller = Scroller(target.context, snapInterpolator)
-			initItemDimensionIfNeeded(layoutManager)
+		if (target == null) {
+			scroller = null
+			super.attachToRecyclerView(null)
+			return
 		}
+		recyclerView = target
+		val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+		check(layoutManager.canScrollHorizontally()) { "RecyclerView must be scrollable" }
+		orientationHelper = OrientationHelper.createHorizontalHelper(layoutManager)
+		layoutDirectionHelper = LayoutDirectionHelper(recyclerView.layoutDirection)
+		scroller = Scroller(target.context, snapInterpolator)
+		initItemDimensionIfNeeded(layoutManager)
 		super.attachToRecyclerView(recyclerView)
 	}
 

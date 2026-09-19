@@ -60,7 +60,7 @@ class CommonHeadersInterceptor @Inject constructor(
 	private fun Interceptor.interceptSafe(chain: Chain): Response = runCatchingCancellable {
 		intercept(chain)
 	}.getOrElse { e ->
-		if (e is IOException || e is Error) {
+		if (e is IOException || e is Error || e is RuntimeException) {
 			throw e
 		} else {
 			// only IOException can be safely thrown from an Interceptor

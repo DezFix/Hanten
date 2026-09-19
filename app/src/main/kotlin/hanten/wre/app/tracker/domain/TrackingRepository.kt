@@ -50,16 +50,19 @@ class TrackingRepository @Inject constructor(
 
 	fun observeNewChaptersCount(mangaId: Long): Flow<Int> {
 		return db.getTracksDao().observeNewChapters(mangaId)
+			.distinctUntilChanged()
 	}
 
 	@Deprecated("")
 	fun observeUpdatedMangaCount(): Flow<Int> {
 		return db.getTracksDao().observeUpdateMangaCount()
+			.distinctUntilChanged()
 			.onStart { gcIfNotCalled() }
 	}
 
 	fun observeUnreadUpdatesCount(): Flow<Int> {
 		return db.getTrackLogsDao().observeUnreadCount()
+			.distinctUntilChanged()
 	}
 
 	fun observeUpdatedManga(limit: Int, filterOptions: Set<ListFilterOption>): Flow<List<MangaTracking>> {
@@ -133,6 +136,7 @@ class TrackingRepository @Inject constructor(
 	fun observeTrackingLog(limit: Int, filterOptions: Set<ListFilterOption>): Flow<List<TrackingLogItem>> {
 		return db.getTrackLogsDao().observeAll(limit, filterOptions)
 			.mapItems { it.toTrackingLogItem() }
+			.distinctUntilChanged()
 			.onStart { gcIfNotCalled() }
 	}
 

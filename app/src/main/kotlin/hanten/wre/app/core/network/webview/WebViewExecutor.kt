@@ -2,12 +2,14 @@ package hanten.wre.app.core.network.webview
 
 import android.content.Context
 import android.util.AndroidRuntimeException
+import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.MainThread
 import dagger.hilt.android.qualifiers.ApplicationContext
+import hanten.wre.app.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
@@ -99,7 +101,9 @@ class WebViewExecutor @Inject constructor(
                                 if (hasResumed) return@evaluateJavascript
                                 val content = result?.takeUnless { it == "null" }
                                 if (!content.isNullOrBlank()) {
-                                    println("DEBUG: Content found via polling. Returning immediately.")
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d("WebViewExecutor", "Content found via polling. Returning immediately.")
+                                    }
                                     resumeOnce(content)
                                 } else {
                                     handler.postDelayed(this, 1000)
@@ -115,19 +119,25 @@ class WebViewExecutor @Inject constructor(
                             if (originalHost != null && requestHost != null && requestHost.contains(originalHost)) {
                                 return false
                             }
-                            println("DEBUG: Blocked redirect to external domain: $url")
+                            if (BuildConfig.DEBUG) {
+                                Log.d("WebViewExecutor", "Blocked redirect to external domain: $url")
+                            }
                             return true
                         }
 
                         override fun onPageFinished(view: WebView?, url: String?) {
                             super.onPageFinished(view, url)
                             if (hasResumed || url == "about:blank") return
-                            println("DEBUG: onPageFinished. Checking content...")
+                            if (BuildConfig.DEBUG) {
+                                Log.d("WebViewExecutor", "onPageFinished. Checking content...")
+                            }
                             view?.evaluateJavascript(script) { result ->
                                 if (hasResumed) return@evaluateJavascript
                                 val content = result?.takeUnless { it == "null" }
                                 if (!content.isNullOrBlank()) {
-                                    println("DEBUG: Content found on pageFinished. Returning immediately.")
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d("WebViewExecutor", "Content found on pageFinished. Returning immediately.")
+                                    }
                                     resumeOnce(content)
                                 }
                             }
@@ -145,7 +155,9 @@ class WebViewExecutor @Inject constructor(
 
                     handler.postDelayed({
                         if (!hasResumed) {
-                            println("ERROR: Overall operation timed out.")
+                            if (BuildConfig.DEBUG) {
+                                Log.d("WebViewExecutor", "Overall operation timed out.")
+                            }
                             resumeOnce(null)
                         }
                     }, timeoutMs)

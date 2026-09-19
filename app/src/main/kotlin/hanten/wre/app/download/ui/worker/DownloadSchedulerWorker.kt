@@ -112,9 +112,12 @@ class DownloadSchedulerWorker @AssistedInject constructor(
                 .build()
 
             Log.d("DownloadScheduler", "Enqueuing download for manga ${nextItem.mangaId}")
+            // APPEND (not KEEP): if a work for this manga is already ENQUEUED/RUNNING,
+            // the new chapters chain after it instead of being silently dropped
+            // (KEEP would discard the new work while the queue item is removed below).
             workManager.enqueueUniqueWork(
                 "download_${nextItem.mangaId}",
-                ExistingWorkPolicy.KEEP,
+                ExistingWorkPolicy.APPEND,
                 downloadRequest
             )
 

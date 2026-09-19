@@ -178,8 +178,9 @@ class LocalMangaRepository @Inject constructor(
 		// slow path
 		val files = getAllFiles()
 		return channelFlow {
+			val dispatcher = Dispatchers.IO.limitedParallelism(MAX_PARALLELISM)
 			for (file in files) {
-				launch {
+				launch(dispatcher) {
 					val mangaInput = LocalMangaParser.getOrNull(file)
 					runCatchingCancellable {
 						val mangaInfo = mangaInput?.getMangaInfo()

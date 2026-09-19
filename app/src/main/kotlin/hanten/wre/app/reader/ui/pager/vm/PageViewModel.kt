@@ -123,7 +123,7 @@ class PageViewModel(
 			} catch (ce: CancellationException) {
 				throw ce
 			} catch (e2: Throwable) {
-				e2.printStackTrace()
+				e2.printStackTraceDebug("PageViewModel::tryConvert")
 				e.addSuppressed(e2)
 				state.value = PageState.Error(e)
 			}

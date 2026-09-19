@@ -177,6 +177,7 @@ class PageLoader @Inject constructor(
 		task = loadPageAsyncImpl(page, skipCache = force, isPrefetch = false)
 		synchronized(tasks) {
 			tasks[page.id] = task
+			evictCompletedTasks()
 		}
 		return task
 	}
@@ -240,7 +241,28 @@ class PageLoader @Inject constructor(
 				val page = prefetchQueue.pollFirst() ?: return@launch
 				synchronized(tasks) {
 					tasks[page.id] = loadPageAsyncImpl(page, skipCache = false, isPrefetch = true)
+					evictCompletedTasks()
 				}
+			}
+		}
+	}
+
+	/**
+	 * Bounds [tasks] growth: drops finished entries above [MAX_CACHED_TASKS].
+	 * Safe because pages are re-created on demand (disk [cache] backs reload).
+	 * Must be called inside `synchronized(tasks)`.
+	 */
+	private fun evictCompletedTasks() {
+		if (tasks.size() <= MAX_CACHED_TASKS) {
+			return
+		}
+		var i = 0
+		while (i < tasks.size() && tasks.size() > MAX_CACHED_TASKS) {
+			val task = tasks.valueAt(i)
+			if (task.isCompleted || task.isCancelled) {
+				tasks.removeAt(i)
+			} else {
+				i++
 			}
 		}
 	}
@@ -342,6 +364,7 @@ class PageLoader @Inject constructor(
 		private const val PROGRESS_UNDEFINED = -1f
 		private const val PREFETCH_LIMIT_DEFAULT = 6
 		private const val PREFETCH_MIN_RAM_MB = 80L
+		private const val MAX_CACHED_TASKS = 48
 
 		fun createPageRequest(pageUrl: String, mangaSource: MangaSource) = Request.Builder()
 			.url(pageUrl)

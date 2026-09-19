@@ -4,11 +4,16 @@ import androidx.annotation.IntDef
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import hanten.wre.app.core.db.entity.MangaEntity
 
 @Entity(
 	tableName = "tracks",
+	indices = [
+		Index(value = ["last_check_time"]),
+		Index(value = ["chapters_new", "last_chapter_date"]),
+	],
 	foreignKeys = [
 		ForeignKey(
 			entity = MangaEntity::class,

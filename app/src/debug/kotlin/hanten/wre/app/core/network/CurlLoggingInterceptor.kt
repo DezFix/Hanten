@@ -13,6 +13,14 @@ class CurlLoggingInterceptor(
 
 	private val escapeRegex = Regex("([\\[\\]\"])")
 
+	private val sensitiveHeaders = setOf(
+		"authorization",
+		"proxy-authorization",
+		"cookie",
+		"set-cookie",
+		"x-auth-token",
+	)
+
 	override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(chain.request()).also {
 		logRequest(it.networkResponse?.request ?: it.request)
 	}
@@ -31,7 +39,8 @@ class CurlLoggingInterceptor(
 			if (name.equals(ACCEPT_ENCODING, ignoreCase = true) && value.equals("gzip", ignoreCase = true)) {
 				isCompressed = true
 			}
-			curlCmd.append(" -H \"").append(name).append(": ").append(value.escape()).append('\"')
+			val safeValue = if (name.lowercase() in sensitiveHeaders) "***" else value.escape()
+			curlCmd.append(" -H \"").append(name).append(": ").append(safeValue).append('\"')
 		}
 
 		val body = request.body

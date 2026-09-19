@@ -222,6 +222,10 @@ class ReaderActivity :
 
     override fun onPause() {
         super.onPause()
+        // Persist progress here (not only in onDestroy): viewModelScope is cancelled
+        // in onCleared right after onDestroy, so a save started there may never finish.
+        // saveCurrentState uses the NonCancellable app-scope history path.
+        viewModel.saveCurrentState(readerManager.currentReader?.getCurrentState())
         viewModel.onPause()
     }
 

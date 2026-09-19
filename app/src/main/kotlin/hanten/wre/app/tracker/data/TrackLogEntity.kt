@@ -3,11 +3,16 @@ package hanten.wre.app.tracker.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import hanten.wre.app.core.db.entity.MangaEntity
 
 @Entity(
 	tableName = "track_logs",
+	indices = [
+		Index(value = ["unread", "created_at"]),
+		Index(value = ["created_at"]),
+	],
 	foreignKeys = [
 		ForeignKey(
 			entity = MangaEntity::class,

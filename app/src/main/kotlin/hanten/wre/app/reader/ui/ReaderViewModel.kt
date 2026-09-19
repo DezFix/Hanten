@@ -355,6 +355,11 @@ class ReaderViewModel @Inject constructor(
                 readingState.update { cs ->
                     cs?.copy(chapterId = page.chapterId, page = page.index)
                 }
+                // Mirror to SavedStateHandle so process death restores the exact page,
+                // not just the last history entry.
+                readingState.value?.let { state ->
+                    savedStateHandle[ReaderIntent.EXTRA_STATE] = state
+                }
                 if (oldChapterId != null && oldChapterId != page.chapterId) {
                     saveCurrentState()
                 }
@@ -477,6 +482,8 @@ class ReaderViewModel @Inject constructor(
                             readerMode.value = mode
                             try {
                                 chaptersLoader.loadSingleChapter(newState.chapterId)
+                            } catch (e: CancellationException) {
+                                throw e
                             } catch (e: Throwable) {
                                 readingState.value = null // try next time
                                 exception = e.mergeWith(exception)

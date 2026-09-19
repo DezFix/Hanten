@@ -45,7 +45,9 @@ class PreferencesCookieJar(
 	@Synchronized
 	override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
 		val wrapped = cookies.map { CookieWrapper(it) }
-		prefs.edit(commit = true) {
+		// apply (async persist): in-memory prefs + cache update synchronously,
+		// so behavior is identical — only the fsync moves off the network thread.
+		prefs.edit(commit = false) {
 			for (cookie in wrapped) {
 				val key = cookie.key()
 				cache[key] = cookie
@@ -77,7 +79,7 @@ class PreferencesCookieJar(
 	override suspend fun clear(): Boolean {
 		cache.clear()
 		withContext(Dispatchers.IO) {
-			prefs.edit(commit = true) { clear() }
+			prefs.edit(commit = false) { clear() }
 		}
 		return true
 	}
@@ -101,7 +103,7 @@ class PreferencesCookieJar(
 	}
 
 	private fun removePersistent(keys: Collection<String>) {
-		prefs.edit(commit = true) {
+		prefs.edit(commit = false) {
 			for (key in keys) {
 				remove(key)
 			}
