@@ -18,12 +18,12 @@ git push origin v9.4.2
 **Output:** Signed release APK published to GitHub Releases
 
 ### 2. Nightly Workflow (nightly.yml)
-Builds and publishes nightly APKs on a weekly schedule.
+Builds and publishes nightly APKs on manual trigger.
 
-**Trigger:** Every Sunday at 2:00 UTC (or manual trigger via `workflow_dispatch`)
+**Trigger:** Manual trigger via `workflow_dispatch` (the weekly schedule is currently disabled)
 **Smart Skip:** Automatically skips the build if there are no new commits since the last nightly release
 
-**Output:** Pre-release APK tagged as `N{YYYYMMDD}` (e.g., `N20251208`)
+**Output:** Pre-release APK tagged as `nightly-{YYYYMMDD}-{SHA}` (e.g., `nightly-20260920-a1b2c3d`)
 
 ### 3. Debug Workflow (debug.yml)
 Builds debug APK on pull requests for validation.

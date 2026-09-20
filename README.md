@@ -40,7 +40,7 @@
 #### Что нужно
 
 - **JDK 17** (рекомендуется дистрибутив [Temurin](https://adoptium.net/temurin/releases/))
-- **Android SDK** (compile SDK 36, build tools 35.0.0, minimum SDK 23)
+- **Android SDK** (compile SDK 36, build tools 36.0.0, minimum SDK 23)
 - **Android Studio** (рекомендуется) или инструменты командной строки Android SDK
 
 #### Сборка проекта

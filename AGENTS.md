@@ -529,7 +529,7 @@ context.assets.open("futon_test.bak").use { input ->
 1. **Assign issues** to yourself before working on them
 2. **Open discussion** for new features before implementation
 3. **Translations** — directly in `app/src/main/res/values*/strings.xml` (Weblate for Hanten pending)
-4. **Manga sources** go in [DezFix/futon-parsers](https://github.com/DezFix/futon-parsers)
+4. **Manga sources** go in [DezFix/hanten-parsers](https://github.com/DezFix/hanten-parsers)
 5. **Do not modify** README or info files (except typos)
 6. **Avoid new dependencies** unless required
 
@@ -595,7 +595,7 @@ class MyWorker @AssistedInject constructor(
 ## Resources
 
 - **Releases (auto-update):** https://github.com/DezFix/Hanten/releases
-- **Parsers Repo:** https://github.com/DezFix/futon-parsers (fork of AppFuton/futon-parsers)
+- **Parsers Repo:** https://github.com/DezFix/hanten-parsers
 - **Upstream:** Kotatsu https://github.com/KotatsuApp/Kotatsu • Futon https://github.com/AppFuton/Futon
 - **CI/CD Setup:** See [CI.md](./CI.md)
 - **Contributing:** See [CONTRIBUTING.md](./CONTRIBUTING.md)
