@@ -23,7 +23,7 @@ jobs:
                },
                {
                  "type": "body",
-                 "regex": ".*\\* (Kotatsu version|Android version|Device): \\?.*",
+                  "regex": ".*\\* (Hanten version|Android version|Device): \\?.*",
                  "message": "Requested information in the template was not filled out."
                }
              ]

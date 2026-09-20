@@ -9,7 +9,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - DI: Hilt (`@HiltAndroidApp` in `BaseApp`), bindings/providers in `AppModule`.
 - Data: Room `MangaDatabase` with `InvalidationTracker` observers; WorkManager used for background tasks.
 - Networking & images: OkHttp client with custom interceptors; Coil v3 configured with SVG/GIF/AVIF decoders, CBZ fetcher, cache sizes.
-- External sources: Manga parsers via `com.github.DezFix:hanten-parsers:$parsersVersion` (JitPack, fork of `AppFuton/hanten-parsers` / `Kotatsu-Redo/kotatsu-parsers-redo`).
+- External sources: Manga parsers via `com.github.DezFix:hanten-parsers:$parsersVersion` (JitPack, fork of `Kotatsu-Redo/kotatsu-parsers-redo`).
 
 ## Build & Variants
 - Variants: `debug`, `release`, `nightly` (inherits `release`). Nightly auto-sets version to `NyyyyMMdd` and date-based `versionCode`.
@@ -24,9 +24,9 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 
 ## CI/CD & Signing
 - GitHub Actions:
-  - Tag `v*` в†’ release build to GitHub Releases.
-  - Weekly `nightly` with smart skip when no new commits.
+  - Tag `v*` → release build to GitHub Releases.
   - PRs build `debug` and attach APK artifacts.
+  - No nightly workflow (removed; the `nightly` gradle variant still exists but is unused).
 - Required secrets: `KEYSTORE_FILE` (base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
 - Local dev: If env vars missing, Gradle prompts interactively; `local.properties` may supply values like `tg_backup_bot_token`.
 - Signature check: `AppValidator` verifies keystore SHA-256; release builds must match the configured fingerprint.
@@ -42,12 +42,12 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
 - Uses JitPack `hanten-parsers` with version from `libs.versions.toml`.
 - Override for testing:
   - `./gradlew assembleDebug -DparsersVersionOverride=<short-sha>`
-  - Example: `curl -s https://api.github.com/repos/appfuton/hanten-parsers/commits/master -H "Accept: application/vnd.github.sha" | cut -c -10`.
+  - Example: `curl -s https://api.github.com/repos/DezFix/hanten-parsers/commits/master -H "Accept: application/vnd.github.sha" | cut -c -10`.
 - Interceptors add parser headers; captcha handling wired to Coil event listener.
 
 ## Conventions
 - Performance over cosmetic refactors; avoid adding dependencies unless necessary (APK size matters).
-- Translations managed via Weblate; do not edit string resources manually outside that flow.
+- Translations live directly in `app/src/main/res/values*/strings.xml`; edit string resources as needed (no Weblate for Hanten).
 - Material You design; viewBinding enabled; prefer adapter-delegates patterns in lists.
 - Debug-only tooling: LeakCanary and WorkInspector active in `debug`/`nightly`.
 

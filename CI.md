@@ -17,13 +17,9 @@ git push origin v9.4.2
 
 **Output:** Signed release APK published to GitHub Releases
 
-### 2. Nightly Workflow (nightly.yml)
-Builds and publishes nightly APKs on manual trigger.
-
-**Trigger:** Manual trigger via `workflow_dispatch` (the weekly schedule is currently disabled)
-**Smart Skip:** Automatically skips the build if there are no new commits since the last nightly release
-
-**Output:** Pre-release APK tagged as `nightly-{YYYYMMDD}-{SHA}` (e.g., `nightly-20260920-a1b2c3d`)
+### 2. Nightly Workflow — removed
+There is no nightly workflow: nightly APKs are not built. (The `nightly` gradle
+variant still exists in `app/build.gradle` but is unused.)
 
 ### 3. Debug Workflow (debug.yml)
 Builds debug APK on pull requests for validation.
@@ -103,7 +99,7 @@ export KEY_PASSWORD=key-password
 # Output: app/build/outputs/apk/release/app-release.apk
 ```
 
-### Nightly Build (requires signing setup)
+### Nightly Build variant (unused, requires signing setup if ever used)
 ```bash
 ./gradlew assembleNightly
 # Output: app/build/outputs/apk/nightly/app-nightly.apk
@@ -113,7 +109,6 @@ export KEY_PASSWORD=key-password
 ## Monitoring Builds
 
 - **Release builds**: Check GitHub Releases
-- **Nightly builds**: Check GitHub Releases (marked as pre-release)
 - **PR builds**: Check "Actions" tab → "Debug Build" → Artifacts section
 
 ## Troubleshooting
@@ -125,9 +120,6 @@ Ensure Android SDK is properly set up. The workflows use `android-actions/setup-
 - Verify the base64 encoding of the keystore is correct
 - Ensure all password secrets are set correctly
 - Test locally: `keytool -list -v -keystore keystore.jks -storepass <password>`
-
-### Nightly build is skipped unexpectedly
-The workflow checks for commits since the last nightly release. If no commits exist, the build is skipped. Force a build with the "workflow_dispatch" trigger.
 
 ## Certificate Fingerprints
 
