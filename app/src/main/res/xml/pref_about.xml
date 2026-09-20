@@ -54,6 +54,13 @@
 		android:title="@string/source_code" />
 
 	<Preference
+		android:key="about_website"
+		android:icon="@drawable/ic_web"
+		android:persistent="false"
+		android:summary="@string/url_website"
+		android:title="@string/website" />
+
+	<Preference
 		android:key="about_app_translation"
 		android:icon="@drawable/ic_language"
 		android:persistent="false"

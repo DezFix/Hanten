@@ -779,6 +779,7 @@
     <string name="content_type_game_cg">Game CG</string>
     <string name="debug">Debug</string>
     <string name="source_code">Source code</string>
+    <string name="website">Website</string>
     <string name="user_manual">User manual</string>
     <string name="telegram_group">Telegram group</string>
     <string name="error_image_format">Unsupported image format: %s</string>

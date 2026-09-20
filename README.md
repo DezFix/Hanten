@@ -6,6 +6,8 @@
 
 **В приоритете — поддержка русскоязычных и украиноязычных источников.**
 
+**Сайт приложения: [dezfix.github.io](https://dezfix.github.io)**
+
 ![Android 6.0](https://img.shields.io/badge/android-6.0+-brightgreen)
 [![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDezFix%2Fhanten-parsers%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C)](https://github.com/DezFix/hanten-parsers)
 [![License](https://img.shields.io/github/license/DezFix/Hanten)](https://github.com/DezFix/Hanten/blob/devel/LICENSE)
@@ -13,59 +15,59 @@
 
 </div>
 
-### Main Features
+### Основные возможности
 
 <div align="left">
 
-* Online [manga catalogues](https://github.com/DezFix/hanten-parsers) (130+ manga sources, incl. Senkuro) with priority support for Russian and Ukrainian sources
-* Support for [Tachiyomi keiyoushi](https://github.com/keiyoushi/extensions) extensions
-* Search manga by name, genres and more filters
-* Favorites organized by user-defined categories
-* Reading history, bookmarks and incognito mode support
-* Download manga and read it offline. Third-party CBZ archives are also supported
-* Clean and convenient Material You UI, optimized for phones, tablets and desktop
-* Standard and Webtoon-optimized customizable reader, gesture support on reading interface
-* Notifications about new chapters with updates feed, manga recommendations (with filters)
-* Integration with manga tracking services: Shikimori, AniList, MyAnimeList, Kitsu
-* Password / fingerprint-protected access to the app
-* Automatically sync app data with other devices on the same account
-* Support for older devices running Android 6.0+
+* Онлайн-[каталоги манги](https://github.com/DezFix/hanten-parsers) (130+ источников, включая Senkuro) с приоритетной поддержкой русских и украинских источников
+* Поддержка расширений [Tachiyomi keiyoushi](https://github.com/keiyoushi/extensions)
+* Поиск манги по названию, жанрам и другим фильтрам
+* Избранное с пользовательскими категориями
+* История чтения, закладки и режим инкогнито
+* Скачивание манги для чтения офлайн. Поддерживаются сторонние CBZ-архивы
+* Удобный интерфейс в стиле Material You, оптимизирован для телефонов, планшетов и ПК
+* Настраиваемая читалка с режимами для обычной манги и вебтуна, поддержка жестов
+* Уведомления о новых главах с лентой обновлений, рекомендации манги (с фильтрами)
+* Интеграция с сервисами отслеживания: Shikimori, AniList, MyAnimeList, Kitsu
+* Защита доступа к приложению паролем / отпечатком пальца
+* Автоматическая синхронизация данных между устройствами на одном аккаунте
+* Поддержка старых устройств на Android 6.0+
 
 </div>
 
-### Development Setup
+### Установка и разработка
 
-#### Prerequisites
+#### Что нужно
 
-- **JDK 17** (recommended: [Temurin](https://adoptium.net/temurin/releases/) distribution)
+- **JDK 17** (рекомендуется дистрибутив [Temurin](https://adoptium.net/temurin/releases/))
 - **Android SDK** (compile SDK 36, build tools 35.0.0, minimum SDK 23)
-- **Android Studio** (recommended) or Android SDK command-line tools
+- **Android Studio** (рекомендуется) или инструменты командной строки Android SDK
 
-#### Building the Project
+#### Сборка проекта
 
-1. **Clone the repository:**
+1. **Клонировать репозиторий:**
    ```bash
    git clone https://github.com/DezFix/Hanten.git
    cd Hanten
    ```
 
-2. **Build debug APK:**
+2. **Собрать debug APK:**
    ```bash
    ./gradlew assembleDebug
    ```
-   Output: `app/build/outputs/apk/debug/app-debug.apk`
+   Результат: `app/build/outputs/apk/debug/app-debug.apk`
 
-3. **Build release APK:**
+3. **Собрать release APK:**
    ```bash
    ./gradlew assembleRelease
    ```
-   Output: `app/build/outputs/apk/release/app-release.apk`
+   Результат: `app/build/outputs/apk/release/app-release.apk`
 
-   *Note: Requires keystore setup via environment variables or `local.properties`*
+   *Примечание: нужна настройка подписи через переменные окружения или `local.properties`*
 
-For detailed contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Подробные правила участия — в [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-### In-App Screenshots
+### Скриншоты
 
 <div align="center">
     <img src="./metadata/en-US/images/phoneScreenshots/1.png" alt="Mobile view" width="250"/>
@@ -83,59 +85,54 @@ For detailed contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
     <img src="./metadata/en-US/images/tenInchScreenshots/2.png" alt="Tablet view" width="400"/>
 </div>
 
-### Contributing
+### Как помочь проекту
 
-Pull requests are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+Pull request'ы приветствуются. Правила — в [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-### Certificate fingerprints
+### Отпечатки сертификата
 
 ```plaintext
 D3:F2:AB:2D:82:AF:A0:AB:02:D5:F6:83:98:26:84:7D:85:0B:39:F8:02:65:77:7D:EB:DE:AB:E6:79:E3:CC:67
 ```
 
-### License
+### Лицензия
 
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 <div align="left">
 
-You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications
-to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build &
-install instructions.
+Вы можете копировать, распространять и изменять программу при условии отслеживания изменений/дат в исходных файлах. Любые модификации или ПО, включающее (через компилятор) код под лицензией GPL, также должны распространяться под GPL вместе с инструкциями по сборке и установке.
 
 </div>
 
-### DMCA disclaimer
+### Отказ от ответственности (DMCA)
 
 <div align="left">
 
-The developers of this application do not have any affiliation with the content available in the app and does not store
-or distribute any content. This application should be considered a web browser, all content that can be found using this
-application is freely available on the Internet. All DMCA takedown requests should be sent to the owners of the website
-where the content is hosted.
+Разработчики приложения не связаны с контентом, доступным в приложении, и не хранят и не распространяют контент. Приложение следует рассматривать как веб-браузер: весь контент, который можно найти с его помощью, свободно доступен в интернете. Все запросы на удаление по DMCA следует направлять владельцам сайтов, на которых размещен контент.
 
 </div>
 
 ---
 
-### Acknowledgments
+### Благодарности
 
 <div align="left">
 
-**Hanten is built upon the exceptional work of the [Kotatsu](https://github.com/KotatsuApp/Kotatsu) project.**
+**Hanten построен на великолепной работе проекта [Kotatsu](https://github.com/KotatsuApp/Kotatsu).**
 
-We are deeply grateful to:
+Мы искренне благодарны:
 
-* **The original Kotatsu developers** for creating such an outstanding manga reader and making it open source
-* **The Kotatsu community** for their contributions, testing, and support
-* **All translators** who helped localize Kotatsu through [Weblate](https://hosted.weblate.org/engage/kotatsu/)
-* **[Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)** for continuing parser development and maintenance
-* **[Kototoro](https://github.com/Kototoro-app/Kototoro)** for the Tachiyomi extension integration guide
+* **Разработчикам оригинальной Kotatsu** — за замечательную читалку и открытый исходный код
+* **Сообществу Kotatsu** — за вклад, тестирование и поддержку
+* **Всем переводчикам**, которые помогали локализовать Kotatsu через [Weblate](https://hosted.weblate.org/engage/kotatsu/)
+* **[Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)** — за развитие и поддержку парсеров
+* **[Kototoro](https://github.com/Kototoro-app/Kototoro)** — за гайд по интеграции расширений Tachiyomi
 
-This project stands on the shoulders of giants. The Kotatsu team's dedication to creating a feature-rich, user-friendly manga reader has provided an incredible foundation for Hanten to build upon.
+Этот проект стоит на плечах гигантов. Преданность команды Kotatsu созданию богатой и удобной читалки дала невероятный фундамент для Hanten.
 
-**Thank you to everyone who contributed to Kotatsu — your work continues to benefit the manga reading community!**
+**Спасибо всем, кто вложился в Kotatsu — ваша работа продолжает служить сообществу читателей манги!**
 
-For the original Kotatsu project, please visit: [github.com/KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu)
+Оригинальный проект Kotatsu: [github.com/KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu)
 
 </div>
