@@ -817,6 +817,7 @@
     <string name="source">Source</string>
     <string name="translation">Translation</string>
     <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+    <string name="chapters_time_multiline" translatable="false">%1$s\n(%2$s)</string>
     <string name="show_slider">Show slider</string>
     <!-- Button label, should be as short as possible -->
     <string name="incognito">Incognito</string>
@@ -990,4 +991,6 @@
     <string name="donate_title">Support development</string>
     <string name="source_error_reports">Source error reports</string>
     <string name="source_error_reports_summary">Send source failure details (source, error, app version) to the developer to help fix broken sources</string>
+    <string name="error_reports">Anonymous error reports</string>
+    <string name="error_reports_summary">Send anonymous crash logs and source failure details (source, error, app version) to help fix bugs. No personal data is collected. Takes effect after restart.</string>
 </resources>

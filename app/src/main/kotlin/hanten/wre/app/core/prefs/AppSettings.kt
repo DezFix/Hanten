@@ -583,12 +583,24 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 	val isStatsEnabled: Boolean
 		get() = prefs.getBoolean(KEY_STATS_ENABLED, false)
 
+	var isErrorReportsEnabled: Boolean
+		get() = prefs.getBoolean(KEY_ERROR_REPORTS, false) ||
+			prefs.getBoolean(KEY_CRASH_ANALYTICS_ENABLED, false) ||
+			prefs.getBoolean(KEY_SOURCE_ERROR_REPORTS, false)
+		set(value) {
+			prefs.edit {
+				putBoolean(KEY_ERROR_REPORTS, value)
+				putBoolean(KEY_CRASH_ANALYTICS_ENABLED, value)
+				putBoolean(KEY_SOURCE_ERROR_REPORTS, value)
+			}
+		}
+
 	var isCrashAnalyticsEnabled: Boolean
-		get() = prefs.getBoolean(KEY_CRASH_ANALYTICS_ENABLED, false)
+		get() = isErrorReportsEnabled
 		set(value) = prefs.edit { putBoolean(KEY_CRASH_ANALYTICS_ENABLED, value) }
 
 	var isSourceErrorReportsEnabled: Boolean
-		get() = prefs.getBoolean(KEY_SOURCE_ERROR_REPORTS, false)
+		get() = isErrorReportsEnabled
 		set(value) = prefs.edit { putBoolean(KEY_SOURCE_ERROR_REPORTS, value) }
 
 	var gitHubMirror: GitHubMirror
@@ -864,6 +876,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_MANGA_LIST_BADGES = "manga_list_badges"
 		const val KEY_CRASH_ANALYTICS_ENABLED = "crash_analytics_enabled"
 		const val KEY_SOURCE_ERROR_REPORTS = "source_error_reports"
+		const val KEY_ERROR_REPORTS = "error_reports"
 		const val KEY_GITHUB_MIRROR = "github_mirror"
 
 		const val KEY_DOWNLOAD_OFF_PEAK_START = "download_off_peak_start"

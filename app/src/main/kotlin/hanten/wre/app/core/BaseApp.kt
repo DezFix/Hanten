@@ -72,8 +72,8 @@ open class BaseApp : Application(), Configuration.Provider {
 		super.onCreate()
 		PlatformRegistry.applicationContext = this // TODO replace with OkHttp.initialize
 		AppCompatDelegate.setDefaultNightMode(settings.theme)
-		// Initialize Sentry if the user opted into crash reports and/or source error reports
-		if (settings.isCrashAnalyticsEnabled || settings.isSourceErrorReportsEnabled) {
+		// Initialize Sentry if the user opted into anonymous error reports
+		if (settings.isErrorReportsEnabled) {
 			initializeSentry()
 		}
 		// TLS 1.3 support for Android < 10
@@ -117,7 +117,7 @@ open class BaseApp : Application(), Configuration.Provider {
 				val dsn = BuildConfig.SENTRY_DSN.ifEmpty { BUGSINK_DSN }
 				options.dsn = dsn
 				options.isEnableAutoSessionTracking = true
-				options.isEnableUncaughtExceptionHandler = settings.isCrashAnalyticsEnabled
+				options.isEnableUncaughtExceptionHandler = settings.isErrorReportsEnabled
 				options.environment = if (BuildConfig.DEBUG) "debug" else "production"
 				options.beforeSend = io.sentry.SentryOptions.BeforeSendCallback { event, _ ->
 					val exceptions = event.exceptions

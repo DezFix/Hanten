@@ -961,6 +961,7 @@
 <string name="breadcrumbs_separator" translatable="false">" &gt; "</string>
     
 <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+<string name="chapters_time_multiline" translatable="false">%1$s\n(%2$s)</string>
     
 <string name="crash_reporting">Отчёты о сбоях</string>
     
@@ -1057,4 +1058,6 @@
     <string name="donate_title">Поддержать разработку</string>
     <string name="source_error_reports">Отчёты об ошибках источников</string>
     <string name="source_error_reports_summary">Отправлять разработчику детали сбоев источников (источник, ошибка, версия), чтобы помочь чинить сломанные источники</string>
+    <string name="error_reports">Анонимные отчёты об ошибках</string>
+    <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>
 </resources>

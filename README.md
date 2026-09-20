@@ -12,6 +12,7 @@
 [![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDezFix%2Fhanten-parsers%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C)](https://github.com/DezFix/hanten-parsers)
 [![License](https://img.shields.io/github/license/DezFix/Hanten)](https://github.com/DezFix/Hanten/blob/devel/LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/DezFix/Hanten?sort=date&display_name=tag&style=flat)](https://github.com/DezFix/Hanten/releases/latest)
+<a href="https://hosted.weblate.org/engage/hanten/"><img src="https://hosted.weblate.org/widget/hanten/svg-badge.svg" alt="Состояние перевода"></a>
 
 </div>
 

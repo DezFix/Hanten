@@ -2,10 +2,10 @@
 <resources>
 	<string name="url_github" translatable="false">https://github.com/DezFix/Hanten</string>
 	<string name="url_website" translatable="false">https://dezfix.github.io</string>
-	<string name="url_donate" translatable="false">https://ko-fi.com/K_K</string>
+	<string name="url_donate" translatable="false">https://ko-fi.com/dezfix</string>
 	<string name="url_telegram_web" translatable="false"></string>
 	<string name="url_telegram" translatable="false"></string>
-	<string name="url_weblate" translatable="false">https://github.com/DezFix/Hanten/issues</string>
+	<string name="url_weblate" translatable="false">https://hosted.weblate.org/engage/hanten/</string>
 	<string name="url_user_manual" translatable="false">https://github.com/DezFix/Hanten/blob/devel/README.md</string>
 	<string name="account_type_sync" translatable="false">hanten.wre.app.sync</string>
 	<string name="github_updates_repo" translatable="false">DezFix/Hanten</string>
@@ -18,8 +18,8 @@
 	<string name="kitsu_clientSecret" translatable="false">54d7307928f63414defd96399fc31ba847961ceaecef3a5fd93144e960c0e151</string>
 	<string name="sync_authority_history" translatable="false">hanten.wre.app.history</string>
 	<string name="sync_authority_favourites" translatable="false">hanten.wre.app.favourites</string>
-	<!-- Foreign bot, unused: Telegram upload is force-disabled in TelegramBackupUploader -->
-	<string name="tg_backup_bot_name" translatable="false">futon_backup_bot</string>
+	<!-- Own bot @hanten_bot: token comes from local.properties tg_backup_bot_token (CI secret TG_BACKUP_BOT_TOKEN) -->
+	<string name="tg_backup_bot_name" translatable="false">hanten_bot</string>
 	<string name="app_icon_url" translatable="false">https://raw.githubusercontent.com/DezFix/Hanten/refs/heads/devel/metadata/en-US/icon.png</string>
 	<string-array name="values_theme" translatable="false">
 		<item>-1</item>

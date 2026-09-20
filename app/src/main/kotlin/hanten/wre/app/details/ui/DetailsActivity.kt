@@ -547,7 +547,7 @@ class DetailsActivity :
 			return this
 		}
 		val timeFormatted = time.formatShort(resources)
-		return getString(R.string.chapters_time_pattern, this, timeFormatted)
+		return getString(R.string.chapters_time_multiline, this, timeFormatted)
 	}
 
 	private fun Manga.getAuthorsString(): SpannedString? {

@@ -31,7 +31,7 @@ class SourceErrorReporter @Inject constructor(
 ) {
 
 	fun report(error: Throwable, source: MangaSource?) {
-		if (!settings.isSourceErrorReportsEnabled) {
+		if (!settings.isErrorReportsEnabled) {
 			return
 		}
 		if (!io.sentry.Sentry.isEnabled()) {

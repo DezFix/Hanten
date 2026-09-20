@@ -134,6 +134,10 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > keystore.jks
 
+      - name: Provide Telegram backup bot token
+        run: |
+          echo "tg_backup_bot_token=${{ secrets.TG_BACKUP_BOT_TOKEN }}" > local.properties
+
       - name: Build release APK
         env:
           KEYSTORE_FILE: ${{ github.workspace }}/keystore.jks

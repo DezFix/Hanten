@@ -31,8 +31,7 @@ class TelegramBackupUploader @Inject constructor(
 	private val botToken = context.getString(R.string.tg_backup_bot_token)
 
 	val isAvailable: Boolean
-		// TODO: no own Telegram bot yet, foreign bots must not be used
-		get() = false // botToken.isNotEmpty()
+		get() = botToken.isNotEmpty()
 
 	suspend fun uploadBackup(file: File) {
 		val requestBody = file.asRequestBody("application/zip".toMediaTypeOrNull())

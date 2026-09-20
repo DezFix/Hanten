@@ -957,10 +957,15 @@
 <string name="breadcrumbs_separator" translatable="false">" &gt; "</string>
     
 <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
+<string name="chapters_time_multiline" translatable="false">%1$s\n(%2$s)</string>
     
 <string name="crash_reporting">Crash Reporting</string>
     
 <string name="crash_reporting_summary">Send anonymous crash logs to help improve the app. Takes effect after restart.</string>
+    
+<string name="error_reports">Анонімні звіти про помилки</string>
+    
+<string name="error_reports_summary">Надсилати анонімні журнали збоїв та деталі помилок джерел (джерело, помилка, версія), щоб допомогти виправляти баги. Особисті дані не збираються. Набуде чинності після перезапуску.</string>
     
 <string name="github_mirror_title">GitHub mirror</string>
     
