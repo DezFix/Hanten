@@ -152,11 +152,23 @@ jobs:
             -PversionCode=${{ steps.version.outputs.version_code }} \
             --no-build-cache --no-configuration-cache
 
+      - name: Extract release notes
+        run: |
+          python3 - <<'EOF'
+          import re
+          version = "${{ steps.version.outputs.version }}"
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          m = re.search(r"^## " + re.escape(version) + r"\s*\n(.*?)(?=^## |\Z)", text, re.S | re.M)
+          open("release_notes.md", "w", encoding="utf-8").write(m.group(1).strip() if m else "")
+          EOF
+          cat release_notes.md
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Hanten ${{ steps.version.outputs.version }}
+          body_path: release_notes.md
           draft: false
           prerelease: false
           files: |
