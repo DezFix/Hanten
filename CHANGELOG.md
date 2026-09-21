@@ -4,6 +4,18 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.1
+Date: 2026-09-21
+
+### Трекинг
+- Свои OAuth-приложения Shikimori, AniList и MAL (были чужие ключи Kotatsu/Futon)
+- Kitsu удалён (сервис мёртв): остались 3 трекера, старые привязки чистятся миграцией БД
+- Парсинг ответов больше не падает на тайтлах без обложки и пустых полях
+- Ошибки OAuth теперь человекочитаемые
+
+### Время чтения
+- Простой дольше 2 минут больше не портит среднюю скорость чтения
+
 ## 2.2.2
 Date: 2026-09-20
 
