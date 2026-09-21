@@ -919,7 +919,6 @@
     
 <string name="delete_chapter_confirm">Удалить главу \“%1$s\” из локального хранилища?</string>
     
-<string name="kitsu" translatable="false">Kitsu</string>
     
 <string name="frequency_every_6_hours">Каждые 6 часов</string>
     

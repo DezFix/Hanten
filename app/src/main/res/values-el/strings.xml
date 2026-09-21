@@ -590,7 +590,6 @@
     
 <string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
     
-<string name="kitsu" translatable="false">Kitsu</string>
     
 <string name="email_password_enter_hint">Enter your email and password to continue</string>
     

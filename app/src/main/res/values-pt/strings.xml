@@ -910,7 +910,6 @@
     
 <string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
     
-<string name="kitsu" translatable="false">Kitsu</string>
     
 <string name="frequency_every_6_hours">Every 6 hours</string>
     

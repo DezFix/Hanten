@@ -849,7 +849,6 @@
     
 <string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
     
-<string name="kitsu" translatable="false">Kitsu</string>
     
 <string name="source_summary_pattern" translatable="false">%1$s, %2$s</string>
     
