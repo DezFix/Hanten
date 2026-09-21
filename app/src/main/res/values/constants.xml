@@ -9,8 +9,8 @@
 	<string name="url_user_manual" translatable="false">https://github.com/DezFix/Hanten/blob/devel/README.md</string>
 	<string name="account_type_sync" translatable="false">hanten.wre.app.sync</string>
 	<string name="github_updates_repo" translatable="false">DezFix/Hanten</string>
-	<string name="shikimori_clientId" translatable="false">Mw6F0tPEOgyV7F9U9Twg50Q8SndMY7hzIOfXg0AX_XU</string>
-	<string name="shikimori_clientSecret" translatable="false">euBMt1GGRSDpVIFQVPxZrO7Kh6X4gWyv0dABuj4B-M8</string>
+	<string name="shikimori_clientId" translatable="false">c3Bs-V6E0lOs7jVW839oclKL0jTWw4em2cvSS_9Ia3g</string>
+	<string name="shikimori_clientSecret" translatable="false">zfZcAysneAac0LivWKjJZuQofRhWc6c2Y3Hm0Klk8ac</string>
 	<string name="anilist_clientId" translatable="false">33558</string>
 	<string name="anilist_clientSecret" translatable="false">JQtr3PgbtYa5o2xMnXFqcsdQV1CAdokLxO5OP5JT</string>
 	<string name="mal_clientId" translatable="false">66e27ac5d5a1764e944677b42e2c4737</string>
