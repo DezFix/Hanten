@@ -72,6 +72,9 @@ class AniListRepository @Inject constructor(
 			.post(body.build())
 			.url("${BASE_URL}oauth/token")
 		val response = okHttp.newCall(request.build()).await().parseJson()
+		check(response.has("access_token")) {
+			"AniList auth failed: " + response.optString("error_description", response.optString("error", "unknown error"))
+		}
 		storage.accessToken = response.getString("access_token")
 		storage.refreshToken = response.getString("refresh_token")
 	}
@@ -95,7 +98,8 @@ class AniListRepository @Inject constructor(
 		""",
 		)
 		val jo = response.getJSONObject("data").getJSONObject("AniChartUser").getJSONObject("user")
-		storage[KEY_SCORE_FORMAT] = jo.getJSONObject("mediaListOptions").getString("scoreFormat")
+		storage[KEY_SCORE_FORMAT] = jo.optJSONObject("mediaListOptions")?.getStringOrNull("scoreFormat")
+			?: ScoreFormat.POINT_10_DECIMAL.name
 		return AniListUser(jo).also { storage.user = it }
 	}
 
@@ -217,24 +221,25 @@ class AniListRepository @Inject constructor(
 			id = json.getInt("id"),
 			mangaId = mangaId,
 			targetId = json.getLong("mediaId"),
-			status = json.getString("status"),
-			chapter = json.getInt("progress"),
-			comment = json.getString("notes"),
-			rating = scoreFormat.normalize(json.getDouble("score").toFloat()),
+			status = json.getStringOrNull("status"),
+			chapter = json.optInt("progress", 0),
+			comment = json.getStringOrNull("notes"),
+			rating = scoreFormat.normalize(json.optDouble("score", 0.0).toFloat()),
 		)
 		db.getScrobblingDao().upsert(entity)
 	}
 
 	private fun ScrobblerManga(json: JSONObject, sourceTitle: String): ScrobblerManga {
-		val title = json.getJSONObject("title")
+		val title = json.optJSONObject("title")
+		val name = title?.getStringOrNull("userPreferred").orEmpty()
 		return ScrobblerManga(
 			id = json.getLong("id"),
-			name = title.getString("userPreferred"),
-			altName = title.getStringOrNull("native"),
-			cover = json.getJSONObject("coverImage").getString("medium"),
-			url = json.getString("siteUrl"),
+			name = name,
+			altName = title?.getStringOrNull("native"),
+			cover = json.optJSONObject("coverImage")?.getStringOrNull("medium"),
+			url = json.getStringOrNull("siteUrl").orEmpty(),
 			isBestMatch = sourceTitle.let {
-				title.keys().forEach { key ->
+				title?.keys()?.forEach { key ->
 					if (title.getStringOrNull(key)?.equals(it, ignoreCase = true) == true) {
 						return@let true
 					}
@@ -246,17 +251,17 @@ class AniListRepository @Inject constructor(
 
 	private fun ScrobblerMangaInfo(json: JSONObject) = ScrobblerMangaInfo(
 		id = json.getLong("id"),
-		name = json.getJSONObject("title").getString("userPreferred"),
-		cover = json.getJSONObject("coverImage").getString("large"),
-		url = json.getString("siteUrl"),
-		descriptionHtml = json.getString("description"),
+		name = json.optJSONObject("title")?.getStringOrNull("userPreferred").orEmpty(),
+		cover = json.optJSONObject("coverImage")?.getStringOrNull("large").orEmpty(),
+		url = json.getStringOrNull("siteUrl").orEmpty(),
+		descriptionHtml = json.getStringOrNull("description").orEmpty(),
 	)
 
 	@Suppress("FunctionName")
 	private fun AniListUser(json: JSONObject) = ScrobblerUser(
 		id = json.getLong("id"),
 		nickname = json.getString("name"),
-		avatar = json.getJSONObject("avatar").getStringOrNull("medium"),
+		avatar = json.optJSONObject("avatar")?.getStringOrNull("medium"),
 		service = ScrobblerService.ANILIST,
 	)
 

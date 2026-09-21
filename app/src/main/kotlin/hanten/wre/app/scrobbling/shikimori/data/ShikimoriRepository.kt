@@ -66,6 +66,9 @@ class ShikimoriRepository @Inject constructor(
 			.post(body.build())
 			.url("${BASE_URL}oauth/token")
 		val response = okHttp.newCall(request.build()).await().parseJson()
+		check(response.has("access_token")) {
+			"Shikimori auth failed: " + response.optString("error_description", response.optString("error", "unknown error"))
+		}
 		storage.accessToken = response.getString("access_token")
 		storage.refreshToken = response.getString("refresh_token")
 	}
@@ -187,10 +190,10 @@ class ShikimoriRepository @Inject constructor(
 			id = json.getInt("id"),
 			mangaId = mangaId,
 			targetId = json.getLong("target_id"),
-			status = json.getString("status"),
-			chapter = json.getInt("chapters"),
-			comment = json.getString("text"),
-			rating = (json.getDouble("score").toFloat() / 10f).coerceIn(0f, 1f),
+			status = json.getStringOrNull("status"),
+			chapter = json.optInt("chapters", 0),
+			comment = json.getStringOrNull("text"),
+			rating = (json.optDouble("score", 0.0).toFloat() / 10f).coerceIn(0f, 1f),
 		)
 		db.getScrobblingDao().upsert(entity)
 	}
@@ -199,7 +202,7 @@ class ShikimoriRepository @Inject constructor(
 		id = json.getLong("id"),
 		name = json.getString("name"),
 		altName = json.getStringOrNull("russian"),
-		cover = json.getJSONObject("image").getString("preview").toAbsoluteUrl(DOMAIN),
+		cover = json.optJSONObject("image")?.getStringOrNull("preview")?.toAbsoluteUrl(DOMAIN),
 		url = json.getString("url").toAbsoluteUrl(DOMAIN),
 		isBestMatch = sourceTitle.equals(json.getString("name"), ignoreCase = true)
 			|| json.getStringOrNull("russian")?.equals(sourceTitle, ignoreCase = true) == true
@@ -208,9 +211,9 @@ class ShikimoriRepository @Inject constructor(
 	private fun ScrobblerMangaInfo(json: JSONObject) = ScrobblerMangaInfo(
 		id = json.getLong("id"),
 		name = json.getString("name"),
-		cover = json.getJSONObject("image").getString("preview").toAbsoluteUrl(DOMAIN),
-		url = json.getString("url").toAbsoluteUrl(DOMAIN),
-		descriptionHtml = json.getString("description_html"),
+		cover = json.optJSONObject("image")?.getStringOrNull("preview")?.toAbsoluteUrl(DOMAIN).orEmpty(),
+		url = json.getStringOrNull("url")?.toAbsoluteUrl(DOMAIN).orEmpty(),
+		descriptionHtml = json.getStringOrNull("description_html").orEmpty(),
 	)
 
 	@Suppress("FunctionName")

@@ -71,6 +71,9 @@ class MALRepository @Inject constructor(
 			.url("${BASE_WEB_URL}/v1/oauth2/token")
 
 		val response = okHttp.newCall(request.build()).await().parseJson()
+		check(response.has("access_token")) {
+			"MAL auth failed: " + response.optString("error_description", response.optString("error", "unknown error"))
+		}
 		storage.accessToken = response.getString("access_token")
 		storage.refreshToken = response.getString("refresh_token")
 	}
@@ -171,10 +174,10 @@ class MALRepository @Inject constructor(
 			id = scrobblerMangaId.toInt(),
 			mangaId = mangaId,
 			targetId = scrobblerMangaId,
-			status = json.getString("status"),
-			chapter = json.getInt("num_chapters_read"),
-			comment = json.getString("comments"),
-			rating = (json.getDouble("score").toFloat() / 10f).coerceIn(0f, 1f),
+			status = json.getStringOrNull("status"),
+			chapter = json.optInt("num_chapters_read", 0),
+			comment = json.getStringOrNull("comments"),
+			rating = (json.optDouble("score", 0.0).toFloat() / 10f).coerceIn(0f, 1f),
 		)
 		db.getScrobblingDao().upsert(entity)
 	}
@@ -199,9 +202,9 @@ class MALRepository @Inject constructor(
 	private fun ScrobblerMangaInfo(json: JSONObject) = ScrobblerMangaInfo(
 		id = json.getLong("id"),
 		name = json.getString("title"),
-		cover = json.getJSONObject("main_picture").getString("large"),
+		cover = json.optJSONObject("main_picture")?.getStringOrNull("large").orEmpty(),
 		url = "$BASE_WEB_URL/manga/${json.getLong("id")}",
-		descriptionHtml = json.getString("synopsis"),
+		descriptionHtml = json.getStringOrNull("synopsis").orEmpty(),
 	)
 
 	@Suppress("FunctionName")
