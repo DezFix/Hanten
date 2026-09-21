@@ -22,10 +22,10 @@ abstract class StatsDao {
 	@Query("SELECT IFNULL(SUM(pages),0) FROM stats WHERE manga_id = :mangaId")
 	abstract suspend fun getReadPagesCount(mangaId: Long): Int
 
-	@Query("SELECT IFNULL(SUM(duration)/SUM(pages), 0) FROM stats WHERE manga_id = :mangaId")
+	@Query("SELECT IFNULL(SUM(MIN(duration, pages * 120000))/SUM(pages), 0) FROM stats WHERE manga_id = :mangaId")
 	abstract suspend fun getAverageTimePerPage(mangaId: Long): Long
 
-	@Query("SELECT IFNULL(SUM(duration)/SUM(pages), 0) FROM stats")
+	@Query("SELECT IFNULL(SUM(MIN(duration, pages * 120000))/SUM(pages), 0) FROM stats")
 	abstract suspend fun getAverageTimePerPage(): Long
 
 	@Query("DELETE FROM stats")

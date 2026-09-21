@@ -41,17 +41,22 @@ class StatsCollector @Inject constructor(
 					duration = 0,
 					pages = 0,
 				),
+				lastUpdate = now,
 			)
 			return
 		}
+		// Count only active reading: idle gaps (phone put aside with screen on)
+		// must not inflate the per-page average forever
+		val gap = (now - entry.lastUpdate).coerceAtLeast(0)
+		val counted = gap.coerceAtMost(MAX_PAGE_DURATION_MS)
 		val pagesDelta = if (entry.state.page != state.page || entry.state.chapterId != state.chapterId) 1 else 0
 		val newEntry = entry.copy(
-			stats = StatsEntity(
-				mangaId = mangaId,
-				startedAt = entry.stats.startedAt,
-				duration = now - entry.stats.startedAt,
+			state = state,
+			stats = entry.stats.copy(
+				duration = entry.stats.duration + counted,
 				pages = entry.stats.pages + pagesDelta,
 			),
+			lastUpdate = now,
 		)
 		stats[mangaId] = newEntry
 		commit(newEntry.stats)
@@ -75,5 +80,12 @@ class StatsCollector @Inject constructor(
 	private data class Entry(
 		val state: ReaderState,
 		val stats: StatsEntity,
+		val lastUpdate: Long,
 	)
+
+	private companion object {
+
+		// Longer than this on a single page counts as idle, not reading
+		const val MAX_PAGE_DURATION_MS = 120_000L
+	}
 }

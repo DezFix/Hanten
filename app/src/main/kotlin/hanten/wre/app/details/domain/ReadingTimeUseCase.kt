@@ -6,7 +6,6 @@ import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
 import hanten.wre.app.parsers.util.findById
 import hanten.wre.app.stats.data.StatsRepository
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -41,7 +40,8 @@ class ReadingTimeUseCase @Inject constructor(
 
 	private suspend fun getSecondsPerPage(mangaId: Long): Int {
 		var time = if (settings.isStatsEnabled) {
-			TimeUnit.MILLISECONDS.toSeconds(statsRepository.getTimePerPage(mangaId)).toInt()
+			// DAO returns milliseconds, round (not truncate) to seconds
+			((statsRepository.getTimePerPage(mangaId) + 500) / 1000).toInt()
 		} else {
 			0
 		}
