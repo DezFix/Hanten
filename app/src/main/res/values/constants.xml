@@ -11,9 +11,9 @@
 	<string name="github_updates_repo" translatable="false">DezFix/Hanten</string>
 	<string name="shikimori_clientId" translatable="false">c3Bs-V6E0lOs7jVW839oclKL0jTWw4em2cvSS_9Ia3g</string>
 	<string name="shikimori_clientSecret" translatable="false">zfZcAysneAac0LivWKjJZuQofRhWc6c2Y3Hm0Klk8ac</string>
-	<string name="anilist_clientId" translatable="false">33558</string>
-	<string name="anilist_clientSecret" translatable="false">JQtr3PgbtYa5o2xMnXFqcsdQV1CAdokLxO5OP5JT</string>
-	<string name="mal_clientId" translatable="false">66e27ac5d5a1764e944677b42e2c4737</string>
+	<string name="anilist_clientId" translatable="false">51625</string>
+	<string name="anilist_clientSecret" translatable="false">8YnVHRvMOHc0s73wOtIdaIwJ5IL7mFEEqsVyX0lZ</string>
+	<string name="mal_clientId" translatable="false">a32713f3215bbaf787032e7e7ca3e606</string>
 	<string name="kitsu_clientId" translatable="false">dd031b32d2f56c990b1425efe6c42ad847e7fe3ab46bf1299f05ecd856bdb7dd</string>
 	<string name="kitsu_clientSecret" translatable="false">54d7307928f63414defd96399fc31ba847961ceaecef3a5fd93144e960c0e151</string>
 	<string name="sync_authority_history" translatable="false">hanten.wre.app.history</string>
