@@ -56,6 +56,14 @@ class AniListRepository @Inject constructor(
 
 	private val shrinkRegex = Regex("\\t+")
 
+	private fun JSONObject.requireData(): JSONObject {
+		if (isNull("data")) {
+			val message = optJSONArray("errors")?.optJSONObject(0)?.optString("message")
+			throw IllegalStateException("AniList error: ${message ?: "empty data"}")
+		}
+		return getJSONObject("data")
+	}
+
 	override suspend fun authorize(code: String?) {
 		val body = FormBody.Builder()
 		body.add("client_id", clientId)
@@ -97,7 +105,7 @@ class AniListRepository @Inject constructor(
 			}
 		""",
 		)
-		val jo = response.getJSONObject("data").getJSONObject("AniChartUser").getJSONObject("user")
+		val jo = response.requireData().getJSONObject("AniChartUser").getJSONObject("user")
 		storage[KEY_SCORE_FORMAT] = jo.optJSONObject("mediaListOptions")?.getStringOrNull("scoreFormat")
 			?: ScoreFormat.POINT_10_DECIMAL.name
 		return AniListUser(jo).also { storage.user = it }
@@ -136,7 +144,7 @@ class AniListRepository @Inject constructor(
 			}
 		""",
 		)
-		val data = response.getJSONObject("data").getJSONObject("Page").getJSONArray("media")
+		val data = response.requireData().getJSONObject("Page").getJSONArray("media")
 		return data.mapJSON { ScrobblerManga(it, query) }
 	}
 
@@ -154,7 +162,7 @@ class AniListRepository @Inject constructor(
 				}
 			""",
 		)
-		saveRate(response.getJSONObject("data").getJSONObject("SaveMediaListEntry"), mangaId)
+		saveRate(response.requireData().getJSONObject("SaveMediaListEntry"), mangaId)
 	}
 
 	override suspend fun updateRate(rateId: Int, mangaId: Long, chapter: Int) {
@@ -171,7 +179,7 @@ class AniListRepository @Inject constructor(
 				}
 			""",
 		)
-		saveRate(response.getJSONObject("data").getJSONObject("SaveMediaListEntry"), mangaId)
+		saveRate(response.requireData().getJSONObject("SaveMediaListEntry"), mangaId)
 	}
 
 	override suspend fun updateRate(rateId: Int, mangaId: Long, rating: Float, status: String?, comment: String?) {
@@ -191,7 +199,7 @@ class AniListRepository @Inject constructor(
 				}
 			""",
 		)
-		saveRate(response.getJSONObject("data").getJSONObject("SaveMediaListEntry"), mangaId)
+		saveRate(response.requireData().getJSONObject("SaveMediaListEntry"), mangaId)
 	}
 
 	override suspend fun getMangaInfo(id: Long): ScrobblerMangaInfo {
@@ -211,7 +219,7 @@ class AniListRepository @Inject constructor(
 			}
 			""",
 		)
-		return ScrobblerMangaInfo(response.getJSONObject("data").getJSONObject("Media"))
+		return ScrobblerMangaInfo(response.requireData().getJSONObject("Media"))
 	}
 
 	private suspend fun saveRate(json: JSONObject, mangaId: Long) {

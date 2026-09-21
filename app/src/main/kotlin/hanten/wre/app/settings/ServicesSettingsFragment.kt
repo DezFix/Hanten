@@ -8,6 +8,7 @@ import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.core.crash.ScrobblerErrorReporter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BasePreferenceFragment
@@ -33,6 +34,9 @@ class ServicesSettingsFragment : BasePreferenceFragment(R.string.services),
 
 	@Inject
 	lateinit var scrobblerAuthHelper: ScrobblerAuthHelper
+
+	@Inject
+	lateinit var scrobblerErrorReporter: ScrobblerErrorReporter
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 		addPreferencesFromResource(R.xml.pref_services)
@@ -128,6 +132,7 @@ class ServicesSettingsFragment : BasePreferenceFragment(R.string.services),
 						getString(R.string.logged_in_as, user.nickname)
 					}.getOrElse {
 						it.printStackTraceDebug("ServicesSettingsFragment::bindScrobblerSummary")
+						scrobblerErrorReporter.report(it, scrobblerService)
 						it.getDisplayMessage(resources)
 					}
 				}

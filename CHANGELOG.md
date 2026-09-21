@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.2
+Date: 2026-09-21
+
+### Трекинг
+- Ошибки трекеров теперь улетают в анонимные отчёты со стектрейсом — чиним вслепую меньше
+- AniList больше не падает, если сервер вернул ошибку вместо данных
+
 ## 2.3.1
 Date: 2026-09-21
 
