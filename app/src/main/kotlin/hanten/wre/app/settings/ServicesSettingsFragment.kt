@@ -61,7 +61,6 @@ class ServicesSettingsFragment : BasePreferenceFragment(R.string.services),
 		bindScrobblerSummary(AppSettings.KEY_SHIKIMORI, ScrobblerService.SHIKIMORI)
 		bindScrobblerSummary(AppSettings.KEY_ANILIST, ScrobblerService.ANILIST)
 		bindScrobblerSummary(AppSettings.KEY_MAL, ScrobblerService.MAL)
-		bindScrobblerSummary(AppSettings.KEY_KITSU, ScrobblerService.KITSU)
 		bindSyncSummary()
 	}
 
@@ -87,11 +86,6 @@ class ServicesSettingsFragment : BasePreferenceFragment(R.string.services),
 
 			AppSettings.KEY_ANILIST -> {
 				handleScrobblerClick(ScrobblerService.ANILIST)
-				true
-			}
-
-			AppSettings.KEY_KITSU -> {
-				handleScrobblerClick(ScrobblerService.KITSU)
 				true
 			}
 

@@ -127,6 +127,5 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		const val HOST_SHIKIMORI_AUTH = "shikimori-auth"
 		const val HOST_ANILIST_AUTH = "anilist-auth"
 		const val HOST_MAL_AUTH = "mal-auth"
-		const val HOST_KITSU_AUTH = "kitsu-auth"
 	}
 }

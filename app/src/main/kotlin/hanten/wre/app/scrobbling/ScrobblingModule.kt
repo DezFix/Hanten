@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import okhttp3.OkHttpClient
-import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.network.BaseHttpClient
 import hanten.wre.app.scrobbling.anilist.data.AniListAuthenticator
 import hanten.wre.app.scrobbling.anilist.data.AniListInterceptor
@@ -17,10 +16,6 @@ import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerType
-import hanten.wre.app.scrobbling.kitsu.data.KitsuAuthenticator
-import hanten.wre.app.scrobbling.kitsu.data.KitsuInterceptor
-import hanten.wre.app.scrobbling.kitsu.data.KitsuRepository
-import hanten.wre.app.scrobbling.kitsu.domain.KitsuScrobbler
 import hanten.wre.app.scrobbling.mal.data.MALAuthenticator
 import hanten.wre.app.scrobbling.mal.data.MALInterceptor
 import hanten.wre.app.scrobbling.mal.domain.MALScrobbler
@@ -71,22 +66,6 @@ object ScrobblingModule {
 
 	@Provides
 	@Singleton
-	fun provideKitsuRepository(
-		@ApplicationContext context: Context,
-		@BaseHttpClient baseHttpClient: OkHttpClient,
-		@ScrobblerType(ScrobblerService.KITSU) storage: ScrobblerStorage,
-		database: MangaDatabase,
-		authenticator: KitsuAuthenticator,
-	): KitsuRepository {
-		val okHttp = baseHttpClient.newBuilder().apply {
-			authenticator(authenticator)
-			addInterceptor(KitsuInterceptor(storage))
-		}.build()
-		return KitsuRepository(context, okHttp, storage, database)
-	}
-
-	@Provides
-	@Singleton
 	@ScrobblerType(ScrobblerService.ANILIST)
 	fun provideAniListStorage(
 		@ApplicationContext context: Context,
@@ -107,18 +86,10 @@ object ScrobblingModule {
 	): ScrobblerStorage = ScrobblerStorage(context, ScrobblerService.MAL)
 
 	@Provides
-	@Singleton
-	@ScrobblerType(ScrobblerService.KITSU)
-	fun provideKitsuStorage(
-		@ApplicationContext context: Context,
-	): ScrobblerStorage = ScrobblerStorage(context, ScrobblerService.KITSU)
-
-	@Provides
 	@ElementsIntoSet
 	fun provideScrobblers(
 		shikimoriScrobbler: ShikimoriScrobbler,
 		aniListScrobbler: AniListScrobbler,
 		malScrobbler: MALScrobbler,
-		kitsuScrobbler: KitsuScrobbler
-	): Set<@JvmSuppressWildcards Scrobbler> = setOf(shikimoriScrobbler, aniListScrobbler, malScrobbler, kitsuScrobbler)
+	): Set<@JvmSuppressWildcards Scrobbler> = setOf(shikimoriScrobbler, aniListScrobbler, malScrobbler)
 }
