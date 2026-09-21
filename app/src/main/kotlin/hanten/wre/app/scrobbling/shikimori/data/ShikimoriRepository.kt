@@ -15,10 +15,12 @@ import hanten.wre.app.parsers.util.json.getStringOrNull
 import hanten.wre.app.parsers.util.json.mapJSON
 import hanten.wre.app.parsers.util.parseJson
 import hanten.wre.app.parsers.util.parseJsonArray
+import hanten.wre.app.parsers.util.parseRaw
 import hanten.wre.app.parsers.util.toAbsoluteUrl
 import hanten.wre.app.scrobbling.common.data.ScrobblerRepository
 import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
+import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerMangaInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
@@ -74,17 +76,35 @@ class ShikimoriRepository @Inject constructor(
 	}
 
 	override suspend fun loadUser(): ScrobblerUser {
-		val request = Request.Builder()
-			.get()
-			.url("${BASE_URL}api/users/whoami")
-		val response = okHttp.newCall(request.build()).await().parseJson()
-		return ShikimoriUser(response).also { storage.user = it }
+		return loadUserOrNull() ?: reloadUser()
 	}
 
 	override val cachedUser: ScrobblerUser?
 		get() {
 			return storage.user
 		}
+
+	private suspend fun loadUserOrNull(): ScrobblerUser? {
+		val request = Request.Builder()
+			.get()
+			.url("${BASE_URL}api/users/whoami")
+		val response = okHttp.newCall(request.build()).await()
+		// Shikimori answers HTTP 200 with a literal `null` body when the token is dead.
+		// Parsing it as JSONObject crashes, so check first.
+		val body = response.parseRaw()
+		if (body.isBlank() || body.trim() == "null") {
+			return null
+		}
+		return ShikimoriUser(JSONObject(body)).also { storage.user = it }
+	}
+
+	private suspend fun reloadUser(): ScrobblerUser {
+		if (storage.refreshToken == null) {
+			throw ScrobblerAuthRequiredException(ScrobblerService.SHIKIMORI)
+		}
+		authorize(null)
+		return loadUserOrNull() ?: throw ScrobblerAuthRequiredException(ScrobblerService.SHIKIMORI)
+	}
 
 	override suspend fun unregister(mangaId: Long) {
 		return db.getScrobblingDao().delete(ScrobblerService.SHIKIMORI.id, mangaId)

@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.3
+Date: 2026-09-21
+
+### Трекинг
+- Shikimori: починена загрузка профиля при протухшем токене (было JSON-падение) — токен обновляется сам, иначе просит войти заново
+
 ## 2.3.2
 Date: 2026-09-21
 
