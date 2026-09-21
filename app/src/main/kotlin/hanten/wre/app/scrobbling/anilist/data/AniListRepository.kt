@@ -84,7 +84,9 @@ class AniListRepository @Inject constructor(
 			"AniList auth failed: " + response.optString("error_description", response.optString("error", "unknown error"))
 		}
 		storage.accessToken = response.getString("access_token")
-		storage.refreshToken = response.getString("refresh_token")
+		if (response.has("refresh_token") && !response.isNull("refresh_token")) {
+			storage.refreshToken = response.getString("refresh_token")
+		}
 	}
 
 	override suspend fun loadUser(): ScrobblerUser {

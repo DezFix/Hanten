@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.4
+Date: 2026-09-21
+
+### Трекинг
+- Shikimori: запрашиваем scope user_rates (без него токен бесправный) и шлём credentials при обновлении токена — вход работает, refresh чинится сам
+
 ## 2.3.3
 Date: 2026-09-21
 

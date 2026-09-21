@@ -47,7 +47,7 @@ class ShikimoriRepository @Inject constructor(
 
 	override val oauthUrl: String
 		get() = "${BASE_URL}oauth/authorize?client_id=$clientId&" +
-			"redirect_uri=$REDIRECT_URI&response_type=code&scope="
+			"redirect_uri=$REDIRECT_URI&response_type=code&scope=user_rates"
 
 	override val isAuthorized: Boolean
 		get() = storage.accessToken != null
@@ -72,7 +72,9 @@ class ShikimoriRepository @Inject constructor(
 			"Shikimori auth failed: " + response.optString("error_description", response.optString("error", "unknown error"))
 		}
 		storage.accessToken = response.getString("access_token")
-		storage.refreshToken = response.getString("refresh_token")
+		if (response.has("refresh_token") && !response.isNull("refresh_token")) {
+			storage.refreshToken = response.getString("refresh_token")
+		}
 	}
 
 	override suspend fun loadUser(): ScrobblerUser {
