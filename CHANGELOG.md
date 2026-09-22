@@ -4,6 +4,16 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.5
+Date: 2026-09-22
+
+### Трекинг
+- Shikimori переехал на shikimori.io: API снова отвечает, вход работает
+- Импорт библиотеки из Shikimori: вся коллекция в избранное с привязками трекинга (меню ⋮ на экране трекера)
+
+### Рекомендации
+- Две вкладки: «Подборка» и «В тренде» (топы твоих источников)
+
 ## 2.3.4
 Date: 2026-09-21
 
