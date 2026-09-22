@@ -1,6 +1,7 @@
 package hanten.wre.app.core.os
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ShortcutManager
 import android.os.Build
@@ -30,6 +31,8 @@ import hanten.wre.app.core.util.ext.mangaSourceExtra
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.processLifecycleScope
 import hanten.wre.app.history.data.HistoryRepository
+import hanten.wre.app.history.ui.HistoryActivity
+import hanten.wre.app.tracker.ui.updates.UpdatesActivity
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.util.ifNullOrEmpty
@@ -119,10 +122,25 @@ class AppShortcutManager @Inject constructor(
 
 	private suspend fun updateShortcutsImpl() = runCatchingCancellable {
 		val maxShortcuts = ShortcutManagerCompat.getMaxShortcutCountPerActivity(context).coerceAtLeast(5)
-		val shortcuts = historyRepository.getList(0, maxShortcuts)
+		val staticShortcuts = listOf(
+			ShortcutInfoCompat.Builder(context, ID_HISTORY)
+				.setShortLabel(context.getString(R.string.history))
+				.setLongLabel(context.getString(R.string.history))
+				.setIcon(IconCompat.createWithResource(context, R.drawable.ic_history))
+				.setIntent(Intent(context, HistoryActivity::class.java).setAction(Intent.ACTION_VIEW))
+				.build(),
+			ShortcutInfoCompat.Builder(context, ID_UPDATES)
+				.setShortLabel(context.getString(R.string.updates))
+				.setLongLabel(context.getString(R.string.updates))
+				.setIcon(IconCompat.createWithResource(context, R.drawable.ic_updated))
+				.setIntent(Intent(context, UpdatesActivity::class.java).setAction(Intent.ACTION_VIEW))
+				.build(),
+		)
+		val recentsCount = (maxShortcuts - staticShortcuts.size).coerceAtLeast(0)
+		val recents = historyRepository.getList(0, recentsCount)
 			.filter { x -> x.title.isNotEmpty() }
 			.map { buildShortcutInfo(it) }
-		ShortcutManagerCompat.setDynamicShortcuts(context, shortcuts)
+		ShortcutManagerCompat.setDynamicShortcuts(context, staticShortcuts + recents)
 	}.onFailure {
 		it.printStackTraceDebug("AppShortcutManager::updateShortcutsImpl")
 	}
@@ -134,8 +152,7 @@ class AppShortcutManager @Inject constructor(
 		}
 	}
 
-	private suspend fun buildShortcutInfo(manga: Manga): ShortcutInfoCompat = withContext(Dispatchers.IO) {
-		val icon = runCatchingCancellable {
+	private suspend fun buildShortcutInfo(manga: Manga): ShortcutInfoCompat = withContext(Dispatchers.IO) {		val icon = runCatchingCancellable {
 			coil.execute(
 				ImageRequest.Builder(context)
 					.data(manga.coverUrl)
@@ -190,5 +207,10 @@ class AppShortcutManager @Inject constructor(
 			.setLongLived(true)
 			.setIntent(AppRouter.listIntent(context, source, null, null))
 			.build()
+	}
+
+	companion object {
+		private const val ID_HISTORY = "shortcut_history"
+		private const val ID_UPDATES = "shortcut_updates"
 	}
 }
