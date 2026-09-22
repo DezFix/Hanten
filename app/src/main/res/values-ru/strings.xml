@@ -1059,4 +1059,7 @@
     <string name="source_error_reports_summary">Отправлять разработчику детали сбоев источников (источник, ошибка, версия), чтобы помочь чинить сломанные источники</string>
     <string name="error_reports">Анонимные отчёты об ошибках</string>
     <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>
+    <string name="suggestions_personal">Подборка</string>
+    <string name="suggestions_trending">В тренде</string>
+    <string name="suggestions_trending_empty">Сейчас ничего не в тренде. Потяните вниз, чтобы обновить.</string>
 </resources>

@@ -1032,4 +1032,10 @@
     
 <string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
 
+    <string name="suggestions_personal">Добірка</string>
+    
+    <string name="suggestions_trending">У тренді</string>
+    
+    <string name="suggestions_trending_empty">Зараз нічого не в тренді. Потягніть вниз, щоб оновити.</string>
+
 </resources>

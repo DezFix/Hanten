@@ -992,4 +992,7 @@
     <string name="source_error_reports_summary">Send source failure details (source, error, app version) to the developer to help fix broken sources</string>
     <string name="error_reports">Anonymous error reports</string>
     <string name="error_reports_summary">Send anonymous crash logs and source failure details (source, error, app version) to help fix bugs. No personal data is collected. Takes effect after restart.</string>
+    <string name="suggestions_personal">For you</string>
+    <string name="suggestions_trending">Trending</string>
+    <string name="suggestions_trending_empty">Nothing trending right now. Pull down to refresh.</string>
 </resources>
