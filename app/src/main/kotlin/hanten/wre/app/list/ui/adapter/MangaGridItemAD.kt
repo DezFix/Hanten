@@ -28,7 +28,16 @@ fun mangaGridItemAD(
 	bind { payloads ->
 		itemView.setTooltipCompat(item.getSummary(context))
 		binding.textViewTitle.text = item.title
-		binding.textViewStatus.setTextAndVisible(item.manga.cardStatusResId)
+		val statusRes = item.manga.cardStatusResId
+		binding.textViewStatus.setTextAndVisible(
+			if (statusRes != 0) {
+				statusRes
+			} else if (item.isStale) {
+				R.string.stale_updates
+			} else {
+				0
+			},
+		)
 		binding.progressView.setProgress(item.progress, PAYLOAD_PROGRESS_CHANGED in payloads)
 		with(binding.iconsView) {
 			clearIcons()

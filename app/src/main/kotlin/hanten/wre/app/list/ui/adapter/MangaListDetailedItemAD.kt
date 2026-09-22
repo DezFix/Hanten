@@ -24,7 +24,16 @@ fun mangaListDetailedItemAD(
 	bind { payloads ->
 		binding.textViewTitle.text = item.title
 		binding.textViewAuthor.textAndVisible = item.manga.authors.joinToString(", ")
-		binding.textViewStatus.setTextAndVisible(item.manga.cardStatusResId)
+		val statusRes = item.manga.cardStatusResId
+		binding.textViewStatus.setTextAndVisible(
+			if (statusRes != 0) {
+				statusRes
+			} else if (item.isStale) {
+				R.string.stale_updates
+			} else {
+				0
+			},
+		)
 		binding.progressView.setProgress(
 			value = item.progress,
 			animate = ListModelDiffCallback.PAYLOAD_PROGRESS_CHANGED in payloads,

@@ -1028,6 +1028,7 @@
     <string name="check_updates">Проверить обновления</string>
     <string name="check_updates_summary">Проверить новую версию на GitHub</string>
     <string name="update_uptodate">У вас последняя версия</string>
+    <string name="stale_updates">Давно без обновлений</string>
     <string name="donate_title">Поддержать разработку</string>
     <string name="error_reports">Анонимные отчёты об ошибках</string>
     <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>

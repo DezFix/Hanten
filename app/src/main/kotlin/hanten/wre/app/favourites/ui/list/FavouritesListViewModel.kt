@@ -36,6 +36,8 @@ import hanten.wre.app.list.ui.MangaListViewModel
 import hanten.wre.app.list.ui.model.EmptyState
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
+import hanten.wre.app.list.ui.model.MangaDetailedListModel
+import hanten.wre.app.list.ui.model.MangaGridModel
 import hanten.wre.app.list.ui.model.toErrorState
 import hanten.wre.app.parsers.model.Manga
 import java.util.concurrent.atomic.AtomicBoolean
@@ -45,6 +47,7 @@ import hanten.wre.app.local.domain.model.LocalManga
 import kotlinx.coroutines.flow.SharedFlow
 
 private const val PAGE_SIZE = 16
+private const val STALE_THRESHOLD_DAYS = 90L
 
 @HiltViewModel
 class FavouritesListViewModel @Inject constructor(
@@ -150,7 +153,29 @@ class FavouritesListViewModel @Inject constructor(
 		val result = ArrayList<ListModel>(size + 1)
 		quickFilter.filterItem(filters)?.let(result::add)
 		mangaListMapper.toListModelList(result, this, mode, MangaListMapper.NO_FAVORITE)
+		result.markStale()
 		return result
+	}
+
+	/**
+	 * Beta: flags cards whose latest known chapter is older than
+	 * [STALE_THRESHOLD_DAYS]. One batched query, display-only.
+	 */
+	private suspend fun MutableList<ListModel>.markStale() {
+		val threshold = System.currentTimeMillis() - STALE_THRESHOLD_DAYS * 24 * 60 * 60 * 1000L
+		val staleIds = repository.findStaleMangaIds(threshold)
+		if (staleIds.isEmpty()) return
+		for (i in indices) {
+			when (val m = get(i)) {
+				is MangaGridModel -> if (!m.isStale && m.manga.id in staleIds) {
+					set(i, m.copy(isStale = true))
+				}
+				is MangaDetailedListModel -> if (!m.isStale && m.manga.id in staleIds) {
+					set(i, m.copy(isStale = true))
+				}
+				else -> Unit
+			}
+		}
 	}
 
 	private fun observeFavorites() = if (categoryId == NO_ID) {

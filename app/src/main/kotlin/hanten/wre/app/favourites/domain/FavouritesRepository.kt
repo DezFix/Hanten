@@ -28,6 +28,7 @@ import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.util.levenshteinDistance
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.search.domain.SearchKind
 import javax.inject.Inject
 
@@ -94,6 +95,19 @@ class FavouritesRepository @Inject constructor(
 	fun observeMangaCount(): Flow<Int> {
 		return db.getFavouritesDao().observeMangaCount()
 			.distinctUntilChanged()
+	}
+
+	/**
+	 * Beta: ids of manga whose latest known chapter is older than [olderThan].
+	 * Single aggregate query, never throws (empty set on failure so a stale
+	 * check can never break the favourites list).
+	 */
+	suspend fun findStaleMangaIds(olderThan: Long): Set<Long> {
+		return runCatchingCancellable {
+			db.getChaptersDao().getMaxUploadDates()
+				.filter { it.maxUploadDate in 1 until olderThan }
+				.mapTo(HashSet()) { it.mangaId }
+		}.getOrElse { emptySet() }
 	}
 
 	fun observeCategories(): Flow<List<FavouriteCategory>> {

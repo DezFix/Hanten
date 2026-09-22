@@ -13,6 +13,13 @@ abstract class ChaptersDao {
 	@Query("SELECT * FROM chapters WHERE manga_id = :mangaId ORDER BY `index` ASC")
 	abstract suspend fun findAll(mangaId: Long): List<ChapterEntity>
 
+	/**
+	 * Beta: latest known chapter date per manga in a single query.
+	 * Read-only aggregate, no schema change.
+	 */
+	@Query("SELECT manga_id AS mangaId, MAX(upload_date) AS maxUploadDate FROM chapters GROUP BY manga_id")
+	abstract suspend fun getMaxUploadDates(): List<MangaMaxUploadDate>
+
 	@Query("DELETE FROM chapters WHERE manga_id = :mangaId")
 	abstract suspend fun deleteAll(mangaId: Long)
 
@@ -28,3 +35,8 @@ abstract class ChaptersDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	protected abstract suspend fun insert(entities: Collection<ChapterEntity>)
 }
+
+data class MangaMaxUploadDate(
+	val mangaId: Long,
+	val maxUploadDate: Long,
+)
