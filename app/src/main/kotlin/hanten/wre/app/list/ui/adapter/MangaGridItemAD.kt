@@ -3,8 +3,10 @@ package hanten.wre.app.list.ui.adapter
 import androidx.core.view.isVisible
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.R
+import hanten.wre.app.core.model.cardStatusResId
 import hanten.wre.app.core.ui.list.AdapterDelegateClickListenerAdapter
 import hanten.wre.app.core.ui.list.OnListItemClickListener
+import hanten.wre.app.core.util.ext.setTextAndVisible
 import hanten.wre.app.core.util.ext.setTooltipCompat
 import hanten.wre.app.databinding.ItemMangaGridBinding
 import hanten.wre.app.list.ui.ListModelDiffCallback.Companion.PAYLOAD_PROGRESS_CHANGED
@@ -26,6 +28,7 @@ fun mangaGridItemAD(
 	bind { payloads ->
 		itemView.setTooltipCompat(item.getSummary(context))
 		binding.textViewTitle.text = item.title
+		binding.textViewStatus.setTextAndVisible(item.manga.cardStatusResId)
 		binding.progressView.setProgress(item.progress, PAYLOAD_PROGRESS_CHANGED in payloads)
 		with(binding.iconsView) {
 			clearIcons()

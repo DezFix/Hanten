@@ -3,7 +3,9 @@ package hanten.wre.app.list.ui.adapter
 import androidx.core.view.isVisible
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.R
+import hanten.wre.app.core.model.cardStatusResId
 import hanten.wre.app.core.ui.list.AdapterDelegateClickListenerAdapter
+import hanten.wre.app.core.util.ext.setTextAndVisible
 import hanten.wre.app.core.util.ext.textAndVisible
 import hanten.wre.app.databinding.ItemMangaListDetailsBinding
 import hanten.wre.app.list.ui.ListModelDiffCallback
@@ -22,6 +24,7 @@ fun mangaListDetailedItemAD(
 	bind { payloads ->
 		binding.textViewTitle.text = item.title
 		binding.textViewAuthor.textAndVisible = item.manga.authors.joinToString(", ")
+		binding.textViewStatus.setTextAndVisible(item.manga.cardStatusResId)
 		binding.progressView.setProgress(
 			value = item.progress,
 			animate = ListModelDiffCallback.PAYLOAD_PROGRESS_CHANGED in payloads,

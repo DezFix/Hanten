@@ -69,6 +69,20 @@ val MangaState.iconResId: Int
 		MangaState.RESTRICTED -> R.drawable.ic_disable
 	}
 
+/**
+ * Beta: status line for library cards, shown UNDER the cover so it never
+ * overlaps artwork. Only notable states are surfaced (finished / paused /
+ * abandoned); ongoing/upcoming/restricted/unknown stay silent to avoid noise
+ * on large libraries. Display-only: reads the already stored [Manga.state],
+ * no database or backup format changes.
+ */
+@get:StringRes
+val Manga.cardStatusResId: Int
+	get() = when (state) {
+		MangaState.FINISHED, MangaState.PAUSED, MangaState.ABANDONED -> state.titleResId
+		else -> 0
+	}
+
 @get:StringRes
 val ContentRating.titleResId: Int
 	get() = when (this) {
