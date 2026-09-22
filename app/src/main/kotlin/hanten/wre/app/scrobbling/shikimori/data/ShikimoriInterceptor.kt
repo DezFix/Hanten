@@ -28,8 +28,21 @@ class ShikimoriInterceptor(private val storage: ScrobblerStorage) : Interceptor 
 			throw ScrobblerAuthRequiredException(ScrobblerService.SHIKIMORI)
 		}
 		if (!response.isSuccessful && !response.isRedirect) {
-			throw IOException("${response.code} ${response.message}")
+			val details = runCatching {
+				response.peekBody(MAX_ERROR_BODY).string()
+			}.getOrNull()?.takeIf { it.isNotBlank() }
+			val message = listOfNotNull(
+				response.code.toString(),
+				response.message.takeIf { it.isNotBlank() },
+				details,
+			).joinToString(" ")
+			throw IOException(message)
 		}
 		return response
+	}
+
+	private companion object {
+
+		const val MAX_ERROR_BODY = 512L
 	}
 }

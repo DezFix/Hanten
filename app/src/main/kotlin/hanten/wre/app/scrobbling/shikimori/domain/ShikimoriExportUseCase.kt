@@ -7,8 +7,10 @@ import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.list.domain.ReadingProgress
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.shikimori.data.ShikimoriRepository
+import hanten.wre.app.scrobbling.shikimori.data.ShikimoriUserRate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -41,12 +43,15 @@ class ShikimoriExportUseCase @Inject constructor(
 		if (favourites.isEmpty()) {
 			return@withContext ExportResult(0, emptyList())
 		}
+		val existingRates = runCatchingCancellable {
+			repository.getUserRates()
+		}.getOrNull().orEmpty().associateBy { it.targetId }
 		val semaphore = Semaphore(MAX_PARALLELISM)
 		val results = supervisorScope {
 			favourites.take(MAX_TITLES).map { manga ->
 				async {
 					semaphore.withPermit {
-						exportOne(manga)
+						exportOne(manga, existingRates)
 					}
 				}
 			}.awaitAll()
@@ -60,7 +65,10 @@ class ShikimoriExportUseCase @Inject constructor(
 	/**
 	 * @return title to report as skipped, or null on success
 	 */
-	private suspend fun exportOne(manga: Manga): String? {
+	private suspend fun exportOne(
+		manga: Manga,
+		existingRates: Map<Long, ShikimoriUserRate>,
+	): String? {
 		if (db.getScrobblingDao().find(ScrobblerService.SHIKIMORI.id, manga.id) != null) {
 			return null // already linked, nothing to do (counts as exported)
 		}
@@ -74,6 +82,10 @@ class ShikimoriExportUseCase @Inject constructor(
 			)
 			ourKeys.any { it in theirKeys }
 		} ?: return manga.title
+		existingRates[target.id]?.let { rate ->
+			linkExisting(manga, rate)
+			return null
+		}
 		runCatchingCancellable {
 			repository.createRate(manga.id, target.id)
 		}.getOrNull() ?: return manga.title
@@ -81,6 +93,21 @@ class ShikimoriExportUseCase @Inject constructor(
 			pushProgress(manga)
 		}
 		return null
+	}
+
+	private suspend fun linkExisting(manga: Manga, rate: ShikimoriUserRate) {
+		db.getScrobblingDao().upsert(
+			ScrobblingEntity(
+				scrobbler = ScrobblerService.SHIKIMORI.id,
+				id = rate.rateId,
+				mangaId = manga.id,
+				targetId = rate.targetId,
+				status = rate.status,
+				chapter = rate.chapters,
+				comment = rate.comment,
+				rating = (rate.score.toFloat() / 10f).coerceIn(0f, 1f),
+			),
+		)
 	}
 
 	private suspend fun pushProgress(manga: Manga) {

@@ -75,6 +75,17 @@ class ShikimoriRepository @Inject constructor(
 		if (response.has("refresh_token") && !response.isNull("refresh_token")) {
 			storage.refreshToken = response.getString("refresh_token")
 		}
+		if (code != null) {
+			// Fresh grants may carry no rights (e.g. approved long ago with an empty scope):
+			// detect it immediately instead of looping on dead tokens.
+			if (loadUserOrNull() == null) {
+				storage.clear()
+				throw IllegalStateException(
+					"Shikimori denied access (no user_rates scope). " +
+						"Revoke Hanten at shikimori.one -> settings -> applications and log in again.",
+				)
+			}
+		}
 	}
 
 	override suspend fun loadUser(): ScrobblerUser {
