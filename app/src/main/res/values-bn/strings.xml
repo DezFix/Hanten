@@ -167,12 +167,9 @@
     <string name="compact">কম্প্যাক্ট</string>
     <string name="show_in_grid_view">গ্রিড ভিউতে দেখান</string>
     <string name="language">ভাষা</string>
-    <string name="share_logs">লগ শেয়ার করুন</string>
-    <string name="enable_logging">লগিং সক্ষম করুন</string>
     <string name="show_suspicious_content">সন্দেহজনক কন্টেন্ট দেখান</string>
     <string name="source_disabled">উৎস অক্ষম করা হয়েছে</string>
     <string name="delete_old_backups">পুরনো ব্যাকআপ মুছে ফেলুন</string>
-    <string name="enable_logging_summary">ডিবাগের উদ্দেশ্যে কিছু অ্যাকশন রেকর্ড করুন। আপনি কী করছেন তা নিশ্চিত না হলে এটি চালু করবেন না</string>
     <string name="theme_name_dynamic">ডাইনামিক</string>
     <string name="theme_name_miku">মিকু</string>
     <string name="data_not_restored">ডেটা পুনরুদ্ধার করা হয়নি</string>
@@ -424,7 +421,6 @@
     
 <string name="sync_title">Sync your data</string>
     
-<string name="email_enter_hint">Enter your email to continue</string>
     
 <string name="hide">Hide</string>
     
@@ -476,7 +472,6 @@
     
 <string name="disable_battery_optimization_summary">Helps with background updates checks</string>
     
-<string name="crash_text">Something went wrong. Please submit a bug report to the developers to help us fix it.</string>
     
 <string name="send">Send</string>
     
@@ -727,7 +722,6 @@
 <string name="invalid_value_message">Invalid value</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="downloaded">Downloaded</string>
     
@@ -1408,11 +1402,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

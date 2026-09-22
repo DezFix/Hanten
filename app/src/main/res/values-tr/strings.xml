@@ -245,7 +245,6 @@
     <string name="default_mode">Varsayılan mod</string>
     <string name="disable_battery_optimization">Pil iyileştirmesini devre dışı bırak</string>
     <string name="disable_battery_optimization_summary">Arka planda güncelleme kontrollerine yardımcı olur</string>
-    <string name="crash_text">Bir şeyler yanlış gitti. Düzeltmemize yardımcı olması için lütfen geliştiricilere bir hata bildirimi gönderin.</string>
     <string name="send">Gönder</string>
     <string name="disable_all">Tümünü devre dışı bırak</string>
     <string name="use_fingerprint">Varsa biyometrik kullan</string>
@@ -274,7 +273,6 @@
     <string name="back">Geri</string>
     <string name="sync">Eşitleme</string>
     <string name="sync_title">Verinizi eşitleyin</string>
-    <string name="email_enter_hint">Devam etmek için E-Postanızı girin</string>
     <string name="clear_all_history">Tüm gecmişi temizle</string>
     <string name="last_2_hours">Son 2 saat</string>
     <string name="history_cleared">Geçmiş temizlendi</string>
@@ -335,9 +333,6 @@
     <string name="prefetch_content">İçerik ön yüklemesi</string>
     <string name="mark_as_current">Geçerli olarak işaretle</string>
     <string name="language">Dil</string>
-    <string name="share_logs">Günlükleri paylaş</string>
-    <string name="enable_logging">Günlük kaydını etkinleştir</string>
-    <string name="enable_logging_summary">Hata ayıklama amacıyla bazı eylemleri kaydedin. Ne yaptığınızdan emin değilseniz açmayın</string>
     <string name="show_suspicious_content">Şüpheli içeriği göster</string>
     <string name="services">Hizmetler</string>
     <string name="scrobbling_empty_hint">Okuma ilerlemesini izlemek için manga ayrıntıları ekranında Menü → İzle\'yi seçin.</string>
@@ -555,7 +550,6 @@
     <string name="next_page">Sonraki sayfa</string>
     <string name="config_reset_confirm">Ayarlar varsayılan değerlere sıfırlansın mı? Bu eylem geri alınamaz.</string>
     <string name="use_two_pages_landscape">Yatay yönde iki sayfa düzeni kullan (beta)</string>
-    <string name="email_password_enter_hint">Devam etmek için e-posta adresinizi ve parolanızı girin</string>
     <string name="default_webtoon_zoom_out">Varsayılan webtoon uzaklaştırması</string>
     <string name="fullscreen_mode">Tam ekran modu</string>
     <string name="reader_fullscreen_summary">Sistem durumunu ve gezinme çubuklarını gizle</string>
@@ -764,8 +758,6 @@
     <string name="open_telegram_bot">Telegram botunu aç</string>
     <string name="clear_database">Veri tabanını temizle</string>
     <string name="clear_database_summary">Kullanılmayan mangalar ile ilgili bilgileri silin</string>
-    <string name="backup_tg_check">API durumunu kontrol et</string>
-    <string name="backup_tg_id_not_set">Sohbet ID\'si ayarlanmadı</string>
     <string name="send_backups_telegram">Yedekleri Telegram\'a gönder</string>
     <string name="test_connection">Bağlantıyı test et</string>
     <string name="telegram_chat_id_summary">Yedeklerin gönderileceği sohbetin ID\'sini girin</string>

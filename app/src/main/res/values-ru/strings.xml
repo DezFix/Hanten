@@ -245,7 +245,6 @@
     <string name="detect_reader_mode_summary">Автоматически определять, является ли манга манхвой</string>
     <string name="disable_battery_optimization">Отключить оптимизацию батареи</string>
     <string name="disable_battery_optimization_summary">Помогает с фоновой проверкой обновлений</string>
-    <string name="crash_text">Что-то пошло не так. Пожалуйста, отправьте отчёт разработчикам, чтобы помочь всё исправить.</string>
     <string name="send">Отправить</string>
     <string name="disable_all">Отключить все</string>
     <string name="use_fingerprint">Использовать биометрические данные, если они доступны</string>
@@ -291,7 +290,6 @@
     <string name="incognito_mode">Режим инкогнито</string>
     <string name="sync">Синхронизация</string>
     <string name="sync_title">Синхронизируйте ваши данные</string>
-    <string name="email_enter_hint">Введите электронную почту, чтобы продолжить</string>
     <string name="account_already_exists">Аккаунт уже существует</string>
     <string name="no_bookmarks_summary">Вы можете создавать закладки во время чтения манги</string>
     <string name="exit_confirmation">Подтверждение выхода</string>
@@ -335,9 +333,6 @@
     <string name="prefetch_content">Предварительная загрузка содержимого</string>
     <string name="mark_as_current">Пометить как текущую</string>
     <string name="language">Язык</string>
-    <string name="share_logs">Поделиться логами</string>
-    <string name="enable_logging">Включить логирование</string>
-    <string name="enable_logging_summary">Записывать некоторые действия для отладки. Включайте только если знаете, что делаете</string>
     <string name="show_suspicious_content">Отображать сомнительный контент</string>
     <string name="theme_name_dynamic">Динамическая</string>
     <string name="color_theme">Цветовая схема</string>
@@ -553,7 +548,6 @@
     <string name="switch_pages_volume_buttons_summary">Использовать кнопки громкости для переключения страниц</string>
     <string name="reader_actions">Действия в режиме чтения</string>
     <string name="reader_actions_summary">Настройка действий для сенсорных областей экрана</string>
-    <string name="email_password_enter_hint">Введите свой адрес электронной почты и пароль, чтобы продолжить</string>
     <string name="config_reset_confirm">Сбросить настройки до значений по умолчанию? Это действие нельзя отменить.</string>
     <string name="use_two_pages_landscape">Использовать двухстраничный макет в альбомной ориентации (бета)</string>
     <string name="default_webtoon_zoom_out">Отдаление в режиме манхвы</string>
@@ -752,9 +746,7 @@
     <string name="error_connection_reset">Сброс соединения удалённым хостом</string>
     <string name="show_slider">Показать слайдер</string>
     <string name="incognito">Инкогнито</string>
-    <string name="backup_tg_check">Проверьте, работает ли API</string>
     <string name="backup_tg_echo">Тестовое сообщение</string>
-    <string name="backup_tg_id_not_set">ID чата не установлен</string>
     <string name="telegram_chat_id">ID чата Telegram</string>
     <string name="open_telegram_bot">Откройте Telegram-бота</string>
     <string name="captcha_required_message">Этот источник требует решения капчи, чтобы продолжить</string>
@@ -1055,8 +1047,6 @@
     <string name="check_updates_summary">Проверить новую версию на GitHub</string>
     <string name="update_uptodate">У вас последняя версия</string>
     <string name="donate_title">Поддержать разработку</string>
-    <string name="source_error_reports">Отчёты об ошибках источников</string>
-    <string name="source_error_reports_summary">Отправлять разработчику детали сбоев источников (источник, ошибка, версия), чтобы помочь чинить сломанные источники</string>
     <string name="error_reports">Анонимные отчёты об ошибках</string>
     <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>
     <string name="scrobbler_import">Импорт библиотеки</string>

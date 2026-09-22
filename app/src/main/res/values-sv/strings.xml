@@ -267,9 +267,7 @@
     <string name="download_slowdown_summary">Hjälper för att undvika att din IP-adress blir blockerad</string>
     <string name="select_range">Välj intervall</string>
     <string name="not_found_404">Innehållet kunde inte hittas eller har tagits bort</string>
-    <string name="crash_text">Något gick fel. Skicka en felrapport till utvecklarna för att hjälpa oss att åtgärda problemet.</string>
     <string name="send">Skicka</string>
-    <string name="email_enter_hint">Skriv in din email för att fortsätta</string>
     <string name="clear_all_history">Rensa all historik</string>
     <string name="no_bookmarks_yet">Inga bokmärken ännu</string>
     <string name="bookmarks_removed">Bokmärken borttagna</string>
@@ -281,8 +279,6 @@
     <string name="discard">Kasta</string>
     <string name="error_no_space_left">Inget mer lagringsutrymme finns kvar på enheten</string>
     <string name="network_unavailable_hint">Slå på Wi-Fi eller mobildata för att läsa manga online</string>
-    <string name="share_logs">Dela loggar</string>
-    <string name="enable_logging">Aktivera loggning</string>
     <string name="pages_saved">Sidor sparade</string>
     <string name="text_empty_holder_secondary_filtered">Inga manga matchade dina valda filter</string>
     <string name="canceled">Avbruten</string>
@@ -299,7 +295,6 @@
     <string name="source_disabled">Källa inaktiverad</string>
     <string name="mark_as_current">Markera som aktuell</string>
     <string name="language">Språk</string>
-    <string name="enable_logging_summary">Spela in några handlingar i felsökningssyfte. Slå inte på om du är osäker på vad du gör</string>
     <string name="chapters_grid_view">Rutnätsvy</string>
     <string name="sync_title">Synkronisera din data</string>
     <string name="no_manga_sources">Inga mangakällor</string>
@@ -426,7 +421,6 @@
     <string name="manage_sources">Hantera källor</string>
     <string name="download_started">Nedladdning påbörjades</string>
     <string name="manga_list">Mangalista</string>
-    <string name="email_password_enter_hint">Skriv in din email och lösenord för att fortsätta</string>
     <string name="images_procy_description">Använd tjänsten wsrv.nl för att minska på nätverkstrafiken och påskynda bildnedladdning om möjligt</string>
     <string name="show_pages_numbers_summary">Visa sidnummer i skärmens nedre hörn</string>
     <string name="download_option_all_chapters">Alla kapitel med översättning %s</string>
@@ -539,9 +533,7 @@
     <string name="error_connection_reset">Anslutning återställd av fjärrvärden</string>
     <string name="restoring_backup">Återställer säkerhetskopia</string>
     <string name="incognito">Inkognito</string>
-    <string name="backup_tg_check">Kontrollera om API:n fungerar</string>
     <string name="backup_tg_echo">Testmeddelande</string>
-    <string name="backup_tg_id_not_set">Chatt-ID är inte inställt</string>
     <string name="telegram_chat_id">Telegram chatt-ID</string>
     <string name="open_telegram_bot">Öppna Telegram-botten</string>
     <string name="hours_short">%d t</string>

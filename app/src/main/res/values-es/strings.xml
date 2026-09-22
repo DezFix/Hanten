@@ -246,7 +246,6 @@
     <string name="disable_all">Desactivar todo</string>
     <string name="disable_battery_optimization">Desactivar la optimización de la batería</string>
     <string name="send">Enviar</string>
-    <string name="crash_text">Algo ha ido mal. Por favor, envía un informe de errores a los desarrolladores para ayudarnos a solucionarlo.</string>
     <string name="use_fingerprint">Usar la biométria si está disponible</string>
     <string name="appwidget_shelf_description">Mangas de tus favoritos</string>
     <string name="appwidget_recent_description">Sus mangas recientemente leídos</string>
@@ -269,7 +268,6 @@
     <string name="invalid_domain_message">Dominio no válido</string>
     <string name="account_already_exists">La cuenta ya existe</string>
     <string name="sync">Sincronización</string>
-    <string name="email_enter_hint">Introduce tu correo electrónico para continuar</string>
     <string name="last_2_hours">Últimas 2 horas</string>
     <string name="no_bookmarks_yet">Todavía no hay marcadores</string>
     <string name="no_bookmarks_summary">Puedes crear marcadores mientras lees el manga</string>
@@ -335,9 +333,6 @@
     <string name="prefetch_content">Precargar el contenido</string>
     <string name="mark_as_current">Marcar como actual</string>
     <string name="language">Idioma</string>
-    <string name="share_logs">Compartir los registros</string>
-    <string name="enable_logging_summary">Grabar algunas interaciones para de depurar los fallos. No lo actives si no estás seguro de lo que estás haciendo</string>
-    <string name="enable_logging">Activar el registro</string>
     <string name="show_suspicious_content">Mostrar contenido sospechoso</string>
     <string name="theme_name_dynamic">Dinámico</string>
     <string name="color_theme">Esquema de colores</string>
@@ -552,7 +547,6 @@
     <string name="long_tap_action">Acción de click largo</string>
     <string name="prev_chapter">Capítulo anterior</string>
     <string name="switch_pages_volume_buttons_summary">Utilizar botones de volumen para cambiar de página</string>
-    <string name="email_password_enter_hint">Introduzca su correo electrónico y contraseña para continuar</string>
     <string name="use_two_pages_landscape">Utilizar un diseño de dos páginas en orientación horizontal (beta)</string>
     <string name="none">Ninguno</string>
     <string name="config_reset_confirm">¿Restablecer los valores por defecto? Esta acción no se puede deshacer.</string>
@@ -755,8 +749,6 @@
     <string name="incognito">Incógnito</string>
     <string name="telegram_chat_id">Identificación del chat de Telegram</string>
     <string name="backup_tg_echo">¡La copia de seguridad de Hanten en Telegram está funcionando!</string>
-    <string name="backup_tg_id_not_set">El ID del chat no está configurado</string>
-    <string name="backup_tg_check">Comprueba si la API funciona</string>
     <string name="error_connection_reset">Conexión restablecida por el host remoto</string>
     <string name="show_slider">Mostrar control deslizante</string>
     <string name="open_telegram_bot">Abre el bot de Telegram</string>

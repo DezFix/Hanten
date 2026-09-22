@@ -245,7 +245,6 @@
     <string name="detect_reader_mode_summary">マンガがウェブトゥーンかどうかを自動判定</string>
     <string name="disable_battery_optimization">バッテリー最適化の無効化</string>
     <string name="disable_battery_optimization_summary">バックグラウンドの更新チェックを支援</string>
-    <string name="crash_text">何か問題が発生しました。開発者にバグレポートを提出し、解決にご協力ください。</string>
     <string name="send">送信</string>
     <string name="disable_all">すべて無効にする</string>
     <string name="appwidget_recent_description">最近読んだ漫画</string>
@@ -279,7 +278,6 @@
     <string name="no_chapters">チャプターなし</string>
     <string name="automatic_scroll">自動スクロール</string>
     <string name="importing_manga">マンガのインポート</string>
-    <string name="email_enter_hint">続行するにはメールアドレスを入力してください</string>
     <string name="import_completed">インポートが完了しました</string>
     <string name="canceled">キャンセル</string>
     <string name="sync_title">データの同期</string>
@@ -336,18 +334,15 @@
     <string name="nothing_here">ここには何もありません</string>
     <string name="scrobbling_empty_hint">読書の進捗状況を確認するには、マンガの詳細画面で「メニュー」→「追跡」を選択します。</string>
     <string name="services">サービス</string>
-    <string name="enable_logging_summary">デバッグ目的でいくつかのアクションを記録します。 何をしているのか分からない場合はオンにしないでください</string>
     <string name="theme_name_miku">ミク</string>
     <string name="user_agent">ユーザー エージェント ヘッダー</string>
     <string name="prefetch_content">コンテンツのプリロード</string>
-    <string name="share_logs">ログを共有</string>
     <string name="allow_unstable_updates">不安定な更新を許可</string>
     <string name="allow_unstable_updates_summary">不安定なビルドに関する通知を受け取る</string>
     <string name="download_started">ダウンロードが開始されました</string>
     <string name="language">言語</string>
     <string name="source_disabled">ソースが無効になっています</string>
     <string name="mark_as_current">現在としてマーク</string>
-    <string name="enable_logging">ログ記録を有効にする</string>
     <string name="show_suspicious_content">疑わしいコンテンツを表示する</string>
     <string name="theme_name_dynamic">ダイナミック</string>
     <string name="color_theme">配色</string>
@@ -475,7 +470,6 @@
     <string name="automatic">自動</string>
     <string name="invalid_server_address_message">無効なサーバーアドレス</string>
     <string name="text_empty_holder_secondary_filtered">選択した条件に一致するマンガはありません</string>
-    <string name="email_password_enter_hint">メールアドレスとパスワードを入力して、続行してください</string>
     <string name="pull_top_no_prev">前のチャプターがありません</string>
     <string name="pull_bottom_no_next">次のチャプターがありません</string>
     <string name="too_many_requests_message_retry">リクエストが多すぎます。%s 秒後に再度お試しください。</string>
@@ -988,11 +982,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

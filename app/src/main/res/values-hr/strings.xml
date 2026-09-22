@@ -187,7 +187,6 @@
     <string name="back">Nazad</string>
     <string name="sync">Sinkronizacija</string>
     <string name="sync_title">Sinkronizirajte vaše podatke</string>
-    <string name="email_enter_hint">Unesite vašu e-poštu za nastavak</string>
     <string name="hide">Sakrij</string>
     <string name="new_sources_text">Dostupni su novi izvori mange</string>
     <string name="check_new_chapters_title">Provjeriti ima li novih poglavlja i obavijestiti o tome</string>
@@ -204,7 +203,6 @@
     <string name="removed_from_history">Uklonjeno iz povijesti</string>
     <string name="detect_reader_mode">Automatski otkrij modus čitanja</string>
     <string name="disable_battery_optimization_summary">Pomaže pri provjerama ažuriranja u pozadini</string>
-    <string name="crash_text">Nešto je pošlo po zlu. Pošaljite izvješće o pogrešci razvojnim programerima kako biste nam pomogli da je popravimo.</string>
     <string name="send">Pošalji</string>
     <string name="status_planned">Planirano</string>
     <string name="status_reading">Čitam</string>
@@ -262,9 +260,6 @@
     <string name="prefetch_content">Predučitavanje sadržaja</string>
     <string name="mark_as_current">Označi kao trenutno</string>
     <string name="language">Jezik</string>
-    <string name="share_logs">Dijeli dnevnike</string>
-    <string name="enable_logging">Omogući bilježenje</string>
-    <string name="enable_logging_summary">Snimite neke radnje u svrhu otklanjanja pogrešaka. Nemojte ga uključivati ako niste sigurni što radite</string>
     <string name="show_suspicious_content">Prikaži sumnjiv sadržaj</string>
     <string name="theme_name_dynamic">Dinamična</string>
     <string name="color_theme">Shema boja</string>
@@ -309,7 +304,6 @@
     <string name="port">Port</string>
     <string name="proxy">Proxy</string>
     <string name="invalid_value_message">Nevažeća vrijednost</string>
-    <string name="email_password_enter_hint">Unesite vašu e-poštu i lozinku za nastavak</string>
     <string name="invert_colors">Invertiraj boje</string>
     <string name="username">Korisničko ime</string>
     <string name="password">Lozinka</string>
@@ -747,8 +741,6 @@
     <string name="show_slider">Prikaži klizač</string>
     <string name="incognito">Inkognito</string>
     <string name="backup_tg_echo">Probna poruka</string>
-    <string name="backup_tg_id_not_set">Chat ID nije postavljen</string>
-    <string name="backup_tg_check">Provjeri je li API radi</string>
     <string name="open_telegram_bot">Otvori Telegram bot</string>
     <string name="captcha_required_message">Ovaj izvor zahtijeva rješavanje captcha zadatka za nastavljanje</string>
     <string name="email">E-mail</string>

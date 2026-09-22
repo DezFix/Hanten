@@ -248,11 +248,9 @@
     <string name="local_manga_processing">Processando mangá salvo</string>
     <string name="chapters_will_removed_background">Os capítulos serão removidos em segundo plano</string>
     <string name="canceled">Cancelado</string>
-    <string name="email_enter_hint">Digite seu e-mail para continuar</string>
     <string name="new_sources_text">Novas fontes de mangá estão disponíveis</string>
     <string name="show_notification_new_chapters_on">Você receberá notificações sobre atualizações do mangá que está lendo</string>
     <string name="notifications_enable">Ativar notificações</string>
-    <string name="crash_text">Algo deu errado. Por favor, envie um relatório de bug para os desenvolvedores para nos ajudar a corrigi-lo.</string>
     <string name="status_planned">Planejado</string>
     <string name="status_reading">Leitura</string>
     <string name="status_re_reading">Relendo</string>
@@ -337,11 +335,8 @@
     <string name="theme_name_mamimi">Mamimi</string>
     <string name="nothing_here">Não há nada aqui</string>
     <string name="services">Serviços</string>
-    <string name="enable_logging_summary">Gravar algumas ações para propósitos de depuração. Não ative se você não sabe o que está fazendo</string>
     <string name="allow_unstable_updates">Permitir atualizações instáveis</string>
     <string name="download_started">Descarga iniciada</string>
-    <string name="share_logs">Compartilhar registos</string>
-    <string name="enable_logging">Ativar registos</string>
     <string name="theme_name_miku">Miku</string>
     <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
@@ -533,7 +528,6 @@
     <string name="volume_unknown">Volume desconhecido</string>
     <string name="incognito_mode_hint">Seu progresso de leitura não será salvo</string>
     <string name="vertical">Vertical</string>
-    <string name="email_password_enter_hint">Coloque seu email e senha para continuar</string>
     <string name="mark_as_completed_prompt">Marcar o mangá selecionado como lido completamente?
 \n
 \nAviso: o progresso da leitura atual será perdido.</string>
@@ -737,9 +731,7 @@
     <string name="incognito">Incógnita</string>
     <string name="content_type_one_shot">Um tiro</string>
     <string name="demographic_kodomo">Criança</string>
-    <string name="backup_tg_check">Verifique se a API funciona</string>
     <string name="backup_tg_echo">Mensagem de teste</string>
-    <string name="backup_tg_id_not_set">O ID do bate-papo não está definido</string>
     <string name="telegram_chat_id">ID do bate-papo do Telegram</string>
     <string name="open_telegram_bot">Abra o bot do Telegram</string>
     <string name="pages_saved">Páginas salvas</string>

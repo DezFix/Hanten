@@ -25,7 +25,6 @@
     <string name="chapters_will_removed_background">章節將在背景被刪除</string>
     <string name="check_new_chapters_title">檢查新的章節並通知關於它資訊</string>
     <string name="download_slowdown_summary">有助于避免阻断您的IP地址</string>
-    <string name="email_enter_hint">輸入您的 email 以繼續</string>
     <string name="new_sources_text">有新的漫畫來源可用</string>
     <string name="detect_reader_mode_summary">自動檢測是否為 webtoon 漫畫</string>
     <string name="show_reading_indicators_summary">在歷史紀錄與最愛中顯示閱讀百分比</string>
@@ -56,7 +55,6 @@
     <string name="suggestions_info">所有的資料都在此裝置上進本機分析，並不會傳送至任何其他地方。</string>
     <string name="exclude_nsfw_from_history_summary">標記為 NSFW 的漫畫將永遠不會被加入到歷史資料中，您的進度也不會被儲存</string>
     <string name="backup_information">您可以建立您的歷史紀錄與最愛的備份，並還原它</string>
-    <string name="crash_text">發生了一些問題。請向開發人員提交一個錯誤告告，以幫助我們修復它。</string>
     <string name="text_file_not_supported">選擇 ZIP 或 CBZ 檔案。</string>
     <string name="no_bookmarks_summary">您可以在閱讀漫畫時建立書籤</string>
     <string name="show_notification_new_chapters_on">您將會收到您正在閱讀的漫畫的更新通知</string>
@@ -191,7 +189,6 @@
     <string name="source_disabled">來源已禁用</string>
     <string name="prefetch_content">內容預先載入</string>
     <string name="mark_as_current">標記目前</string>
-    <string name="enable_logging">啟動登入</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="got_it">知道了</string>
     <string name="settings_apply_restart_required">請重新啟動此應用程式以應用這些變更</string>
@@ -217,7 +214,6 @@
     <string name="username">使用者名稱</string>
     <string name="password">密碼</string>
     <string name="invalid_port_number">無效的連接埠編號</string>
-    <string name="share_logs">分享日誌</string>
     <string name="clear_source_cookies_summary">僅清除指定網域的 cookie，大多數情況下會使授權會失效</string>
     <string name="share">分享</string>
     <string name="create_shortcut">建立捷徑…</string>
@@ -394,7 +390,6 @@
     <string name="account_already_exists">帳號已存在</string>
     <string name="dns_over_https">DNS over HTTPS</string>
     <string name="reader_slider">顯示頁面切換滑塊</string>
-    <string name="enable_logging_summary">紀錄一些動作用於除錯。假如您不確定您在做什麼時，不要將它開啟</string>
     <string name="show_suspicious_content">顯示可疑內容</string>
     <string name="show_in_grid_view">在網格檢視中顯示</string>
     <string name="nothing_here">這裡沒有任何東西</string>
@@ -541,7 +536,6 @@
     <string name="enhanced_colors_summary">減少色帶，但可能會影響效能</string>
     <string name="remaining_time_pattern">%1$s %2$s</string>
     <string name="remove_from_history">從歷史記錄中移除</string>
-    <string name="email_password_enter_hint">請輸入您的電子郵件和密碼以繼續</string>
     <string name="config_reset_confirm">重置設定為預設值？此動作無法撤銷。</string>
     <string name="use_two_pages_landscape">在橫向模式下使用雙頁佈局（測試版）</string>
     <string name="default_webtoon_zoom_out">預設網頁漫畫縮小</string>
@@ -968,11 +962,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

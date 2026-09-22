@@ -201,7 +201,6 @@
     <string name="status_re_reading">Қайталап оқып жатырмын</string>
     <string name="detect_reader_mode">Оқу режімін өздігінен анықтау</string>
     <string name="tracking">Бақылау</string>
-    <string name="email_enter_hint">Жалғастыру үшін email поштаңызды жазыңыз</string>
     <string name="disable_all">Бәрін өшіру</string>
     <string name="clear_feed">Лекті тазалау</string>
     <string name="chapters_empty">Бұл маңгада тарау жоқ</string>
@@ -217,7 +216,6 @@
     <string name="removal_completed">Жойылды</string>
     <string name="edit">Өңдеу</string>
     <string name="removed_from_history">Тарихтан жойылды</string>
-    <string name="crash_text">Ақау пайда болды. Жөндеу үшін әзірлеушіге шағым жіберіңізші.</string>
     <string name="detect_reader_mode_summary">Маңга уебтүн бе екенін өздігінен анықтап береді</string>
     <string name="appwidget_recent_description">Соңғы оқыған маңгаңыз</string>
     <string name="appearance">Кейіп</string>
@@ -298,7 +296,6 @@
     <string name="reset">Арылту</string>
     <string name="tracker_wifi_only_summary">Шектеулі желі қосылымы болса жаңа тарау қолжетімдігін тексермеу</string>
     <string name="order_added">Қосылды</string>
-    <string name="enable_logging">Логтауды қосу</string>
     <string name="on_device">Құрылғыда</string>
     <string name="password">Құпиясөз</string>
     <string name="download_option_whole_manga">Маңганы толықтай</string>
@@ -307,7 +304,6 @@
     <string name="backup_frequency">Сақтық көшірмесінің жиілігі</string>
     <string name="data_and_privacy">Дерек пен құпиялық</string>
     <string name="clear_cookies_summary">Қате болса көмектесе алады. Түгел тіркелгінің күші жойылады</string>
-    <string name="enable_logging_summary">Кей әрекетті түзеуге сақтау қою. Не екенін білмесеңіз қоспаңыз</string>
     <string name="clear_source_cookies_summary">Осы дәмейіннің кукиін тазалау. Көп жағдайда тіркелгіден шығылып кетеді</string>
     <string name="history_shortcuts">Соңғы маңганың таңбашасын көрсету</string>
     <string name="downloads_wifi_only_summary">Ұялы желіге көшкенде жүктеп алуды тоқтату</string>
@@ -474,7 +470,6 @@
     <string name="no_bookmarks_yet">Бетбелгі жоқ</string>
     <string name="no_thanks">Жоқ, рақмет</string>
     <string name="suggest_new_sources_summary">Қолданбаның жаңа нұсқасында пайда болған дереккөзді ұсыну</string>
-    <string name="share_logs">Логты бөлісу</string>
     <string name="speed">Жылдамдық</string>
     <string name="download_option_all_chapters">%s аударған түгел тарау</string>
     <string name="suggestion_manga">Ұсыныс: %s</string>
@@ -499,7 +494,6 @@
     <string name="available_d">Қолжетімді: %1$d</string>
     <string name="content_type_other">Басқа</string>
     <string name="skip">Өткізіп жіберу</string>
-    <string name="email_password_enter_hint">Жалғастыру үшін email поштаңыз бен құпиясөзіңізді жазыңыз</string>
     <string name="state_paused">Кідіртілген</string>
     <string name="reader_optimize">Жадты жұмсауды үнемдеу (beta)</string>
     <string name="reader_optimize_summary">Жадта көп орын алмау үшін көрінбей тұрған беттердің сапасын азайту</string>
@@ -1084,11 +1078,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

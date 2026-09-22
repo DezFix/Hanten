@@ -179,7 +179,6 @@
     <string name="tracking">تتبع</string>
     <string name="text_history_holder_secondary">ابحث عن ما تقرأه في قسم «استكشاف»</string>
     <string name="all_favourites">كل المُفضلة</string>
-    <string name="email_enter_hint">أدخل بريدك الإلكتروني للمتابعة</string>
     <string name="disable_all">تعطيل الجميع</string>
     <string name="chapters_empty">لا توجد فصول في هذه المانجا</string>
     <string name="preload_pages">إعادة تحميل الصفحات</string>
@@ -197,7 +196,6 @@
     <string name="edit">تعديل</string>
     <string name="captcha_required">مطلوب التحقق من الCAPTCHA</string>
     <string name="removed_from_history">تم الحذف من السجل</string>
-    <string name="crash_text">حدث خطأ ما. يرجى إرسال تقرير بالخطأ إلى المطورين لمساعدتنا في إصلاحه.</string>
     <string name="detect_reader_mode_summary">اكتشف تلقائيًا ما إذا كانت المانجا عبارة عن webtoon</string>
     <string name="appwidget_recent_description">المانجا التي قرأتها مؤخرًا</string>
     <string name="appearance">مظهر</string>
@@ -354,7 +352,6 @@
     <string name="network_unavailable">الشبكة غير متاحة</string>
     <string name="more">المزيد</string>
     <string name="prefetch_content">اعادة تحميل المحتوى</string>
-    <string name="enable_logging">تفعيل التسجيل</string>
     <string name="theme_name_asuka">أسوكا</string>
     <string name="remove_completed_downloads_confirm">سيتم حذف سجل التنزيلات الخاص بك بشكل نهائي. لن تتأثر أي ملفات تم تنزيلها</string>
     <string name="theme_name_dynamic">الديناميكية</string>
@@ -371,7 +368,6 @@
     <string name="pause">إيقاف مؤقت</string>
     <string name="show_on_shelf">العرض في الرف</string>
     <string name="remove_completed">تمت الإزالة</string>
-    <string name="enable_logging_summary">سجل بعض الأفعال لغايات التصحيح. لا تقم بتشغيله إذا لم تكن متأكدًا مما تفعله</string>
     <string name="language">اللغة</string>
     <string name="show_suspicious_content">إظهار المحتوى مشكوك فيه</string>
     <string name="color_theme">مخطط الألوان</string>
@@ -387,7 +383,6 @@
     <string name="suggestions_enable_prompt">‌‌‍‎‎‍هل ترغب في تلقي اقتراحات المانجا الشخصية؟</string>
     <string name="images_proxy_title">وكيل تحسين الصور</string>
     <string name="webtoon_zoom_summary">السماح بإيماءة التكبير في وضع الويب تون</string>
-    <string name="share_logs">مشاركة السجلات</string>
     <string name="downloaded">تم التنزيل</string>
     <string name="username">اسم المستخدم</string>
     <string name="password">كلمة المرور</string>
@@ -396,7 +391,6 @@
     <string name="show_pages_numbers_summary">إظهار أرقام الصفحات في الزاوية السفلية</string>
     <string name="in_progress">قيد التنفيذ</string>
     <string name="too_many_requests_message">طلبات كثيرة جدا. حاول مرة أخرى في وقت لاحق</string>
-    <string name="email_password_enter_hint">أدخل بريدك الإلكتروني وكلمة المرور للمتابعة</string>
     <string name="network">اتصال</string>
     <string name="data_and_privacy">البيانات والخصوصية</string>
     <string name="download_option_first_n_chapters">أولاً%s</string>
@@ -670,9 +664,7 @@
     <string name="error_connection_reset">تم إعادة ضبط الاتصال</string>
     <string name="show_slider">إظهار شريط التمرير</string>
     <string name="incognito">متخفي</string>
-    <string name="backup_tg_check">التحقق من حساب Telegram</string>
     <string name="backup_tg_echo">اختبار اتصال Telegram</string>
-    <string name="backup_tg_id_not_set">لم يتم تعيين معرف دردشة Telegram</string>
     <string name="telegram_chat_id">معرف دردشة Telegram</string>
     <string name="open_telegram_bot">فتح روبوت Telegram</string>
     <string name="seconds_short">%d s</string>

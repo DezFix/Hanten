@@ -257,10 +257,8 @@
     <string name="back">Voltar</string>
     <string name="sync">Sincronização</string>
     <string name="sync_title">Sincronize seus dados</string>
-    <string name="email_enter_hint">Digite seu e-mail para continuar</string>
     <string name="tracking">Monitoramento</string>
     <string name="logout">Sair</string>
-    <string name="crash_text">Vixe, algo deu errado. Por favor, envie um relatório de erro para os desenvolvedores para nos ajudar a corrigir o problema.</string>
     <string name="send">Enviar</string>
     <string name="status_planned">Planejado</string>
     <string name="status_reading">Lendo</string>
@@ -327,8 +325,6 @@
     <string name="nothing_here">Não há nada aqui</string>
     <string name="server_error">Erro do servidor (%1$d). Por favor, tente novamente mais tarde</string>
     <string name="compact">Compacta</string>
-    <string name="enable_logging">Habilitar registros</string>
-    <string name="share_logs">Compartilhar registros</string>
     <string name="error_no_space_left">Sem espaço disponível no dispositivo</string>
     <string name="network_unavailable">Rede não disponível</string>
     <string name="network_unavailable_hint">Ative o Wi-Fi ou a rede móvel para ler mangás online</string>
@@ -347,7 +343,6 @@
     <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="source_disabled">Fonte desativada</string>
-    <string name="enable_logging_summary">Gravar algumas ações para fins de depuração. Não ative se você não souber o que está fazendo</string>
     <string name="theme_name_mamimi">Mamimi</string>
     <string name="theme_name_miku">Miku</string>
     <string name="theme_name_kanade">Kanade</string>
@@ -536,7 +531,6 @@
     <string name="incognito_mode_hint">Seu progresso de leitura não será salvo</string>
     <string name="vertical">Vertical</string>
     <string name="remaining_time_pattern">%1$s %2$s</string>
-    <string name="email_password_enter_hint">Digite seu e-mail e senha para continuar</string>
     <string name="show_menu">Mostrar menu</string>
     <string name="toggle_ui">Mostrar/ocultar UI</string>
     <string name="prev_chapter">Capítulo anterior</string>
@@ -751,8 +745,6 @@
     <string name="download_cellular_confirm">Permitir baixar pelos dados móveis?</string>
     <string name="error_connection_reset">Redefinição de conexão pelo host remoto</string>
     <string name="show_slider">Mostrar controle deslizante</string>
-    <string name="backup_tg_check">Verifique se a API funciona</string>
-    <string name="backup_tg_id_not_set">O ID do bate-papo não está definido</string>
     <string name="telegram_chat_id">ID do bate-papo do telegram</string>
     <string name="open_telegram_bot">Abra o bot do Telegram</string>
     <string name="clear_database">Limpar banco de dados</string>

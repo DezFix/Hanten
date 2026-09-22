@@ -171,7 +171,6 @@
     <string name="account_already_exists">Účet již existuje</string>
     <string name="back">Zpět</string>
     <string name="sync_title">Synchronizujte svá data</string>
-    <string name="email_enter_hint">Pro pokračování zadejte svůj email</string>
     <string name="hide">Schovat</string>
     <string name="new_sources_text">Jsou dostupné nové zdroje mang</string>
     <string name="check_new_chapters_title">Kontrolovat nové kapiroly a upozornit na ně</string>
@@ -270,9 +269,6 @@
     <string name="prefetch_content">Přednačítání kontentu</string>
     <string name="mark_as_current">Označit jako aktuální</string>
     <string name="language">Jazyk</string>
-    <string name="share_logs">Sdílet záznamy</string>
-    <string name="enable_logging">Zapnout zaznamenávání</string>
-    <string name="enable_logging_summary">Zaznamenejte některé akce pro účely ladění. Nezapínejte jej, pokud si nejste jisti, co děláte</string>
     <string name="show_suspicious_content">Zobrazovat podezřelý kontent</string>
     <string name="theme_name_dynamic">Dynamické</string>
     <string name="color_theme">Schéma barev</string>
@@ -405,7 +401,6 @@
     <string name="sync">Synchronizace</string>
     <string name="show_notification_new_chapters_off">Nedostanete oznámení ale nové kapitoly budou v seznamu zvýrazněné</string>
     <string name="bookmark_removed">Záložka odstraněna</string>
-    <string name="crash_text">Něco se pokazilo. Prosím odešlete hlášení o chybě vývojářům aby jste nám ji pomohli opravit.</string>
     <string name="state_finished">Hotovo</string>
     <string name="select_range">Vybrat rozsah</string>
     <string name="last_2_hours">Poslední 2 hodiny</string>
@@ -434,7 +429,6 @@
     <string name="online_variant">Online varianta</string>
     <string name="content_type_hentai">Hentai</string>
     <string name="disable_nsfw">Vypnout NSFW</string>
-    <string name="email_password_enter_hint">Pro pokračování zadejte svůj e-mail a heslo</string>
     <string name="this_month">Tento měsíc</string>
     <string name="voice_search">Hlasové vyhledávání</string>
     <string name="related_manga">Související manga</string>
@@ -713,8 +707,6 @@
     <string name="restoring_backup">Obnovování zálohy</string>
     <string name="show_slider">Zobrazit posuvník</string>
     <string name="content_type_one_shot">One shot</string>
-    <string name="backup_tg_check">Zkontrolovat, jestli API funguje</string>
-    <string name="backup_tg_id_not_set">Chat ID není nastaveno</string>
     <string name="open_telegram_bot">Otevřít Telegram bota</string>
     <string name="not_in_favorites">Není v oblíbených</string>
     <string name="unpopular">Nepopulární</string>

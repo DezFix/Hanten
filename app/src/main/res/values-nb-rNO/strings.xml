@@ -232,7 +232,6 @@
     <string name="hide">Skjul</string>
     <string name="new_sources_text">Nye manga-kilder tilgjengelig</string>
     <string name="download_slowdown">Tregere nedlasting</string>
-    <string name="email_enter_hint">Skriv inn e-postadressen din for å fortsette</string>
     <string name="back">Tilbake</string>
     <string name="sync">Synkronisering</string>
     <string name="sync_title">Synkroniser dataen din</string>
@@ -282,11 +281,9 @@
     <string name="data_deletion">Datasletting</string>
     <string name="exit_confirmation">Avsluttingsbekreftelse</string>
     <string name="invalid_domain_message">Ugyldig daomene</string>
-    <string name="share_logs">Del loggføring</string>
     <string name="color_theme">Fargedrakt</string>
     <string name="theme_name_dynamic">Dynamisk</string>
     <string name="language">Språk</string>
-    <string name="enable_logging">Skru på loggføring</string>
     <string name="storage_usage">Lagringsbruk</string>
     <string name="sync_auth_hint">Du kan logge med en eksisterende konto, eller opprette en ny</string>
 <string name="app_name" translatable="false">Hanten</string>
@@ -339,7 +336,6 @@
     
 <string name="disable_battery_optimization_summary">Helps with background updates checks</string>
     
-<string name="crash_text">Something went wrong. Please submit a bug report to the developers to help us fix it.</string>
     
 <string name="status_planned">Planned</string>
     
@@ -433,7 +429,6 @@
     
 <string name="mark_as_current">Mark as current</string>
     
-<string name="enable_logging_summary">Record some actions for debug purposes. Don\'t turn it on if you\'re not sure what you\'re doing</string>
     
 <string name="show_suspicious_content">Show suspicious content</string>
     
@@ -565,7 +560,6 @@
 <string name="invalid_value_message">Invalid value</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="downloaded">Downloaded</string>
     
@@ -1337,11 +1331,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

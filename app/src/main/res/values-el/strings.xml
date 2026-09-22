@@ -190,7 +190,6 @@
     <string name="removal_completed">Η εκκαθάριση ολοκληρώθηκε</string>
     <string name="sync">Συγχρονισμός</string>
     <string name="sync_title">Συγχρόνισε τα δεδομένα σου</string>
-    <string name="email_enter_hint">Εισήγαγε το email σου για να προχωρήσεις</string>
     <string name="new_sources_text">Νέες πηγές manga είναι διαθέσιμες</string>
     <string name="notifications_enable">Ενεργοποίηση ειδοποιήσεων</string>
     <string name="download">Λήψη</string>
@@ -383,7 +382,6 @@
     <string name="too_many_requests_message">Υπερβολικά πολλά αιτήματα. Ξαναδοκιμάστε αργότερα</string>
     <string name="manage">Διαχείριση</string>
     <string name="no_bookmarks_yet">Δεν έχεις κάποιον σελιδοδείκτη ακόμα</string>
-    <string name="share_logs">Κοινοποίηση logs</string>
     <string name="no_access_to_file">Δεν έχεις πρόσβαση σε αυτό το αρχείο ή directory</string>
     <string name="local_manga_directories">Directory για τοπικά manga</string>
     <string name="captcha_required_summary">%s απαιτεί την επίλυση ενός CAPTCHA για να λειτουργήσει κανονικά</string>
@@ -455,9 +453,7 @@
     <string name="clear_network_cache">Καθάρισε προσωρινή μνήμη δικτύου</string>
     <string name="images_procy_description">Χρησιμοποίησε την υπηρεσία wsrv.nl για να μειώσεις την κίνηση δικτύου και να αυξήσεις την ταχύτητα φόρτωσης εικόνων αν είναι δυνατό</string>
     <string name="reader_info_bar_summary">Εμφάνιση ώρας και προόδου στο πάνω μέρος της οθόνης</string>
-    <string name="enable_logging">Ενεργοποίηση καταγραφής logs</string>
     <string name="pick_custom_directory">Διάλεξε directory της επιλογής σου</string>
-    <string name="enable_logging_summary">Καταγραφή ορισμένων ενεργειών που προορίζονται για την εκσφαλμάτωση της εφαρμογής. Μην το ενεργοποιήσεις αν δεν είσαι βέβαιος για το τι κάνεις</string>
     <string name="show_in_grid_view">Εμφάνιση με μορφή πλέγματος</string>
     <string name="mirror_switching_summary">Αυτόματη αλλαγή τομέων για πήγες manga σε περίπτωση σφαλμάτων αν υπάρχει διαθεσιμότητα mirror</string>
     <string name="folder_with_images_import_description">Μπορείς να επιλέξεις ένα directory με φακέλους αρχειοθέτησης ή εικόνες. Κάθε φάκελος αρχειοθέτησης (ή subdirectory) θα αναγνωρίζεται ως κεφάλαιο.</string>
@@ -516,7 +512,6 @@
     <string name="default_mode">Προεπιλεγμένη λειτουργία</string>
     <string name="disable_battery_optimization">Απενεργοποίηση βελτιστοποίησης μπαταρίας</string>
     <string name="disable_battery_optimization_summary">Βοηθά στους ελέγχους ενημερώσεων στο παρασκήνιο</string>
-    <string name="crash_text">Κάτι πήγε στραβά. Παρακαλούμε υποβάλετε αναφορά σφάλματος στους προγραμματιστές για να μας βοηθήσετε να το διορθώσουμε.</string>
     <string name="send">Αποστολή</string>
     <string name="report">Αναφορά</string>
     <string name="show_reading_indicators">Εμφάνιση δεικτών προόδου ανάγνωσης</string>
@@ -591,7 +586,6 @@
 <string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="pull_to_prev_chapter">Release to open previous chapter</string>
     
@@ -1097,11 +1091,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

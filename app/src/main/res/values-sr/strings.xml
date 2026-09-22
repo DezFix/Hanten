@@ -152,7 +152,6 @@
     <string name="sync_host_description">Можеш да користиш послуживач за синхронизацију који се самостално хостује или подразумевани. Не мењај ово ако ниси сигуран шта радиш.</string>
     <string name="error_corrupted_file">Враћени су неважећи подаци или је датотека оштећена</string>
     <string name="all_favourites">Свe омиљено</string>
-    <string name="email_enter_hint">Унеси своју адресу е-поште за наставак</string>
     <string name="pick_custom_directory">Изабери прилагођени директоријум</string>
     <string name="no_chapters">Нема поглавља</string>
     <string name="list_options">Листа опција</string>
@@ -169,7 +168,6 @@
     <string name="error_multiple_states_not_supported">Овај извор манга не подржава филтрирање према више стања</string>
     <string name="order_added">Додатим</string>
     <string name="source_summary_pattern">%1$s, %2$s</string>
-    <string name="enable_logging">Омогући дијагностику</string>
     <string name="on_device">На уређају</string>
     <string name="download_option_whole_manga">Целу Мангу</string>
     <string name="settings_apply_restart_required">Поново покрени апликацију да би применио ове промене</string>
@@ -178,7 +176,6 @@
     <string name="source_disabled">Извор је онемогућен</string>
     <string name="backup_frequency">Учесталост прављења резервне копије</string>
     <string name="clear_cookies_summary">Може помоћи у случају неких проблема. Сва овлашћења ће бити поништена</string>
-    <string name="enable_logging_summary">Снима неке радње у сврху отклањања грешака. Немојте ово укључивати ако нисте сигурни шта радите</string>
     <string name="suggestions_enable">Омогући предлоге</string>
     <string name="clear_feed">Очисти новости</string>
     <string name="welcome">Добродошли</string>
@@ -258,7 +255,6 @@
     <string name="scrobbling_empty_hint">Да бисте пратили напредак читања, изаберите Изборник → Прати на екрану са детаљима манге.</string>
     <string name="removed_from_history">Уклоњено из историје</string>
     <string name="no_manga_sources_found">Вашим упитом није пронађен ниједан доступан извор манге</string>
-    <string name="crash_text">Нешто није у реду. Пошаљите извештај о грешци програмерима да бисте нам помогли да то поправимо.</string>
     <string name="color_light">Светла</string>
     <string name="detect_reader_mode_summary">Аутоматски откриј да ли је манга webtoon</string>
     <string name="web_view_unavailable">WebView није доступан: провери да ли је WebView добављач инсталиран</string>
@@ -485,7 +481,6 @@
     <string name="no_thanks">Не хвала</string>
     <string name="suggest_new_sources_summary">Затражи да омогућиш новододате изворе након ажурирања апликације</string>
     <string name="backup_information">Можеш да направиш резервну копију своје историје и омиљених и обновити је</string>
-    <string name="share_logs">Дели дневнике</string>
     <string name="zoom_mode_keep_start">Задржи на почетку</string>
     <string name="text_local_holder_secondary">Сачувај нешто из каталога или увези из датотеке.</string>
     <string name="speed">Брзина</string>
@@ -534,7 +529,6 @@
 \n
 \nУпозорење: тренутни напредак читања ће бити изгубљен.</string>
     <string name="incognito_mode_hint">Ваш напредак читања неће бити сачуван</string>
-    <string name="email_password_enter_hint">Унеси своју адресу е-поште и лозинку да бисте наставили</string>
     <string name="category_hidden_done">Ова категорија је сакривена са главног екрана и доступна јој је преко Изборника → Управљај категоријама</string>
     <string name="toggle_ui">Прикажи/сакриј интерфејс</string>
     <string name="next_chapter">Ново поглавље</string>
@@ -759,9 +753,7 @@
     <string name="incognito">Тајно</string>
     <string name="open_telegram_bot">Отвори Телеграм бот-а</string>
     <string name="telegram_chat_id">Телеграм ИД за ћаскање</string>
-    <string name="backup_tg_id_not_set">ИД ћаскања није подешен</string>
     <string name="error_connection_reset">Веза је ресетована од стране удаљеног домаћина</string>
-    <string name="backup_tg_check">Провери да ли API ради</string>
     <string name="backup_tg_echo">Пробна порука</string>
     <string name="show_slider">Прикажи клизач</string>
     <string name="telegram_chat_id_summary">Унеси ИД ћаскања на који треба послати резервне копије</string>

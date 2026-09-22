@@ -233,13 +233,11 @@
     <string name="access_denied_403">அணுகல் மறுக்கப்பட்டது (403)</string>
     <string name="email">மின்னஞ்சல்</string>
     <string name="author">நூலாசிரியர்</string>
-    <string name="backup_tg_check">பநிஇ வேலை செய்கிறதா என்று சரிபார்க்கவும்</string>
     <string name="all_sources_enabled">அனைத்து ஆதாரங்களும் இயக்கப்பட்டுள்ளன</string>
     <string name="web_view_unavailable">வெப்வியூ கிடைக்கவில்லை: வெப்வியூ வழங்குநர் நிறுவப்பட்டிருக்கிறாரா என்று சரிபார்க்கவும்</string>
     <string name="clear_network_cache">பிணையம் கேச் அழிக்கவும்</string>
     <string name="proxy">பதிலாள்</string>
     <string name="invalid_value_message">தவறான மதிப்பு</string>
-    <string name="email_password_enter_hint">தொடர உங்கள் மின்னஞ்சல் மற்றும் கடவுச்சொல்லை உள்ளிடவும்</string>
     <string name="authorization_optional">ஏற்பு (விரும்பினால்)</string>
     <string name="text_history_holder_primary">நீங்கள் படித்தவை இங்கே காண்பிக்கப்படும்</string>
     <string name="text_history_holder_secondary">«எக்ச்ப்ளோர்» பிரிவில் என்ன படிக்க வேண்டும் என்பதைக் கண்டறியவும்</string>
@@ -338,7 +336,6 @@
     <string name="account_already_exists">கணக்கு ஏற்கனவே உள்ளது</string>
     <string name="sync">ஒத்தியக்கம்</string>
     <string name="sync_title">உங்கள் தரவை ஒத்திசைக்கவும்</string>
-    <string name="email_enter_hint">தொடர உங்கள் மின்னஞ்சலை உள்ளிடவும்</string>
     <string name="hide">மறை</string>
     <string name="new_sources_text">புதிய மங்கா ஆதாரங்கள் கிடைக்கின்றன</string>
     <string name="show_notification_new_chapters_on">நீங்கள் படிக்கும் மங்காவின் புதுப்பிப்புகள் பற்றிய அறிவிப்புகளைப் பெறுவீர்கள்</string>
@@ -362,7 +359,6 @@
     <string name="detect_reader_mode_summary">மங்கா வெப்டூன் என்றால் தானாகவே கண்டறியவும்</string>
     <string name="disable_battery_optimization">பேட்டரி தேர்வுமுறை முடக்கு</string>
     <string name="disable_battery_optimization_summary">பின்னணி புதுப்பிப்புகள் சோதனைகளுக்கு உதவுகிறது</string>
-    <string name="crash_text">ஏதோ தவறு நடந்தது. அதை சரிசெய்ய எங்களுக்கு உதவ ஒரு பிழை அறிக்கையை டெவலப்பர்களிடம் சமர்ப்பிக்கவும்.</string>
     <string name="send">அனுப்பு</string>
     <string name="status_reading">படித்தல்</string>
     <string name="status_re_reading">மறு வாசிப்பு</string>
@@ -423,9 +419,6 @@
     <string name="prefetch_content">உள்ளடக்க முன் ஏற்றுதல்</string>
     <string name="mark_as_current">மின்னோட்டமாக குறிக்கவும்</string>
     <string name="language">மொழி</string>
-    <string name="share_logs">பதிவுகளைப் பகிரவும்</string>
-    <string name="enable_logging">பதிவை இயக்கவும்</string>
-    <string name="enable_logging_summary">பிழைத்திருத்த நோக்கங்களுக்காக சில செயல்களைப் பதிவுசெய்க. நீங்கள் என்ன செய்கிறீர்கள் என்று உங்களுக்குத் தெரியாவிட்டால் அதை இயக்க வேண்டாம்</string>
     <string name="color_theme">வண்ணத் திட்டம்</string>
     <string name="show_in_grid_view">கட்டம் பார்வையில் காண்பி</string>
     <string name="theme_name_mion">விவரம்</string>
@@ -753,7 +746,6 @@
     <string name="incognito">மறைநிலை</string>
     <string name="error_connection_reset">தொலைநிலை புரவலன் மூலம் இணைப்பு மீட்டமைப்பு</string>
     <string name="backup_tg_echo">சோதனை செய்தி</string>
-    <string name="backup_tg_id_not_set">அரட்டை ஐடி அமைக்கப்படவில்லை</string>
     <string name="telegram_chat_id">தந்தி அரட்டை ஐடி</string>
     <string name="open_telegram_bot">டெலிகிராம் போட் திறக்கவும்</string>
     <string name="send_backups_telegram">டெலிகிராமில் காப்புப்பிரதிகளை அனுப்பவும்</string>

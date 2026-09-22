@@ -249,7 +249,6 @@
     <string name="undo">Адмена</string>
     <string name="disable_battery_optimization">Адключыць аптымізацыю акумулятара</string>
     <string name="disable_battery_optimization_summary">Дапамагае з фонавай праверкай абнаўленняў</string>
-    <string name="crash_text">Штосьці пайшло не так. Калі ласка, адпраўце справаздачу пра памылку распрацоўшчыкам, каб дапамагчы нам яе выправіць.</string>
     <string name="send">Адправіць</string>
     <string name="invalid_domain_message">Памылковы дамен</string>
     <string name="report">Справаздача</string>
@@ -296,7 +295,6 @@
     <string name="back">Назад</string>
     <string name="sync">Сінхранізацыя</string>
     <string name="sync_title">Сінхранізацыя вашых дадзеных</string>
-    <string name="email_enter_hint">Каб працягнуць, увядзіце свой адрас электроннай пошты</string>
     <string name="import_completed_hint">Вы можаце выдаліць зыходны файл са сховішча, каб зэканоміць месца</string>
     <string name="import_will_start_soon">Хутка пачнецца імпарт</string>
     <string name="manga_error_description_pattern">Дэталі памылкі:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1. Паспрабуйце &lt;a href=%2$s&gt;адкрыць мангу ў вэб-браўзеры&lt;/a&gt;, каб пераканацца, што яна даступная ў крыніцы&lt;br&gt;2. Упэўніцеся, што вы выкарыстоўваеце &lt;a href=hanten://about&gt;апошнюю версію Hanten&lt;/a&gt;&lt;br&gt;3. Калі ён даступны, адпраўце распрацоўнікам справаздачу аб памылцы.</string>
@@ -310,9 +308,6 @@
     <string name="reset">Скінуць</string>
     <string name="text_unsaved_changes_prompt">Захаваць ці адхіліць незахаваныя змены\?</string>
     <string name="discard">Адмяніць</string>
-    <string name="enable_logging">Уключыць запіс</string>
-    <string name="share_logs">Падзяліцца логамі</string>
-    <string name="enable_logging_summary">Запішыце некаторыя дзеянні для адладкі. Уключайце толькі калі ведаеце, што робіце</string>
     <string name="show_suspicious_content">Паказаць падазроны кантэнт</string>
     <string name="canceled">Адменена</string>
     <string name="manage">Кіраваць</string>
@@ -553,7 +548,6 @@
 \nУвага: бягучы ход чытання будзе страчаны.</string>
     <string name="reader_actions_summary">Налада дзеянняў для сэнсарных абласцей экрана</string>
     <string name="remaining_time_pattern">%1$s %2$s</string>
-    <string name="email_password_enter_hint">Каб працягнуць, увядзіце адрас электроннай пошты і пароль</string>
     <string name="config_reset_confirm">Скінуць налады да значэнняў па змаўчанні? Гэта дзеянне нельга адмяніць.</string>
     <string name="use_two_pages_landscape">Выкарыстоўвайце двухстаронкавы макет у альбомнай арыентацыі (бэта)</string>
     <string name="default_webtoon_zoom_out">Аддаленне ў рэжыме манхвы</string>
@@ -760,11 +754,9 @@
     <string name="all_sources_enabled">Усе крыніцы ўключаны</string>
     <string name="reader_info_bar_transparent">Празрыстая інфармацыйная панэль чытання</string>
     <string name="restoring_backup">Аднаўленне рэзервовай копіі</string>
-    <string name="backup_tg_check">Праверце, ці працуе API</string>
     <string name="telegram_chat_id">ID чата Telegram</string>
     <string name="backup_tg_echo">Тэставое паведамленне</string>
     <string name="open_telegram_bot">Адкрыйце Telegram-бота</string>
-    <string name="backup_tg_id_not_set">ID чата не ўсталяваны</string>
     <string name="search_disabled_sources">Пошук па адключаных крыніцах</string>
     <string name="captcha_required_message">Гэтая крыніца патрабуе рашэння капчы, каб працягнуць</string>
     <string name="handle_links">Апрацоўка спасылак</string>

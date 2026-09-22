@@ -298,7 +298,6 @@
     <string name="download_slowdown_summary">Pomaga uniknąć blokowania Twojego adresu IP</string>
     <string name="local_manga_processing">Przetwarzanie zapisanej mangi</string>
     <string name="chapters_will_removed_background">Rozdziały zostaną usunięte w tle</string>
-    <string name="email_enter_hint">Wpisz swój adres e-mail, aby kontynuować</string>
     <string name="new_sources_text">Dostępne są nowe źródła mang</string>
     <string name="check_new_chapters_title">Sprawdzaj dostępność nowych rozdziałów i informuj o nich</string>
     <string name="show_notification_new_chapters_on">Będziesz otrzymywać powiadomienia o aktualizacjach mang, które czytasz</string>
@@ -306,7 +305,6 @@
     <string name="tracking">Śledzenie</string>
     <string name="detect_reader_mode_summary">Automatycznie wykryj, czy manga to webtoon</string>
     <string name="disable_battery_optimization_summary">Pomaga w sprawdzaniu aktualizacji w tle</string>
-    <string name="crash_text">Coś poszło nie tak. Zgłoś błąd programistom, aby pomóc nam go naprawić.</string>
     <string name="clear_cookies_summary">Może pomóc w przypadku niektórych problemów. Wszystkie autoryzacje zostaną unieważnione</string>
     <string name="no_manga_sources">Brak źródeł mang</string>
     <string name="no_manga_sources_text">Włącz źródła mang do czytania mang online</string>
@@ -339,8 +337,6 @@
     <string name="scrobbling_empty_hint">By śledzić postęp w czytaniu, wybierz Menu → Śledź na ekranie detali mangi.</string>
     <string name="find_similar">Znajdź podobne</string>
     <string name="user_agent">Nagłówek UserAgent</string>
-    <string name="share_logs">Udostępnij dzienniki</string>
-    <string name="enable_logging_summary">Zapisz niektóre działania do celów debugowania. Nie włączaj go, jeśli nie jesteś pewien, co robisz</string>
     <string name="allow_unstable_updates">Zezwól na niestabilne aktualizacje</string>
     <string name="got_it">Rozumiem</string>
     <string name="settings_apply_restart_required">Uruchom ponownie aplikację by wprowadzić te zmiany</string>
@@ -351,7 +347,6 @@
     <string name="enable">Włączać</string>
     <string name="prefetch_content">Wstępne ładowanie treści</string>
     <string name="mark_as_current">Oznacz jako aktualne</string>
-    <string name="enable_logging">Włącz logowanie</string>
     <string name="show_suspicious_content">Pokaż podejrzane treści</string>
     <string name="color_theme">Schemat kolorów</string>
     <string name="show_in_grid_view">Pokaż w widoku siatki</string>
@@ -454,7 +449,6 @@
     <string name="manga_list">Lista mang</string>
     <string name="disable_nsfw">Wyłącz NSFW</string>
     <string name="show">Pokazywać</string>
-    <string name="email_password_enter_hint">Wpisz swój adres e-mail i hasło, aby kontynuować</string>
     <string name="items_limit_exceeded">Nie można dodać więcej elementów</string>
     <string name="to_top">W górę</string>
     <string name="moved_to_top">Przeniesiono na górę</string>
@@ -762,7 +756,6 @@
     <string name="backup_restored_background">Kopia zapasowa zostanie przywrócona w tle</string>
     <string name="restoring_backup">Przywracanie kopii zapasowej</string>
     <string name="exclude_nsfw_from_suggestions_summary">Manga dla dorosłych nie będzie pokazywana w sugestiach. Ta opcja może działać niepoprawnie z niektórymi źródłami</string>
-    <string name="backup_tg_check">Sprawdź czy API działa poprawnie</string>
     <string name="enable_all_sources">Włącz wszystkie źródła mangi</string>
     <string name="enable_all_sources_summary">Wszystkie dostępne źródła mangi zostaną włączone na stałe</string>
     <string name="all_sources_enabled">Wszystkie źródła są włączone</string>
@@ -783,7 +776,6 @@
     <string name="open_telegram_bot">Otwórz bota z Telegram</string>
     <string name="show_slider">Pokaż suwak</string>
     <string name="incognito">Incognito</string>
-    <string name="backup_tg_id_not_set">Nie ustawiono ID czatu</string>
     <string name="telegram_chat_id">ID czatu Telegrama</string>
     <string name="error_disclaimer_manga">Spróbuj otworzyć mangę w przeglądarce internetowej, aby upewnić się, że jest dostępna w swoim źródle.</string>
     <string name="link_to_manga_in_app">Link do mangi w Hanten</string>

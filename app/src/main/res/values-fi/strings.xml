@@ -245,7 +245,6 @@
     <string name="default_mode">Oletustila</string>
     <string name="disable_battery_optimization">Poista akun optimoinnin käytöstä</string>
     <string name="disable_battery_optimization_summary">Auttaa taustapäivitystarkastuksissa</string>
-    <string name="crash_text">Jokin meni pieleen. Lähetä vikailmoitus kehittäjille, jotta voimme korjata sen.</string>
     <string name="disable_all">Poista kaikki käytöstä</string>
     <string name="send">Lähetä</string>
     <string name="use_fingerprint">Käytä sormenjälkeä, jos käytettävissä</string>
@@ -300,7 +299,6 @@
     
 <string name="sync_title">Sync your data</string>
     
-<string name="email_enter_hint">Enter your email to continue</string>
     
 <string name="status_planned">Planned</string>
     
@@ -452,11 +450,8 @@
     
 <string name="language">Language</string>
     
-<string name="share_logs">Share logs</string>
     
-<string name="enable_logging">Enable logging</string>
     
-<string name="enable_logging_summary">Record some actions for debug purposes. Don\'t turn it on if you\'re not sure what you\'re doing</string>
     
 <string name="show_suspicious_content">Show suspicious content</string>
     
@@ -594,7 +589,6 @@
 <string name="invalid_value_message">Invalid value</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="downloaded">Downloaded</string>
     
@@ -1366,11 +1360,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

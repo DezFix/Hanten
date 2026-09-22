@@ -167,7 +167,6 @@
     <string name="back">Kembali</string>
     <string name="sync">Penyegerakkan</string>
     <string name="sync_title">Segerakkan data anda</string>
-    <string name="email_enter_hint">Masukkan email anda untuk menyambung</string>
     <string name="hide">Sembunyi</string>
     <string name="new_sources_text">Sumber manga baharu tersedia</string>
     <string name="check_new_chapters_title">Semak untuk bab baharu dan beritahu mengenainya</string>
@@ -285,7 +284,6 @@
     <string name="detect_reader_mode_summary">Kesan sekiranya manga adalah webtoon secara automatik</string>
     <string name="show_reading_indicators_summary">Tunjuk peratusan dibaca dalam sejarah dan kegemaran</string>
     <string name="bookmarks_removed">Penanda dibuang</string>
-    <string name="crash_text">Sebuah ralat telah berlaku. Sila hantar laporan pepijat kepada pembangun untuk membantu kami membetulkannya.</string>
     <string name="saved_manga">Manga disimpan</string>
     <string name="text_feed_holder">Bab-bab baharu bacaan anda ditunjukkan di sini</string>
     <string name="size_s">Saiz: %s</string>
@@ -348,9 +346,6 @@
     <string name="prefetch_content">Kandungan Preloading</string>
     <string name="mark_as_current">Tandakan sebagai semasa</string>
     <string name="language">Bahasa</string>
-    <string name="share_logs">Kongsi log</string>
-    <string name="enable_logging">Dayakan pembalakan</string>
-    <string name="enable_logging_summary">Catat beberapa tindakan untuk tujuan debug. Jangan menghidupkannya jika anda tidak pasti apa yang anda lakukan</string>
     <string name="show_suspicious_content">Tunjukkan kandungan yang mencurigakan</string>
     <string name="theme_name_dynamic">Dinamik</string>
     <string name="theme_name_expressive">Ekspresif (ujian)</string>
@@ -406,7 +401,6 @@
     <string name="port">Pelabuhan</string>
     <string name="proxy">Proksi</string>
     <string name="invalid_value_message">Nilai tidak sah</string>
-    <string name="email_password_enter_hint">Masukkan e -mel dan kata laluan anda untuk diteruskan</string>
     <string name="downloaded">Dimuat turun</string>
     <string name="images_proxy_title">Proksi Pengoptimuman Imej</string>
     <string name="images_procy_description">Gunakan perkhidmatan WSRV.NL untuk mengurangkan penggunaan lalu lintas dan mempercepat pemuatan imej jika boleh</string>
@@ -763,9 +757,7 @@
     <string name="show_slider">Tunjukkan gelangsar</string>
     <string name="incognito">Mod penyamaran</string>
     <string name="error_connection_reset">Tetapkan semula sambungan oleh tuan rumah jauh</string>
-    <string name="backup_tg_check">Periksa sama ada API berfungsi</string>
     <string name="backup_tg_echo">Mesej ujian</string>
-    <string name="backup_tg_id_not_set">ID sembang tidak ditetapkan</string>
     <string name="telegram_chat_id">ID sembang telegram</string>
     <string name="open_telegram_bot">Buka bot Telegram</string>
     <string name="send_backups_telegram">Hantar sandaran di Telegram</string>

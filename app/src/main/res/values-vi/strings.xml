@@ -134,7 +134,6 @@
     <string name="download_slowdown_summary">Giúp tránh việc ip của bạn bị chặn</string>
     <string name="chapters_will_removed_background">Các chương sẽ bị xoá dưới nền</string>
     <string name="sync_title">Đồng bộ dữ liệu của bạn</string>
-    <string name="email_enter_hint">Nhập email của bạn để tiếp tục</string>
     <string name="new_sources_text">Đã có các nguồn truyện mới</string>
     <string name="check_new_chapters_title">Kiểm tra và thông báo về các chương mới</string>
     <string name="show_notification_new_chapters_off">Bạn sẽ không nhận thông báo nhưng những chương mới sẽ được đánh đấu trong danh sách</string>
@@ -167,7 +166,6 @@
     <string name="network_unavailable_hint">Bật wifi hoặc dữ liệu di động để đọc truyện trực tuyến</string>
     <string name="prefetch_content">Tải trước nội dung</string>
     <string name="mark_as_current">Đánh dấu là hiện tại đã đọc xong</string>
-    <string name="enable_logging_summary">Lưu một số thông tin cho mục đích gỡ lỗi. Đừng bật nó nếu bạn không biết mình đang làm gì</string>
     <string name="show_suspicious_content">Hiển thị nội dung khả nghi</string>
     <string name="theme_name_dynamic">Động</string>
     <string name="error_occurred">Đã xảy ra lỗi</string>
@@ -288,7 +286,6 @@
     <string name="random">Ngẫu nhiên</string>
     <string name="status_re_reading">Đọc lại</string>
     <string name="no_chapters">Không có chương nào</string>
-    <string name="crash_text">Có gì đó không đúng. Vui lòng gửi một báo cáo lỗi cho các nhà phát triển để giúp chúng tôi sửa nó.</string>
     <string name="status_on_hold">Tạm ngưng</string>
     <string name="status_dropped">Đã ngưng</string>
     <string name="appwidget_shelf_description">Manga từ các mục yêu thích của bạn</string>
@@ -317,9 +314,7 @@
     <string name="reader_slider">Hiện thanh trượt chuyển trang</string>
     <string name="webtoon_zoom">Phóng to truyện Webtoon</string>
     <string name="show_in_grid_view">Hiển thị dưới dạng lưới</string>
-    <string name="share_logs">Chia sẻ logs</string>
     <string name="theme_name_miku">Miku</string>
-    <string name="enable_logging">Bật log</string>
     <string name="color_theme">Bảng màu</string>
     <string name="nothing_here">Không có gì ở đây cả</string>
     <string name="language">Ngôn ngữ</string>
@@ -494,7 +489,6 @@
     <string name="no_chapters_deleted">Không có chương nào bị xoá</string>
     <string name="migration_completed">Sáp nhập thành công</string>
     <string name="delete_read_chapters_prompt">Hành động này sẽ xoá tất cả các chương đã đọc trong bộ nhớ trong. Bạn có thể tải lại sau, nhưng những chương đã xoá có thể mất vĩnh viễn.</string>
-    <string name="email_password_enter_hint">Nhập email và mật khẩu để tiếp tục</string>
     <string name="unknown">Không rõ</string>
     <string name="show">Xem</string>
     <string name="captcha_required_summary">%s yêu cầu giải captcha để hoạt động bình thường</string>
@@ -757,8 +751,6 @@
     <string name="incognito">Ẩn danh</string>
     <string name="show_slider">Hiện thanh trượt</string>
     <string name="backup_tg_echo">Tình trạng: 200 OK</string>
-    <string name="backup_tg_check">Kiểm tra API</string>
-    <string name="backup_tg_id_not_set">Bạn chưa thiết lập Chat ID của Telegram</string>
     <string name="telegram_chat_id">Chat ID của Telegram</string>
     <string name="open_telegram_bot">Mở Bot Telegram</string>
     <string name="error_connection_reset">Kết nối đã được đặt lại bởi máy chủ</string>

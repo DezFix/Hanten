@@ -247,7 +247,6 @@
     <string name="detect_reader_mode">Автовизначення режиму читання</string>
     <string name="disable_battery_optimization">Вимкнути оптимізацію акумулятора</string>
     <string name="disable_battery_optimization_summary">Допомагає з перевірками фонових оновлень</string>
-    <string name="crash_text">Щось пішло не так. Будь ласка, надішліть звіт про помилку розробникам, щоб допомогти нам її виправити.</string>
     <string name="send">Надіслати</string>
     <string name="disable_all">Вимкнути все</string>
     <string name="use_fingerprint">Використовувати біометричні дані, якщо вони доступні</string>
@@ -272,7 +271,6 @@
     <string name="select_range">Виберіть діапазон</string>
     <string name="not_found_404">Вміст не знайдено або видалено</string>
     <string name="back">Назад</string>
-    <string name="email_enter_hint">Введіть свою електронну пошту, щоб продовжити</string>
     <string name="history_cleared">Історія очищена</string>
     <string name="manage">Керувати</string>
     <string name="no_bookmarks_yet">Закладок ще немає</string>
@@ -346,9 +344,6 @@
     <string name="theme_name_mion">Міон</string>
     <string name="theme_name_rikka">Рікка</string>
     <string name="theme_name_sakura">Сакура</string>
-    <string name="share_logs">Поділиться логами</string>
-    <string name="enable_logging">Увімкнути логування</string>
-    <string name="enable_logging_summary">Записувати деякі дії з метою подальшого налагодження. Включайте лише якщо знаєте, що робите</string>
     <string name="theme_name_mamimi">Мамімі</string>
     <string name="show_suspicious_content">Показувати сумнівний контент</string>
     <string name="theme_name_dynamic">Динамічний</string>
@@ -555,7 +550,6 @@
     <string name="long_tap_action">Дія при тривалому натисканні</string>
     <string name="switch_pages_volume_buttons">Увімкнути кнопки гучності</string>
     <string name="reader_actions_summary">Налаштування дій для сенсорних областей екрана</string>
-    <string name="email_password_enter_hint">Введіть свою адресу електронної пошти та пароль, щоб продовжити</string>
     <string name="config_reset_confirm">Повернути налаштування до значень за замовчуванням? Цю дію неможливо скасувати.</string>
     <string name="use_two_pages_landscape">Використовувати макет двох сторінок у альбомній орієнтації (бета)</string>
     <string name="fullscreen_mode">Повноекранний режим</string>
@@ -764,9 +758,7 @@
     <string name="show_slider">Показати слайдер</string>
     <string name="incognito">Інкогніто</string>
     <string name="error_connection_reset">Скидання з\'єднання віддаленим хостом</string>
-    <string name="backup_tg_check">Перевірте, чи працює API</string>
     <string name="backup_tg_echo">Тестове повідомлення</string>
-    <string name="backup_tg_id_not_set">ID чату не встановлено</string>
     <string name="telegram_chat_id">ID чату Telegram</string>
     <string name="open_telegram_bot">Відкрийте Telegram-бота</string>
     <string name="send_backups_telegram">Надсилати резервні копії до Telegram</string>

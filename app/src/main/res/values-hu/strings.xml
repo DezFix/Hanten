@@ -74,7 +74,6 @@
     <string name="preload_pages">Oldalak előtöltése</string>
     <string name="suggestions_excluded_genres_summary">Határozz meg műfajokat, amiket nem akarsz látni a javaslatokban</string>
     <string name="canceled">Megszakítva</string>
-    <string name="email_enter_hint">Add meg az email címed a folytatáshoz</string>
     <string name="clear_pages_cache">Oldal gyorsítótár törlése</string>
     <string name="text_file_sizes">B|kB|MB|GB|TB</string>
     <string name="standard">Standard</string>
@@ -179,7 +178,6 @@
     <string name="bookmark_add">Könyvjelző hozzáadása</string>
     <string name="bookmark_removed">Könyvjelző eltávolítva</string>
     <string name="disable_battery_optimization_summary">Segít a háttérfrissítésekben</string>
-    <string name="crash_text">Valami hiba történt. Kérlek, küldj hibajelentést a fejlesztőknek, hogy segíthessünk a hiba elhárításában.</string>
     <string name="status_planned">Tervezett</string>
     <string name="status_reading">Olvasás</string>
     <string name="status_re_reading">Újraolvasás</string>
@@ -299,8 +297,6 @@
     <string name="prefetch_content">Tartalom előtöltése</string>
     <string name="mark_as_current">Aktuálisként jelölés</string>
     <string name="language">Nyelv</string>
-    <string name="enable_logging">Naplózás engedélyezése</string>
-    <string name="share_logs">Naplók megosztása</string>
     <string name="show_suspicious_content">Gyanús tartalom megjelenítése</string>
     <string name="theme_name_dynamic">Dinamikus</string>
     <string name="color_theme">Színséma</string>
@@ -377,7 +373,6 @@
     <string name="show_in_grid_view">Rács nézetben megjelenít</string>
     <string name="manga_error_description_pattern">Hiba részletei:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1. Próbáld meg &lt;a href=%2$s&gt;megnyitni a mangát egy webböngészőben&lt;/a&gt;, hogy megbizonyosodj róla, hogy elérhető-e az eredeti forrásáról.&lt;br&gt;2. Győződj meg arról, hogy a &lt;a href=hanten://about&gt;Hanten legfrissebb verzióját&lt;/a&gt; használod.&lt;br&gt;3. Ha elérhető, küldj egy hibajelentést a fejlesztőknek.</string>
     <string name="scrobbling_empty_hint">Az olvasási előrehaladás követéséhez válaszd a Menü → Követés lehetőséget a manga részletek képernyőn.</string>
-    <string name="enable_logging_summary">Rögzít néhány műveletet hibakeresési célokra. Ne kapcsold be, ha nem vagy biztos benne, hogy mit csinálsz</string>
     <string name="services">Szolgáltatások</string>
     <string name="allow_unstable_updates">Instabil frissítések engedélyezése</string>
     <string name="allow_unstable_updates_summary">Értesítések fogadása instabil verziókról</string>
@@ -422,7 +417,6 @@
     <string name="port">Port</string>
     <string name="proxy">Proxy</string>
     <string name="invalid_value_message">Érvénytelen érték</string>
-    <string name="email_password_enter_hint">Add meg az e-mail címed és a jelszavad a folytatáshoz</string>
     <string name="downloaded">Letöltött</string>
     <string name="images_proxy_title">Proxy a képek optimalizálásához</string>
     <string name="images_procy_description">Használd a wsrv.nl szolgáltatást a forgalom csökkentéséhez és a képek betöltésének felgyorsításához, ha lehetséges</string>
@@ -988,11 +982,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

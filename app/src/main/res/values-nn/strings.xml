@@ -166,7 +166,6 @@
     <string name="account_already_exists">Kontoen finst alt</string>
     <string name="back">Attende</string>
     <string name="sync_title">Synkroniser dataet ditt</string>
-    <string name="email_enter_hint">Rit inn e-postadressa di for å halda fram</string>
     <string name="hide">Skjul</string>
     <string name="name">Namn</string>
     <string name="edit">Brigd</string>
@@ -235,9 +234,6 @@
     <string name="prefetch_content">Hent inn innhald på forhand</string>
     <string name="mark_as_current">Merk som aktuelt</string>
     <string name="language">Språk</string>
-    <string name="share_logs">Del loggføringar</string>
-    <string name="enable_logging">Loggfør</string>
-    <string name="enable_logging_summary">Ta opp nokre gjerder til bruk i istandsetjing</string>
     <string name="theme_name_dynamic">Skiftande</string>
     <string name="color_theme">Letar</string>
     <string name="show_in_grid_view">Vis som rutenett</string>
@@ -432,7 +428,6 @@
     
 <string name="disable_battery_optimization_summary">Helps with background updates checks</string>
     
-<string name="crash_text">Something went wrong. Please submit a bug report to the developers to help us fix it.</string>
     
 <string name="invalid_server_address_message">Invalid server address</string>
     
@@ -488,7 +483,6 @@
 <string name="proxy">Proxy</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="images_proxy_title">Images optimization proxy</string>
     
@@ -1240,11 +1234,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

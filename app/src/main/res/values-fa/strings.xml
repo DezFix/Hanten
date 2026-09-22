@@ -224,7 +224,6 @@
     <string name="hide">مخفی کردن</string>
     <string name="canceled">لغو شد</string>
     <string name="account_already_exists">اکانتی با این نام کاربری وجود دارد</string>
-    <string name="email_enter_hint">برای ادامه دادن، ایمیل خود را وارد کنید</string>
     <string name="check_new_chapters_title">چک کردن و اطلاع دادن برای چپتر جدید</string>
     <string name="show_notification_new_chapters_on">برای آپدیت مانگاهایی که درحال خواندن هستید، اعلان دریافت خواهید کرد</string>
     <string name="show_notification_new_chapters_off">برای چپترهای جدید مانگاهایی که نشانه گذاری کرده اید، اعلان دریافت نخواهید کرد</string>
@@ -266,7 +265,6 @@
     <string name="unstable_feature_summary">این ویژگی در حالت آزمایشی می‌باشد، لطفاً از داشتن بکاپ مطمئن شوید تا داده های شما از بین نروند</string>
     <string name="undo">بازگرداندن</string>
     <string name="automatic">خودکار</string>
-    <string name="crash_text">مشکلی پیش آمد. لطفاً به منظور کمک کردن به رفع مشکل، گزارشی به توسعه‌دهندگان ارسال کنید.</string>
     <string name="dns_over_https">DNS بر روی HTTPS</string>
     <string name="detect_reader_mode">تشخیص خودکار حالت خواندن</string>
     <string name="show_reading_indicators">نشان دادن نشانگر پیشروی خوانش</string>
@@ -345,9 +343,6 @@
     <string name="prefetch_content">پیش بازگذاری محتوا</string>
     <string name="mark_as_current">نشانه گذاری به عنوان فعلی</string>
     <string name="language">زبان</string>
-    <string name="share_logs">اشتراک گذاری گزارش</string>
-    <string name="enable_logging">فعال کردن گزارشات</string>
-    <string name="enable_logging_summary">ثبت برخی عمیات برای اهداف اشکال زدایی. اگه نمیدونی داری چیکار میکنی این گزینه رو روشن نکن</string>
     <string name="show_suspicious_content">نمایش محتوای مشکوک</string>
     <string name="theme_name_dynamic">پویا</string>
     <string name="theme_name_expressive">صریح (تست)</string>
@@ -406,7 +401,6 @@
     <string name="port">درگاه</string>
     <string name="proxy">پروکسی</string>
     <string name="invalid_value_message">مقدار نامعتبر</string>
-    <string name="email_password_enter_hint">برای ادامه رایانامه و گذرواژه را وارد کنید</string>
     <string name="downloaded">بارگیری شده</string>
     <string name="images_proxy_title">پروکسی بهینه سازی تصاویر</string>
     <string name="images_procy_description">استفاده از سرویس wsrv.nl (در صورت امکان)‌ برای کاهش مصرف ترافیک و افزایش سرعت بارگیری تصویر</string>
@@ -1016,11 +1010,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

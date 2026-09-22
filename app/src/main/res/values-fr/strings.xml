@@ -245,7 +245,6 @@
     <string name="detect_reader_mode_summary">Détecter automatiquement si un manga est un webtoon</string>
     <string name="disable_battery_optimization">Désactiver l\'optimisation de la batterie</string>
     <string name="disable_battery_optimization_summary">Aide à la vérification des mises à jour des antécédents</string>
-    <string name="crash_text">Un problème est survenu. Veuillez soumettre un rapport de bogue aux développeurs pour nous aider à le corriger.</string>
     <string name="send">Envoyer</string>
     <string name="disable_all">Tout désactiver</string>
     <string name="use_fingerprint">Utiliser la biométrie si elle est disponible</string>
@@ -297,7 +296,6 @@
     <string name="back">Retour</string>
     <string name="sync">Synchronisation</string>
     <string name="sync_title">Synchronisez vos données</string>
-    <string name="email_enter_hint">Entrez votre courriel pour continuer</string>
     <string name="saved_manga">Mangas sauvegardés</string>
     <string name="pages_cache">Cache des pages</string>
     <string name="other_cache">Autre cache</string>
@@ -334,9 +332,6 @@
     <string name="source_disabled">Source désactivée</string>
     <string name="prefetch_content">Préchargement du contenu</string>
     <string name="mark_as_current">Marquer comme actuel</string>
-    <string name="share_logs">Partager les journaux</string>
-    <string name="enable_logging">Activer la journalisation</string>
-    <string name="enable_logging_summary">Enregistrer quelques actions à des fins de débogage. Ne l\'activez pas si vous ne savez pas ce que vous faites</string>
     <string name="language">Langue</string>
     <string name="show_suspicious_content">Afficher le contenu suspect</string>
     <string name="theme_name_dynamic">Dynamique</string>
@@ -529,7 +524,6 @@
     <string name="incognito_mode_hint">Votre progression de lecture ne sera pas sauvegardée</string>
     <string name="last_read">Dernier lu</string>
     <string name="vertical">Vertical</string>
-    <string name="email_password_enter_hint">Entrez votre courriel et mot de passe pour continuer</string>
     <string name="grayscale">Niveaux de gris</string>
     <string name="error_filter_locale_genre_not_supported">Le filtrage à la fois par genres et par langues n\'est pas supporté par cette source</string>
     <string name="error_filter_states_genre_not_supported">Le filtrage à la fois par genres et par statut n\'est pas supporté par cette source</string>
@@ -753,7 +747,6 @@
     <string name="author">Auteur</string>
     <string name="source">Source</string>
     <string name="translation">Traduction</string>
-    <string name="backup_tg_check">Vérifier si l\'API fonctionne</string>
     <string name="open_telegram_bot">Ouvrir le bot Telegram</string>
     <string name="incognito">Mode Incognito</string>
     <string name="telegram_chat_id">ID de chat Telegram</string>
@@ -761,7 +754,6 @@
     <string name="test_connection">Tester la connexion</string>
     <string name="open_telegram_bot_summary">Appuyez pour ouvrir le chat avec le bot de sauvegarde Hanten</string>
     <string name="error_connection_reset">Connexion réinitialisée par l\'hôte distant</string>
-    <string name="backup_tg_id_not_set">L\'ID du chat n\'est pas défini</string>
     <string name="telegram_chat_id_summary">Entrez l\'ID du chat où les sauvegardes doivent être envoyées</string>
     <string name="send_backups_telegram">Envoyer les sauvegardes sur Telegram</string>
     <string name="show_slider">Afficher le curseur</string>

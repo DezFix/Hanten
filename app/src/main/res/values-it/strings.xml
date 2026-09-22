@@ -245,7 +245,6 @@
     <string name="detect_reader_mode_summary">Rileva automaticamente se il manga è un webtoon</string>
     <string name="disable_battery_optimization">Disattiva l\'ottimizzazione della batteria</string>
     <string name="disable_battery_optimization_summary">Contribuisce ai controlli di aggiornamento in sfondo</string>
-    <string name="crash_text">Qualcosa è andato storto. Si prega di inviare una segnalazione di bug agli sviluppatori per aiutarci a risolvere il problema.</string>
     <string name="send">Invia</string>
     <string name="disable_all">Disabilita tutto</string>
     <string name="use_fingerprint">Usa le impronte digitali se disponibili</string>
@@ -323,7 +322,6 @@
     <string name="reset">Ripristina</string>
     <string name="reader_slider">Mostra il cursore di cambio pagina</string>
     <string name="color_correction">Correzione del colore</string>
-    <string name="email_enter_hint">Inserisci il tuo indirizzo e-mail per continuare</string>
     <string name="sync_title">Sincronizza i tuoi dati</string>
     <string name="history_shortcuts">Mostra i collegamenti ai manga recenti</string>
     <string name="reader_control_ltr">Controllo ergonomico del lettore</string>
@@ -335,9 +333,6 @@
     <string name="text_unsaved_changes_prompt">Salvare o eliminare le modifiche non salvate\?</string>
     <string name="discard">Abbandona</string>
     <string name="language">Lingua</string>
-    <string name="share_logs">Condividi i registri</string>
-    <string name="enable_logging_summary">Registra alcune azioni a scopo di debug. Non attivare se non si è sicuri di cosa si stia facendo</string>
-    <string name="enable_logging">Abilita la registrazione</string>
     <string name="show_suspicious_content">Mostra il contenuto sospetto</string>
     <string name="theme_name_dynamic">Dinamico</string>
     <string name="color_theme">Schema colori</string>
@@ -543,7 +538,6 @@
     <string name="last_read">Ultima lettura</string>
     <string name="reading_time_estimation_summary">Il tempo di lettura stimato potrebbe essere inaccurato</string>
     <string name="reading_time_estimation">Mostra il tempo di lettura stimato</string>
-    <string name="email_password_enter_hint">Inserisci email e password per continuare</string>
     <string name="show_menu">Mostra menu</string>
     <string name="switch_pages_volume_buttons_summary">Usa i pulsanti del volume per cambiare pagine</string>
     <string name="tap_action">Azioni tap</string>
@@ -752,7 +746,6 @@
     <string name="show_slider">Mostra cursore</string>
     <string name="incognito">Incognito</string>
     <string name="backup_tg_echo">Messaggio di test</string>
-    <string name="backup_tg_id_not_set">L\'ID chat non è impostato</string>
     <string name="telegram_chat_id">ID chat di Telegram</string>
     <string name="open_telegram_bot">Apri il bot di Telegram</string>
     <string name="handle_links">Gestione link</string>
@@ -765,7 +758,6 @@
     <string name="open_telegram_bot_summary">Premi per aprire la chat con Hanten Backup Bot</string>
     <string name="translation">Traduzione</string>
     <string name="test_connection">Connessione test</string>
-    <string name="backup_tg_check">Verifica se l\'API è funzionante</string>
     <string name="author">Autore</string>
     <string name="source">Sorgente</string>
     <string name="captcha_required_message">Questa sorgente richiede di risolvere un captcha per continuare</string>

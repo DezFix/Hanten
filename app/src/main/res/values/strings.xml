@@ -245,7 +245,6 @@
     <string name="back">Back</string>
     <string name="sync">Synchronization</string>
     <string name="sync_title">Sync your data</string>
-    <string name="email_enter_hint">Enter your email to continue</string>
     <string name="hide">Hide</string>
     <string name="new_sources_text">New manga sources are available</string>
     <string name="check_new_chapters_title">Check for new chapters and notify about it</string>
@@ -271,7 +270,6 @@
     <string name="detect_reader_mode_summary">Automatically detect if manga is webtoon</string>
     <string name="disable_battery_optimization">Disable battery optimization</string>
     <string name="disable_battery_optimization_summary">Helps with background updates checks</string>
-    <string name="crash_text">Something went wrong. Please submit a bug report to the developers to help us fix it.</string>
     <string name="send">Send</string>
     <string name="status_planned">Planned</string>
     <string name="status_reading">Reading</string>
@@ -358,9 +356,6 @@
     <string name="prefetch_content">Content preloading</string>
     <string name="mark_as_current">Mark as current</string>
     <string name="language">Language</string>
-    <string name="share_logs">Share logs</string>
-    <string name="enable_logging">Enable logging</string>
-    <string name="enable_logging_summary">Record some actions for debug purposes. Don\'t turn it on if you\'re not sure what you\'re doing</string>
     <string name="show_suspicious_content">Show suspicious content</string>
     <string name="theme_name_dynamic">Dynamic</string>
     <string name="theme_name_expressive">Expressive (Test)</string>
@@ -429,7 +424,6 @@
     <string name="port">Port</string>
     <string name="proxy">Proxy</string>
     <string name="invalid_value_message">Invalid value</string>
-    <string name="email_password_enter_hint">Enter your email and password to continue</string>
     <string name="downloaded">Downloaded</string>
     <string name="images_proxy_title">Images optimization proxy</string>
     <string name="images_procy_description">Use the wsrv.nl service to reduce traffic usage and speed up image loading if possible</string>
@@ -821,9 +815,7 @@
     <!-- Button label, should be as short as possible -->
     <string name="incognito">Incognito</string>
     <string name="error_connection_reset">Connection reset by remote host</string>
-    <string name="backup_tg_check">Check if API works</string>
     <string name="backup_tg_echo">Test message</string>
-    <string name="backup_tg_id_not_set">Chat ID is not set</string>
     <string name="telegram_chat_id">Telegram chat ID</string>
     <string name="open_telegram_bot">Open the Telegram bot</string>
     <string name="send_backups_telegram">Send backups in Telegram</string>
@@ -988,8 +980,6 @@
     <string name="check_updates_summary">Check for a new version on GitHub</string>
     <string name="update_uptodate">You have the latest version</string>
     <string name="donate_title">Support development</string>
-    <string name="source_error_reports">Source error reports</string>
-    <string name="source_error_reports_summary">Send source failure details (source, error, app version) to the developer to help fix broken sources</string>
     <string name="error_reports">Anonymous error reports</string>
     <string name="error_reports_summary">Send anonymous crash logs and source failure details (source, error, app version) to help fix bugs. No personal data is collected. Takes effect after restart.</string>
     <string name="scrobbler_import">Import library</string>

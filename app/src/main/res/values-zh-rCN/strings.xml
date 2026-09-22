@@ -242,7 +242,6 @@
     <string name="detect_reader_mode_summary">阅读条漫时自动应用条漫阅读模式</string>
     <string name="disable_battery_optimization">禁用电池优化</string>
     <string name="disable_battery_optimization_summary">帮助保持检查更新时的后台运行</string>
-    <string name="crash_text">出错了，请向开发人员提交错误报告以帮助修复问题。</string>
     <string name="send">发送</string>
     <string name="disable_all">全部禁用</string>
     <string name="status_planned">想读</string>
@@ -270,7 +269,6 @@
     <string name="back">返回</string>
     <string name="sync">同步</string>
     <string name="sync_title">开始同步网络数据</string>
-    <string name="email_enter_hint">输入邮箱地址以继续</string>
     <string name="status_dropped">已腰斩</string>
     <string name="select_range">选择范围</string>
     <string name="clear_all_history">清除所有阅读记录</string>
@@ -335,9 +333,6 @@
     <string name="prefetch_content">内容预加载</string>
     <string name="mark_as_current">标为当前进度</string>
     <string name="language">语言</string>
-    <string name="enable_logging">启用日志记录</string>
-    <string name="share_logs">分享日志</string>
-    <string name="enable_logging_summary">出于调试目的记录一些操作，若不知道有何用处请不要自行开启</string>
     <string name="show_suspicious_content">显示可疑内容</string>
     <string name="theme_name_dynamic">动态</string>
     <string name="color_theme">配色主题</string>
@@ -555,7 +550,6 @@
     <string name="tap_action">点按操作</string>
     <string name="use_two_pages_landscape">横屏启用双页布局</string>
     <string name="config_reset_confirm">确定重置为默认设置？重置后无法撤销。</string>
-    <string name="email_password_enter_hint">输入邮箱和密码以继续</string>
     <string name="fullscreen_mode">全屏模式</string>
     <string name="default_webtoon_zoom_out">条漫默认缩小值</string>
     <string name="reader_fullscreen_summary">将系统状态栏与通知栏隐藏</string>
@@ -760,8 +754,6 @@
     <string name="show_slider">显示滑块</string>
     <string name="error_connection_reset">远程主机重置了连接</string>
     <string name="backup_tg_echo">测试消息</string>
-    <string name="backup_tg_check">检查 API 是否可用</string>
-    <string name="backup_tg_id_not_set">未设置聊天ID</string>
     <string name="telegram_chat_id">Telegram 聊天 ID</string>
     <string name="open_telegram_bot">打开 Telegram 机器人</string>
     <string name="send_backups_telegram">用 Telegram 发送备份</string>

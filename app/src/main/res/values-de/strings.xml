@@ -246,7 +246,6 @@
     <string name="disable_battery_optimization">Akkuoptimierung deaktivieren</string>
     <string name="disable_battery_optimization_summary">Hilft bei der Hintergrundaktualisierung</string>
     <string name="send">Senden</string>
-    <string name="crash_text">Etwas ist schief gelaufen. Bitte sende einen Fehlerbericht an die Entwickler, um uns bei der Behebung zu helfen.</string>
     <string name="disable_all">Alle deaktivieren</string>
     <string name="use_fingerprint">Fingerabdruck verwenden, falls verfügbar</string>
     <string name="appwidget_shelf_description">Manga aus deinen Favoriten</string>
@@ -288,7 +287,6 @@
     <string name="back">Zurück</string>
     <string name="sync">Synchronisierung</string>
     <string name="sync_title">Synchronisiere deine Daten</string>
-    <string name="email_enter_hint">Gib deine E-Mail-Adresse ein, um fortzufahren</string>
     <string name="clear_all_history">Gesamten Verlauf löschen</string>
     <string name="last_2_hours">Letzte 2 Stunden</string>
     <string name="history_cleared">Verlauf gelöscht</string>
@@ -330,10 +328,7 @@
     <string name="prefetch_content">Inhalte vorladen</string>
     <string name="mark_as_current">Als aktuell markieren</string>
     <string name="webtoon_zoom">Webtoon-Zoom</string>
-    <string name="share_logs">Protokolle teilen</string>
-    <string name="enable_logging">Protokollierung aktivieren</string>
     <string name="language">Sprache</string>
-    <string name="enable_logging_summary">Einige Aktionen zu Debug-Zwecken aufzeichnen. Aktiviere dies nicht, wenn Du dir nicht sicher bist, was du tust.</string>
     <string name="history_shortcuts">Zeige Verknüpfungen zu aktuellen Manga</string>
     <string name="history_shortcuts_summary">Neueste Manga durch langes Drücken auf das Anwendungssymbol verfügbar machen</string>
     <string name="show_suspicious_content">Verdächtige Inhalte anzeigen</string>
@@ -535,7 +530,6 @@
     <string name="list_options">Listenoptionen</string>
     <string name="volume_">Speicher %d</string>
     <string name="volume_unknown">Unbekannte Speicher Volumen</string>
-    <string name="email_password_enter_hint">Gebe deine E-Mail-Adresse und Passwort an, um fortzufahren</string>
     <string name="incognito_mode_hint">Deine Lese fortschritt, wird nicht gespeichert</string>
     <string name="vertical">Vertikal</string>
     <string name="category_hidden_done">Diese Kategorie wurde vom Hauptbildschirm ausgeblendet und ist verfügbar unter: Menü → Kategorien verwalten</string>
@@ -974,11 +968,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

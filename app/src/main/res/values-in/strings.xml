@@ -239,7 +239,6 @@
     <string name="queued">Mengantre</string>
     <string name="auth_complete">Resmi</string>
     <string name="text_local_holder_secondary">Simpan dari sumber daring atau berkas impor.</string>
-    <string name="email_enter_hint">Masukkan surel Anda untuk melanjutkan</string>
     <string name="status_re_reading">Dibaca ulang</string>
     <string name="explore">Jelajah</string>
     <string name="status_planned">Direncanakan</string>
@@ -295,7 +294,6 @@
     <string name="account_already_exists">Akun sudah ada</string>
     <string name="back">Kembali</string>
     <string name="disable_battery_optimization_summary">Membantu pemeriksaan pembaruan di latar belakang</string>
-    <string name="crash_text">Ada sesuatu yang salah. Mohon untuk mengirim laporan kutu ke pengembang untuk membantu kami memperbaikinya.</string>
     <string name="report">Lapor</string>
     <string name="exclude_nsfw_from_history_summary">Manga yang ditandai sebagai TAUSB tidak akan ditambahkan ke riwayat dan progres Anda tidak akan disimpan</string>
     <string name="clear_cookies_summary">Bisa membantu dalam beberapa masalah. Seluruh otorisasi akan menjadi tidak valid</string>
@@ -329,7 +327,6 @@
     <string name="user_agent">Tajuk Agen Pengguna</string>
     <string name="settings_apply_restart_required">Mulai ulang aplikasi untuk menerapkan perubahan ini</string>
     <string name="theme_name_kanade">Kanade</string>
-    <string name="share_logs">Bagikan log</string>
     <string name="error_no_space_left">Tidak ada ruang tersisa di perangkat</string>
     <string name="allow_unstable_updates">Izinkan pembaruan yang tidak stabil</string>
     <string name="allow_unstable_updates_summary">Terima notifikasi tentang build yang tidak stabil</string>
@@ -340,8 +337,6 @@
     <string name="text_search_holder_secondary">Cobalah untuk memformulasi ulang kueri.</string>
     <string name="zoom_mode_keep_start">Tetap di awal</string>
     <string name="reader_info_pattern">Bab %1$d/%2$d Hlm. %3$d/%4$d</string>
-    <string name="enable_logging">Aktifkan pencatatan</string>
-    <string name="enable_logging_summary">Rekam beberapa tindakan untuk tujuan awakutu. Jangan nyalakan jika Anda tidak yakin dengan apa yang Anda lakukan</string>
     <string name="theme_name_dynamic">Dinamis</string>
     <string name="color_theme">Skema warna</string>
     <string name="show_in_grid_view">Perlihatkan dalam tampilan kisi</string>
@@ -555,7 +550,6 @@
     <string name="show_menu">Tampilkan menu</string>
     <string name="config_reset_confirm">Kembalikan pengaturan ke bawaan? Tindakan ini tidak bisa dibatalkan.</string>
     <string name="use_two_pages_landscape">Gunakan tata letak dua halaman pada orientasi lanskap (beta)</string>
-    <string name="email_password_enter_hint">Masukkan surel dan kata sandi untuk melanjutkan</string>
     <string name="reading_time_estimation_summary">Perkiraan waktu mungkin tidak akurat</string>
     <string name="suggestions_unavailable_text">Fitur saran dinonaktifkan</string>
     <string name="check_for_new_chapters_disabled">Memeriksa bab baru dinonaktifkan</string>
@@ -687,7 +681,6 @@
     <string name="original_language">Bahasa asli</string>
     <string name="year">Tahun</string>
     <string name="show_slider">Tampilkan penggeser</string>
-    <string name="backup_tg_check">Periksa apakah API bekerja</string>
     <string name="backup_tg_echo">Tes pesan</string>
     <string name="telegram_chat_id">ID chat Telegram</string>
     <string name="pages_saved">Halaman disimpan</string>
@@ -746,7 +739,6 @@
     <string name="dont_allow">Jangan izinkan</string>
     <string name="open_telegram_bot">Buka bot Telegram</string>
     <string name="enable_all_sources">Aktifkan semua sumber manga</string>
-    <string name="backup_tg_id_not_set">ID chat belum diset</string>
     <string name="captcha_required_message">Sumber ini membutuhkan penyelesaian captcha untuk melanjutkan</string>
     <string name="error_image_format">Format gambar tidak didukung: %s</string>
     <string name="translation">Terjemahan</string>

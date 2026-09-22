@@ -260,7 +260,6 @@
     <string name="compact">सघन</string>
     <string name="mark_as_current">वर्तमान के रूप में चिह्नित करें</string>
     <string name="language">भाषा</string>
-    <string name="enable_logging">लॉगिंग सक्षम करें</string>
     <string name="show_suspicious_content">संदिग्ध सामग्री दिखाएं</string>
     <string name="theme_name_dynamic">गतिशील</string>
     <string name="color_theme">रंग योजना</string>
@@ -330,7 +329,6 @@
     <string name="disable_nsfw">NSFW अक्षम करें</string>
     <string name="images_proxy_title">छवियां अनुकूलन प्रॉक्सी</string>
     <string name="data_and_privacy">डेटा और गोपनीयता</string>
-    <string name="email_password_enter_hint">जारी रखने के लिए अपना ईमेल और पासवर्ड डालें</string>
     <string name="clear_source_cookies_summary">केवल निर्दिष्ट डोमेन के लिए कुकीज़ साफ करें। अधिकांश मामलों में प्राधिकरण अमान्य हो जाएगा</string>
     <string name="download_option_next_unread_n_chapters">अगला अपठित %s</string>
     <string name="no_access_to_file">आपके पास इस फाइल या निर्देशिका तक कोई पहुंच नहीं है</string>
@@ -478,7 +476,6 @@
     <string name="back">पीछे</string>
     <string name="sync">समन्वयन</string>
     <string name="sync_title">अपना डेटा समन्वयित करें</string>
-    <string name="email_enter_hint">जारी रखने के लिए अपना ईमेल दर्ज करें</string>
     <string name="hide">छुपाएं</string>
     <string name="new_sources_text">नए मंगा स्रोत उपलब्ध हैं</string>
     <string name="check_new_chapters_title">नए अध्यायों की जांच करें और इसके बारे में सूचित करें</string>
@@ -516,7 +513,6 @@
     <string name="dns_over_https">HTTPS पर DNS</string>
     <string name="default_mode">तयशुदा मोड</string>
     <string name="disable_battery_optimization_summary">बैकग्राउंड अद्यतन जांच में मदद करता है</string>
-    <string name="crash_text">कुछ गलत हो गया। कृपया इसे ठीक करने में हमारी सहायता के लिए डेवलपर्स को एक बग रिपोर्ट सबमिट करें।</string>
     <string name="show_reading_indicators_summary">इतिहास और पसंदीदा में पढ़ा गया प्रतिशत दिखाएं</string>
     <string name="show_all">सब दिखाएं</string>
     <string name="downloads_cancelled">डाउनलोड रद्द कर दिए गए हैं</string>
@@ -533,8 +529,6 @@
     <string name="network_unavailable_hint">मंगा को ऑनलाइन पढ़ने के लिए Wi-Fi या मोबाइल नेटवर्क चालू करें</string>
     <string name="source_disabled">स्रोत अक्षम किया गया</string>
     <string name="prefetch_content">सामग्री प्रीलोड हो रही है</string>
-    <string name="share_logs">लॉग साझा करें</string>
-    <string name="enable_logging_summary">डिबग उद्देश्यों के लिए कुछ क्रियाएं रिकॉर्ड करें। यदि आप निश्चित नहीं हैं कि आप क्या कर रहे हैं तो इसे चालू न करें</string>
     <string name="theme_name_asuka">Asuka</string>
     <string name="theme_name_mion">Mion</string>
     <string name="theme_name_sakura">Sakura</string>
@@ -959,11 +953,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

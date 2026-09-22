@@ -249,7 +249,6 @@
     <string name="dns_over_https">DNS over HTTPS 활성화</string>
     <string name="default_mode">기본 모드</string>
     <string name="detect_reader_mode_summary">왭툰 자동 감지</string>
-    <string name="crash_text">오류. 저희가 고칠 수 있게 버그 정보를 보내주세요.</string>
     <string name="status_planned">계획됨</string>
     <string name="status_reading">읽는 중</string>
     <string name="status_re_reading">다시 읽는 중</string>
@@ -292,7 +291,6 @@
     <string name="back">뒤로가기</string>
     <string name="sync">동기화</string>
     <string name="sync_title">데이터 동기화 하기</string>
-    <string name="email_enter_hint">이메일을 입력하여 계속</string>
     <string name="download_slowdown">다운로드 속도 늦추기</string>
     <string name="enabled_d_of_d" tools:ignore="PluralsCandidate">%1$d 의%2$d 에</string>
     <string name="invalid_port_number">잘못된 포트 번호</string>
@@ -416,11 +414,8 @@
     
 <string name="language">Language</string>
     
-<string name="share_logs">Share logs</string>
     
-<string name="enable_logging">Enable logging</string>
     
-<string name="enable_logging_summary">Record some actions for debug purposes. Don\'t turn it on if you\'re not sure what you\'re doing</string>
     
 <string name="show_suspicious_content">Show suspicious content</string>
     
@@ -550,7 +545,6 @@
 <string name="proxy">Proxy</string>
     
     
-<string name="email_password_enter_hint">Enter your email and password to continue</string>
     
 <string name="downloaded">Downloaded</string>
     
@@ -1290,11 +1284,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     

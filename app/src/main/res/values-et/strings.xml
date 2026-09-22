@@ -14,7 +14,6 @@
     <string name="cancel_all">Tühista kõik</string>
     <string name="sync_host_description">Saate kasutada ise korraldatud sünkroonimisserverit või tava sünkroonimisserverit. Ärge muutke seda, kui te ei ole kindel, mida teete.</string>
     <string name="all_favourites">Kõik lemmikud</string>
-    <string name="email_enter_hint">Sisesta oma emaili aadress et jätkata</string>
     <string name="save">Salvesta</string>
     <string name="light_indicator">LED indikaator</string>
     <string name="no_chapters">Pole peatükke</string>
@@ -30,7 +29,6 @@
     <string name="disable_all">Lülita kõik välja</string>
     <string name="error_occurred">Tekkis viga</string>
     <string name="order_added">Lisatud</string>
-    <string name="enable_logging">Lülita sisse loggig</string>
     <string name="clear_thumbs_cache">Tühjenda pisipildi vahemälu</string>
     <string name="switch_pages">Vaheta lehekülge</string>
     <string name="settings_apply_restart_required">Muudatuste rakendamiseks käivitage rakendus uuesti</string>
@@ -38,7 +36,6 @@
     <string name="text_clear_updates_feed_prompt">Tühjenda kõik uuenduste ajalugu?</string>
     <string name="source_disabled">Allikas välja lülitatud</string>
     <string name="clear_cookies_summary">Võib aidata mõndade probleemidega. Kõik autoriseerimine saab invalideeritud</string>
-    <string name="enable_logging_summary">Salvesta mõned tegevused silumiseks. Ärge lülitage seda sisse, kui te ei ole kindel, mida teete</string>
     <string name="suggestions_enable">Lülita sisse soovitused</string>
     <string name="clear_feed">Tühjenda voog</string>
     <string name="welcome">Tere tulemast</string>
@@ -121,7 +118,6 @@
     <string name="update">Uuenda</string>
     <string name="scrobbling_empty_hint">Lugemise edenemise jälgimiseks valige manga üksikasjade ekraanil menüü → Jälgimine.</string>
     <string name="removed_from_history">Eemaldatud ajaloost</string>
-    <string name="crash_text">Midagi läks valesti. Palun esitage arendajatele veateade, et aidata meil seda parandada.</string>
     <string name="theme">Teema</string>
     <string name="detect_reader_mode_summary">Automaatselt tuvastada, kas manga on webtoon</string>
     <string name="not_found_404">Sisu mitte saadaval või eemaldatud</string>
@@ -373,7 +369,6 @@
     <string name="no_bookmarks_yet">Pole järjehoidjaid veel</string>
     <string name="no_thanks">Tänan ei</string>
     <string name="backup_information">Sa saad teha tagavara enda ajaloost, lemmikutest ja siis taastada need</string>
-    <string name="share_logs">Jaga looge</string>
     <string name="zoom_mode_keep_start">Hoija stardis</string>
     <string name="external_storage">Väline mälu</string>
     <string name="text_local_holder_secondary">Salvesta midagi võrgupõhisest kataloogist või impordi failist.</string>
@@ -433,7 +428,6 @@
     <string name="list_options">Loendi valikud</string>
     <string name="last_read">Viimatiloetud</string>
     <string name="items_limit_exceeded">Ühtegi objekti ei saa enam lisada</string>
-    <string name="email_password_enter_hint">Jätkamaks sisesta oma e-posti aadress ja salasõna</string>
     <string name="color_light">Hele</string>
     <string name="color_black">Must</string>
     <string name="color_dark">Tume</string>
@@ -1098,11 +1092,9 @@
     
 <string name="error_connection_reset">Connection reset by remote host</string>
     
-<string name="backup_tg_check">Check if API works</string>
     
 <string name="backup_tg_echo">Test message</string>
     
-<string name="backup_tg_id_not_set">Chat ID is not set</string>
     
 <string name="telegram_chat_id">Telegram chat ID</string>
     
