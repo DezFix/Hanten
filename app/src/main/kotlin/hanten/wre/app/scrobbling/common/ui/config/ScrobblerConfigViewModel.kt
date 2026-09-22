@@ -27,6 +27,7 @@ import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
+import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriImportUseCase
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -34,6 +35,7 @@ import javax.inject.Provider
 class ScrobblerConfigViewModel @Inject constructor(
 	savedStateHandle: SavedStateHandle,
 	scrobblersProvider: Provider<Set<@JvmSuppressWildcards Scrobbler>>,
+	private val importUseCase: ShikimoriImportUseCase,
 ) : BaseViewModel() {
 
 	private val scrobblerService = getScrobblerService(savedStateHandle)
@@ -43,6 +45,17 @@ class ScrobblerConfigViewModel @Inject constructor(
 
 	val user = MutableStateFlow<ScrobblerUser?>(null)
 	val onLoggedOut = MutableEventFlow<Unit>()
+	val onImportDone = MutableEventFlow<ShikimoriImportUseCase.ImportResult>()
+
+	val isImportSupported: Boolean
+		get() = scrobblerService == ScrobblerService.SHIKIMORI
+
+	fun startImport(categoryTitle: String) {
+		launchLoadingJob(Dispatchers.IO) {
+			val result = importUseCase.importLibrary(categoryTitle)
+			onImportDone.call(result)
+		}
+	}
 
 	val content = scrobbler.observeAllScrobblingInfo()
 		.onStart { loadingCounter.increment() }

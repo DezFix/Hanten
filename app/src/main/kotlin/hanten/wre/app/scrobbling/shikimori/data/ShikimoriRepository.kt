@@ -206,6 +206,40 @@ class ShikimoriRepository @Inject constructor(
 		return ScrobblerMangaInfo(response)
 	}
 
+	suspend fun getUserRates(): List<ShikimoriUserRate> {
+		val user = cachedUser ?: loadUser()
+		val url = BASE_URL.toHttpUrl().newBuilder()
+			.addPathSegment("api")
+			.addPathSegment("v2")
+			.addPathSegment("user_rates")
+			.addQueryParameter("user_id", user.id.toString())
+			.addQueryParameter("target_type", "Manga")
+			.build()
+		val request = Request.Builder().url(url).get().build()
+		val response = okHttp.newCall(request).await().parseJsonArray()
+		return response.mapJSON { jo ->
+			ShikimoriUserRate(
+				rateId = jo.getInt("id"),
+				targetId = jo.getLong("target_id"),
+				status = jo.getStringOrNull("status"),
+				score = jo.optDouble("score", 0.0),
+				chapters = jo.optInt("chapters", 0),
+				comment = jo.getStringOrNull("text"),
+			)
+		}
+	}
+
+	suspend fun getMangaTitleVariants(targetId: Long): List<String> {
+		val request = Request.Builder()
+			.get()
+			.url("${BASE_URL}api/mangas/$targetId")
+		val response = okHttp.newCall(request.build()).await().parseJson()
+		return listOfNotNull(
+			response.getStringOrNull("name"),
+			response.getStringOrNull("russian"),
+		).filter { it.isNotBlank() }.distinct()
+	}
+
 	private suspend fun saveRate(json: JSONObject, mangaId: Long) {
 		val entity = ScrobblingEntity(
 			scrobbler = ScrobblerService.SHIKIMORI.id,
@@ -246,3 +280,12 @@ class ShikimoriRepository @Inject constructor(
 		service = ScrobblerService.SHIKIMORI,
 	)
 }
+
+data class ShikimoriUserRate(
+	val rateId: Int,
+	val targetId: Long,
+	val status: String?,
+	val score: Double,
+	val chapters: Int,
+	val comment: String?,
+)

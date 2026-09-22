@@ -995,4 +995,7 @@
     <string name="suggestions_personal">For you</string>
     <string name="suggestions_trending">Trending</string>
     <string name="suggestions_trending_empty">Nothing trending right now. Pull down to refresh.</string>
+    <string name="scrobbler_import">Import library</string>
+    <string name="scrobbler_import_category" translatable="false">Shikimori</string>
+    <string name="scrobbler_import_done">Imported %1$d titles, skipped %2$d</string>
 </resources>

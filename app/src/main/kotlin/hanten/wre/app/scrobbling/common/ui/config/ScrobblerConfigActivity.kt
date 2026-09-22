@@ -2,8 +2,12 @@ package hanten.wre.app.scrobbling.common.ui.config
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.MenuProvider
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,6 +26,7 @@ import hanten.wre.app.databinding.ActivityScrobblerConfigBinding
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
+import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriImportUseCase
 import hanten.wre.app.scrobbling.common.ui.config.adapter.ScrobblingMangaAdapter
 import androidx.appcompat.R as appcompatR
 
@@ -53,6 +58,8 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		viewModel.onLoggedOut.observeEvent(this) {
 			finishAfterTransition()
 		}
+		viewModel.onImportDone.observeEvent(this, ::showImportResult)
+		addMenuProvider(ImportMenuProvider())
 
 		processIntent(intent)
 	}
@@ -113,6 +120,40 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		viewBinding.progressBar.showOrHide(isLoading)
 	}
 
+	private fun showImportResult(result: ShikimoriImportUseCase.ImportResult) {
+		val skipped = result.skipped.take(MAX_SKIPPED_NAMES).joinToString(separator = "\n")
+		val message = StringBuilder(getString(R.string.scrobbler_import_done, result.imported, result.skipped.size))
+		if (skipped.isNotEmpty()) {
+			message.append("\n\n").append(skipped)
+			if (result.skipped.size > MAX_SKIPPED_NAMES) {
+				message.append("\n… (+${result.skipped.size - MAX_SKIPPED_NAMES})")
+			}
+		}
+		MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.scrobbler_import)
+			.setMessage(message.toString())
+			.setPositiveButton(android.R.string.ok, null)
+			.show()
+	}
+
+	private inner class ImportMenuProvider : MenuProvider {
+
+		override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+			menuInflater.inflate(R.menu.opt_scrobbler_config, menu)
+		}
+
+		override fun onPrepareMenu(menu: Menu) {
+			menu.findItem(R.id.action_import)?.isVisible = viewModel.isImportSupported
+		}
+
+		override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+			if (menuItem.itemId == R.id.action_import) {
+				viewModel.startImport(getString(R.string.scrobbler_import_category))
+				return true
+			}
+			return false
+		}
+	}
 	private fun showUserDialog() {
 		MaterialAlertDialogBuilder(this)
 			.setTitle(title)
@@ -127,5 +168,7 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		const val HOST_SHIKIMORI_AUTH = "shikimori-auth"
 		const val HOST_ANILIST_AUTH = "anilist-auth"
 		const val HOST_MAL_AUTH = "mal-auth"
+
+		private const val MAX_SKIPPED_NAMES = 15
 	}
 }
