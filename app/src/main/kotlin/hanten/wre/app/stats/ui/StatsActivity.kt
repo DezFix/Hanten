@@ -36,11 +36,14 @@ import hanten.wre.app.core.util.ext.showOrHide
 import hanten.wre.app.core.util.ext.start
 import hanten.wre.app.databinding.ActivityStatsBinding
 import hanten.wre.app.databinding.ItemEmptyStateBinding
+import hanten.wre.app.details.data.ReadingTime
 import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.stats.domain.StatsPeriod
 import hanten.wre.app.stats.domain.StatsRecord
+import hanten.wre.app.stats.domain.StatsSummary
 import hanten.wre.app.stats.ui.views.PieChartView
 import hanten.wre.app.parsers.model.Manga
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class StatsActivity : BaseActivity<ActivityStatsBinding>(),
@@ -79,6 +82,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
         viewModel.onActionDone.observeEvent(this, ReversibleActionObserver(viewBinding.recyclerView))
         viewModel.readingStats.observe(this) { records ->
             val sum = records.sumOf { it.duration }
+            refreshSummary()
             viewBinding.chart.setData(
                 records.map { v ->
                     PieChartView.Segment(
@@ -91,6 +95,9 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
                 },
             )
             adapter.emit(records)
+        }
+        viewModel.summary.observe(this) {
+            refreshSummary()
         }
     }
 
@@ -171,6 +178,40 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
             recyclerView.isGone = isEmpty
             stubEmpty.isVisible = isEmpty
         }
+        refreshSummary()
+    }
+
+    /**
+     * Beta: one-line totals for the selected period.
+     */
+    private fun refreshSummary() {
+        val summary = viewModel.summary.value
+        val hasRecords = viewModel.readingStats.value.isNotEmpty()
+        if (summary == null || !hasRecords || (summary.durationMs == 0L && summary.pages == 0)) {
+            viewBinding.textViewSummary.isGone = true
+            return
+        }
+        viewBinding.textViewSummary.isGone = false
+        viewBinding.textViewSummary.text = formatSummary(summary)
+    }
+
+    private fun formatSummary(summary: StatsSummary): String {
+        val total = formatDuration(summary.durationMs)
+        return if (summary.days > 0 && summary.days < Int.MAX_VALUE) {
+            val perDayPages = summary.pages / summary.days
+            getString(R.string.stats_summary_daily, total, summary.pages, perDayPages)
+        } else {
+            getString(R.string.stats_summary, total, summary.pages)
+        }
+    }
+
+    private fun formatDuration(durationMs: Long): String {
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(durationMs).toInt()
+        return ReadingTime(
+            minutes = minutes % 60,
+            hours = minutes / 60,
+            isContinue = false,
+        ).format(resources)
     }
 
     override fun onInflate(stub: ViewStub?, inflated: View) {

@@ -77,6 +77,23 @@
 
 	</HorizontalScrollView>
 
+	<TextView
+		android:id="@+id/textView_summary"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:ellipsize="end"
+		android:maxLines="2"
+		android:paddingHorizontal="16dp"
+		android:paddingTop="4dp"
+		android:textAppearance="?attr/textAppearanceBodyMedium"
+		android:textColor="?attr/colorSecondary"
+		android:visibility="gone"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/scrollView_chips"
+		tools:text="12 h 30 min · 480 pages · 68/day"
+		tools:visibility="visible" />
+
 	<hanten.wre.app.stats.ui.views.PieChartView
 		android:id="@+id/chart"
 		android:layout_width="0dp"
@@ -85,7 +102,7 @@
 		app:layout_constraintDimensionRatio="1"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/scrollView_chips" />
+		app:layout_constraintTop_toBottomOf="@id/textView_summary" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recyclerView"
