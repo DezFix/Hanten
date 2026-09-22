@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.7
+Date: 2026-09-22
+
+### Трекинг
+- Импорт/выгрузка Shikimori: совпадение названий по обоим вариантам (оригинал + русское) — русские библиотеки больше не пропускаются целиком
+
 ## 2.3.6
 Date: 2026-09-22
 
