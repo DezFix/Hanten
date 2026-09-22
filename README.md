@@ -4,7 +4,9 @@
 
 **Форк проектов [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) • Пакет `hanten.wre.app` • Прямые обновления из GitHub Releases**
 
-**В приоритете — поддержка русскоязычных и украиноязычных источников.**
+**В приоритете — поддержка русскоязычных и украиноязычных источников, но чиним и остальные: пользуетесь — пишите, поможем всем.**
+
+*Priority is RU/UK sources, but other languages are welcome too: report a broken source and we'll take a look.*
 
 **Сайт приложения: [dezfix.github.io](https://dezfix.github.io)**
 
