@@ -482,7 +482,8 @@ class AppRouter private constructor(
             setView(imageView)
             setNegativeButton(android.R.string.cancel, null)
             setCancelable(true)
-        }.show()
+        }
+        dialog.show()
         activity.lifecycleScope.launch {
             val bitmap = QrCodeHelper.encode(link)
             if (bitmap != null) {

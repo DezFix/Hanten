@@ -78,9 +78,12 @@ val MangaState.iconResId: Int
  */
 @get:StringRes
 val Manga.cardStatusResId: Int
-	get() = when (state) {
-		MangaState.FINISHED, MangaState.PAUSED, MangaState.ABANDONED -> state.titleResId
-		else -> 0
+	get() {
+		val s = state
+		return when (s) {
+			MangaState.FINISHED, MangaState.PAUSED, MangaState.ABANDONED -> s.titleResId
+			else -> 0
+		}
 	}
 
 @get:StringRes

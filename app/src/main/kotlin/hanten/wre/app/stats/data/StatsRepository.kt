@@ -95,7 +95,7 @@ class StatsRepository @Inject constructor(
 	 * Beta: total pages read since [fromDate], for the summary header.
 	 */
 	suspend fun getPeriodPagesRead(fromDate: Long): Int {
-		return db.getStatsDao().getReadPagesCount(fromDate)
+		return db.getStatsDao().getReadPagesCountSince(fromDate)
 	}
 
 	suspend fun getMangaTimeline(mangaId: Long): NavigableMap<Long, Int> {
