@@ -1030,18 +1030,16 @@
     
 <string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
     
-<string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
+    <string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
 
-    <string name="suggestions_personal">Добірка</string>
-    
-    <string name="suggestions_trending">У тренді</string>
-    
-    <string name="suggestions_trending_empty">Зараз нічого не в тренді. Потягніть вниз, щоб оновити.</string>
-    
     <string name="scrobbler_import">Імпорт бібліотеки</string>
     
     <string name="scrobbler_import_category" translatable="false">Shikimori</string>
     
     <string name="scrobbler_import_done">Імпортовано: %1$d, пропущено: %2$d</string>
+    
+    <string name="scrobbler_export">Вивантажити бібліотеку</string>
+    
+    <string name="scrobbler_export_done">Вивантажено: %1$d, пропущено: %2$d</string>
 
 </resources>

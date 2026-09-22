@@ -9,4 +9,10 @@
 		android:title="@string/scrobbler_import"
 		app:showAsAction="never" />
 
+	<item
+		android:id="@+id/action_export"
+		android:icon="@drawable/ic_send"
+		android:title="@string/scrobbler_export"
+		app:showAsAction="never" />
+
 </menu>

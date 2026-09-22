@@ -1059,10 +1059,9 @@
     <string name="source_error_reports_summary">Отправлять разработчику детали сбоев источников (источник, ошибка, версия), чтобы помочь чинить сломанные источники</string>
     <string name="error_reports">Анонимные отчёты об ошибках</string>
     <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>
-    <string name="suggestions_personal">Подборка</string>
-    <string name="suggestions_trending">В тренде</string>
-    <string name="suggestions_trending_empty">Сейчас ничего не в тренде. Потяните вниз, чтобы обновить.</string>
     <string name="scrobbler_import">Импорт библиотеки</string>
     <string name="scrobbler_import_category" translatable="false">Shikimori</string>
     <string name="scrobbler_import_done">Импортировано: %1$d, пропущено: %2$d</string>
+    <string name="scrobbler_export">Выгрузить библиотеку</string>
+    <string name="scrobbler_export_done">Выгружено: %1$d, пропущено: %2$d</string>
 </resources>

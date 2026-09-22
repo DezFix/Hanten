@@ -27,6 +27,7 @@ import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriImportUseCase
+import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriExportUseCase
 import hanten.wre.app.scrobbling.common.ui.config.adapter.ScrobblingMangaAdapter
 import androidx.appcompat.R as appcompatR
 
@@ -59,6 +60,7 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 			finishAfterTransition()
 		}
 		viewModel.onImportDone.observeEvent(this, ::showImportResult)
+		viewModel.onExportDone.observeEvent(this, ::showExportResult)
 		addMenuProvider(ImportMenuProvider())
 
 		processIntent(intent)
@@ -136,6 +138,22 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 			.show()
 	}
 
+	private fun showExportResult(result: ShikimoriExportUseCase.ExportResult) {
+		val skipped = result.skipped.take(MAX_SKIPPED_NAMES).joinToString(separator = "\n")
+		val message = StringBuilder(getString(R.string.scrobbler_export_done, result.exported, result.skipped.size))
+		if (skipped.isNotEmpty()) {
+			message.append("\n\n").append(skipped)
+			if (result.skipped.size > MAX_SKIPPED_NAMES) {
+				message.append("\n… (+${result.skipped.size - MAX_SKIPPED_NAMES})")
+			}
+		}
+		MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.scrobbler_export)
+			.setMessage(message.toString())
+			.setPositiveButton(android.R.string.ok, null)
+			.show()
+	}
+
 	private inner class ImportMenuProvider : MenuProvider {
 
 		override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -143,13 +161,22 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		}
 
 		override fun onPrepareMenu(menu: Menu) {
-			menu.findItem(R.id.action_import)?.isVisible = viewModel.isImportSupported
+			val supported = viewModel.isImportSupported
+			menu.findItem(R.id.action_import)?.isVisible = supported
+			menu.findItem(R.id.action_export)?.isVisible = supported
 		}
 
 		override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-			if (menuItem.itemId == R.id.action_import) {
-				viewModel.startImport(getString(R.string.scrobbler_import_category))
-				return true
+			when (menuItem.itemId) {
+				R.id.action_import -> {
+					viewModel.startImport(getString(R.string.scrobbler_import_category))
+					return true
+				}
+
+				R.id.action_export -> {
+					viewModel.startExport()
+					return true
+				}
 			}
 			return false
 		}
