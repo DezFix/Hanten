@@ -962,8 +962,8 @@
     <string name="check_updates">Check for updates</string>
     <string name="check_updates_summary">Check for a new version on GitHub</string>
     <string name="update_uptodate">You have the latest version</string>
-    <string name="stats_summary">%1$s · %2$d pages</string>
-    <string name="stats_summary_daily">%1$s · %2$d pages · %3$d/day</string>
+    <string name="stats_pages">%1$d pages</string>
+    <string name="stats_per_day">%1$d/day</string>
     <string name="donate_title">Support development</string>
     <string name="error_reports">Anonymous error reports</string>
     <string name="error_reports_summary">Send anonymous crash logs and source failure details (source, error, app version) to help fix bugs. No personal data is collected. Takes effect after restart.</string>

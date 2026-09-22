@@ -182,26 +182,22 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
     }
 
     /**
-     * Beta: one-line totals for the selected period.
+     * Beta: totals for the selected period as static chips in app style.
      */
     private fun refreshSummary() {
         val summary = viewModel.summary.value
         val hasRecords = viewModel.readingStats.value.isNotEmpty()
         if (summary == null || !hasRecords || (summary.durationMs == 0L && summary.pages == 0)) {
-            viewBinding.textViewSummary.isGone = true
+            viewBinding.scrollViewSummary.isGone = true
             return
         }
-        viewBinding.textViewSummary.isGone = false
-        viewBinding.textViewSummary.text = formatSummary(summary)
-    }
-
-    private fun formatSummary(summary: StatsSummary): String {
-        val total = formatDuration(summary.durationMs)
-        return if (summary.days > 0 && summary.days < Int.MAX_VALUE) {
-            val perDayPages = summary.pages / summary.days
-            getString(R.string.stats_summary_daily, total, summary.pages, perDayPages)
-        } else {
-            getString(R.string.stats_summary, total, summary.pages)
+        viewBinding.scrollViewSummary.isGone = false
+        viewBinding.chipSummaryTime.text = formatDuration(summary.durationMs)
+        viewBinding.chipSummaryPages.text = getString(R.string.stats_pages, summary.pages)
+        val showDaily = summary.days > 0 && summary.days < Int.MAX_VALUE
+        viewBinding.chipSummaryDaily.isGone = !showDaily
+        if (showDaily) {
+            viewBinding.chipSummaryDaily.text = getString(R.string.stats_per_day, summary.pages / summary.days)
         }
     }
 

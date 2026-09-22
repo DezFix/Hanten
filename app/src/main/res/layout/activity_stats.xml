@@ -77,22 +77,60 @@
 
 	</HorizontalScrollView>
 
-	<TextView
-		android:id="@+id/textView_summary"
+	<HorizontalScrollView
+		android:id="@+id/scrollView_summary"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:ellipsize="end"
-		android:maxLines="2"
-		android:paddingHorizontal="16dp"
-		android:paddingTop="4dp"
-		android:textAppearance="?attr/textAppearanceBodyMedium"
-		android:textColor="?attr/colorSecondary"
+		android:clipToPadding="false"
+		android:paddingHorizontal="12dp"
+		android:scrollbars="none"
 		android:visibility="gone"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/scrollView_chips"
-		tools:text="12 h 30 min · 480 pages · 68/day"
-		tools:visibility="visible" />
+		tools:visibility="visible">
+
+		<com.google.android.material.chip.ChipGroup
+			android:id="@+id/layout_summary"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_summary_time"
+				style="@style/Widget.Hanten.Chip.Assist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:checkable="false"
+				android:clickable="false"
+				android:focusable="false"
+				app:chipIcon="@drawable/ic_history"
+				tools:text="12 h 30 min" />
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_summary_pages"
+				style="@style/Widget.Hanten.Chip.Assist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:checkable="false"
+				android:clickable="false"
+				android:focusable="false"
+				app:chipIcon="@drawable/ic_book_page"
+				tools:text="480 pages" />
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_summary_daily"
+				style="@style/Widget.Hanten.Chip.Assist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:checkable="false"
+				android:clickable="false"
+				android:focusable="false"
+				app:chipIcon="@drawable/ic_updated"
+				tools:text="68/day" />
+
+		</com.google.android.material.chip.ChipGroup>
+
+	</HorizontalScrollView>
 
 	<hanten.wre.app.stats.ui.views.PieChartView
 		android:id="@+id/chart"
@@ -102,7 +140,7 @@
 		app:layout_constraintDimensionRatio="1"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/textView_summary" />
+		app:layout_constraintTop_toBottomOf="@id/scrollView_summary" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recyclerView"
