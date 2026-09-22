@@ -558,7 +558,6 @@
     
 <string name="show_reading_indicators">Show reading progress indicators</string>
     
-<string name="data_deletion">Data deletion</string>
     
 <string name="exclude_nsfw_from_history_summary">Manga marked as NSFW will never be added to the history and your progress will not be saved</string>
     
@@ -852,7 +851,6 @@
     
 <string name="network">Network</string>
     
-<string name="data_and_privacy">Data and privacy</string>
     
 <string name="restore_summary">Restore previously created backup</string>
     

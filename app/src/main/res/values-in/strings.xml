@@ -287,7 +287,6 @@
     <string name="use_fingerprint">Gunakan biometrik jika tersedia</string>
     <string name="appwidget_shelf_description">Manga dari kesukaan Anda</string>
     <string name="appwidget_recent_description">Manga yang baru-baru ini Anda baca</string>
-    <string name="data_deletion">Penghapusan data</string>
     <string name="account_already_exists">Akun sudah ada</string>
     <string name="back">Kembali</string>
     <string name="disable_battery_optimization_summary">Membantu pemeriksaan pembaruan di latar belakang</string>
@@ -394,7 +393,6 @@
     <string name="invert_colors">Balikkan warna</string>
     <string name="password">Kata sandi</string>
     <string name="authorization_optional">Otorisasi (opsional)</string>
-    <string name="data_and_privacy">Data dan privasi</string>
     <string name="restore_summary">Pulihkan cadangan yang dibuat sebelumnya</string>
     <string name="invalid_port_number">Nomor porta tak sah</string>
     <string name="network">Jaringan</string>

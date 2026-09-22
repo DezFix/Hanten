@@ -192,7 +192,6 @@
     <string name="dns_over_https">Https க்கு மேல் dns</string>
     <string name="status_planned">திட்டமிடப்பட்டது</string>
     <string name="report">அறிக்கை</string>
-    <string name="data_deletion">தரவு நீக்குதல்</string>
     <string name="show_all">அனைத்தையும் காட்டு</string>
     <string name="select_range">வரம்பைத் தேர்ந்தெடுக்கவும்</string>
     <string name="manage">நிர்வகிக்கவும்</string>
@@ -466,7 +465,6 @@
     <string name="password">கடவுச்சொல்</string>
     <string name="invalid_port_number">தவறான துறைமுகம் எண்</string>
     <string name="network">பிணையம்</string>
-    <string name="data_and_privacy">தரவு மற்றும் தனியுரிமை</string>
     <string name="restore_summary">முன்பு உருவாக்கப்பட்ட காப்புப்பிரதியை மீட்டமை</string>
     <string name="webtoon_zoom_summary">வெப்டூன் பயன்முறையில் சைகையில் பெரிதாக்க அனுமதிக்கவும்</string>
     <string name="reader_info_bar_summary">திரையின் மேற்புறத்தில் தற்போதைய நேரத்தையும் வாசிப்பு முன்னேற்றத்தையும் காட்டுங்கள்</string>

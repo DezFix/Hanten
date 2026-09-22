@@ -63,7 +63,6 @@
     <string name="default_mode">Подразумевани режим</string>
     <string name="network_unavailable">Мрежа није доступна</string>
     <string name="network_unavailable_hint">Укључите Wi-Fi или мобилну мрежу да бисте читали мангу на мрежи</string>
-    <string name="data_and_privacy">Подаци и приватност</string>
     <string name="network">Мрежа</string>
     <string name="show_pages_numbers_summary">Прикажи бројеве страница у доњем углу</string>
     <string name="images_proxy_title">Посредни послуживач за оптимизацију слика</string>
@@ -179,7 +178,6 @@
     <string name="content_type_hentai">Хентаи</string>
     <string name="clear_source_cookies_summary">Избриши колачиће само за одређени домен. У већини случајева поништава овлашћење</string>
     <string name="clear_all_history">Избриши сву историју</string>
-    <string name="data_deletion">Брисање података</string>
     <string name="history_shortcuts">Прикажи недавне пречице за мангу</string>
     <string name="import_completed">Увоз је завршен</string>
     <string name="show_reading_indicators">Прикажи показивач током читања</string>

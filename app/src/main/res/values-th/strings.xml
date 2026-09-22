@@ -96,7 +96,6 @@
     <string name="text_downloads_list_holder">คุณไม่มีอะไรในดาวน์โหลดเลย</string>
     <string name="downloads_resumed">การดาวน์โหลดของคุณได้ดำเนินการต่อแล้ว</string>
     <string name="downloads_paused">การดาวน์โหลดของคุณได้หยุดชั่วคราว</string>
-    <string name="data_and_privacy">ข้อมูลและความเป็นส่วนตัว</string>
     <string name="cookies_cleared">คุกกี้ทั้งหมดได้ถูกลบแล้ว</string>
     <string name="removed_from_history">ได้ลบจากประวัติแล้ว</string>
     <string name="removed_from_favourites">ลบออกจากรายการโปรดแล้ว</string>
@@ -256,7 +255,6 @@
     <string name="report">รีพอร์ต</string>
     <string name="text_clear_cookies_prompt">คุณจะออกจากระบบจากทุกแหล่ง</string>
     <string name="clear_all_history">ลบประวัติทั้งหมด</string>
-    <string name="data_deletion">การลบข้อมูล</string>
     <string name="show_reading_indicators">แสดงตัวบอกความคืบหน้าในการอ่าน</string>
     <string name="show_notification_new_chapters_off">คุณจะไม่ได้รับการแจ้งเตือน แต่บทใหม่จะถูกเน้นในรายการ</string>
     <string name="text_clear_search_history_prompt">ลบคำค้นหาล่าสุดทั้งหมดอย่างถาวรไหม\?</string>

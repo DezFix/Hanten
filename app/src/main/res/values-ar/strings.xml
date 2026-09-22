@@ -272,7 +272,6 @@
     <string name="cancel_all_downloads_confirm">سيتم إلغاء جميع التنزيلات النشطة، وستُفقَد البيانات المحملة جزئيًا</string>
     <string name="text_downloads_list_holder">ليس لديك أية تنزيلات</string>
     <string name="bookmark_added">تم الإضافة للمحفظة</string>
-    <string name="data_deletion">حذف البيانات</string>
     <string name="show_reading_indicators_summary">اظهر نسبة القراءة في السجل و المُفضلة</string>
     <string name="show_all">اظهر الكل</string>
     <string name="invalid_domain_message">مجال غير صالح</string>
@@ -386,7 +385,6 @@
     <string name="in_progress">قيد التنفيذ</string>
     <string name="too_many_requests_message">طلبات كثيرة جدا. حاول مرة أخرى في وقت لاحق</string>
     <string name="network">اتصال</string>
-    <string name="data_and_privacy">البيانات والخصوصية</string>
     <string name="download_option_first_n_chapters">أولاً%s</string>
     <string name="invalid_port_number">رقم المنفذ غير صالح</string>
     <string name="restore_summary">استعادة النسخة الاحتياطية التي تم إنشاؤها مسبقًا</string>

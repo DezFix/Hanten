@@ -256,7 +256,6 @@
     <string name="logout">ログアウト</string>
     <string name="status_planned">予定</string>
     <string name="status_dropped">ドロップ</string>
-    <string name="data_deletion">データの削除</string>
     <string name="show_reading_indicators_summary">履歴とお気に入りに既読率を表示する</string>
     <string name="clear_cookies_summary">いくつかの問題の場合に助けることができる。すべての認証が無効になります</string>
     <string name="show_reading_indicators">読書の進行状況インジケーターを表示</string>
@@ -396,7 +395,6 @@
     <string name="authorization_optional">オーソライズ（オプション）</string>
     <string name="invalid_port_number">無効なポート番号です</string>
     <string name="network">ネットワーク</string>
-    <string name="data_and_privacy">データとプライバシー</string>
     <string name="restore_summary">以前作成したバックアップを復元する</string>
     <string name="webtoon_zoom_summary">ウェブトゥーンモードでのズームインジェスチャを許可する</string>
     <string name="show_pages_numbers_summary">下隅にページ番号を表示する</string>

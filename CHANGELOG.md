@@ -4,6 +4,16 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.3.6
+Date: 2026-09-22
+
+### Трекинг
+- Импорт библиотеки из Shikimori в избранное с привязками трекинга
+- Выгрузка библиотеки из приложения в Shikimori
+
+### Чистка
+- Удалены мертвые строки (ночные обновления, старые бэкапы, Kitsu-логин, RPC-заглушка и др.)
+
 ## 2.3.5
 Date: 2026-09-22
 

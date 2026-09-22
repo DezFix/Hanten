@@ -216,7 +216,6 @@
     <string name="status_on_hold">होल्ड पर</string>
     <string name="status_dropped">गिरा दिया गया</string>
     <string name="show_reading_indicators">पठन प्रगति संकेतक दिखाएं</string>
-    <string name="data_deletion">डेटा विलोपन</string>
     <string name="exclude_nsfw_from_history_summary">NSFW के रूप में चिह्नित मंगा को इतिहास में कभी नहीं जोड़ा जाएगा और आपकी प्रगति सहेजी नहीं जाएगी</string>
     <string name="clear_cookies_summary">कुछ समस्या होने पर मदद मिल सकती है। सभी प्राधिकरण अमान्य कर दिए जाएंगे</string>
     <string name="invalid_domain_message">अमान्य डोमेन</string>
@@ -324,7 +323,6 @@
     <string name="manga_list">मंगा सूची</string>
     <string name="disable_nsfw">NSFW अक्षम करें</string>
     <string name="images_proxy_title">छवियां अनुकूलन प्रॉक्सी</string>
-    <string name="data_and_privacy">डेटा और गोपनीयता</string>
     <string name="clear_source_cookies_summary">केवल निर्दिष्ट डोमेन के लिए कुकीज़ साफ करें। अधिकांश मामलों में प्राधिकरण अमान्य हो जाएगा</string>
     <string name="download_option_next_unread_n_chapters">अगला अपठित %s</string>
     <string name="no_access_to_file">आपके पास इस फाइल या निर्देशिका तक कोई पहुंच नहीं है</string>

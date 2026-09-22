@@ -198,7 +198,6 @@
     <string name="appwidget_recent_description">Manga yang anda baru baca</string>
     <string name="report">Lapor</string>
     <string name="show_reading_indicators">Tunjukkan penunjuk kemajuan pembacaan</string>
-    <string name="data_deletion">Pembuangan data</string>
     <string name="exclude_nsfw_from_history_summary">Manga ditanda sebagai NSFW tidak akan ditambahkan dalam sejarah dan kemajuan tidak akan disimpan</string>
     <string name="show_all">Tunjuk semua</string>
     <string name="invalid_domain_message">Domain tidak sah</string>
@@ -404,7 +403,6 @@
     <string name="authorization_optional">Kebenaran (pilihan)</string>
     <string name="invalid_port_number">Nombor port tidak sah</string>
     <string name="network">Rangkaian</string>
-    <string name="data_and_privacy">Data dan privasi</string>
     <string name="restore_summary">Pulihkan sandaran yang dibuat sebelum ini</string>
     <string name="webtoon_zoom_summary">Benarkan isyarat zum masuk dalam mod webtoon</string>
     <string name="pull_to_prev_chapter">Siaran untuk membuka bab sebelumnya</string>

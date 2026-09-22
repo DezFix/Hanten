@@ -275,7 +275,6 @@
     <string name="network_unavailable_hint">Skru på Wi-Fi eller mobilnettverk for å lese manga på nett</string>
     <string name="notifications_enable">Skru på merknader</string>
     <string name="show_reading_indicators">Vis indikatorer for leseforløp</string>
-    <string name="data_deletion">Datasletting</string>
     <string name="exit_confirmation">Avsluttingsbekreftelse</string>
     <string name="invalid_domain_message">Ugyldig daomene</string>
     <string name="color_theme">Fargedrakt</string>
@@ -572,7 +571,6 @@
     
 <string name="network">Network</string>
     
-<string name="data_and_privacy">Data and privacy</string>
     
 <string name="restore_summary">Restore previously created backup</string>
     

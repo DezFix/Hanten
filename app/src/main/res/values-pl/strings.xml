@@ -229,7 +229,6 @@
     <string name="logged_in_as">Zalogowano jako %s</string>
     <string name="onboard_text">Wybierz języki, w których chcesz czytać mangi. Możesz zmienić to później w ustawieniach.</string>
     <string name="report">Zgłoś</string>
-    <string name="data_deletion">Usuwanie danych</string>
     <string name="invalid_domain_message">Nieważna domena</string>
     <string name="reorder">Zmień kolejność</string>
     <string name="exit_confirmation">Potwierdzenie wyjścia</string>
@@ -396,7 +395,6 @@
     <string name="invert_colors">Odwróć kolory</string>
     <string name="invalid_port_number">Nieprawidłowy numer portu</string>
     <string name="network">Sieć</string>
-    <string name="data_and_privacy">Dane i prywatność</string>
     <string name="restore_summary">Przywróć wcześniej utworzoną kopię zapasową</string>
     <string name="webtoon_zoom_summary">Zezwalaj na powiększanie gestu w trybie webtoon</string>
     <string name="show_pages_numbers_summary">Pokaż numery stron w dolnym rogu</string>

@@ -203,7 +203,6 @@
     <string name="chapters_empty">Бұл маңгада тарау жоқ</string>
     <string name="clear_all_history">Түгел тарихты тазалау</string>
     <string name="preload_pages">Беттерді алдынала жүктей беру</string>
-    <string name="data_deletion">Деректі жою</string>
     <string name="show_reading_indicators">Оқу прогрессін көрсету</string>
     <string name="local_manga_processing">Сақталған маңгаңыз үдерісте</string>
     <string name="show_notification_new_chapters_off">Мәлімдеме алмайсыз, бірақ жаңа тараулар тізімде көрсетіліп тұрады</string>
@@ -299,7 +298,6 @@
     <string name="settings_apply_restart_required">Өзгерту іске қосылуы үшін қолданбаны өшіріп қосыңыз</string>
     <string name="source_disabled">Дереккөз өшіп жатыр</string>
     <string name="backup_frequency">Сақтық көшірмесінің жиілігі</string>
-    <string name="data_and_privacy">Дерек пен құпиялық</string>
     <string name="clear_cookies_summary">Қате болса көмектесе алады. Түгел тіркелгінің күші жойылады</string>
     <string name="clear_source_cookies_summary">Осы дәмейіннің кукиін тазалау. Көп жағдайда тіркелгіден шығылып кетеді</string>
     <string name="history_shortcuts">Соңғы маңганың таңбашасын көрсету</string>

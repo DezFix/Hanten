@@ -47,7 +47,6 @@
     <string name="remove_category">Eemalda</string>
     <string name="clear_all_history">Tühjenda kõik ajalugu</string>
     <string name="preload_pages">Lehekülgede eellaadimine</string>
-    <string name="data_deletion">Andmete kustutamine</string>
     <string name="favourites">Lemmikud</string>
     <string name="history_shortcuts">Näita hiljutise manga lühitee</string>
     <string name="read_mode">Lugemis mood</string>
@@ -385,7 +384,6 @@
     <string name="sign_in">Logi sisse</string>
     <string name="remove_completed_downloads_confirm">Sinu allalaadimise ajalugu kustutatakse jäädavalt. Allalaaditud failid jäävad alles</string>
     <string name="password">Parool</string>
-    <string name="data_and_privacy">Andmed ja privaatsus</string>
     <string name="invalid_value_message">Kehtetu väärtus</string>
     <string name="downloads_cancelled">Allalaadimised on katkestatud</string>
     <string name="web_view_unavailable">WebView ei ole saadaval: kontrollige kas WebView pakkuja on installitud</string>

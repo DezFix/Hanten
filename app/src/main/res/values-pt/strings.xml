@@ -254,7 +254,6 @@
     <string name="status_completed">Concluído</string>
     <string name="status_on_hold">Em espera</string>
     <string name="show_reading_indicators">Mostrar indicadores de progresso de leitura</string>
-    <string name="data_deletion">Exclusão de dados</string>
     <string name="clear_cookies_summary">Pode ajudar em caso de alguns problemas. Todas as autorizações serão invalidadas</string>
     <string name="show_all">Mostrar tudo</string>
     <string name="clear_all_history">Apagar todo o histórico</string>
@@ -353,7 +352,6 @@
     <string name="sync_host_description">Você pode usar um servidor de sincronização auto-hospedado ou um padrão. Não mude isso se não tiver certeza do que está fazendo.</string>
     <string name="address">Endereço</string>
     <string name="port">Porta</string>
-    <string name="data_and_privacy">Dados e privacidade</string>
     <string name="invalid_port_number">Número de porta inválido</string>
     <string name="network">Rede</string>
     <string name="restore_summary">Restaurar backup criado anteriormente</string>

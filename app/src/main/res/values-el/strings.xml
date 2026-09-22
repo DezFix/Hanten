@@ -287,7 +287,6 @@
     <string name="invert_colors">Αντιστροφή χρωμάτων</string>
     <string name="username">Όνομα χρήστη</string>
     <string name="network">Δίκτυο</string>
-    <string name="data_and_privacy">Δεδομένα και ιδιωτικότητα</string>
     <string name="restore_summary">Επανάφερε κάποιο αντίγραφο ασφαλείας</string>
     <string name="webtoon_zoom_summary">Επίτρεψε την χειρονομία μεγέθυνσης στην λειτουργία Webtoon</string>
     <string name="show_pages_numbers_summary">Εμφάνιση αριθμού σελίδων στην κάτω γωνία</string>
@@ -505,7 +504,6 @@
     <string name="send">Αποστολή</string>
     <string name="report">Αναφορά</string>
     <string name="show_reading_indicators">Εμφάνιση δεικτών προόδου ανάγνωσης</string>
-    <string name="data_deletion">Διαγραφή δεδομένων</string>
     <string name="show_all">Εμφάνιση όλων</string>
     <string name="invalid_domain_message">Μη έγκυρο domain</string>
     <string name="select_range">Επιλογή εύρους</string>

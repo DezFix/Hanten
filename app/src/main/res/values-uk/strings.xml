@@ -260,7 +260,6 @@
     <string name="status_on_hold">Відкладено</string>
     <string name="status_dropped">Занедбано</string>
     <string name="show_reading_indicators">Показувати індикатори прогресу читання</string>
-    <string name="data_deletion">Видалення даних</string>
     <string name="show_reading_indicators_summary">Показати відсоток прочитаного в історії та обраному</string>
     <string name="exclude_nsfw_from_history_summary">Манґа, позначена як NSFW, ніколи не буде додана до історії і ваш прогрес не буде збережений</string>
     <string name="clear_cookies_summary">Може допомогти в разі виникнення проблем. Усі авторизації будуть анульовані</string>
@@ -398,7 +397,6 @@
     <string name="username">Ім\'я користувача</string>
     <string name="invert_colors">Інвертувати кольори</string>
     <string name="network">Мережа</string>
-    <string name="data_and_privacy">Дані та конфіденційність</string>
     <string name="restore_summary">Відновити раніше створену резервну копію</string>
     <string name="reader_info_bar_summary">Показувати поточний час і прогрес читання у верхній частині екрана</string>
     <string name="show_pages_numbers_summary">Показати номери сторінок у нижньому куті</string>

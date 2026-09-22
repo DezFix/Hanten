@@ -258,7 +258,6 @@
     <string name="show_all">Tout afficher</string>
     <string name="status_on_hold">En attente</string>
     <string name="status_dropped">Abandonné</string>
-    <string name="data_deletion">Suppression des données</string>
     <string name="logout">Se déconnecter</string>
     <string name="status_completed">Terminé</string>
     <string name="status_re_reading">Relecture</string>
@@ -399,7 +398,6 @@
     <string name="webtoon_zoom_summary">Autoriser le geste de zoom en mode webtoon</string>
     <string name="reader_info_bar_summary">Afficher l\'heure actuelle et la progression de la lecture en haut de l\'écran</string>
     <string name="network">Réseau</string>
-    <string name="data_and_privacy">Données et confidentialité</string>
     <string name="show_pages_numbers_summary">Afficher les numéros de page dans le coin inférieur</string>
     <string name="clear_source_cookies_summary">Effacer les cookies pour le domaine spécifié uniquement. Dans la plupart des cas, l\'autorisation sera invalidée</string>
     <string name="download_option_first_n_chapters">%s premier(s)</string>

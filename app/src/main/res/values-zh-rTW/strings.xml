@@ -179,7 +179,6 @@
     <string name="use_fingerprint">若可用，請使用生物辨識</string>
     <string name="appwidget_shelf_description">您最愛的漫畫</string>
     <string name="appwidget_recent_description">您最近閱讀的漫畫</string>
-    <string name="data_deletion">資料刪除</string>
     <string name="manage">管理</string>
     <string name="clear_new_chapters_counters">也清除關於新章節的資訊</string>
     <string name="compact">緊湊</string>
@@ -302,7 +301,6 @@
     <string name="web_view_unavailable">WebView 不可用: 檢查是否已安裝 WebView</string>
     <string name="type">類型</string>
     <string name="address">位址</string>
-    <string name="data_and_privacy">資料與隱私</string>
     <string name="restore_summary">還原先前建立的備份</string>
     <string name="port">連接埠</string>
     <string name="download_option_all_unread">所有未讀章節</string>

@@ -265,7 +265,6 @@
     <string name="dns_over_https">DNS بر روی HTTPS</string>
     <string name="detect_reader_mode">تشخیص خودکار حالت خواندن</string>
     <string name="show_reading_indicators">نشان دادن نشانگر پیشروی خوانش</string>
-    <string name="data_deletion">پاک کردن داده ها</string>
     <string name="popularity">محبوبیت</string>
     <string name="status_on_hold">در انتظار</string>
     <string name="status_dropped">رها شده</string>
@@ -404,7 +403,6 @@
     <string name="authorization_optional">اعتبار سنجی (اختیاری)</string>
     <string name="invalid_port_number">شماره درگاه نامعتبر</string>
     <string name="network">شبکه</string>
-    <string name="data_and_privacy">داده ها و حریم خصوصی</string>
     <string name="restore_summary">بازیابی نسخه پشتیبان تهیه شده قبلی</string>
     <string name="webtoon_zoom_summary">امکان زوم در حالت وبتون</string>
     <string name="reader_info_bar_summary">نمایش زمان و پیشرفت کنونی در بالای صفحه نمایش</string>

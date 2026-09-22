@@ -544,7 +544,6 @@
     
 <string name="show_reading_indicators">Show reading progress indicators</string>
     
-<string name="data_deletion">Data deletion</string>
     
 <string name="show_reading_indicators_summary">Show percentage read in history and favorites</string>
     
@@ -844,7 +843,6 @@
     
 <string name="network">Network</string>
     
-<string name="data_and_privacy">Data and privacy</string>
     
 <string name="restore_summary">Restore previously created backup</string>
     

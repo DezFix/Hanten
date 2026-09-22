@@ -259,7 +259,6 @@
     <string name="logout">Выйти</string>
     <string name="status_re_reading">Перечитываю</string>
     <string name="show_reading_indicators">Показать индикаторы прогресса чтения</string>
-    <string name="data_deletion">Удаление данных</string>
     <string name="clear_cookies_summary">Может помочь в случае каких-либо проблем. Все авторизации будут аннулированы</string>
     <string name="show_all">Показать все</string>
     <string name="invalid_domain_message">Неверное доменное имя</string>
@@ -397,7 +396,6 @@
     <string name="invert_colors">Инвертировать цвета</string>
     <string name="webtoon_zoom_summary">Разрешить жесты масштабирования в режиме манхвы</string>
     <string name="network">Сеть</string>
-    <string name="data_and_privacy">Данные и конфиденциальность</string>
     <string name="restore_summary">Восстановить ранее созданную резервную копию</string>
     <string name="reader_info_bar_summary">Отображение текущего времени и прогресса чтения в верхней части экрана</string>
     <string name="show_pages_numbers_summary">Показывать номера страниц в нижнем углу</string>

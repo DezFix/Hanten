@@ -254,7 +254,6 @@
     <string name="appwidget_shelf_description">Manga a kedvenceid közül</string>
     <string name="appwidget_recent_description">A nemrég olvasott mangád</string>
     <string name="report">Jelent</string>
-    <string name="data_deletion">Adattörlés</string>
     <string name="show_all">Összes mutatása</string>
     <string name="clear_all_history">Minden előzmény törlése</string>
     <string name="last_2_hours">Utolsó 2 óra</string>
@@ -420,7 +419,6 @@
     <string name="authorization_optional">Hitelesítés (opcionális)</string>
     <string name="invalid_port_number">Érvénytelen portszám</string>
     <string name="network">Hálózat</string>
-    <string name="data_and_privacy">Adatok és adatvédelem</string>
     <string name="restore_summary">Korábban létrehozott biztonsági mentés visszaállítása</string>
     <string name="webtoon_zoom_summary">Engedélyezze a nagyító gesztust webtoon módban</string>
     <string name="reader_info_bar_summary">Aktuális idő és az olvasási folyamat megjelenítése a képernyő tetején</string>

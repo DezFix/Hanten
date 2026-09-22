@@ -251,7 +251,6 @@
     <string name="logout">Kirjaudu ulos</string>
     <string name="status_reading">Lukemassa</string>
     <string name="status_re_reading">Lukemassa uudelleen</string>
-    <string name="data_deletion">Tietojen poistaminen</string>
     <string name="show_all">Näytä kaikki</string>
     <string name="select_range">Valitse alue</string>
     <string name="not_found_404">Sisältöä ei löydy tai se on poistettu</string>
@@ -601,7 +600,6 @@
     
 <string name="network">Network</string>
     
-<string name="data_and_privacy">Data and privacy</string>
     
 <string name="restore_summary">Restore previously created backup</string>
     

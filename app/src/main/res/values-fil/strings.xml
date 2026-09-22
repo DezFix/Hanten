@@ -225,7 +225,6 @@
     <string name="status_dropped">Itinigil</string>
     <string name="appwidget_shelf_description">Manga mula sa iyong mga paborito</string>
     <string name="appwidget_recent_description">Ang iyong kamakailang nabasa na manga</string>
-    <string name="data_deletion">Pagtanggal ng data</string>
     <string name="show_reading_indicators_summary">Ipakita ang porsyento na nabasa sa kasaysayan at mga paborito</string>
     <string name="show_all">Ipakita lahat</string>
     <string name="select_range">Pumili ng saklaw</string>
@@ -393,7 +392,6 @@
     <string name="username">Username</string>
     <string name="authorization_optional">Awtorisasyon (opsyonal)</string>
     <string name="network">Network</string>
-    <string name="data_and_privacy">Data at privacy</string>
     <string name="restore_summary">Ibalik ang dating ginawang backup</string>
     <string name="webtoon_zoom_summary">Payagan ang pag-zoom in na gesture sa webtoon mode</string>
     <string name="reader_info_bar_summary">Ipakita ang kasalukuyang oras at progreso ng pagbabasa sa tuktok ng screen</string>
