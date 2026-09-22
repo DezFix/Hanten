@@ -182,22 +182,23 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
     }
 
     /**
-     * Beta: totals for the selected period as static chips in app style.
+     * Beta: totals for the selected period as a tonal info card
+     * (deliberately not chips — chips look tappable).
      */
     private fun refreshSummary() {
         val summary = viewModel.summary.value
         val hasRecords = viewModel.readingStats.value.isNotEmpty()
         if (summary == null || !hasRecords || (summary.durationMs == 0L && summary.pages == 0)) {
-            viewBinding.scrollViewSummary.isGone = true
+            viewBinding.cardSummary.isGone = true
             return
         }
-        viewBinding.scrollViewSummary.isGone = false
-        viewBinding.chipSummaryTime.text = formatDuration(summary.durationMs)
-        viewBinding.chipSummaryPages.text = getString(R.string.stats_pages, summary.pages)
+        viewBinding.cardSummary.isGone = false
+        viewBinding.textSummaryTimeValue.text = formatDuration(summary.durationMs)
+        viewBinding.textSummaryPagesValue.text = summary.pages.toString()
         val showDaily = summary.days > 0 && summary.days < Int.MAX_VALUE
-        viewBinding.chipSummaryDaily.isGone = !showDaily
+        viewBinding.layoutSummaryDaily.isGone = !showDaily
         if (showDaily) {
-            viewBinding.chipSummaryDaily.text = getString(R.string.stats_per_day, summary.pages / summary.days)
+            viewBinding.textSummaryDailyValue.text = (summary.pages / summary.days).toString()
         }
     }
 

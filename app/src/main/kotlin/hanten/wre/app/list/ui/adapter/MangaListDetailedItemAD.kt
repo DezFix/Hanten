@@ -34,7 +34,7 @@ fun mangaListDetailedItemAD(
 			if (item.isFavorite) addIcon(R.drawable.ic_heart_outline)
 			val mangaState = item.manga.state
 			when (mangaState) {
-				MangaState.FINISHED, MangaState.PAUSED, MangaState.ABANDONED ->
+				MangaState.FINISHED, MangaState.ABANDONED ->
 					addIcon(mangaState.iconResId)
 
 				else -> if (item.isStale) addIcon(R.drawable.ic_updated)

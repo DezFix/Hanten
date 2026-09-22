@@ -1029,8 +1029,9 @@
     <string name="check_updates">Проверить обновления</string>
     <string name="check_updates_summary">Проверить новую версию на GitHub</string>
     <string name="update_uptodate">У вас последняя версия</string>
-    <string name="stats_pages">стр.: %1$d</string>
-    <string name="stats_per_day">%1$d/день</string>
+    <string name="stats_label_time">Время</string>
+    <string name="stats_label_pages">Страницы</string>
+    <string name="stats_label_per_day">В день</string>
     <string name="donate_title">Поддержать разработку</string>
     <string name="error_reports">Анонимные отчёты об ошибках</string>
     <string name="error_reports_summary">Отправлять анонимные журналы сбоев и детали ошибок источников (источник, ошибка, версия), чтобы помочь чинить баги. Личные данные не собираются. Вступит в силу после перезапуска.</string>
