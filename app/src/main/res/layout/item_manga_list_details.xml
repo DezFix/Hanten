@@ -97,20 +97,6 @@
 				app:lineHeight="14dp"
 				tools:text="@tools:sample/lorem/random" />
 
-			<TextView
-				android:id="@+id/textView_status"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="4dp"
-				android:ellipsize="end"
-				android:gravity="center_vertical"
-				android:maxLines="1"
-				android:textAppearance="?attr/textAppearanceLabelSmall"
-				android:textColor="?attr/colorSecondary"
-				android:visibility="gone"
-				tools:text="@string/state_finished"
-				tools:visibility="visible" />
-
 		</LinearLayout>
 
 		<hanten.wre.app.core.ui.widgets.BadgeView

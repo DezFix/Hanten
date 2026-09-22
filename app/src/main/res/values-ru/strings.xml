@@ -1029,7 +1029,6 @@
     <string name="check_updates">Проверить обновления</string>
     <string name="check_updates_summary">Проверить новую версию на GitHub</string>
     <string name="update_uptodate">У вас последняя версия</string>
-    <string name="stale_updates">Давно без обновлений</string>
     <string name="stats_summary">%1$s · стр.: %2$d</string>
     <string name="stats_summary_daily">%1$s · стр.: %2$d · %3$d/день</string>
     <string name="donate_title">Поддержать разработку</string>
