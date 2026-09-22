@@ -783,6 +783,7 @@
     <string name="include_disabled_sources">Включить отключённые источники</string>
     <string name="suggestions_disabled_sources_summary">Отображать рекомендации из всех источников манги, включая отключённые</string>
     <string name="link_to_manga_in_app">Ссылка на мангу в Hanten</string>
+    <string name="share_qr_code">QR-код</string>
     <string name="nsfw_16">16+</string>
     <string name="clear_browser_data_summary">Удалить данные встроенного браузера, такие как кэш и куки. Внимание: авторизация в источниках манги может быть потеряна</string>
     <string name="error_non_file_uri">Выбранный путь не может быть использован, поскольку он не обозначает файл или каталог</string>

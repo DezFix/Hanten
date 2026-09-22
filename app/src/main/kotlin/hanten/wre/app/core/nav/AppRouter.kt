@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CheckResult
 import androidx.annotation.UiContext
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -21,6 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.EntryPointAccessors
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
@@ -49,6 +52,7 @@ import hanten.wre.app.core.prefs.TriStateOption
 import hanten.wre.app.core.ui.dialog.BigButtonsAlertDialog
 import hanten.wre.app.core.ui.dialog.ErrorDetailsDialog
 import hanten.wre.app.core.ui.dialog.buildAlertDialog
+import hanten.wre.app.core.util.QrCodeHelper
 import hanten.wre.app.core.util.ext.connectivityManager
 import hanten.wre.app.core.util.ext.findActivity
 import hanten.wre.app.core.util.ext.getThemeDrawable
@@ -109,6 +113,7 @@ import hanten.wre.app.parsers.util.ellipsize
 import hanten.wre.app.parsers.util.isNullOrEmpty
 import hanten.wre.app.parsers.util.mapToArray
 import java.io.File
+import kotlinx.coroutines.launch
 import androidx.appcompat.R as appcompatR
 
 class AppRouter private constructor(
@@ -440,18 +445,52 @@ class AppRouter private constructor(
                 arrayOf(
                     context.getString(R.string.link_to_manga_in_app),
                     context.getString(R.string.link_to_manga_on_s, manga.source.getTitle(context)),
+                    context.getString(R.string.share_qr_code),
                 ),
             ) { _, which ->
-                val link = when (which) {
-                    0 -> manga.appUrl.toString()
-                    1 -> manga.publicUrl
-                    else -> return@setItems
+                when (which) {
+                    0 -> shareLink(manga.appUrl.toString(), manga.title)
+                    1 -> shareLink(manga.publicUrl, manga.title)
+                    2 -> showQrDialog(manga.appUrl.toString(), manga.title)
                 }
-                shareLink(link, manga.title)
             }
             setNegativeButton(android.R.string.cancel, null)
             setCancelable(true)
         }.show()
+    }
+
+    /**
+     * Beta: QR code with the short in-app link. Any camera app can scan it;
+     * the app itself opens it via deep-link intent filters, so no in-app
+     * scanner is needed.
+     */
+    private fun showQrDialog(link: String, title: String) {
+        val activity = this.activity ?: return
+        val density = activity.resources.displayMetrics.density
+        val imageSize = (256 * density).toInt()
+        val imageView = AppCompatImageView(activity).apply {
+            layoutParams = ViewGroup.LayoutParams(imageSize, imageSize)
+            setPadding(
+                (24 * density).toInt(),
+                (8 * density).toInt(),
+                (24 * density).toInt(),
+                (8 * density).toInt(),
+            )
+        }
+        val dialog = buildAlertDialog(activity) {
+            setTitle(title)
+            setView(imageView)
+            setNegativeButton(android.R.string.cancel, null)
+            setCancelable(true)
+        }.show()
+        activity.lifecycleScope.launch {
+            val bitmap = QrCodeHelper.encode(link)
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap)
+            } else {
+                dialog.dismiss()
+            }
+        }
     }
 
     fun showErrorDialog(error: Throwable, url: String? = null) {
