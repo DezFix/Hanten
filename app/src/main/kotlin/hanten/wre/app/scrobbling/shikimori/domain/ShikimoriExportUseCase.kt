@@ -64,10 +64,15 @@ class ShikimoriExportUseCase @Inject constructor(
 		if (db.getScrobblingDao().find(ScrobblerService.SHIKIMORI.id, manga.id) != null) {
 			return null // already linked, nothing to do (counts as exported)
 		}
+		val ourKeys = (setOf(manga.title) + manga.altTitles).mapTo(HashSet()) { it.normalizeKey() }
 		val target = runCatchingCancellable {
 			repository.findManga(manga.title, 0)
-		}.getOrNull().orEmpty().firstOrNull {
-			it.name.normalizeKey() == manga.title.normalizeKey()
+		}.getOrNull().orEmpty().firstOrNull { candidate ->
+			val theirKeys = setOfNotNull(
+				candidate.name.normalizeKey(),
+				candidate.altName?.normalizeKey(),
+			)
+			ourKeys.any { it in theirKeys }
 		} ?: return manga.title
 		runCatchingCancellable {
 			repository.createRate(manga.id, target.id)

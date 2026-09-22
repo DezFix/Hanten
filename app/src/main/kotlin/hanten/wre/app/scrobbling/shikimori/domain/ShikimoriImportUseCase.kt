@@ -120,7 +120,10 @@ class ShikimoriImportUseCase @Inject constructor(
 				}
 				for (query in titles) {
 					val result = repository.getList(0, null, MangaListFilter(query = query))
-						.firstOrNull { it.title.normalizeKey() in keys }
+						.firstOrNull { manga ->
+							manga.title.normalizeKey() in keys ||
+								manga.altTitles.any { it.normalizeKey() in keys }
+						}
 					if (result != null) {
 						return@runCatchingCancellable result
 					}
