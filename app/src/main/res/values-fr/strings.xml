@@ -46,8 +46,6 @@
     <string name="scale_mode">Mode mise à l\'échelle</string>
     <string name="create_category">Nouvelle catégorie</string>
     <string name="right_to_left">De droite à gauche</string>
-    <string name="no_update_available">Aucune mise à jour disponible</string>
-    <string name="check_for_updates">Vérifier les mises à jour</string>
     <string name="app_version">Version %s</string>
     <string name="about">À propos</string>
     <string name="passwords_mismatch">Les mots de passe ne correspondent pas</string>
@@ -64,7 +62,6 @@
     <string name="updates_feed_cleared">Effacé</string>
     <string name="clear_updates_feed">Effacer le flux des mises à jour</string>
     <string name="size_s">Taille : %s</string>
-    <string name="new_version_s">Nouvelle version : %s</string>
     <string name="search_results">Résultats de la recherche</string>
     <string name="text_feed_holder">Les nouveaux chapitres de ce que vous lisez sont affichés ici</string>
     <string name="updates">Mises à jour</string>
@@ -346,10 +343,8 @@
     <string name="theme_name_asuka">Asuka</string>
     <string name="theme_name_mion">Mion</string>
     <string name="theme_name_mamimi">Mamimi</string>
-    <string name="allow_unstable_updates">Autoriser les mises à jour instables</string>
     <string name="download_started">Téléchargement commencé</string>
     <string name="theme_name_kanade">Kanade</string>
-    <string name="allow_unstable_updates_summary">Recevoir des notifications sur les moutures instables</string>
     <string name="user_agent">En-tête UserAgent</string>
     <string name="settings_apply_restart_required">Veuillez redémarrer l\'application pour appliquer ces changements</string>
     <string name="got_it">Compris</string>
@@ -359,7 +354,6 @@
     <string name="show_on_shelf">Afficher sur l\'étagère</string>
     <string name="sources_reorder_tip">Appuyez sur un élément et maintenez-le enfoncé pour le réorganiser</string>
     <string name="find_similar">Trouver des similaires</string>
-    <string name="downloads_wifi_only_summary">Arrêter le téléchargement lors du passage à un réseau mobile</string>
     <string name="sync_auth_hint">Vous pouvez vous connecter à un compte existant ou en créer un nouveau</string>
     <string name="server_address">Adresse du serveur</string>
     <string name="sync_host_description">Vous pouvez utiliser un serveur de synchronisation autohébergé ou un serveur par défaut. Ne modifiez pas ce paramètre si vous n\'êtes pas sûr(e) de ce que vous faites.</string>
@@ -410,11 +404,9 @@
     <string name="clear_source_cookies_summary">Effacer les cookies pour le domaine spécifié uniquement. Dans la plupart des cas, l\'autorisation sera invalidée</string>
     <string name="download_option_first_n_chapters">%s premier(s)</string>
     <string name="download_option_next_unread_n_chapters">%s prochain(s) non lu(s)</string>
-    <string name="download_option_all_unread_b">Tous les chapitres non lus (%s)</string>
     <string name="download_option_all_chapters">Tous les chapitres avec traduction %s</string>
     <string name="download_option_all_unread">Tous les chapitres non lus</string>
     <string name="download_option_whole_manga">Tout le manga</string>
-    <string name="download_option_manual_selection">Sélection manuelle des chapitres</string>
     <string name="no_access_to_file">Vous n\'avez pas accès à ce fichier ou répertoire</string>
     <string name="pick_custom_directory">Choisir un répertoire personnalisé</string>
     <string name="local_manga_directories">Annuaires locaux de mangas</string>
@@ -465,7 +457,6 @@
     <string name="source_summary_pattern">%1$s, %2$s</string>
     <string name="backup_frequency">Fréquence de création de sauvegarde</string>
     <string name="content_type_hentai">Hentais</string>
-    <string name="suggest_new_sources">Suggérer de nouvelles sources après la mise à jour de l\'application</string>
     <string name="periodic_backups_enable">Activer les sauvegardes périodiques</string>
     <string name="content_type_comics">Comics</string>
     <string name="catalog">Catalogue</string>
@@ -499,7 +490,6 @@
     <string name="last_successful_backup">Dernière sauvegarde réussie : %s</string>
     <string name="state_paused">En pause</string>
     <string name="backups_output_directory">Sauvegardes répertoire de sortie</string>
-    <string name="suggest_new_sources_summary">Prompt pour permettre des sources nouvellement ajoutées après la mise à jour de l\'application</string>
     <string name="content_type_other">Autre</string>
     <string name="state_upcoming">À venir</string>
     <string name="welcome_text">Veuillez choisir les sources que vous souhaitez activer. Cela peut aussi être configuré plus tard dans les paramètres</string>
@@ -837,7 +827,6 @@
     <string name="obtain">Obtenir</string>
     <string name="reading_s">Lecture de %s</string>
     <string name="read_on_s">Lire sur %s</string>
-    <string name="rpc_skip_nsfw_summary">Ne pas utiliser la présence enrichie pour du contenu adulte</string>
     <string name="invalid_token">Jeton invalide : %s</string>
     <string name="show_floating_control_button">Afficher le bouton de commande flottant</string>
     <string name="unavailable">Non disponible</string>
@@ -884,7 +873,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

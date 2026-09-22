@@ -120,7 +120,6 @@
     <string name="updates">Updates</string>
     <string name="text_feed_holder">New chapters of what you are reading are shown here</string>
     <string name="search_results">Search results</string>
-    <string name="new_version_s">New version: %s</string>
     <string name="size_s">Size: %s</string>
     <string name="clear_updates_feed">Clear updates feed</string>
     <string name="updates_feed_cleared">Cleared</string>
@@ -138,8 +137,6 @@
     <string name="passwords_mismatch">Mismatching passwords</string>
     <string name="about">About</string>
     <string name="app_version">Version %s</string>
-    <string name="check_for_updates">Check for updates: This checks for newer GitHub release. If you installed Hanten from a store, better use the store\'s client for this.</string>
-    <string name="no_update_available">No updates available</string>
     <string name="right_to_left">Right-to-left</string>
     <string name="create_category">New category</string>
     <string name="scale_mode">Scale mode</string>
@@ -371,8 +368,6 @@
     <string name="nothing_here">There is nothing here</string>
     <string name="scrobbling_empty_hint">To track reading progress, select Menu → Track on the manga details screen.</string>
     <string name="services">Services</string>
-    <string name="allow_unstable_updates">Allow unstable updates</string>
-    <string name="allow_unstable_updates_summary">Check for nightly builds in addition to stable releases</string>
     <string name="download_started">Download started</string>
     <string name="got_it">Got it</string>
     <string name="sources_reorder_tip">Tap and hold on an item to reorder them</string>
@@ -397,9 +392,7 @@
     <string name="remove_completed">Remove completed</string>
     <string name="cancel_all">Cancel all</string>
     <string name="downloads_wifi_only">Download only via Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Stop downloading when switching to a mobile network</string>
     <string name="downloads_charging_only">Download only when charging</string>
-    <string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     <string name="suggestion_manga">Suggestion: %s</string>
     <string name="suggestions_notifications_summary">Sometimes show notifications with suggested manga</string>
     <string name="more">More</string>
@@ -448,8 +441,6 @@
     <string name="download_option_first_n_chapters">First %s</string>
     <string name="download_option_next_unread_n_chapters">Next unread %s</string>
     <string name="download_option_all_unread">All unread chapters</string>
-    <string name="download_option_all_unread_b">All unread chapters (%s)</string>
-    <string name="download_option_manual_selection">Select chapters manually</string>
     <string name="pick_custom_directory">Pick custom directory</string>
     <string name="no_access_to_file">You have no access to this file or directory</string>
     <string name="local_manga_directories">Local manga directories</string>
@@ -497,8 +488,6 @@
     <string name="state_abandoned">Dropped</string>
     <string name="enhanced_colors_summary">Reduces banding, but may impact performance</string>
     <string name="enhanced_colors">32-bit color mode</string>
-    <string name="suggest_new_sources">Suggest new sources after app update</string>
-    <string name="suggest_new_sources_summary">Prompt to enable newly added sources after updating the application</string>
     <string name="list_options">List options</string>
     <string name="by_relevance">Relevance</string>
     <string name="categories">Categories</string>
@@ -900,7 +889,6 @@
     <string name="obtain">Obtain</string>
     <string name="reading_s">Reading %s</string>
     <string name="read_on_s">Read on %s</string>
-    <string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     <string name="invalid_token">Invalid token: %s</string>
     <string name="show_floating_control_button">Show floating control button</string>
     <string name="unavailable">Unavailable</string>
@@ -956,17 +944,13 @@
     <string name="download_only_on_charging_summary">Connect to a power source to start downloads</string>
     <string name="error_quota_too_low">Storage quota cannot be lower than current usage</string>
     <string name="download_quota_reached">Storage quota reached. Downloads paused.</string>
-    <string name="update_available_title">Update available: %1$s</string>
     <string name="update_available_heading">A new update is available</string>
     <string name="update_install_now">Update now</string>
-    <string name="update_now">Update</string>
-    <string name="update_later">Later</string>
     <string name="update_skip_version">Skip this version</string>
     <string name="update_no_changelog">No changelog provided.</string>
     <string name="frequency_every_hour">Every hour</string>
     <string name="frequency_every_3_days">Every 3 days</string>
     <string name="suggestions_update_interval">Update interval</string>
-    <string name="update_download_and_install">Download and install</string>
     <string name="update_downloading_title">Downloading update: %1$s</string>
     <string name="update_cancel">Cancel</string>
     <string name="update_download_progress">%1$d%% · %2$s / %3$s</string>

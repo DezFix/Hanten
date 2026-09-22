@@ -58,7 +58,6 @@
     <string name="enter_password">Ilagay ang password</string>
     <string name="protect_application_summary">Humingi ng password kapag sinimulan ang Hanten</string>
     <string name="about">Tungkol rito</string>
-    <string name="check_for_updates">Maghanap ng update</string>
     <string name="right_to_left">Kanan sa kaliwa</string>
     <string name="create_category">Bagong Kategorya</string>
     <string name="zoom_mode_fit_center">Pagkasyahin sa gitna</string>
@@ -135,7 +134,6 @@
     <string name="pages">Mga pahina</string>
     <string name="clear_history">Linisin ang kasaysayan</string>
     <string name="clear_search_history">Linisin ang kasaysayan ng paghahanap</string>
-    <string name="new_version_s">Bagong bersyon: %s</string>
     <string name="passwords_mismatch">Hindi tumutugma sa mga password</string>
     <string name="clear_cookies">Linisin ang mga cookie</string>
     <string name="clear_pages_cache">Linisin ang page cache</string>
@@ -157,7 +155,6 @@
     <string name="wrong_password">Maling password</string>
     <string name="app_version">Bersyon %s</string>
     <string name="scale_mode">Mode ng scale</string>
-    <string name="no_update_available">Walang available na update</string>
     <string name="reverse">Baliktarin</string>
     <string name="group">Grupo</string>
     <string name="silent">Tahimik</string>
@@ -287,7 +284,6 @@
     <string name="theme_name_kanade">Kanade</string>
     <string name="nothing_here">Wala naman dito</string>
     <string name="services">Mga serbisyo</string>
-    <string name="allow_unstable_updates">Payagan ang mga hindi stable na update</string>
     <string name="show_reading_indicators">Ipakita ang pang-hiwatig ng progreso</string>
     <string name="exclude_nsfw_from_history_summary">Ang mga Manga na naka-mark na NSFW ay hindi masasali sa kasaysayan at ang progress mo ay hindi ma-sesave</string>
     <string name="clear_cookies_summary">Maaaring makatulong sa kaso ng ilang mga isyu. Ang lahat ng pahintulot ay mawawalan ng bisa</string>
@@ -326,7 +322,6 @@
     <string name="use_fingerprint">Gumamit ng biometric kung magagamit</string>
     <string name="report">Ulat</string>
     <string name="reset">I-reset</string>
-    <string name="allow_unstable_updates_summary">Makakuha ng paunawa tungkol sa mga unstable build</string>
     <string name="network_unavailable">Hindi magagamit ang network</string>
     <string name="network_unavailable_hint">I-on ang Wi-Fi o mobile network para magbasa ng manga online</string>
     <string name="reader_control_ltr_summary">Huwag i-adjust ang direksyon ng pagpalit ng pahina sa reader mode, hal. kapag pindutin ang kanan (right) na key ay palaging lumilipat sa susunod na pahina. Ang opsyong ito ay nakakaapekto lamang sa mga hardware input device</string>
@@ -371,7 +366,6 @@
     <string name="mirror_switching_summary">Awtomatikong lumipat ng domain para sa mga manga source kapag may error kung may available na mirror</string>
     <string name="cancel_all">Kanselahin lahat</string>
     <string name="downloads_wifi_only">Mag-download lamang sa pamamagitan ng Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Itigil ang pag-download kapag lumipat sa isang mobile network</string>
     <string name="paused">Naka-pause</string>
     <string name="remove_completed">Tanggalin ang nakumpleto na</string>
     <string name="suggestion_manga">Mga mungkahi: %s</string>
@@ -411,8 +405,6 @@
     <string name="download_option_first_n_chapters">Unang %s</string>
     <string name="download_option_next_unread_n_chapters">Susunod na di-nabasa %s</string>
     <string name="download_option_all_unread">Lahat ng di-nababasang kabanata</string>
-    <string name="download_option_all_unread_b">Lahat ng di-nababasang kabanata (%s)</string>
-    <string name="download_option_manual_selection">Manu-manong pumili ng mga kabanata</string>
     <string name="invert_colors">Baliktarin ang mga kulay</string>
     <string name="pick_custom_directory">Pumili ng custom na directory</string>
     <string name="no_access_to_file">Wala kang access sa file o directory na ito</string>
@@ -456,13 +448,11 @@
     <string name="main_screen_sections">Mga pangunahing seksyon ng screen</string>
     <string name="zoom_out">Mag-zoom palabas</string>
     <string name="to_top">Sa taas</string>
-    <string name="suggest_new_sources">Magmungkahi ng mga bagong source pagkatapos ng app update</string>
     <string name="enhanced_colors_summary">Binabawasan ang banding, ngunit maaaring makaapekto ito sa performance</string>
     <string name="state_abandoned">Na-drop</string>
     <string name="keep_screen_on">Panatilihing naka-on ang screen</string>
     <string name="enhanced_colors">32-bit na color mode</string>
     <string name="keep_screen_on_summary">Huwag I-off ang screen habang nagbabasa ng manga</string>
-    <string name="suggest_new_sources_summary">I-prompt na paganahin ang mga bagong idinagdag na source pagkatapos i-update ang aplikasyon</string>
     <string name="categories">Mga Kategorya</string>
     <string name="list_options">Opsyon sa Listahan</string>
     <string name="by_relevance">Kaugnayan</string>
@@ -824,7 +814,6 @@
     <string name="unavailable">Di-available</string>
     <string name="show_floating_control_button">Ipakita ang lumulutang na control button</string>
     <string name="invalid_token">Imbalidong token: %s</string>
-    <string name="rpc_skip_nsfw_summary">Huwag gamitin ang RPC para sa pangmatandang content</string>
     <string name="read_on_s">Basahin sa %s</string>
     <string name="reading_s">Binabasa ng %s</string>
     <string name="obtain">Kumuha</string>
@@ -881,7 +870,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

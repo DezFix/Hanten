@@ -38,7 +38,6 @@
     <string name="internal_storage">Унутрашња меморија</string>
     <string name="external_storage">Спољна меморија</string>
     <string name="language">Језик</string>
-    <string name="allow_unstable_updates">Дозволи нестабилна ажурирања</string>
     <string name="text_file_sizes">B|kB|MB|GB|TB</string>
     <string name="standard">Стандардни</string>
     <string name="webtoon">Манхва</string>
@@ -64,7 +63,6 @@
     <string name="default_mode">Подразумевани режим</string>
     <string name="network_unavailable">Мрежа није доступна</string>
     <string name="network_unavailable_hint">Укључите Wi-Fi или мобилну мрежу да бисте читали мангу на мрежи</string>
-    <string name="allow_unstable_updates_summary">Добијај обавештења о нестабилним верзијама апликације</string>
     <string name="data_and_privacy">Подаци и приватност</string>
     <string name="network">Мрежа</string>
     <string name="show_pages_numbers_summary">Прикажи бројеве страница у доњем углу</string>
@@ -88,7 +86,6 @@
     <string name="error">Грешка</string>
     <string name="new_chapters">Нова поглавља</string>
     <string name="notifications_settings">Подешавања обавештења</string>
-    <string name="new_version_s">Нова верзија: %s</string>
     <string name="about_app_translation_summary">Преведи ову апликацију</string>
     <string name="about_app_translation">Превод</string>
     <string name="screenshots_policy">Политика снимања екрана</string>
@@ -111,7 +108,6 @@
     <string name="notifications">Обавештења</string>
     <string name="pages_cache">Кеш страница</string>
     <string name="manga_shelf">Полица</string>
-    <string name="check_for_updates">Провери ажурирања</string>
     <string name="feed">Новости</string>
     <string name="services">Услуге</string>
     <string name="show_on_shelf">Прикажи на полици</string>
@@ -182,12 +178,9 @@
     <string name="chapters_empty">Нема поглавља у овој манги</string>
     <string name="content_type_hentai">Хентаи</string>
     <string name="clear_source_cookies_summary">Избриши колачиће само за одређени домен. У већини случајева поништава овлашћење</string>
-    <string name="no_update_available">Нема доступних ажурирања</string>
     <string name="clear_all_history">Избриши сву историју</string>
     <string name="data_deletion">Брисање података</string>
     <string name="history_shortcuts">Прикажи недавне пречице за мангу</string>
-    <string name="downloads_wifi_only_summary">Зауставља преузимање када пређеш на мобилну мрежу</string>
-    <string name="suggest_new_sources">Предложи нове изворе након ажурирања апликације</string>
     <string name="import_completed">Увоз је завршен</string>
     <string name="show_reading_indicators">Прикажи показивач током читања</string>
     <string name="read_later">За касније</string>
@@ -221,7 +214,6 @@
     <string name="unknown">Непознато</string>
     <string name="in_progress">У току</string>
     <string name="suggestions">Предлози</string>
-    <string name="download_option_manual_selection">Изабери поглавља ручно</string>
     <string name="enhanced_colors_summary">Смањује траке, али може утицати на учинак</string>
     <string name="importing_manga">Увези манге</string>
     <string name="enabled">Омогућено</string>
@@ -296,7 +288,6 @@
     <string name="online_variant">Варијанта са мреже</string>
     <string name="create_category">Нова категорија</string>
     <string name="error_multiple_genres_not_supported">Овај извор манге не подржава филтрирање према више жанрова</string>
-    <string name="download_option_all_unread_b">Сва непрочитана поглавља (%s)</string>
     <string name="color_dark">Тамна</string>
     <string name="screenshots_allow">Дозволи</string>
     <string name="backup_restore">Прављење резервних копија и обнављање</string>
@@ -479,7 +470,6 @@
     <string name="mirror_switching_summary">Самостално пребаци домене за изворе манге у случају грешака ако су послуживачи доступни</string>
     <string name="no_bookmarks_yet">Нема обележивача за сада</string>
     <string name="no_thanks">Не хвала</string>
-    <string name="suggest_new_sources_summary">Затражи да омогућиш новододате изворе након ажурирања апликације</string>
     <string name="backup_information">Можеш да направиш резервну копију своје историје и омиљених и обновити је</string>
     <string name="zoom_mode_keep_start">Задржи на почетку</string>
     <string name="text_local_holder_secondary">Сачувај нешто из каталога или увези из датотеке.</string>
@@ -845,7 +835,6 @@
     <string name="obtain">Добиј</string>
     <string name="reading_s">Читам %s</string>
     <string name="read_on_s">Читај на %s</string>
-    <string name="rpc_skip_nsfw_summary">Не користи RPC за садржај за одрасле</string>
     <string name="invalid_token">Неважећи токен: %s</string>
     <string name="show_floating_control_button">Прикажи плутајуће дугме за контролу</string>
     <string name="unavailable">Недоступно</string>
@@ -886,7 +875,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

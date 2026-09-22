@@ -4,7 +4,6 @@
     <string name="text_history_holder_secondary">«Шолу» бөлімінен не оқуға болатынын табыңыз.</string>
     <string name="text_local_holder_secondary">Файлдан импорттаңыз не онлайн каталогтан бірдеңе сақтаңыз.</string>
     <string name="other_storage">Басқа бума</string>
-    <string name="new_version_s">Жаңа нұсқа: %s</string>
     <string name="size_s">Өлшемі: %s</string>
     <string name="clear_updates_feed">Жаңарту легін тазалау</string>
     <string name="updates_feed_cleared">Тазаланды</string>
@@ -122,7 +121,6 @@
     <string name="protect_application">Қолданбаны қорғау</string>
     <string name="passwords_mismatch">Құпиясөз бірдей емес</string>
     <string name="app_version">%s нұсқа</string>
-    <string name="check_for_updates">Жаңартуды тексеру</string>
     <string name="right_to_left">Оңнан солға</string>
     <string name="zoom_mode_fit_height">Биіктігіне қарай қою</string>
     <string name="zoom_mode_fit_width">Еніне қарай қою</string>
@@ -156,7 +154,6 @@
     <string name="auth_not_supported_by">%s кіру қолжетімсіз</string>
     <string name="state_finished">Аяқталған</string>
     <string name="text_clear_updates_feed_prompt">Жаңарту тарихын толықтау тазартайық па\?</string>
-    <string name="no_update_available">Жаңарту жоқ</string>
     <string name="backup_restore">Сақтық көшірме мен қалпына келтіру</string>
     <string name="dont_check">Тексермеу</string>
     <string name="enter_password">Құпиясөзді енгізіңіз</string>
@@ -306,8 +303,6 @@
     <string name="clear_cookies_summary">Қате болса көмектесе алады. Түгел тіркелгінің күші жойылады</string>
     <string name="clear_source_cookies_summary">Осы дәмейіннің кукиін тазалау. Көп жағдайда тіркелгіден шығылып кетеді</string>
     <string name="history_shortcuts">Соңғы маңганың таңбашасын көрсету</string>
-    <string name="downloads_wifi_only_summary">Ұялы желіге көшкенде жүктеп алуды тоқтату</string>
-    <string name="suggest_new_sources">Қолданбаны жаңартқан соң жаңа дереккөз ұсыну</string>
     <string name="import_completed">Импорт аяқталды</string>
     <string name="user_agent">UserAgent басы</string>
     <string name="ignore_ssl_errors">SSL қатеге мән бермеу</string>
@@ -322,7 +317,6 @@
     <string name="theme_name_sakura">Сакура</string>
     <string name="unknown">Белгісіз</string>
     <string name="in_progress">Оқылып жатыр</string>
-    <string name="download_option_manual_selection">Тарауды таңдап шығу</string>
     <string name="enhanced_colors_summary">Түс ыдырауын азайтады, бірақ өнімділікке әсер ете алады</string>
     <string name="importing_manga">Маңга импорттау</string>
     <string name="pause">Үзіліс</string>
@@ -366,13 +360,11 @@
     <string name="advanced">Қосымша баптау</string>
     <string name="sync_settings">Үйлестіру баптауы</string>
     <string name="online_variant">Онлайн нұсқа</string>
-    <string name="download_option_all_unread_b">Түгел оқылмаған тарау (%s)</string>
     <string name="authorization_optional">Кіру (міндетті емес)</string>
     <string name="color_dark">Күңгірт</string>
     <string name="other_cache">Басқа кәш</string>
     <string name="show_suspicious_content">Күмәнді контентті көрсету</string>
     <string name="reader_info_bar_summary">Экранның үстінгі жағында уақыт пен оқу прогрессін көрсету</string>
-    <string name="allow_unstable_updates_summary">Тұрақсыз нұсқа туралы мәлімдеме алу</string>
     <string name="comics_archive_import_description">Бір не одан көп .cbz я .zip файлын таңдай аласыз, әр файыл бөлек маңга болып анықталады.</string>
     <string name="downloads_paused">Жүктеп алу тоқтап қалды</string>
     <string name="too_many_requests_message">Тым көп сұрату. Біраздан соң қайталап көріңіз</string>
@@ -455,7 +447,6 @@
     <string name="to_top">Үстіге</string>
     <string name="show">Көрсету</string>
     <string name="show_on_shelf">Сөреде көрсету</string>
-    <string name="allow_unstable_updates">Тұрақсыз жаңартуды орнатуға рұқсат беру</string>
     <string name="sync_auth_hint">Жаңа тіркелгі аша аласыз я жаңасын жасай аласыз</string>
     <string name="theme_name_kanade">Канаде</string>
     <string name="backups_output_directory">Сақтық көшірмесінің каталогы</string>
@@ -469,7 +460,6 @@
     <string name="mirror_switching_summary">Дереккөз дәмейнінің қатесі пайда болып, айнасы қолжетімді болса, өздігінен соған ауыстыру</string>
     <string name="no_bookmarks_yet">Бетбелгі жоқ</string>
     <string name="no_thanks">Жоқ, рақмет</string>
-    <string name="suggest_new_sources_summary">Қолданбаның жаңа нұсқасында пайда болған дереккөзді ұсыну</string>
     <string name="speed">Жылдамдық</string>
     <string name="download_option_all_chapters">%s аударған түгел тарау</string>
     <string name="suggestion_manga">Ұсыныс: %s</string>
@@ -571,7 +561,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1244,7 +1233,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

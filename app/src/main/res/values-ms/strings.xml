@@ -88,8 +88,6 @@
     <string name="passwords_mismatch">Kata laluan tidak padan</string>
     <string name="about">Tentang</string>
     <string name="app_version">Versi %s</string>
-    <string name="check_for_updates">Semak kemas kini</string>
-    <string name="no_update_available">Tiada kemas kini tersedia</string>
     <string name="right_to_left">Kanan-ke-kiri</string>
     <string name="zoom_mode_fit_width">Muat ke kelebaran</string>
     <string name="zoom_mode_keep_start">Kekalkan di permulaan</string>
@@ -287,7 +285,6 @@
     <string name="saved_manga">Manga disimpan</string>
     <string name="text_feed_holder">Bab-bab baharu bacaan anda ditunjukkan di sini</string>
     <string name="size_s">Saiz: %s</string>
-    <string name="new_version_s">Versi baharu: %s</string>
     <string name="clear_updates_feed">Kosongkan siaran kemaskini</string>
     <string name="updates_feed_cleared">Dikosongkan</string>
     <string name="wrong_password">Kata laluan salah</string>
@@ -355,8 +352,6 @@
     <string name="nothing_here">Tidak ada apa -apa di sini</string>
     <string name="scrobbling_empty_hint">Untuk Melacak Progres Membaca, Pilih Menu → LaCak Di Layar Butiran Manga.</string>
     <string name="services">Perkhidmatan</string>
-    <string name="allow_unstable_updates">Benarkan kemas kini yang tidak stabil</string>
-    <string name="allow_unstable_updates_summary">Terima pemberitahuan mengenai binaan yang tidak stabil</string>
     <string name="download_started">Muat turun bermula</string>
     <string name="got_it">Mendapatnya</string>
     <string name="sources_reorder_tip">Ketik dan tahan item untuk menyusun semula mereka</string>
@@ -380,7 +375,6 @@
     <string name="remove_completed">Keluarkan selesai</string>
     <string name="cancel_all">Batalkan semua</string>
     <string name="downloads_wifi_only">Muat turun Hanya melalui Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Berhenti memuat turun semasa beralih ke rangkaian mudah alih</string>
     <string name="suggestion_manga">Cadangan: %s</string>
     <string name="suggestions_notifications_summary">Kadang -kadang menunjukkan pemberitahuan dengan manga yang dicadangkan</string>
     <string name="more">Lebih</string>
@@ -431,8 +425,6 @@
     <string name="download_option_first_n_chapters">Pertama %s</string>
     <string name="download_option_next_unread_n_chapters">Seterusnya belum dibaca %s</string>
     <string name="download_option_all_unread">Semua bab yang belum dibaca</string>
-    <string name="download_option_all_unread_b">Semua bab yang belum dibaca (%s)</string>
-    <string name="download_option_manual_selection">Pilih bab secara manual</string>
     <string name="pick_custom_directory">Pilih direktori tersuai</string>
     <string name="no_access_to_file">Anda tidak mempunyai akses ke fail atau direktori ini</string>
     <string name="local_manga_directories">Direktori manga tempatan</string>
@@ -475,8 +467,6 @@
     <string name="state_abandoned">Jatuh</string>
     <string name="enhanced_colors_summary">Mengurangkan banding, tetapi mungkin memberi kesan kepada prestasi</string>
     <string name="enhanced_colors">Mod warna 32-bit</string>
-    <string name="suggest_new_sources">Cadangkan sumber baru selepas kemas kini aplikasi</string>
-    <string name="suggest_new_sources_summary">Segera untuk membolehkan sumber yang baru ditambah setelah mengemas kini aplikasi</string>
     <string name="list_options">Pilihan Senarai</string>
     <string name="by_relevance">Kaitan</string>
     <string name="categories">Kategori</string>
@@ -839,7 +829,6 @@
     <string name="obtain">Memperoleh</string>
     <string name="reading_s">Membaca %s</string>
     <string name="read_on_s">Baca terus %s</string>
-    <string name="rpc_skip_nsfw_summary">Jangan gunakan RPC untuk kandungan dewasa</string>
     <string name="invalid_token">Token tidak sah: %s</string>
     <string name="show_floating_control_button">Tunjukkan butang kawalan terapung</string>
     <string name="unavailable">Tidak tersedia</string>
@@ -880,7 +869,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

@@ -86,7 +86,6 @@
     <string name="update">अद्यतन</string>
     <string name="feed_will_update_soon">फीड अद्यतन शीघ्र ही आरंभ होगा</string>
     <string name="app_update_available">इस ऐप का नया संस्करण उपलब्ध हैं</string>
-    <string name="new_version_s">नया संस्करण: %s</string>
     <string name="text_delete_local_manga">डिवाइस से \"%s\" को स्थायी रूप से मिटाएं?</string>
     <string name="text_history_holder_primary">आप जो पढ़ेंगे वह यहां प्रदर्शित किया जाएगा</string>
     <string name="delete_manga">मंगा मिटाएं</string>
@@ -142,8 +141,6 @@
     <string name="repeat_password">पासवर्ड दोहराएं</string>
     <string name="passwords_mismatch">बेमेल पासवर्ड</string>
     <string name="app_version">संस्करण %s</string>
-    <string name="check_for_updates">अद्यतनों के लिए जांचें</string>
-    <string name="no_update_available">कोई अद्यतन उपलब्ध नहीं</string>
     <string name="scale_mode">स्केल मोड</string>
     <string name="black_dark_theme">काली</string>
     <string name="black_dark_theme_summary">AMOLED स्क्रीन पर कम बिजली का उपयोग होता है</string>
@@ -282,7 +279,6 @@
     <string name="paused">विरामित</string>
     <string name="cancel_all">सभी रद्द करें</string>
     <string name="mirror_switching">स्वचालित रूप से मिरर चुनें</string>
-    <string name="downloads_wifi_only_summary">मोबाइल नेटवर्क पर स्विच करते समय डाउनलोड करना बंद कर दें</string>
     <string name="suggestion_manga">सुझाव: %s</string>
     <string name="suggestions_notifications_summary">कभी-कभी सुझाए गए मंगा के साथ सूचनाएं दिखाएं</string>
     <string name="more">अधिक</string>
@@ -364,8 +360,6 @@
     <string name="keep_screen_on_summary">जब आप मंगा पढ़ रहे हों तो स्क्रीन बंद न करें</string>
     <string name="enhanced_colors_summary">बैंडिंग को कम करता है, लेकिन प्रदर्शन को प्रभावित कर सकता है</string>
     <string name="enhanced_colors">32-बिट रंग मोड</string>
-    <string name="suggest_new_sources">ऐप अद्यतन के बाद नए स्रोत सुझाएं</string>
-    <string name="suggest_new_sources_summary">एप्लिकेशन को अपडेट करने के बाद नए जोड़े गए स्रोतों को सक्षम करने का संकेत दें</string>
     <string name="online_variant">ऑनलाइन संस्करण</string>
     <string name="periodic_backups">आवधिक बैकअप</string>
     <string name="backup_frequency">बैकअप निर्माण आवृत्ति</string>
@@ -419,8 +413,6 @@
     <string name="download_option_whole_manga">संपूर्ण मंगा</string>
     <string name="download_option_first_n_chapters">प्रथम %s</string>
     <string name="download_option_all_unread">सभी अपठित अध्याय</string>
-    <string name="download_option_all_unread_b">सभी अपठित अध्याय (%s)</string>
-    <string name="download_option_manual_selection">अध्यायों का चयन हस्तचालित रूप से करें</string>
     <string name="color_light">हल्का</string>
     <string name="color_dark">गहरा</string>
     <string name="color_white">सफेद</string>
@@ -533,9 +525,7 @@
     <string name="theme_name_mion">Mion</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="theme_name_mamimi">Mamimi</string>
-    <string name="allow_unstable_updates">अस्थिर अद्यतन की अनुमति दें</string>
     <string name="nothing_here">यहां कुछ नहीं है</string>
-    <string name="allow_unstable_updates_summary">अस्थिर बिल्ड के बारे में सूचनाएं प्राप्त करें</string>
     <string name="categories_delete_confirm">क्या आप वाकई चयनित पसंदीदा श्रेणियां मिटाना चाहते हैं? \nइसमें मौजूद सारा मंगा नष्ट हो जाएगा और इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="manga_error_description_pattern">त्रुटि विवरण:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1। यह सुनिश्चित करने के लिए कि यह अपने स्रोत पर उपलब्ध है &lt;a href=%2$s&gt;मंगा को वेब ब्राउज़र में खोलने का प्रयास करें&lt;/a&gt;&lt;br&gt;2। सुनिश्चित करें कि आप &lt;a href=hanten://about&gt;Hanten के नवीनतम संस्करण&lt;/a&gt;&lt;br&gt;3 का उपयोग कर रहे हैं। यदि यह उपलब्ध है, तो डेवलपर्स को एक त्रुटि रिपोर्ट भेजें।</string>
     <string name="folder_with_images_import_description">आप अभिलेखों या छवियों वाली एक निर्देशिका का चयन कर सकते हैं। प्रत्येक संग्रह (या उपनिर्देशिका) को एक अध्याय के रूप में पहचाना जाएगा।</string>
@@ -696,7 +686,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1119,7 +1108,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

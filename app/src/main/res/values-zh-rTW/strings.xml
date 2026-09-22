@@ -111,7 +111,6 @@
     <string name="all_favourites">所有最愛</string>
     <string name="favourites_category_empty">空白分類</string>
     <string name="search_results">搜尋結果</string>
-    <string name="new_version_s">新版本: %s</string>
     <string name="size_s">大小: %s</string>
     <string name="updates_feed_cleared">已清除</string>
     <string name="clear_updates_feed">清除更新訂閱</string>
@@ -126,8 +125,6 @@
     <string name="passwords_mismatch">密碼不匹配</string>
     <string name="about">關於</string>
     <string name="app_version">版本 %s</string>
-    <string name="check_for_updates">檢查更新</string>
-    <string name="no_update_available">沒有可用的更新</string>
     <string name="right_to_left">由右至左</string>
     <string name="create_category">新分類</string>
     <string name="scale_mode">縮放模式</string>
@@ -309,7 +306,6 @@
     <string name="restore_summary">還原先前建立的備份</string>
     <string name="port">連接埠</string>
     <string name="download_option_all_unread">所有未讀章節</string>
-    <string name="download_option_all_unread_b">所有未讀章節 (%s)</string>
     <string name="downloads">下載</string>
     <string name="save_page">儲存頁面</string>
     <string name="page_saved">頁面已儲存</string>
@@ -329,7 +325,6 @@
     <string name="status_reading">閱讀</string>
     <string name="download_started">下載已開始</string>
     <string name="download_option_whole_manga">整個漫畫</string>
-    <string name="download_option_manual_selection">手動選擇章節</string>
     <string name="language">語言</string>
     <string name="invert_colors">反轉色彩</string>
     <string name="images_procy_description">如果可能的話，使用 wsrv.nl 服務以減少流量使用與提升圖片載入速度</string>
@@ -376,7 +371,6 @@
     <string name="theme_name_mion">Mion</string>
     <string name="pause">暫停</string>
     <string name="downloads_wifi_only">只通過 Wi-Fi 下載</string>
-    <string name="downloads_wifi_only_summary">切換到行動網路時停止下載</string>
     <string name="by_name">名稱</string>
     <string name="popular">熱門</string>
     <string name="updated">已更新</string>
@@ -393,7 +387,6 @@
     <string name="show_suspicious_content">顯示可疑內容</string>
     <string name="show_in_grid_view">在網格檢視中顯示</string>
     <string name="nothing_here">這裡沒有任何東西</string>
-    <string name="allow_unstable_updates">允許不穩定更新</string>
     <string name="sync_settings">同步設定</string>
     <string name="no_thanks">不，謝謝</string>
     <string name="cancel_all_downloads_confirm">所有進行中的下載將被取消， 未下載完成的資料將會遺失</string>
@@ -415,7 +408,6 @@
     <string name="download_option_next_unread_n_chapters">下一個未讀 %s</string>
     <string name="download_option_first_n_chapters">最初 %s</string>
     <string name="memory_usage_pattern">%s - %s</string>
-    <string name="allow_unstable_updates_summary">接收不穩定建置的更新通知</string>
     <string name="scrobbling_empty_hint">要追蹤閱讀進度，在漫畫詳細畫面選擇選單 → 追蹤。</string>
     <string name="manga_error_description_pattern">錯誤詳情:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1. 嘗試&lt;a href=%2$s&gt;在瀏覽器中開啟漫畫&lt;/a&gt; 以確保它在其來源中是可用的&lt;br&gt;2. 確認您使用的是 &lt;a href=hanten://about&gt;最新版的的 Hanten&lt;/a&gt;&lt;br&gt;3. 如果可用，請向開發人員發送錯誤報告。</string>
     <string name="languages">語言</string>
@@ -428,7 +420,6 @@
     <string name="tracker_wifi_only_summary">使用計量付費網路連線時不檢查新章節</string>
     <string name="order_added">加入日期</string>
     <string name="on_device">在裝置上</string>
-    <string name="suggest_new_sources">在應用程式更新之後推薦新的來源</string>
     <string name="moved_to_top">移動至頂部</string>
     <string name="data_not_restored_text">確保您選取了正確的備份檔案</string>
     <string name="unknown">未知</string>
@@ -458,7 +449,6 @@
     <string name="color_white">白色</string>
     <string name="to_top">至頂</string>
     <string name="show">顯示</string>
-    <string name="suggest_new_sources_summary">在應用程式更新之後提示啟用新加入的來源</string>
     <string name="color_black">黑色</string>
     <string name="this_month">這個月</string>
     <string name="state_upcoming">即將推出</string>
@@ -694,7 +684,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1124,7 +1113,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

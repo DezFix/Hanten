@@ -121,13 +121,10 @@
     <string name="text_empty_holder_primary">ここは空っぽです…</string>
     <string name="favourites_category_empty">空のカテゴリー</string>
     <string name="text_local_holder_secondary">オンラインソースから保存するかファイルをインポートします。</string>
-    <string name="new_version_s">新しいバージョン:%s</string>
     <string name="rotate_screen">画面を回転させる</string>
     <string name="enter_password">パスワードを入力してください</string>
     <string name="wrong_password">パスワードが間違っています</string>
     <string name="protect_application">アプリを保護する</string>
-    <string name="check_for_updates">最新のアップデートを確認する</string>
-    <string name="no_update_available">利用可能なアップデートはありません</string>
     <string name="right_to_left">右から左</string>
     <string name="auth_complete">承認済み</string>
     <string name="auth_not_supported_by">%sへのログインはサポートされていません</string>
@@ -337,8 +334,6 @@
     <string name="theme_name_miku">ミク</string>
     <string name="user_agent">ユーザー エージェント ヘッダー</string>
     <string name="prefetch_content">コンテンツのプリロード</string>
-    <string name="allow_unstable_updates">不安定な更新を許可</string>
-    <string name="allow_unstable_updates_summary">不安定なビルドに関する通知を受け取る</string>
     <string name="download_started">ダウンロードが開始されました</string>
     <string name="language">言語</string>
     <string name="source_disabled">ソースが無効になっています</string>
@@ -384,7 +379,6 @@
     <string name="paused">一時停止</string>
     <string name="cancel_all">全てキャンセル</string>
     <string name="downloads_wifi_only">Wi-Fi経由でのみダウンロード</string>
-    <string name="downloads_wifi_only_summary">モバイルデータ通信への切り替え時にダウンロードを停止する</string>
     <string name="suggestion_manga">提案： %s</string>
     <string name="suggestions_notifications_summary">提案されたマンガの通知を表示することがあります</string>
     <string name="more">もっと見る</string>
@@ -413,8 +407,6 @@
     <string name="download_option_first_n_chapters">最初%s</string>
     <string name="download_option_next_unread_n_chapters">次の未読%s</string>
     <string name="download_option_all_unread">すべての未読の章</string>
-    <string name="download_option_all_unread_b">すべての未読チャプター (%s)</string>
-    <string name="download_option_manual_selection">手動でチャプターを選択</string>
     <string name="no_access_to_file">このファイルまたはディレクトリにアクセスできません</string>
     <string name="pick_custom_directory">カスタムディレクトリを選択</string>
     <string name="local_manga_directories">ローカルマンガディレクトリ</string>
@@ -477,8 +469,6 @@
     <string name="keep_screen_on_summary">漫画を読んでいる間は画面をオフにしない</string>
     <string name="enhanced_colors_summary">バンドノイズを低減しますが、パフォーマンスへの影響が生じる場合があります</string>
     <string name="enhanced_colors">32bitカラーモード</string>
-    <string name="suggest_new_sources">アプリ更新後に新しいソースを提案する</string>
-    <string name="suggest_new_sources_summary">アプリケーション更新後に新しく追加されたソースを使用できるようにするかどうか確認する</string>
     <string name="by_relevance">関連性</string>
     <string name="categories">カテゴリ</string>
     <string name="online_variant">オンライン版</string>
@@ -752,7 +742,6 @@
     <string name="obtain">アクセス</string>
     <string name="reading_s">読書 %s</string>
     <string name="read_on_s">%s で読む</string>
-    <string name="rpc_skip_nsfw_summary">成人向けコンテンツに RPC を使用しないでください</string>
     <string name="invalid_token">無効なトークン: %s</string>
     <string name="show_floating_control_button">「続行」ボタンをフローティングで表示</string>
     <string name="unavailable">利用案内</string>
@@ -833,7 +822,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

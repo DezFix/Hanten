@@ -35,8 +35,6 @@
     <string name="list_mode">Listenmodus</string>
     <string name="grid">Raster</string>
     <string name="text_clear_updates_feed_prompt">Den gesamte Aktualisierungsverlauf unwiderruflich löschen\?</string>
-    <string name="no_update_available">Keine Aktualisierungen verfügbar</string>
-    <string name="check_for_updates">Nach Aktualisierungen suchen</string>
     <string name="track_sources">Suche nach Aktualisierungen</string>
     <string name="feed_will_update_soon">Die Feed-Aktualisierung beginnt gleich</string>
     <string name="update">Aktualisieren</string>
@@ -98,7 +96,6 @@
     <string name="remove_category">Entfernen</string>
     <string name="rotate_screen">Bildschirm drehen</string>
     <string name="size_s">Größe: %s</string>
-    <string name="new_version_s">Neue Version: %s</string>
     <string name="search_results">Suchergebnisse</string>
     <string name="text_feed_holder">Hier siehst du neue Kapitel der Mangas, welche du liest</string>
     <string name="read_later">Später lesen</string>
@@ -342,8 +339,6 @@
     <string name="scrobbling_empty_hint">Um deinen Lesefortschritt zu tracken, wähle Menü → Lesefortschritt tracken auf dem Manga Details Bildschirm.</string>
     <string name="find_similar">Ähnliche finden</string>
     <string name="theme_name_sakura">Sakura</string>
-    <string name="allow_unstable_updates_summary">Benachrichtigungen über instabile Versionen erhalten</string>
-    <string name="allow_unstable_updates">Erlaube instabile Updates</string>
     <string name="got_it">Alles klar</string>
     <string name="sources_reorder_tip">Drücke und halte eine Quelle, um diese umzusortieren</string>
     <string name="settings_apply_restart_required">Bitte starte die App neu, um die Änderungen anzuwenden</string>
@@ -374,7 +369,6 @@
     <string name="remove_completed">Entfernung abgeschlossen</string>
     <string name="cancel_all">Alle abbrechen</string>
     <string name="downloads_wifi_only">Nur über Wi-Fi herunterladen</string>
-    <string name="downloads_wifi_only_summary">Beende das Herunterladen beim Wechsel zu einem Mobilfunknetz</string>
     <string name="suggestions_notifications_summary">Zeige ab und zu Benachrichtigungen mit Manga-Vorschlägen</string>
     <string name="downloads_removed">Downloads wurden entfernt</string>
     <string name="suggestion_manga">Vorschlag: %s</string>
@@ -407,8 +401,6 @@
     <string name="download_option_first_n_chapters">Erste %s</string>
     <string name="download_option_next_unread_n_chapters">Nächste ungelesene %s</string>
     <string name="download_option_all_unread">Alle ungelesenen Kapitel</string>
-    <string name="download_option_all_unread_b">Alle ungelesenen Kapitel (%s)</string>
-    <string name="download_option_manual_selection">Kapitel manuell auswählen</string>
     <string name="description">Beschreibung</string>
     <string name="this_month">Dieser Monat</string>
     <string name="voice_search">Sprachsuche</string>
@@ -472,7 +464,6 @@
     <string name="error_multiple_states_not_supported">Filtern nach mehreren Zuständen wird von dieser Manga-Quelle nicht unterstützt</string>
     <string name="error_search_not_supported">Die Suchfunktion wird von dieser Manga-Quelle nicht unterstützt</string>
     <string name="enhanced_colors">32-bit Farbmodus</string>
-    <string name="suggest_new_sources">Neue Quellen nach einem Update vorschlagen</string>
     <string name="by_relevance">Relevanz</string>
     <string name="categories">Kategorien</string>
     <string name="frequency_every_day">Täglich</string>
@@ -526,7 +517,6 @@
     <string name="disable_battery_optimization_summary_downloads">Könnte dir damit helfen, den Download zu starten, wenn du Probleme damit hast</string>
     <string name="state_abandoned">Verworfen</string>
     <string name="enhanced_colors_summary">Reduziert das Banding (harte Farbverläufe), kann aber die Leistung beeinträchtigen</string>
-    <string name="suggest_new_sources_summary">Aufforderung zur Aktivierung neu hinzugefügter Quellen nach Aktualisierung der Anwendung</string>
     <string name="list_options">Listenoptionen</string>
     <string name="volume_">Speicher %d</string>
     <string name="volume_unknown">Unbekannte Speicher Volumen</string>
@@ -681,7 +671,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1134,7 +1123,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

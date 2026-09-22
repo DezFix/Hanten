@@ -88,9 +88,7 @@
     <string name="favourites_categories">প্রিয় বিভাগ</string>
     <string name="rotate_screen">পর্দা ঘোরান</string>
     <string name="vibration">কম্পন</string>
-    <string name="no_update_available">কোন আপডেট উপলব্ধ নেই</string>
     <string name="remove_category">অপসারণ</string>
-    <string name="downloads_wifi_only_summary">মোবাইল নেটওয়ার্কে স্যুইচ করার সময় ডাউনলোড করা বন্ধ করুন</string>
     <string name="read_later">পরে পড়ুন</string>
     <string name="cannot_find_available_storage">সঞ্চয়স্থান উপলব্ধ নয়</string>
     <string name="ignore_ssl_errors">SSL ত্রুটি উপেক্ষা করুন</string>
@@ -107,7 +105,6 @@
     <string name="update">হালনাগাদ</string>
     <string name="feed_will_update_soon">ফিড আপডেট শীঘ্রই শুরু হবে</string>
     <string name="resume">আবার শুরু করুন</string>
-    <string name="new_version_s">নতুন সংস্করণ: %s</string>
     <string name="scale_mode">স্কেল মোড</string>
     <string name="sync_settings">সিঙ্ক্রোনাইজেশন সেটিংস</string>
     <string name="text_history_holder_primary">আপনি যা পড়েছেন তা এখানে প্রদর্শিত হবে</string>
@@ -128,7 +125,6 @@
     <string name="more">আরো</string>
     <string name="protect_application">অ্যাপটি রক্ষা করুন</string>
     <string name="passwords_mismatch">অমিল পাসওয়ার্ড</string>
-    <string name="check_for_updates">হালনাগাদ এর জন্য অনুসন্ধান করুন</string>
     <string name="protect_application_summary">কোটাটসু শুরু করার সময় পাসওয়ার্ডের জন্য জিজ্ঞাসা করুন</string>
     <string name="right_to_left">ডান থেকে বাম</string>
     <string name="mirror_switching">স্বয়ংক্রিয়ভাবে আয়না চয়ন করুন</string>
@@ -655,9 +651,7 @@
     
 <string name="services">Services</string>
     
-<string name="allow_unstable_updates">Allow unstable updates</string>
     
-<string name="allow_unstable_updates_summary">Check for nightly builds in addition to stable releases</string>
     
 <string name="download_started">Download started</string>
     
@@ -683,7 +677,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_completed_downloads_confirm">Your downloads history will be permanently deleted. No downloaded files will be affected</string>
     
@@ -771,9 +764,7 @@
     
 <string name="download_option_all_unread">All unread chapters</string>
     
-<string name="download_option_all_unread_b">All unread chapters (%s)</string>
     
-<string name="download_option_manual_selection">Select chapters manually</string>
     
 <string name="pick_custom_directory">Pick custom directory</string>
     
@@ -867,9 +858,7 @@
     
 <string name="enhanced_colors">32-bit color mode</string>
     
-<string name="suggest_new_sources">Suggest new sources after app update</string>
     
-<string name="suggest_new_sources_summary">Prompt to enable newly added sources after updating the application</string>
     
 <string name="list_options">List options</string>
     
@@ -1568,7 +1557,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

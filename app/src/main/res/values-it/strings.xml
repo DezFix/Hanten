@@ -84,8 +84,6 @@
     <string name="black_dark_theme">Tema nero scuro</string>
     <string name="create_category">Nuova categoria</string>
     <string name="right_to_left">Da destra a sinistra</string>
-    <string name="no_update_available">Nessun aggiornamento disponibile</string>
-    <string name="check_for_updates">Controlla gli aggiornamenti</string>
     <string name="app_version">Versione %s</string>
     <string name="about">Informazioni</string>
     <string name="passwords_mismatch">Le password non corrispondono</string>
@@ -102,7 +100,6 @@
     <string name="updates_feed_cleared">Flusso degli aggiornamenti cancellato</string>
     <string name="clear_updates_feed">Cancella il flusso degli aggiornamenti</string>
     <string name="size_s">Dimensioni: %s</string>
-    <string name="new_version_s">Nuova versione: %s</string>
     <string name="search_results">Risultati della ricerca</string>
     <string name="text_feed_holder">Qui potrai vedere i nuovi capitoli del manga che stai leggendo</string>
     <string name="updates">Aggiornamenti</string>
@@ -346,8 +343,6 @@
     <string name="theme_name_mion">Mion</string>
     <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_miku">Miku</string>
-    <string name="allow_unstable_updates">Permetti aggiornamenti instabili</string>
-    <string name="allow_unstable_updates_summary">Ricevi notifiche riguardo versioni instabili</string>
     <string name="download_started">Download iniziato</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="languages">Lingue</string>
@@ -379,8 +374,6 @@
     <string name="data_and_privacy">Dati e privacy</string>
     <string name="content_type_hentai">Hentai</string>
     <string name="clear_source_cookies_summary">Pulisci cookies solo per dominio specifico. Nella maggior parte dei casi invaliderà l\'autorizzazione</string>
-    <string name="downloads_wifi_only_summary">Smetti di scaricare quando si passa a rete mobile</string>
-    <string name="suggest_new_sources">Suggerisci nuove fonti dopo aggiornamento dell\'app</string>
     <string name="user_agent">Header UserAgent</string>
     <string name="error_filter_states_genre_not_supported">Questa fonte non supporta il filtraggio per sia genere che stato</string>
     <string name="ignore_ssl_errors">Ignora errori SSL</string>
@@ -395,7 +388,6 @@
     <string name="welcome_text">Selezionare le fonti di contenuti da abilitare. Si può configurare anche successivamente nelle impostazioni</string>
     <string name="unknown">Sconosciuto</string>
     <string name="in_progress">In progresso</string>
-    <string name="download_option_manual_selection">Selezione manuale capitoli</string>
     <string name="enhanced_colors_summary">Riduce il banding, ma può impattare la performance</string>
     <string name="pause">Pausa</string>
     <string name="remove_completed">Rimuovi completati</string>
@@ -436,7 +428,6 @@
     <string name="online_variant">Variante online</string>
     <string name="disable_battery_optimization_summary_downloads">Potrebbe aiutare a far iniziare il download in caso di problemi</string>
     <string name="error_multiple_genres_not_supported">Questa fonte di manga non supporta il filtraggio per multipli generi</string>
-    <string name="download_option_all_unread_b">Tutti i capitoli non letti (%s)</string>
     <string name="authorization_optional">Autorizzazione (opzionale)</string>
     <string name="color_dark">Scuro</string>
     <string name="this_manga">Questo manga</string>
@@ -504,7 +495,6 @@
     <string name="invert_colors">Inverti colori</string>
     <string name="mirror_switching_summary">Cambiare dominio di fonte del manga automaticamente in caso di errore se sono disponibili mirror</string>
     <string name="no_thanks">No grazie</string>
-    <string name="suggest_new_sources_summary">Chiedi se aggiungere nuove fonti dopo aggiornamento dell\'applicazione</string>
     <string name="speed">Velocità</string>
     <string name="download_option_all_chapters">Tutti i capitoli con traduzioni %s</string>
     <string name="content_type_other">Altro</string>
@@ -840,7 +830,6 @@
     <string name="show_floating_control_button">Mostra pulsante di controllo fluttuante</string>
 
 
-    <string name="rpc_skip_nsfw_summary">Non utilizzare RPC per contenuti per adulti</string>
     <string name="unavailable">Non disponibile</string>
     <string name="manga_restricted_description">Questo manga non è disponibile per la lettura da questa fonte. Prova a cercarlo in altre fonti o aprilo in un browser per maggiori informazioni</string>
     <string name="no_chapters_in_manga">Questo manga non contiene capitoli</string>
@@ -899,7 +888,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

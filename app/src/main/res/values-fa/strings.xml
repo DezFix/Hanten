@@ -174,15 +174,12 @@
     <string name="light_indicator">نشانگر ال ای دی</string>
     <string name="pages_animation">انیمیشن صفحه</string>
     <string name="updates">به روز شده ها</string>
-    <string name="new_version_s">نسخه ی جدید: %s</string>
     <string name="other_storage">محل های ذخیره سازی دیگر</string>
     <string name="size_s">حجم: %s</string>
     <string name="rotate_screen">چرخاندن صفحه</string>
     <string name="update">به روزرسانی</string>
     <string name="feed_will_update_soon">آپدیت فید به زودی شروع می شود</string>
     <string name="app_version">نسخه %s</string>
-    <string name="check_for_updates">بررسی بروزرسانی</string>
-    <string name="no_update_available">هیچ بروزرسانی موجود نیست</string>
     <string name="create_category">دسته بندی جدید</string>
     <string name="zoom_mode_fit_height">متناسب به طول</string>
     <string name="black_dark_theme">سیاه</string>
@@ -358,8 +355,6 @@
     <string name="nothing_here">چیزی اینجا نیست</string>
     <string name="scrobbling_empty_hint">برای فعال کردن پیگیری پیشرفت خواندن، منو را انتخاب کنید ← پیگیری در صفحه جزئیات مانگا.</string>
     <string name="services">خدمات</string>
-    <string name="allow_unstable_updates">اجازه بروزرسانی های ناپایدار</string>
-    <string name="allow_unstable_updates_summary">دریافت اعلان درباره ورژن های ناپایدار</string>
     <string name="download_started">بارگیری آغاز شد</string>
     <string name="got_it">متوجه شدم</string>
     <string name="sources_reorder_tip">برای مرتب‌سازی مجدد آیتم‌ها، روی آنها ضربه بزنید و نگه دارید</string>
@@ -383,7 +378,6 @@
     <string name="remove_completed">منوی آیتم؛ اقدام برای حذف آیتم های کامل شده</string>
     <string name="cancel_all">لغو همه</string>
     <string name="downloads_wifi_only">بارگیری فقط از طریق وایفای</string>
-    <string name="downloads_wifi_only_summary">توقف دانلود در زمان تغییرشبکه به داده تلفن همراه</string>
     <string name="suggestion_manga">پیشنهاد:‌%s</string>
     <string name="suggestions_notifications_summary">گاهی اوقات اعلان‌هایی با مانگا پیشنهادی نمایش داده می‌شود</string>
     <string name="more">بیشتر</string>
@@ -421,8 +415,6 @@
     <string name="download_option_first_n_chapters">ابتدا %s</string>
     <string name="download_option_next_unread_n_chapters">خوانده نشده بعدی %s</string>
     <string name="download_option_all_unread">تمام فصل های خوانده نشده</string>
-    <string name="download_option_all_unread_b">تمام فصل های خوانده نشده (%s)</string>
-    <string name="download_option_manual_selection">انتخاب فصل به صورت دستی</string>
     <string name="pick_custom_directory">انتخاب پوشه سفارشی</string>
     <string name="no_access_to_file">شما دسترسی به این پرونده یا پوشه را ندارید</string>
     <string name="local_manga_directories">پوشه های مانگای محلی</string>
@@ -470,8 +462,6 @@
     <string name="state_abandoned">رها شده</string>
     <string name="enhanced_colors_summary">باندینگ را کاهش می‌دهد، اما ممکن است بر عملکرد تأثیر بگذارد</string>
     <string name="enhanced_colors">حالت رنگ ۳۲ بیتی</string>
-    <string name="suggest_new_sources">پیشنهاد منابع جدید بعد از بروزرسانی برنامه</string>
-    <string name="suggest_new_sources_summary">درخواست فعال کردن منابع تازه اضافه شده پس از به‌روزرسانی برنامه</string>
     <string name="list_options">گزینه های فهرست</string>
     <string name="by_relevance">ارتباط</string>
     <string name="categories">دسته بندی ها</string>
@@ -643,7 +633,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1176,7 +1165,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

@@ -88,7 +88,6 @@
     <string name="read_later">Θα διαβαστούν αργότερα</string>
     <string name="updates">Ενημερώσεις</string>
     <string name="search_results">Αποτελέσματα αναζήτησης</string>
-    <string name="new_version_s">Νέα έκδοση: %s</string>
     <string name="size_s">Μέγεθος: %s</string>
     <string name="clear_updates_feed">Εκκαθάριση τροφοδοτικού ενημερώσεων</string>
     <string name="updates_feed_cleared">Καθαρίστηκε</string>
@@ -97,7 +96,6 @@
     <string name="feed_will_update_soon">Η ενημέρωση του τροφοδοτικού θα αρχίσει σύντομα</string>
     <string name="dont_check">Μην κοιτάξεις</string>
     <string name="enter_password">Εισαγωγή κωδικού</string>
-    <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>
     <string name="right_to_left">Δεξιά προς τα αριστερά</string>
     <string name="create_category">Νέα κατηγορία</string>
     <string name="scale_mode">Είδος κλίμακας</string>
@@ -212,7 +210,6 @@
     <string name="remove_category">Αφαίρεση</string>
     <string name="text_feed_holder">Νέα κεφάλαια από ό,τι διαβάζεις θα φαίνονται εδώ</string>
     <string name="track_sources">Ψάξε για ενημερώσεις</string>
-    <string name="no_update_available">Δεν είναι διαθέσιμη κάποια ενημέρωση</string>
     <string name="data_restored_success">Όλα τα δεδομένα επαναφέρθηκαν</string>
     <string name="protect_application_subtitle">Εισήγαγε κωδικό με τον οποίο θα ανοίγεις την εφαρμογή</string>
     <string name="captcha_required">Απαιτείται έλεγχος CAPTCHA</string>
@@ -275,7 +272,6 @@
     <string name="language">Γλώσσα</string>
     <string name="scrobbling_empty_hint">Για να καταγράψεις την πρόοδο σου, επίλεξε Μενού → Καταγραφή στην οθόνη λεπτομερειών για το manga.</string>
     <string name="services">Υπηρεσίες</string>
-    <string name="allow_unstable_updates">Επίτρεψε ασταθείς ενημερώσεις</string>
     <string name="sources_reorder_tip">Πάτα παρατεταμένα ένα στοιχείο για να το αναταξινομήσεις</string>
     <string name="settings_apply_restart_required">Κάνε επανεκκίνηση της εφαρμογής για να εφαρμοστούν οι αλλαγές, παρακαλώ</string>
     <string name="comics_archive_import_description">Μπορείς να επιλέξεις ένα ή περισσότερα .cbz ή .zip αρχεία, κάθε ένα θα αναγνωρίζεται ως ξεχωριστό manga.</string>
@@ -349,7 +345,6 @@
     <string name="keep_screen_on">Κράτα την οθόνη ανοιχτή</string>
     <string name="keep_screen_on_summary">Να μην κλείνει η οθόνη κατά την ανάγνωση manga</string>
     <string name="lock_screen_rotation">Κλείδωσε την περιστροφή οθόνης</string>
-    <string name="allow_unstable_updates_summary">Λάβε ειδοποιήσεις για ασταθείς εκδόσεις</string>
     <string name="download_started">Η λήψη ξεκίνησε</string>
     <string name="manga_list">Λίστα manga</string>
     <string name="theme_name_dynamic">Δυναμικό</string>
@@ -361,8 +356,6 @@
     <string name="download_option_first_n_chapters">Πρώτα %s</string>
     <string name="download_option_next_unread_n_chapters">Τα επόμενα μη αναγνωσμένα %s</string>
     <string name="download_option_all_unread">Όλα τα μη αναγνωσμένα κεφάλαια</string>
-    <string name="download_option_all_unread_b">Όλα τα μην αναγνωσμένα κεφάλαια (%s)</string>
-    <string name="download_option_manual_selection">Χειροκίνητη επιλογή κεφαλαίων</string>
     <string name="description">Περιγραφή</string>
     <string name="this_month">Αυτόν τον μήνα</string>
     <string name="voice_search">Φωνητική αναζήτηση</string>
@@ -412,7 +405,6 @@
     <string name="paused">Σε παύση</string>
     <string name="cancel_all">Ακύρωση όλων</string>
     <string name="downloads_wifi_only">Λήψη μόνο μέσω Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Σταματημός της λήψης με την αλλαγή σε δεδομένα</string>
     <string name="suggestion_manga">Προτάσεις: %s</string>
     <string name="suggestions_notifications_summary">Ενίοτε εμφάνιση ειδοποιήσεων με προτεινόμενα manga</string>
     <string name="more">Περισσότερα</string>
@@ -472,8 +464,6 @@
     <string name="error_search_not_supported">Η αναζήτηση δεν υποστηρίζεται από αυτήν την πηγή manga</string>
     <string name="enhanced_colors_summary">Μειώνει την ένταση της χρωματικής ζώνης, αλλά μπορεί να επηρεάσει την επίδοση</string>
     <string name="enhanced_colors">Λειτουργία χρώματος 32-bit</string>
-    <string name="suggest_new_sources">Να προτείνονται νέες πηγές μετά από ενημέρωση της εφαρμογής</string>
-    <string name="suggest_new_sources_summary">Εντολή για ενεργοποίηση καινούριων πηγών μετά την ενημέρωση της εφαρμογής</string>
     <string name="list_options">Επιλογές λίστας</string>
     <string name="by_relevance">Σχετικότητα</string>
     <string name="categories">Κατηγορίες</string>
@@ -575,7 +565,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1257,7 +1246,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

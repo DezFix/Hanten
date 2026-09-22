@@ -85,7 +85,6 @@
     <string name="welcome">مرحبا</string>
     <string name="about_app_translation_summary">ترجمة هذا التطبيق</string>
     <string name="vibration">اهتزاز</string>
-    <string name="no_update_available">لا يوجد تحديثات</string>
     <string name="remove_category">حذف</string>
     <string name="internal_storage">التخزين الداخلي</string>
     <string name="read_later">اقرأ لاحقا</string>
@@ -111,7 +110,6 @@
     <string name="update">تحديث</string>
     <string name="feed_will_update_soon">سيبدأ تحديث الموجز قريبًا</string>
     <string name="app_update_available">تتوفر نسخة جديدة من التطبيق</string>
-    <string name="new_version_s">نسخة جديدة: %s</string>
     <string name="sync_settings">إعدادات التزامن</string>
     <string name="create_category">قائمة جديدة</string>
     <string name="notification_sound">صوت الإشعار</string>
@@ -140,7 +138,6 @@
     <string name="protect_application">حماية التطبيق</string>
     <string name="passwords_mismatch">كلمة السر غير مطابقة</string>
     <string name="yesterday">أمس</string>
-    <string name="check_for_updates">تحقق من وجود تحديثات</string>
     <string name="protect_application_summary">اطلب كلمة السر عند تشغيل التطبيق</string>
     <string name="right_to_left">من اليمين الى اليسار</string>
     <string name="reader_mode_hint">سيتم تذكر الاعدادات المختارة لهذه المانجا</string>
@@ -316,8 +313,6 @@
     <string name="settings_apply_restart_required">يرجى إعادة تشغيل التطبيق لرؤية التغييرات.\"</string>
     <string name="removed_from_favourites">تم الحذف من المُفضلة</string>
     <string name="no_chapters">لا توجد فصول</string>
-    <string name="allow_unstable_updates">السماح بالتحديثات غير مستقرة</string>
-    <string name="allow_unstable_updates_summary">تلقي إشعارات حول الإصدارات الغير مستقرة</string>
     <string name="categories_delete_confirm">هل أنت متأكد أنك تريد حذف قوائم المُفضلة المحددة \n؟ سيتم فقدان جميع المانجا فيها ولا يمكن التراجع عن هذا.</string>
     <string name="pages_cache">بيانات التخزين المؤقت للصفحات</string>
     <string name="not_found_404">المحتوى غير موجود أو تمت إزالته</string>
@@ -359,7 +354,6 @@
     <string name="theme_name_mamimi">ماميمي</string>
     <string name="theme_name_kanade">كانادي</string>
     <string name="got_it">وجدتها</string>
-    <string name="downloads_wifi_only_summary">إيقاف التحميل عند الانتقال إلى شبكة الهاتف المحمول</string>
     <string name="resume">استئناف</string>
     <string name="cancel_all">إلغاء الكل</string>
     <string name="source_disabled">تم تعطيل المصدر</string>
@@ -396,7 +390,6 @@
     <string name="download_option_first_n_chapters">أولاً%s</string>
     <string name="invalid_port_number">رقم المنفذ غير صالح</string>
     <string name="restore_summary">استعادة النسخة الاحتياطية التي تم إنشاؤها مسبقًا</string>
-    <string name="download_option_all_unread_b">جميع الفصول غير المقروءة (%s)</string>
     <string name="download_option_next_unread_n_chapters">التالي غير المقروء %s</string>
     <string name="no_access_to_file">ليس لديك حق الوصول إلى هذا الملف أو المجلد</string>
     <string name="pick_custom_directory">اختر مجلد مخصص</string>
@@ -427,7 +420,6 @@
     <string name="languages">اللغات</string>
     <string name="compact">المدمج</string>
     <string name="address">عنوان</string>
-    <string name="download_option_manual_selection">حدد الفصول يدويا</string>
     <string name="mirror_switching">اختر المرآة تلقائيًا</string>
     <string name="suggestion_manga">اقتراح : %s</string>
     <string name="downloads_resumed">تم استئناف التنزيلات</string>
@@ -463,8 +455,6 @@
     <string name="enhanced_colors">وضع الألوان 32-bit</string>
     <string name="backup_frequency">تكرار إنشاء النسخ الاحتياطي</string>
     <string name="periodic_backups">النسخ الاحتياطي الدوري</string>
-    <string name="suggest_new_sources">أقترح مصادر جديدة عند تحديث البرنامج</string>
-    <string name="suggest_new_sources_summary">المطالبة بتمكين المصادر المضافة حديثًا بعد تحديث التطبيق</string>
     <string name="frequency_every_day">كل يوم</string>
     <string name="online_variant">البديل على الانترنت</string>
     <string name="frequency_every_2_days">كل يومين</string>
@@ -831,7 +821,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -979,7 +968,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

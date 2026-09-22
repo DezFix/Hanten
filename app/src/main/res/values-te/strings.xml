@@ -113,7 +113,6 @@
     <string name="updates">నవీకరణలు</string>
     <string name="text_feed_holder">మీరు చదువుతున్న కొత్త అధ్యాయాలు ఇక్కడ చూపబడతాయి</string>
     <string name="search_results">వెతుకుపరి ఫలితాలు</string>
-    <string name="new_version_s">కొత్త వెర్షన్: %s</string>
     <string name="size_s">సైజ్: %s</string>
     <string name="clear_updates_feed">నవీకరణ ఫీడ్ క్లియర్ చెయ్యి</string>
     <string name="updates_feed_cleared">ఫీడ్ క్లియర్ అయింది</string>
@@ -154,9 +153,7 @@
     
 <string name="app_version">Version %s</string>
     
-<string name="check_for_updates">Check for updates: This checks for newer GitHub release. If you installed Hanten from a store, better use the store\'s client for this.</string>
     
-<string name="no_update_available">No updates available</string>
     
 <string name="right_to_left">Right-to-left</string>
     
@@ -625,9 +622,7 @@
     
 <string name="services">Services</string>
     
-<string name="allow_unstable_updates">Allow unstable updates</string>
     
-<string name="allow_unstable_updates_summary">Check for nightly builds in addition to stable releases</string>
     
 <string name="download_started">Download started</string>
     
@@ -676,11 +671,9 @@
     
 <string name="downloads_wifi_only">Download only via Wi-Fi</string>
     
-<string name="downloads_wifi_only_summary">Stop downloading when switching to a mobile network</string>
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="suggestion_manga">Suggestion: %s</string>
     
@@ -780,9 +773,7 @@
     
 <string name="download_option_all_unread">All unread chapters</string>
     
-<string name="download_option_all_unread_b">All unread chapters (%s)</string>
     
-<string name="download_option_manual_selection">Select chapters manually</string>
     
 <string name="pick_custom_directory">Pick custom directory</string>
     
@@ -878,9 +869,7 @@
     
 <string name="enhanced_colors">32-bit color mode</string>
     
-<string name="suggest_new_sources">Suggest new sources after app update</string>
     
-<string name="suggest_new_sources_summary">Prompt to enable newly added sources after updating the application</string>
     
 <string name="list_options">List options</string>
     
@@ -1668,7 +1657,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

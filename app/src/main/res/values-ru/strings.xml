@@ -109,7 +109,6 @@
     <string name="updates">Обновления</string>
     <string name="text_feed_holder">Новые главы того, что вы читаете, будут показаны здесь</string>
     <string name="search_results">Результаты поиска</string>
-    <string name="new_version_s">Новая версия: %s</string>
     <string name="size_s">Размер: %s</string>
     <string name="clear_updates_feed">Очистить ленту обновлений</string>
     <string name="updates_feed_cleared">Очищено</string>
@@ -126,8 +125,6 @@
     <string name="passwords_mismatch">Пароли не совпадают</string>
     <string name="about">О программе</string>
     <string name="app_version">Версия %s</string>
-    <string name="check_for_updates">Проверить обновления</string>
-    <string name="no_update_available">Нет доступных обновлений</string>
     <string name="right_to_left">Справа налево</string>
     <string name="create_category">Создать категорию</string>
     <string name="scale_mode">Масштабирование</string>
@@ -348,8 +345,6 @@
     <string name="scrobbling_empty_hint">Чтобы отслеживать прогресс чтения, выберите «Меню» → «Отслеживать» на экране сведений о манге.</string>
     <string name="nothing_here">Здесь ничего нет</string>
     <string name="download_started">Загрузка началась</string>
-    <string name="allow_unstable_updates">Разрешить нестабильные обновления</string>
-    <string name="allow_unstable_updates_summary">Получать уведомления о нестабильных сборках</string>
     <string name="settings_apply_restart_required">Пожалуйста, перезапустите приложение, чтобы применить эти изменения</string>
     <string name="user_agent">Заголовок UserAgent</string>
     <string name="got_it">Понятно</string>
@@ -370,7 +365,6 @@
     <string name="sync_settings">Настройки синхронизации</string>
     <string name="sync_host_description">Вы можете использовать собственный сервер синхронизации или сервер по умолчанию. Не изменяйте эту настройку, если не уверены, что делаете.</string>
     <string name="server_address">Адрес сервера</string>
-    <string name="downloads_wifi_only_summary">Останавливать загрузку при переключении на мобильную сеть</string>
     <string name="paused">Приостановлено</string>
     <string name="downloads_wifi_only">Скачивать только через Wi-Fi</string>
     <string name="no_thanks">Нет, спасибо</string>
@@ -413,8 +407,6 @@
     <string name="download_option_all_chapters">Все главы с переводом %s</string>
     <string name="download_option_whole_manga">Мангу целиком</string>
     <string name="download_option_first_n_chapters">Первые %s</string>
-    <string name="download_option_all_unread_b">Все непрочитанные главы (%s)</string>
-    <string name="download_option_manual_selection">Выбрать главы вручную</string>
     <string name="no_access_to_file">У вас нет доступа к этому файлу или каталогу</string>
     <string name="local_manga_directories">Локальные каталоги манги</string>
     <string name="pick_custom_directory">Выбрать пользовательский каталог</string>
@@ -461,11 +453,9 @@
     <string name="state_abandoned">Заброшена</string>
     <string name="categories">Категории</string>
     <string name="list_options">Параметры списка</string>
-    <string name="suggest_new_sources">Предлагать новые источники после обновления приложения</string>
     <string name="enhanced_colors_summary">Уменьшает полосы, но может повлиять на производительность</string>
     <string name="by_relevance">Актуальность</string>
     <string name="enhanced_colors">32-битный цветовой режим</string>
-    <string name="suggest_new_sources_summary">Предлагать источники манги, добавленные в последнем обновлении приложения</string>
     <string name="online_variant">Онлайн вариант</string>
     <string name="frequency_every_day">Каждый день</string>
     <string name="backup_frequency">Частота создания резервных копий</string>
@@ -840,7 +830,6 @@
     <string name="obtain">Получить</string>
     <string name="reading_s">Чтение %s</string>
     <string name="read_on_s">Читать дальше %s</string>
-    <string name="rpc_skip_nsfw_summary">Не использовать RPC для контента для взрослых</string>
     <string name="invalid_token">Недействительный токен: %s</string>
     <string name="show_floating_control_button">Показать плавающую кнопку управления</string>
     <string name="unavailable">Недоступно</string>
@@ -901,7 +890,6 @@
     
 <string name="downloads_charging_only">Скачивать только при зарядке</string>
     
-<string name="downloads_charging_only_summary">Элементы будут скачиваться только во время зарядки устройства</string>
     
 <string name="remove_downloads_confirm">Удалить выбранные загрузки?</string>
     
@@ -1023,17 +1011,13 @@
 <string name="error_quota_too_low">Квота хранилища не может быть меньше текущего использования</string>
     
 <string name="download_quota_reached">Квота хранилища исчерпана. Загрузки приостановлены.</string>
-    <string name="update_available_title">Доступно обновление: %1$s</string>
     <string name="update_available_heading">Вышло новое обновление</string>
     <string name="update_install_now">Обновить сейчас</string>
-    <string name="update_now">Обновить</string>
-    <string name="update_later">Позже</string>
     <string name="update_skip_version">Пропустить эту версию</string>
     <string name="update_no_changelog">Список изменений отсутствует.</string>
     <string name="frequency_every_hour">Каждый час</string>
     <string name="frequency_every_3_days">Каждые 3 дня</string>
     <string name="suggestions_update_interval">Интервал обновления</string>
-    <string name="update_download_and_install">Скачать и установить</string>
     <string name="update_downloading_title">Загрузка обновления: %1$s</string>
     <string name="update_cancel">Отмена</string>
     <string name="update_download_progress">%1$d%% · %2$s / %3$s</string>

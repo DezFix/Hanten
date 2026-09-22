@@ -44,14 +44,12 @@
     <string name="chapters_empty">Selles mangas ei ole peatükke</string>
     <string name="remove">Eemalda</string>
     <string name="vibration">Värisemine</string>
-    <string name="no_update_available">Uuendusi pole saadaval</string>
     <string name="remove_category">Eemalda</string>
     <string name="clear_all_history">Tühjenda kõik ajalugu</string>
     <string name="preload_pages">Lehekülgede eellaadimine</string>
     <string name="data_deletion">Andmete kustutamine</string>
     <string name="favourites">Lemmikud</string>
     <string name="history_shortcuts">Näita hiljutise manga lühitee</string>
-    <string name="downloads_wifi_only_summary">Peata allalaadimised kui vahetad mobiilsele ühendusele</string>
     <string name="read_mode">Lugemis mood</string>
     <string name="internal_storage">Sisemine mälu</string>
     <string name="import_completed">Imporditud</string>
@@ -145,7 +143,6 @@
     <string name="select_range">Valige vahemik</string>
     <string name="tracker_warning">Mõnedel seadmetel on erinev süsteemikäitumine, mis võib katkestada taustatööd.</string>
     <string name="network_error">Võrguviga</string>
-    <string name="new_version_s">Uus versioon: %s</string>
     <string name="no_manga_sources">Pole manga allikaid</string>
     <string name="light">Valge</string>
     <string name="suggestions_excluded_genres_summary">Täpsusta žanrid, mida te ei soovi ettepanekutes näha</string>
@@ -170,7 +167,6 @@
     <string name="dns_over_https">DNS üle HTTPS</string>
     <string name="show_suspicious_content">Näita kahtlast sisu</string>
     <string name="show_pages_numbers">nummerda leheküljed</string>
-    <string name="allow_unstable_updates_summary">Saa teateid ebastabiilsete uuenduste kohta</string>
     <string name="sync_title">Sünkroniseeri oma andmed</string>
     <string name="appwidget_shelf_description">Manga sinu lemmikutest</string>
     <string name="comics_archive_import_description">Sa võid valida üks või veel .cbz või .zip faile, iga fail võetakse kui erinev manga.</string>
@@ -259,7 +255,6 @@
     <string name="passwords_mismatch">Ebavõrdsed paroolid</string>
     <string name="by_name">Nimi</string>
     <string name="yesterday">Eile</string>
-    <string name="check_for_updates">Otsi uuendusi</string>
     <string name="exclude_nsfw_from_history_summary">Manga märkitud kui NSFW kungai ei lisata sinu ajalukku ja progressi ei salvestata</string>
     <string name="mark_as_current">Margi kui präegune</string>
     <string name="protect_application_summary">Kusi parooli avades Hantent</string>
@@ -345,7 +340,6 @@
     <string name="show">Näita</string>
     <string name="genres">Žanrid</string>
     <string name="show_on_shelf">Näita riiulil</string>
-    <string name="allow_unstable_updates">Luba ebastabiilseid uuendusi</string>
     <string name="sync_auth_hint">Sa võid sisse logida olemasolevasse kasutajasse või teha uue</string>
     <string name="create_shortcut">Tee otsetee…</string>
     <string name="theme_name_kanade">Kanade</string>
@@ -444,7 +438,6 @@
     <string name="category_hidden_done">See kategooria on põhivaatest peidetud ja on leitav siit: Menüü → Halda kategooriaid</string>
     <string name="clear_source_cookies_summary">Kustuta vaid valitud domeenide küpsised. Enamusel juhtudel tähendab see ka autentimise katkemist vastavas saidis</string>
     <string name="download_option_all_chapters">Kõik peatükid %s tõlkega</string>
-    <string name="download_option_manual_selection">Vali peatükid käsitsi</string>
     <string name="no_access_to_file">Sul puudub ligipääs sellele failile või kaustale</string>
     <string name="voice_search">Häälotsing</string>
     <string name="related_manga">Sarnane manga</string>
@@ -465,7 +458,6 @@
     <string name="invalid_server_address_message">Vigane serveri aadress</string>
     <string name="download_option_whole_manga">Terve manga</string>
     <string name="download_option_first_n_chapters">Esimesed %s</string>
-    <string name="download_option_all_unread_b">Kõik lugemata peatükid (%s)</string>
     <string name="data_not_restored">Andmed jäid taastamata</string>
     <string name="data_not_restored_text">Palun kontrolli, et oled valinud õige varundusfaili</string>
     <string name="too_many_requests_message_retry">Liiga palju päringuid. Proovi uuesti %s</string>
@@ -474,8 +466,6 @@
     <string name="state_abandoned">Lõpetatud</string>
     <string name="enhanced_colors_summary">Sellega läheb graafika ilusamaks, aga võib väheneda nutiseadme jõudlus</string>
     <string name="enhanced_colors">32-bitine värvirežiim</string>
-    <string name="suggest_new_sources">Peale rakenduse uuendamist soovita uusi andmeallikaid</string>
-    <string name="suggest_new_sources_summary">Peale rakenduse uuendamist küsi, kas soovid kasutusele võtta uusi mangade allikaid</string>
     <string name="automatic">Automaatne</string>
     <string name="migration_completed">Andmete kolimne on lõppenud</string>
     <string name="retry">Proovi uuesti</string>
@@ -569,7 +559,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1250,7 +1239,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

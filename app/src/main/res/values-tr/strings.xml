@@ -130,7 +130,6 @@
     <string name="clear_updates_feed">Güncelleme akışını temizle</string>
     <string name="feed_will_update_soon">Akış güncellemesi yakında başlayacak</string>
     <string name="app_version">Sürüm %s</string>
-    <string name="check_for_updates">Güncellemeleri kontrol et</string>
     <string name="zoom_mode_fit_center">Merkeze sığdır</string>
     <string name="zoom_mode_fit_width">Genişliğe sığdır</string>
     <string name="black_dark_theme_summary">AMOLED ekranlarda daha az güç kullanır</string>
@@ -162,10 +161,8 @@
     <string name="backup_information">Geçmişinizin ve favorilerinizin yedeğini oluşturabilir ve bunları geri yükleyebilirsiniz</string>
     <string name="long_ago">Uzun zaman önce</string>
     <string name="today">Bugün</string>
-    <string name="no_update_available">Güncelleme yok</string>
     <string name="all_favourites">Tüm favoriler</string>
     <string name="text_feed_holder">Okuduklarınızın yeni bölümleri burada gösterilir</string>
-    <string name="new_version_s">Yeni sürüm: %s</string>
     <string name="protect_application">Uygulamayı koru</string>
     <string name="passwords_mismatch">Parolalar eşleşmiyor</string>
     <string name="right_to_left">Sağdan-sola</string>
@@ -343,8 +340,6 @@
     <string name="theme_name_mamimi">Mamimi</string>
     <string name="theme_name_kanade">Kanade</string>
     <string name="user_agent">UserAgent başlığı</string>
-    <string name="allow_unstable_updates_summary">Kararsız versiyonlar hakkında bildirim alın</string>
-    <string name="allow_unstable_updates">Kararsız güncellemelere izin ver</string>
     <string name="download_started">İndirme başladı</string>
     <string name="theme_name_miku">Miku</string>
     <string name="theme_name_asuka">Asuka</string>
@@ -361,7 +356,6 @@
     <string name="server_address">Sunucu adresi</string>
     <string name="sync_host_description">Kendi eşitleme sunucunuzu veya varsayılan bir sunucuyu kullanabilirsiniz. Ne yaptığınızdan emin değilseniz bunu değiştirmeyin.</string>
     <string name="mirror_switching_summary">Hata durumlarında manga kaynakları için yedek bağlantılar mevcutsa otomatik olarak bu bağlantıları kullan</string>
-    <string name="downloads_wifi_only_summary">Mobil ağa geçerken indirmeyi durdur</string>
     <string name="remove_completed">Bitirilenleri kaldır</string>
     <string name="cancel_all">Hepsini iptal et</string>
     <string name="downloads_wifi_only">Sadece Wi-Fi ile indir</string>
@@ -421,12 +415,10 @@
     <string name="on_device">Cihazda</string>
     <string name="download_option_whole_manga">Bütün manga</string>
     <string name="clear_source_cookies_summary">Yalnızca belirtilen alan adı için çerezleri temizleyin. Çoğu durumda yetkilendirmeyi geçersiz kılar</string>
-    <string name="suggest_new_sources">Uygulama güncellemesinden sonra yeni kaynaklar önerin</string>
     <string name="moved_to_top">Üste taşındı</string>
     <string name="data_not_restored_text">Doğru yedek dosyasını seçtiğinizden emin olun</string>
     <string name="unknown">Bilinmeyen</string>
     <string name="in_progress">Devam ediyor</string>
-    <string name="download_option_manual_selection">Bölümleri elle seç</string>
     <string name="enhanced_colors_summary">Çizgileşmeyi azaltır, ancak performansı etkileyebilir</string>
     <string name="items_limit_exceeded">Daha fazla öğe eklenemez</string>
     <string name="data_not_restored">Veri geri yüklemedi</string>
@@ -439,7 +431,6 @@
     <string name="reader_zoom_buttons">Yakınlaştırma butonlarını göster</string>
     <string name="main_screen_sections">Ana ekran bölümleri</string>
     <string name="advanced">Gelişmiş</string>
-    <string name="download_option_all_unread_b">Tüm okunmamış bölümler (%s)</string>
     <string name="color_dark">Koyu</string>
     <string name="too_many_requests_message">Çok fazla istek. Daha sonra tekrar deneyin</string>
     <string name="related_manga">İlgili manga</string>
@@ -459,7 +450,6 @@
     <string name="color_white">Beyaz</string>
     <string name="to_top">Üste</string>
     <string name="show">Göster</string>
-    <string name="suggest_new_sources_summary">Uygulamayı güncelledikten sonra yeni eklenen kaynakları etkinleştirmeyi bildir</string>
     <string name="download_option_all_chapters">%s çevirisi olan tüm bölümler</string>
     <string name="color_black">Siyah</string>
     <string name="this_month">Bu ay</string>
@@ -839,7 +829,6 @@
     <string name="obtain">Al</string>
     <string name="reading_s">%s okuyor</string>
     <string name="read_on_s">%s üzerinde oku</string>
-    <string name="rpc_skip_nsfw_summary">Yetişkin içerik için Etkinlik Durumu\'nu kullanma</string>
     <string name="invalid_token">Geçersiz Token: %s</string>
     <string name="show_floating_control_button">Kayan kontrol butonunu göster</string>
     <string name="unavailable">Mevcut değil</string>
@@ -899,7 +888,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

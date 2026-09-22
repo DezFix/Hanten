@@ -150,8 +150,6 @@
     <string name="zoom_mode_fit_height">Dopasuj do wysokości</string>
     <string name="zoom_mode_fit_center">Dopasuj do środka</string>
     <string name="create_category">Nowa kategoria</string>
-    <string name="no_update_available">Brak nowych aktualizacji</string>
-    <string name="check_for_updates">Sprawdź dostępność aktualizacji</string>
     <string name="app_version">Wersja %s</string>
     <string name="about">O aplikacji</string>
     <string name="remove_category">Usuń</string>
@@ -192,7 +190,6 @@
     <string name="favourites_category_empty">Pusta kategoria</string>
     <string name="read_later">Czytaj później</string>
     <string name="updates">Aktualizacje</string>
-    <string name="new_version_s">Nowa wersja: %s</string>
     <string name="size_s">Wielkość: %s</string>
     <string name="rotate_screen">Obróć ekran</string>
     <string name="update">Odśwież</string>
@@ -337,7 +334,6 @@
     <string name="scrobbling_empty_hint">By śledzić postęp w czytaniu, wybierz Menu → Śledź na ekranie detali mangi.</string>
     <string name="find_similar">Znajdź podobne</string>
     <string name="user_agent">Nagłówek UserAgent</string>
-    <string name="allow_unstable_updates">Zezwól na niestabilne aktualizacje</string>
     <string name="got_it">Rozumiem</string>
     <string name="settings_apply_restart_required">Uruchom ponownie aplikację by wprowadzić te zmiany</string>
     <string name="speed">Prędkość</string>
@@ -365,7 +361,6 @@
     <string name="paused">Wstrzymane</string>
     <string name="cancel_all">Anulować całość</string>
     <string name="downloads_wifi_only">Pobieraj tylko przez Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Zatrzymaj pobieranie po przełączeniu na sieć komórkową</string>
     <string name="suggestion_manga">Sugestia: %s</string>
     <string name="suggestions_notifications_summary">Czasami wyświetlaj powiadomienia z sugerowaną mangą</string>
     <string name="more">Więcej</string>
@@ -373,7 +368,6 @@
     <string name="cancel_all_downloads_confirm">Wszystkie aktywne pobrania zostaną anulowane, częściowo pobrane dane zostaną utracone</string>
     <string name="remove_completed">Usuwanie zakończone</string>
     <string name="language">Język</string>
-    <string name="allow_unstable_updates_summary">Otrzymuj powiadomienia o niestabilnych kompilacjach</string>
     <string name="download_started">Pobieranie rozpoczęte</string>
     <string name="sync_settings">Ustawienia synchronizacji</string>
     <string name="server_address">Adres serwera</string>
@@ -411,10 +405,8 @@
     <string name="download_option_all_chapters">Wszystkie rozdziały z tłumaczeniem %s</string>
     <string name="download_option_first_n_chapters">Pierwszy %s</string>
     <string name="download_option_all_unread">Wszystkie nieprzeczytane rozdziały</string>
-    <string name="download_option_all_unread_b">Wszystkie nieprzeczytane rozdziały (%s)</string>
     <string name="download_option_whole_manga">Cała manga</string>
     <string name="download_option_next_unread_n_chapters">Następna nieprzeczytana %s</string>
-    <string name="download_option_manual_selection">Wybierz rozdziały ręcznie</string>
     <string name="pick_custom_directory">Wybierz katalog niestandardowy</string>
     <string name="no_access_to_file">Nie masz dostępu do tego pliku lub katalogu</string>
     <string name="local_manga_directories">Lokalne katalogi mangi</string>
@@ -465,7 +457,6 @@
     <string name="genres_exclude">Wykluczone gatunki</string>
     <string name="enhanced_colors">tryb koloru 32-bit</string>
     <string name="periodic_backups">Cykliczna kopia zapasowa</string>
-    <string name="suggest_new_sources">Sugeruj nowe źródła po aktualizacji aplikacji</string>
     <string name="periodic_backups_enable">Włącz cykliczną kopię zapasową</string>
     <string name="frequency_every_2_days">Co 2 dni</string>
     <string name="frequency_every_day">Codziennie</string>
@@ -506,7 +497,6 @@
     <string name="remove_from_history">Usuń z historii</string>
     <string name="pages_saving">Zapisywanie stron</string>
     <string name="enhanced_colors_summary">Zmniejsza pasmo, ale może mieć wpływ na wydajność</string>
-    <string name="suggest_new_sources_summary">Zapytaj o włączenie nowododanych źródeł po aktualizacji aplikacji</string>
     <string name="backups_output_directory">Katalog kopii zapasowej</string>
     <string name="last_successful_backup">Ostatnia pomyślna kopia zapasowa: %s</string>
     <string name="lock_screen_rotation">Zablokuj obracanie ekranu</string>
@@ -862,7 +852,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -954,7 +943,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

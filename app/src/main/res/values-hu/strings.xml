@@ -114,7 +114,6 @@
     <string name="read_later">Olvasás később</string>
     <string name="updates">Frissítések</string>
     <string name="search_results">eresési eredmények</string>
-    <string name="new_version_s">Új verzió: %s</string>
     <string name="size_s">Méret: %s</string>
     <string name="clear_updates_feed">Frissítési előzmények törlése</string>
     <string name="rotate_screen">Képernyő elforgatása</string>
@@ -126,8 +125,6 @@
     <string name="passwords_mismatch">Nem egyező jelszavak</string>
     <string name="about">Névjegy</string>
     <string name="app_version">Verzió %s</string>
-    <string name="check_for_updates">Frissítések keresése</string>
-    <string name="no_update_available">Nincsenek rendelkezésre álló frissítések</string>
     <string name="right_to_left">Jobbról balra</string>
     <string name="scale_mode">Méretezési mód</string>
     <string name="zoom_mode_fit_center">Középre igazítás</string>
@@ -374,8 +371,6 @@
     <string name="manga_error_description_pattern">Hiba részletei:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1. Próbáld meg &lt;a href=%2$s&gt;megnyitni a mangát egy webböngészőben&lt;/a&gt;, hogy megbizonyosodj róla, hogy elérhető-e az eredeti forrásáról.&lt;br&gt;2. Győződj meg arról, hogy a &lt;a href=hanten://about&gt;Hanten legfrissebb verzióját&lt;/a&gt; használod.&lt;br&gt;3. Ha elérhető, küldj egy hibajelentést a fejlesztőknek.</string>
     <string name="scrobbling_empty_hint">Az olvasási előrehaladás követéséhez válaszd a Menü → Követés lehetőséget a manga részletek képernyőn.</string>
     <string name="services">Szolgáltatások</string>
-    <string name="allow_unstable_updates">Instabil frissítések engedélyezése</string>
-    <string name="allow_unstable_updates_summary">Értesítések fogadása instabil verziókról</string>
     <string name="download_started">Letöltés elkezdve</string>
     <string name="got_it">Értettem</string>
     <string name="sources_reorder_tip">Koppints és tartsd nyomva egy elemet a sorrend megváltoztatásához</string>
@@ -396,7 +391,6 @@
     <string name="remove_completed">Eltávolítás befejezve</string>
     <string name="cancel_all">Összes megszakítása</string>
     <string name="downloads_wifi_only">Csak Wi-Fi-n keresztül töltsd le</string>
-    <string name="downloads_wifi_only_summary">Mobilhálózatra váltáskor állítsa le a letöltést</string>
     <string name="suggestion_manga">Javaslat: %s</string>
     <string name="suggestions_notifications_summary">Néha mutass értesítéseket manga javaslatokkal</string>
     <string name="more">Több</string>
@@ -437,8 +431,6 @@
     <string name="download_option_first_n_chapters">Első %s</string>
     <string name="download_option_next_unread_n_chapters">Következő olvasatlan %s</string>
     <string name="download_option_all_unread">Minden olvasatlan fejezet</string>
-    <string name="download_option_all_unread_b">Minden olvasatlan fejezet (%s)</string>
-    <string name="download_option_manual_selection">Fejezetek kézi kiválasztása</string>
     <string name="pick_custom_directory">Egyéni mappa kiválasztása</string>
     <string name="no_access_to_file">Nincs hozzáférésed ehhez a fájlhoz vagy mappához</string>
     <string name="local_manga_directories">Helyi manga mappák</string>
@@ -478,8 +470,6 @@
     <string name="state_abandoned">Elvetve</string>
     <string name="enhanced_colors_summary">Csökkenti a szalagolást (kemény színátmenetek), de befolyásolhatja a teljesítményt</string>
     <string name="enhanced_colors">32 bites színmód</string>
-    <string name="suggest_new_sources">Javasolj új forrásokat az alkalmazás frissítése után</string>
-    <string name="suggest_new_sources_summary">Kérés az alkalmazás frissítése után hozzáadott új források engedélyezésére</string>
     <string name="list_options">Lista beállítások</string>
     <string name="by_relevance">Relevancia</string>
     <string name="categories">Kategóriák</string>
@@ -667,7 +657,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1148,7 +1137,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

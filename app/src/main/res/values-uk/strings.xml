@@ -98,7 +98,6 @@
     <string name="favourites_category_empty">Порожня категорія</string>
     <string name="read_later">Прочитати пізніше</string>
     <string name="updates">Оновлення</string>
-    <string name="new_version_s">Нова версія: %s</string>
     <string name="size_s">Розмір: %s</string>
     <string name="clear_updates_feed">Очистити стрічку оновлень</string>
     <string name="updates_feed_cleared">Очищено</string>
@@ -114,8 +113,6 @@
     <string name="passwords_mismatch">Паролі не співпадають</string>
     <string name="about">Про застосунок</string>
     <string name="app_version">Версія %s</string>
-    <string name="check_for_updates">Перевірити наявність оновлень</string>
-    <string name="no_update_available">Немає доступних оновлень</string>
     <string name="create_category">Нова категорія</string>
     <string name="scale_mode">Режим масштабування</string>
     <string name="zoom_mode_fit_center">Вмістити в екран</string>
@@ -349,8 +346,6 @@
     <string name="theme_name_dynamic">Динамічний</string>
     <string name="color_theme">Колірний акцент</string>
     <string name="show_in_grid_view">Показати у вигляді сітки</string>
-    <string name="allow_unstable_updates">Дозволити нестабільні оновлення</string>
-    <string name="allow_unstable_updates_summary">Отримувати сповіщення про нестабільні збірки</string>
     <string name="download_started">Завантаження розпочато</string>
     <string name="user_agent">Заголовок UserAgent</string>
     <string name="settings_apply_restart_required">Перезапустіть програму, щоб застосувати зміни</string>
@@ -374,7 +369,6 @@
     <string name="mirror_switching_summary">Автоматично перемикайте домени для джерел у разі помилок, якщо дзеркала доступні</string>
     <string name="resume">Відновити</string>
     <string name="pause">Пауза</string>
-    <string name="downloads_wifi_only_summary">Зупинити завантаження при переході на мобільну мережу</string>
     <string name="enable">Увімкнути</string>
     <string name="no_thanks">Ні, дякую</string>
     <string name="suggestion_manga">Пропозиція: %s</string>
@@ -415,8 +409,6 @@
     <string name="download_option_all_unread">Усі непрочитані розділи</string>
     <string name="download_option_all_chapters">Усі розділи з перекладом %s</string>
     <string name="download_option_whole_manga">Манґа цілком</string>
-    <string name="download_option_all_unread_b">Усі непрочитані розділи (%s)</string>
-    <string name="download_option_manual_selection">Виберіть розділи вручну</string>
     <string name="local_manga_directories">Локальні каталоги манґи</string>
     <string name="download_option_first_n_chapters">Перші %s</string>
     <string name="download_option_next_unread_n_chapters">Перші непрочитані %s</string>
@@ -463,11 +455,9 @@
     <string name="state_abandoned">Кинута</string>
     <string name="categories">Категорії</string>
     <string name="list_options">Параметри списку</string>
-    <string name="suggest_new_sources">Пропонувати нові джерела після оновлення застосунку</string>
     <string name="enhanced_colors_summary">Зменшує смуги, але може вплинути на продуктивність</string>
     <string name="by_relevance">Актуальність</string>
     <string name="enhanced_colors">32-бітний колірний режим</string>
-    <string name="suggest_new_sources_summary">Пропонує включити нові джерела манґи після оновлення застосунку</string>
     <string name="online_variant">Онлайн варіант</string>
     <string name="frequency_every_day">Кожен день</string>
     <string name="backup_frequency">Частота резервного копіювання</string>
@@ -841,7 +831,6 @@
     <string name="obtain">Отримати</string>
     <string name="reading_s">Читання %s</string>
     <string name="read_on_s">Читати на %s</string>
-    <string name="rpc_skip_nsfw_summary">Не використовуйте RPC для контенту для дорослих</string>
     <string name="invalid_token">Недійсний токен: %s</string>
     <string name="show_floating_control_button">Показати плаваючу кнопку керування</string>
     <string name="unavailable">Недоступно</string>
@@ -901,7 +890,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

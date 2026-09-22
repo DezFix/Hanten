@@ -109,7 +109,6 @@
     <string name="favourites_category_empty">Prazna kategorija</string>
     <string name="text_feed_holder">Ovdje su prikazana nova poglavlja onoga što čitate</string>
     <string name="search_results">Rezultati pretraživanja</string>
-    <string name="new_version_s">Nova verzija: %s</string>
     <string name="dont_check">Ne provjeravaj</string>
     <string name="enter_password">Upišite lozinku</string>
     <string name="wrong_password">Pogrešna lozinka</string>
@@ -119,8 +118,6 @@
     <string name="passwords_mismatch">Nepodudarne lozinke</string>
     <string name="about">O aplikaciji</string>
     <string name="app_version">Verzija %s</string>
-    <string name="check_for_updates">Provjerite ima li ažuriranja</string>
-    <string name="no_update_available">Nema dostupnih ažuriranja</string>
     <string name="right_to_left">S desna na lijevo</string>
     <string name="create_category">Nova kategorija</string>
     <string name="scale_mode">Modus skaliranja</string>
@@ -271,8 +268,6 @@
     <string name="theme_name_sakura">Sakura</string>
     <string name="theme_name_mamimi">Mamimi</string>
     <string name="services">Usluge</string>
-    <string name="allow_unstable_updates">Dopusti nestabilna ažuriranja</string>
-    <string name="allow_unstable_updates_summary">Primajte obavijesti o nestabilnim verzijama</string>
     <string name="download_started">Preuzimanje je počelo</string>
     <string name="got_it">Shvaćam</string>
     <string name="speed">Brzina</string>
@@ -287,7 +282,6 @@
     <string name="remove_completed">Ukloni dovršene</string>
     <string name="cancel_all">Otkaži sve</string>
     <string name="downloads_wifi_only">Preuzimanje samo putem Wi-Fi mreže</string>
-    <string name="downloads_wifi_only_summary">Zaustavite preuzimanje kada se prebacite na mobilnu mrežu</string>
     <string name="suggestion_manga">Prijedlog: %s</string>
     <string name="suggestions_notifications_summary">Ponekad prikaži obavijesti s predloženom mangom</string>
     <string name="more">Više</string>
@@ -334,8 +328,6 @@
     <string name="state_abandoned">Izbačeno</string>
     <string name="enhanced_colors_summary">Smanjuje trake, ali može utjecati na performanse</string>
     <string name="enhanced_colors">32-bitni modus boje</string>
-    <string name="suggest_new_sources">Predloži nove izvore nakon ažuriranja aplikacije</string>
-    <string name="suggest_new_sources_summary">Upit za omogućavanje novododanih izvora nakon ažuriranja aplikacije</string>
     <string name="list_options">Popis opcija</string>
     <string name="by_relevance">Relevantnost</string>
     <string name="categories">Kategorije</string>
@@ -577,8 +569,6 @@
     <string name="use_two_pages_landscape">Koristi raspored dviju stranice u poleženom položaju (beta)</string>
     <string name="download_option_next_unread_n_chapters">Sljedeći nepročitani %s</string>
     <string name="download_option_all_unread">Sva nepročitana poglavlja</string>
-    <string name="download_option_all_unread_b">Sva nepročitana poglavlja (%s)</string>
-    <string name="download_option_manual_selection">Odaberite poglavlja ručno</string>
     <string name="pick_custom_directory">Odaberite prilagođeni direktorij</string>
     <string name="no_access_to_file">Nemate pristup ovoj datoteci ili direktoriju</string>
     <string name="local_manga_directories">Lokalni direktoriji mange</string>
@@ -838,7 +828,6 @@
     <string name="obtain">Nabavi</string>
     <string name="reading_s">Čitaš %s</string>
     <string name="read_on_s">Čitaj na %s</string>
-    <string name="rpc_skip_nsfw_summary">Ne koristi Rich Presence klijent (RPC) za sadržaj za odrasle</string>
     <string name="invalid_token">Nevažeći token: %s</string>
     <string name="show_floating_control_button">Prikaži plutajući gumb kontrola</string>
     <string name="unavailable">Nedostupno</string>
@@ -896,7 +885,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

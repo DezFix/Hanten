@@ -18,7 +18,6 @@
 	<string name="notifications_settings">ଵିଜ୍ଞପ୍ତି ସେଟିଂ</string>
 	<string name="appearance">ରୂପ</string>
 	<string name="dont_check">ଯାଞ୍ଚ କରନି</string>
-	<string name="check_for_updates">ଅଦ୍ୟତନ ପାଇଁ ଯାଞ୍ଚ କରିବା</string>
 	<string name="yesterday">ଗତକାଲି</string>
 	<string name="today">ଆଜି</string>
 	<string name="check_new_chapters_title">ନୂଆ ଅଧ୍ୟାୟ ପାଇଁ ଯାଞ୍ଚ କରି ଏହା ଵିଷୟରେ ସୂଚିତ କରିବା</string>
@@ -245,7 +244,6 @@
     
 <string name="search_results">Search results</string>
     
-<string name="new_version_s">New version: %s</string>
     
 <string name="size_s">Size: %s</string>
     
@@ -279,7 +277,6 @@
     
 <string name="app_version">Version %s</string>
     
-<string name="no_update_available">No updates available</string>
     
 <string name="right_to_left">Right-to-left</string>
     
@@ -728,9 +725,7 @@
     
 <string name="scrobbling_empty_hint">To track reading progress, select Menu → Track on the manga details screen.</string>
     
-<string name="allow_unstable_updates">Allow unstable updates</string>
     
-<string name="allow_unstable_updates_summary">Check for nightly builds in addition to stable releases</string>
     
 <string name="sources_reorder_tip">Tap and hold on an item to reorder them</string>
     
@@ -773,11 +768,9 @@
     
 <string name="downloads_wifi_only">Download only via Wi-Fi</string>
     
-<string name="downloads_wifi_only_summary">Stop downloading when switching to a mobile network</string>
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="suggestions_notifications_summary">Sometimes show notifications with suggested manga</string>
     
@@ -875,9 +868,7 @@
     
 <string name="download_option_all_unread">All unread chapters</string>
     
-<string name="download_option_all_unread_b">All unread chapters (%s)</string>
     
-<string name="download_option_manual_selection">Select chapters manually</string>
     
 <string name="pick_custom_directory">Pick custom directory</string>
     
@@ -973,9 +964,7 @@
     
 <string name="enhanced_colors">32-bit color mode</string>
     
-<string name="suggest_new_sources">Suggest new sources after app update</string>
     
-<string name="suggest_new_sources_summary">Prompt to enable newly added sources after updating the application</string>
     
 <string name="list_options">List options</string>
     
@@ -1763,7 +1752,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     

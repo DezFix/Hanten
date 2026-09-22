@@ -103,7 +103,6 @@
     <string name="updates">Абнаўленні</string>
     <string name="text_feed_holder">Тут паказваюцца новыя раздзелы таго, што вы чытаеце</string>
     <string name="search_results">Вынікі пошуку</string>
-    <string name="new_version_s">Новая версія: %s</string>
     <string name="size_s">Памер: %s</string>
     <string name="clear_updates_feed">Ачысціць стужку абнаўленняў</string>
     <string name="updates_feed_cleared">Ачышчана</string>
@@ -120,8 +119,6 @@
     <string name="passwords_mismatch">Паролі не супадаюць</string>
     <string name="about">Аб праграме</string>
     <string name="app_version">Версія %s</string>
-    <string name="check_for_updates">Праверыць абнаўленні</string>
-    <string name="no_update_available">Няма даступных абнаўленняў</string>
     <string name="right_to_left">Справа налева</string>
     <string name="create_category">Стварыць катэгорыю</string>
     <string name="scale_mode">Маштабаванне</string>
@@ -348,8 +345,6 @@
     <string name="removed_from_favourites">Выдалена з абранага</string>
     <string name="options">Параметры</string>
     <string name="user_agent">Загаловак UserAgent</string>
-    <string name="allow_unstable_updates">Дазволіць нестабільныя абнаўленні</string>
-    <string name="allow_unstable_updates_summary">Атрымліваць апавяшчэнні аб нестабільных зборках</string>
     <string name="download_started">Спампоўка пачалася</string>
     <string name="settings_apply_restart_required">Калі ласка, перазапусціце праграму каб прымяніць змены</string>
     <string name="got_it">Зразумеў</string>
@@ -372,7 +367,6 @@
     <string name="sync_host_description">Вы можаце выкарыстоўваць уласны сервер сінхранізацыі або сервер па змаўчанні. Не змяняйце гэта, калі вы не ўпэўненыя, што робіце.</string>
     <string name="pause">Паўза</string>
     <string name="remove_completed">Выдаліць завершаныя</string>
-    <string name="downloads_wifi_only_summary">Спыніць загрузку пры пераключэнні на мабільную сетку</string>
     <string name="suggestions_notifications_summary">Часам паказваць апавяшчэнні з прапанаванай мангай</string>
     <string name="more">Больш</string>
     <string name="enable">Уключыць</string>
@@ -412,9 +406,7 @@
     <string name="local_manga_directories">Лакальныя каталогі мангі</string>
     <string name="download_option_all_chapters">Усе раздзелы з перакладам %s</string>
     <string name="download_option_first_n_chapters">Першыя %s</string>
-    <string name="download_option_all_unread_b">Усе непрачытаныя раздзелы (%s)</string>
     <string name="download_option_all_unread">Усе непрачытаныя раздзелы</string>
-    <string name="download_option_manual_selection">Выбірайце раздзелы ўручную</string>
     <string name="pick_custom_directory">Выберыце карыстальніцкі каталог</string>
     <string name="download_option_next_unread_n_chapters">Наступная непрачытаная %s</string>
     <string name="no_access_to_file">У вас няма доступу да гэтага файла або каталога</string>
@@ -461,11 +453,9 @@
     <string name="state_abandoned">Кінута</string>
     <string name="categories">Катэгорыі</string>
     <string name="list_options">Параметры спісу</string>
-    <string name="suggest_new_sources">Прапаноўваць новыя крыніцы пасля абнаўлення праграмы</string>
     <string name="enhanced_colors_summary">Памяншае паласы, але можа паўплываць на прадукцыйнасць</string>
     <string name="by_relevance">Актуальнасць</string>
     <string name="enhanced_colors">32-бітны каляровы рэжым</string>
-    <string name="suggest_new_sources_summary">Прапаноўваць крыніцы мангі, дададзеныя ў апошнім абнаўленні праграмы</string>
     <string name="online_variant">Анлайн варыянт</string>
     <string name="frequency_every_day">Кожны дзень</string>
     <string name="backup_frequency">Частата стварэння рэзервовых копій</string>
@@ -839,7 +829,6 @@
     <string name="obtain">Атрымаць</string>
     <string name="reading_s">Чытанне %s</string>
     <string name="read_on_s">Чытаць далей %s</string>
-    <string name="rpc_skip_nsfw_summary">Не выкарыстоўваць RPC для дарослага кантэнту</string>
     <string name="invalid_token">Няправільны токен: %s</string>
     <string name="show_floating_control_button">Паказаць плаваючую кнопку кіравання</string>
     <string name="unavailable">Недаступна</string>
@@ -884,7 +873,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

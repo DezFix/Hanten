@@ -137,7 +137,6 @@
     <string name="updates">更新内容</string>
     <string name="text_feed_holder">在读漫画的新章节将在这里显示</string>
     <string name="search_results">搜索结果</string>
-    <string name="new_version_s">新版本：%s</string>
     <string name="clear_updates_feed">清除订阅更新记录</string>
     <string name="updates_feed_cleared">订阅更新记录已清除</string>
     <string name="rotate_screen">旋转屏幕</string>
@@ -153,8 +152,6 @@
     <string name="passwords_mismatch">密码不一致</string>
     <string name="about">关于</string>
     <string name="app_version">版本 %s</string>
-    <string name="check_for_updates">检查更新</string>
-    <string name="no_update_available">已是最新版本</string>
     <string name="right_to_left">从右到左</string>
     <string name="create_category">添加分类</string>
     <string name="scale_mode">缩放模式</string>
@@ -347,8 +344,6 @@
     <string name="theme_name_kanade">Kanade</string>
     <string name="nothing_here">一片荒漠</string>
     <string name="scrobbling_empty_hint">要记录阅读进度，在漫画详情页里选择【菜单】→【进度记录】。</string>
-    <string name="allow_unstable_updates">允许更新至测试版本</string>
-    <string name="allow_unstable_updates_summary">接收测试版本的更新通知</string>
     <string name="download_started">下载已开始</string>
     <string name="user_agent">UserAgent 标识</string>
     <string name="settings_apply_restart_required">重启程序后生效</string>
@@ -364,7 +359,6 @@
     <string name="mirror_switching">自动选择镜像网址</string>
     <string name="mirror_switching_summary">若存在可用的镜像网址，在出错时开始自动切换</string>
     <string name="paused">已暂停</string>
-    <string name="downloads_wifi_only_summary">切换到移动网络时停止下载</string>
     <string name="remove_completed">清除已完成任务</string>
     <string name="cancel_all">取消所有下载任务</string>
     <string name="downloads_wifi_only">仅在连接 Wi-Fi 时下载</string>
@@ -407,11 +401,9 @@
     <string name="pick_custom_directory">选择自定义目录</string>
     <string name="password">密码</string>
     <string name="download_option_whole_manga">整部漫画</string>
-    <string name="download_option_manual_selection">手动选择章节</string>
     <string name="description">简介</string>
     <string name="images_proxy_title">图像加载优化代理</string>
     <string name="username">用户名</string>
-    <string name="download_option_all_unread_b">所有未读章节 (%s)</string>
     <string name="authorization_optional">授权 (可选)</string>
     <string name="download_option_first_n_chapters">前 %s</string>
     <string name="downloaded">已下载</string>
@@ -458,10 +450,8 @@
     <string name="keep_screen_on">保持屏幕常亮</string>
     <string name="keep_screen_on_summary">阅读时保持亮屏</string>
     <string name="list_options">显示选项</string>
-    <string name="suggest_new_sources">推荐新增图源</string>
     <string name="enhanced_colors_summary">减少色带，但可能会影响性能</string>
     <string name="enhanced_colors">32位色彩模式</string>
-    <string name="suggest_new_sources_summary">应用更新后推送新增图源</string>
     <string name="frequency_every_day">每天一次</string>
     <string name="categories">分类</string>
     <string name="backup_frequency">备份频率</string>
@@ -897,7 +887,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -945,7 +934,6 @@
     
 <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="crash_reporting">Crash Reporting</string>
     

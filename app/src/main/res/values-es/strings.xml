@@ -103,7 +103,6 @@
     <string name="updates">Actualizaciones</string>
     <string name="text_feed_holder">Aquí se muestran los nuevos capítulos de lo que está leyendo</string>
     <string name="search_results">Resultados de la búsqueda</string>
-    <string name="new_version_s">Nueva versión: %s</string>
     <string name="size_s">Tamaño: %s</string>
     <string name="clear_updates_feed">Borrar actualizaciones</string>
     <string name="updates_feed_cleared">Borrar el feed de actualizaciones</string>
@@ -120,8 +119,6 @@
     <string name="passwords_mismatch">Las contraseñas no coinciden</string>
     <string name="about">Acerca de</string>
     <string name="app_version">Versión %s</string>
-    <string name="check_for_updates">Comprobar actualizaciones</string>
-    <string name="no_update_available">No hay actualizaciones disponibles</string>
     <string name="right_to_left">De derecha a izquierda</string>
     <string name="create_category">Nueva categoría</string>
     <string name="scale_mode">Modo de escala</string>
@@ -347,8 +344,6 @@
     <string name="theme_name_kanade">Canadé</string>
     <string name="scrobbling_empty_hint">Para realizar un seguimiento del progreso de la lectura, seleccione Menú → Seguimiento en la pantalla de detalles del manga.</string>
     <string name="services">Servicios</string>
-    <string name="allow_unstable_updates_summary">Recibir notificaciones sobre versiones inestables</string>
-    <string name="allow_unstable_updates">Permitir actualizaciones inestables</string>
     <string name="download_started">Descarga iniciada</string>
     <string name="user_agent">Encabezado del agente de usuario</string>
     <string name="settings_apply_restart_required">Por favor, reinicie la aplicación para aplicar estos cambios</string>
@@ -370,7 +365,6 @@
     <string name="remove_completed">Eliminación completa</string>
     <string name="cancel_all">Cancelar todo</string>
     <string name="downloads_wifi_only">Descargar solo por WiFi</string>
-    <string name="downloads_wifi_only_summary">Detener la descarga al cambiar a una red móvil</string>
     <string name="sync_host_description">Puedes utilizar un servidor de sincronización propio o uno predeterminado. No cambies esto si no estás seguro de lo que haces.</string>
     <string name="paused">Pausado</string>
     <string name="enable">Activar</string>
@@ -411,8 +405,6 @@
     <string name="download_option_whole_manga">El manga completo</string>
     <string name="download_option_first_n_chapters">Primero %s</string>
     <string name="download_option_all_unread">Todos los capítulos sin leer</string>
-    <string name="download_option_all_unread_b">Todos los capítulos sin leer (%s)</string>
-    <string name="download_option_manual_selection">Selección manual de los capítulos</string>
     <string name="download_option_all_chapters">Todos los capítulos con traducción %s</string>
     <string name="download_option_next_unread_n_chapters">Siguiente %s sin leer</string>
     <string name="pick_custom_directory">Elegir un directorio personalizado</string>
@@ -459,9 +451,7 @@
     <string name="keep_screen_on">Mantener pantalla encendida</string>
     <string name="keep_screen_on_summary">No apagues la pantalla mientras lees manga</string>
     <string name="state_abandoned">Abandonó</string>
-    <string name="suggest_new_sources">Sugerir nuevas fuentes tras actualizar la aplicación</string>
     <string name="enhanced_colors">Modo de color de 32 bits</string>
-    <string name="suggest_new_sources_summary">Solicitud para habilitar las nuevas fuentes añadidas tras actualizar la aplicación</string>
     <string name="categories">Categorías</string>
     <string name="list_options">Lista de opciones</string>
     <string name="enhanced_colors_summary">Reduce el banding, pero puede afectar al rendimiento</string>
@@ -837,7 +827,6 @@
     <string name="obtain">Obtener</string>
     <string name="reading_s">Leyendo %s</string>
     <string name="read_on_s">Sigue leyendo en %s</string>
-    <string name="rpc_skip_nsfw_summary">No utilice RPC para contenido de adultos</string>
     <string name="invalid_token">Token no válido: %s</string>
     <string name="show_floating_control_button">Mostrar botón de control, flotante</string>
     <string name="unavailable">No disponible</string>
@@ -895,7 +884,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

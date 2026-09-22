@@ -82,8 +82,6 @@
     <string name="repeat_password">Nhập lại mật khẩu</string>
     <string name="about">Giới thiệu</string>
     <string name="app_version">Phiên bản %s</string>
-    <string name="check_for_updates">Chạm để kiểm tra bản cập nhật mới</string>
-    <string name="no_update_available">Không có bản cập nhật</string>
     <string name="right_to_left">Phải sang trái</string>
     <string name="create_category">Danh mục mới</string>
     <string name="scale_mode">Kiểu tỉ lệ</string>
@@ -199,7 +197,6 @@
     <string name="screenshots_allow">Cho phép</string>
     <string name="suggestions_info">Tất cả dữ liệu chỉ được phân tích cục bộ trên thiết bị này và không bao giờ gửi đi nơi nào khác.</string>
     <string name="all_favourites">Tất cả danh mục yêu thích</string>
-    <string name="new_version_s">Phiên bản mới: %s</string>
     <string name="clear_updates_feed">Xoá danh sách cập nhật</string>
     <string name="updates_feed_cleared">Đã xoá</string>
     <string name="update">Cập nhật</string>
@@ -320,7 +317,6 @@
     <string name="language">Ngôn ngữ</string>
     <string name="compact">Nhỏ gọn</string>
     <string name="services">Dịch vụ</string>
-    <string name="allow_unstable_updates">Cho phép các bản cập nhật không ổn định</string>
     <string name="_import">Nhập</string>
     <string name="text_unsaved_changes_prompt">Lưu hoặc loại bỏ những thay đổi chưa được lưu?</string>
     <string name="download_started">Tải về đã bắt đầu</string>
@@ -361,12 +357,10 @@
     <string name="comics_archive_import_description">Bạn có thể chọn một hoặc nhiều file .cbz hoặc .zip, mỗi file sẽ được nhận dạng như một manga riêng biệt.</string>
     <string name="cancel_all">Huỷ bỏ tất cả</string>
     <string name="downloads_wifi_only">Chỉ tải xuống qua Wi-Fi</string>
-    <string name="downloads_wifi_only_summary">Ngừng tải xuống khi chuyển qua mạng dữ liệu</string>
     <string name="remove_completed_downloads_confirm">Lịch sử tải xuống của bạn sẽ bị xoá vĩnh viễn. Các tệp đã tải về máy sẽ không bị xóa</string>
     <string name="address">Địa chỉ</string>
     <string name="invert_colors">Đảo màu</string>
     <string name="invalid_port_number">Cổng không hợp lệ</string>
-    <string name="download_option_manual_selection">Chọn thủ công các chương</string>
     <string name="download_option_all_unread">Tất cả các chương chưa đọc</string>
     <string name="resume">Tiếp tục</string>
     <string name="clear_new_chapters_counters">Xoá thông tin về chương mới</string>
@@ -394,7 +388,6 @@
     <string name="restore_summary">Khôi phục từ bản sao lưu đã được tạo trước đó</string>
     <string name="reader_info_bar_summary">Hiển thị thời gian hiện tại và tiến trình đọc ở góc bên trên màn hình</string>
     <string name="download_option_whole_manga">Toàn bộ truyện</string>
-    <string name="download_option_all_unread_b">Tất cả các chương chưa đọc (%s)</string>
     <string name="no_access_to_file">Bạn không có quyền truy cập vào tập tin hoặc thư mục này</string>
     <string name="local_manga_directories">Thư mục truyện tên thiết bị</string>
     <string name="pick_custom_directory">Chọn thư mục tuỳ chỉnh</string>
@@ -413,7 +406,6 @@
     <string name="scrobbling_empty_hint">Để theo dõi tiến trình đọc, chọn Danh sách → Theo dõi trên màn hình chi tiết manga.</string>
     <string name="color_light">Sáng</string>
     <string name="color_dark">Tối</string>
-    <string name="allow_unstable_updates_summary">Nhận thông báo về các bản dựng không ổn định</string>
     <string name="related_manga">Truyện tranh liên quan</string>
     <string name="suggestions_wifi_only_summary">Không cập nhật đề xuất bằng kết nối mạng có đo lường</string>
     <string name="comics_archive">Từ tệp đã nén dữ liệu truyện</string>
@@ -439,10 +431,8 @@
     <string name="search_hint">Nhập tên manga, thể loại hoặc tên nguồn</string>
     <string name="clear_network_cache">Xoá cache (Cache của mạng)</string>
     <string name="type">Thể loại</string>
-    <string name="suggest_new_sources">Gợi ý nguồn mới sau khi cập nhật ứng dụng</string>
     <string name="manga_list">Danh sách manga</string>
     <string name="list_options">Tuỳ chọn danh sách</string>
-    <string name="suggest_new_sources_summary">Hiện cửa sổ bật các nguồn mới sau khi cập nhật ứng dụng</string>
     <string name="by_relevance">Liên quan</string>
     <string name="periodic_backups">Sao lưu định kì</string>
     <string name="online_variant">Xem chi tiết với nguồn</string>
@@ -897,7 +887,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -947,7 +936,6 @@
     
 <string name="chapters_time_pattern" translatable="false">%1$s (%2$s)</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="crash_reporting">Crash Reporting</string>
     

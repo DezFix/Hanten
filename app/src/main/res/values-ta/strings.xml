@@ -255,7 +255,6 @@
     <string name="updates">புதுப்பிப்புகள்</string>
     <string name="text_feed_holder">நீங்கள் படிக்கிறவற்றின் புதிய அத்தியாயங்கள் இங்கே காட்டப்பட்டுள்ளன</string>
     <string name="search_results">தேடல் முடிவுகள்</string>
-    <string name="new_version_s">புதிய பதிப்பு: %s</string>
     <string name="size_s">அளவு: %s</string>
     <string name="clear_updates_feed">புதுப்பிப்புகளை அழிக்கவும்</string>
     <string name="updates_feed_cleared">அழிக்கப்பட்டது</string>
@@ -272,9 +271,7 @@
     <string name="passwords_mismatch">பொருந்தாத கடவுச்சொற்கள்</string>
     <string name="about">பற்றி</string>
     <string name="app_version">பதிப்பு %s</string>
-    <string name="check_for_updates">புதுப்பிப்புகளை சரிபார்க்கவும்</string>
     <string name="state_upcoming">வரவிருக்கும்</string>
-    <string name="no_update_available">புதுப்பிப்புகள் எதுவும் கிடைக்கவில்லை</string>
     <string name="right_to_left">வலதுபுறம் இடது</string>
     <string name="create_category">புதிய வகை</string>
     <string name="scale_mode">அளவிலான பயன்முறை</string>
@@ -427,8 +424,6 @@
     <string name="download_option_next_unread_n_chapters">அடுத்து படிக்காத %s</string>
     <string name="content_type_other">மற்றொன்று</string>
     <string name="scrobbling_empty_hint">வாசிப்பு முன்னேற்றத்தைக் கண்காணிக்க, மங்கா விவரங்கள் திரையில் பட்டியல் → தடத்தைத் தேர்ந்தெடுக்கவும்.</string>
-    <string name="allow_unstable_updates">நிலையற்ற புதுப்பிப்புகளை அனுமதிக்கவும்</string>
-    <string name="allow_unstable_updates_summary">நிலையற்ற கட்டடங்களைப் பற்றிய அறிவிப்புகளைப் பெறுங்கள்</string>
     <string name="download_started">பதிவிறக்கம் தொடங்கியது</string>
     <string name="got_it">கிடைத்தது</string>
     <string name="sources_reorder_tip">அவற்றை மறுவரிசைப்படுத்த ஒரு பொருளைத் தட்டவும் பிடிக்கவும்</string>
@@ -447,7 +442,6 @@
     <string name="remove_completed">முடிக்கப்பட்டதை அகற்று</string>
     <string name="cancel_all">அனைத்தையும் ரத்துசெய்</string>
     <string name="downloads_wifi_only">வைஃபை வழியாக மட்டுமே பதிவிறக்கவும்</string>
-    <string name="downloads_wifi_only_summary">மொபைல் நெட்வொர்க்கிற்கு மாறும்போது பதிவிறக்குவதை நிறுத்துங்கள்</string>
     <string name="suggestion_manga">பரிந்துரை: %s</string>
     <string name="suggestions_notifications_summary">சில நேரங்களில் பரிந்துரைக்கப்பட்ட மங்காவுடன் அறிவிப்புகளைக் காட்டுங்கள்</string>
     <string name="more">மேலும்</string>
@@ -482,8 +476,6 @@
     <string name="download_option_whole_manga">முழு மங்கா</string>
     <string name="download_option_first_n_chapters">முதல் %s</string>
     <string name="restore">மீட்டெடுக்கவும்</string>
-    <string name="download_option_all_unread_b">படிக்காத அனைத்து அத்தியாயங்களும் (%s)</string>
-    <string name="download_option_manual_selection">அத்தியாயங்களை கைமுறையாகத் தேர்ந்தெடுக்கவும்</string>
     <string name="pick_custom_directory">தனிப்பயன் கோப்பகத்தைத் தேர்ந்தெடுங்கள்</string>
     <string name="no_access_to_file">இந்த கோப்பு அல்லது கோப்பகத்திற்கு உங்களுக்கு அணுகல் இல்லை</string>
     <string name="local_manga_directories">உள்ளக மங்கா கோப்பகங்கள்</string>
@@ -531,8 +523,6 @@
     <string name="state_abandoned">கைவிடப்பட்டது</string>
     <string name="enhanced_colors_summary">பேண்டலிங்கைக் குறைக்கிறது, ஆனால் செயல்திறனை பாதிக்கலாம்</string>
     <string name="enhanced_colors">32-பிட் வண்ண பயன்முறை</string>
-    <string name="suggest_new_sources">பயன்பாட்டு புதுப்பிப்புக்குப் பிறகு புதிய ஆதாரங்களை பரிந்துரைக்கவும்</string>
-    <string name="suggest_new_sources_summary">பயன்பாட்டைப் புதுப்பித்த பிறகு புதிதாக சேர்க்கப்பட்ட ஆதாரங்களை இயக்குமாறு தூண்டுதல்</string>
     <string name="list_options">பட்டியல் விருப்பங்கள்</string>
     <string name="by_relevance">பொருத்தமானது</string>
     <string name="categories">வகைகள்</string>
@@ -831,7 +821,6 @@
     <string name="obtain">பெறுங்கள்</string>
     <string name="reading_s">படித்தல் %s</string>
     <string name="read_on_s">%s படிக்கவும்</string>
-    <string name="rpc_skip_nsfw_summary">வயதுவந்த உள்ளடக்கத்திற்கு RPC ஐப் பயன்படுத்த வேண்டாம்</string>
     <string name="invalid_token">தவறான டோக்கன்: %s</string>
     <string name="show_floating_control_button">மிதக்கும் கட்டுப்பாட்டு பொத்தானைக் காட்டு</string>
     <string name="unavailable">கிடைக்கவில்லை</string>
@@ -882,7 +871,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

@@ -100,7 +100,6 @@
     <string name="read_later">Ler depois</string>
     <string name="updates">Atualizações</string>
     <string name="search_results">Resultados da busca</string>
-    <string name="new_version_s">Nova versão: %s</string>
     <string name="size_s">Tamanho: %s</string>
     <string name="clear_updates_feed">Limpar o fluxo de atualizações</string>
     <string name="rotate_screen">Girar a tela</string>
@@ -185,14 +184,12 @@
     <string name="switch_pages">Mudar páginas</string>
     <string name="clear_thumbs_cache">Limpar cache das miniaturas (capas, etc.)</string>
     <string name="favourites_categories">Categorias favoritas</string>
-    <string name="no_update_available">Nenhuma atualização disponível</string>
     <string name="create_category">Nova categoria</string>
     <string name="zoom_mode_fit_center">Ajustar ao centro</string>
     <string name="zoom_mode_keep_start">Manter no início</string>
     <string name="black_dark_theme_summary">Consome menos bateria em telas AMOLED</string>
     <string name="create_backup">Criar backup de dados</string>
     <string name="text_local_holder_secondary">Salve algo do catálogo online ou importe de um arquivo.</string>
-    <string name="check_for_updates">Verificar se há atualizações</string>
     <string name="text_feed_holder">Novos capítulos da(s) obra(s) que você lê serão mostrados aqui</string>
     <string name="app_version">Versão %s</string>
     <string name="zoom_mode_fit_width">Ajustar à largura</string>
@@ -328,7 +325,6 @@
     <string name="error_no_space_left">Sem espaço disponível no dispositivo</string>
     <string name="network_unavailable">Rede não disponível</string>
     <string name="network_unavailable_hint">Ative o Wi-Fi ou a rede móvel para ler mangás online</string>
-    <string name="allow_unstable_updates">Permitir atualizações instáveis</string>
     <string name="download_started">Começando a baixar</string>
     <string name="language">Idioma</string>
     <string name="mark_as_current">Marcar como atual</string>
@@ -349,7 +345,6 @@
     <string name="scrobbling_empty_hint">Para acompanhar o progresso de leitura, selecione Menu → Rastrear na tela de detalhes da obra.</string>
     <string name="clear_new_chapters_counters">Também limpe as informações sobre novos capítulos</string>
     <string name="sync_auth_hint">Você pode entrar em uma conta existente ou criar uma nova</string>
-    <string name="allow_unstable_updates_summary">Receber notificações sobre versões beta</string>
     <string name="comics_archive_import_description">Você pode selecionar um ou mais arquivos .cbz ou .zip; cada arquivo será reconhecido como uma obra separada.</string>
     <string name="folder_with_images_import_description">Você pode selecionar um diretório com arquivos ou imagens. Cada arquivo (ou subdiretório) será reconhecido como um capítulo.</string>
     <string name="speed">Velocidade</string>
@@ -395,8 +390,6 @@
     <string name="download_option_first_n_chapters">Primeiros %s</string>
     <string name="download_option_next_unread_n_chapters">Próximos %s não lidos</string>
     <string name="download_option_all_unread">Todos os capítulos não lidos</string>
-    <string name="download_option_all_unread_b">Todos os capítulos não lidos (%s)</string>
-    <string name="download_option_manual_selection">Selecionar capítulos manualmente</string>
     <string name="authorization_optional">Autorização (opcional)</string>
     <string name="proxy">Proxy</string>
     <string name="sync_settings">Configurações de sincronização</string>
@@ -409,7 +402,6 @@
     <string name="suggestions_enable_prompt">Quer receber sugestões personalizadas de mangás?</string>
     <string name="suggestion_manga">Sugestão: %s</string>
     <string name="downloads_resumed">\"Baixando\" foi retomado</string>
-    <string name="downloads_wifi_only_summary">Interrompa o \"baixando\' ao mudar para uma rede móvel</string>
     <string name="cancel_all_downloads_confirm">Todos os \"baixando\" ativos serão cancelados, dados parcialmente baixados serão perdidos</string>
     <string name="downloads_wifi_only">Baixar apenas via Wi-Fi</string>
     <string name="web_view_unavailable">WebView não disponível: verifique se o provedor WebView está instalado</string>
@@ -460,7 +452,6 @@
     <string name="categories">Categorias</string>
     <string name="list_options">Opções (favoritas)</string>
     <string name="backup_frequency">Frequência de criação de backup</string>
-    <string name="suggest_new_sources">Sugerir novas fontes após a atualização do aplicativo</string>
     <string name="periodic_backups_enable">Ativar backups periódicos</string>
     <string name="enhanced_colors_summary">Reduz a formação de faixas, mas pode afetar o desempenho</string>
     <string name="frequency_every_2_days">A cada 2 dias</string>
@@ -476,7 +467,6 @@
     <string name="keep_screen_on_summary">Não desligar a tela enquanto estiver lendo a obra</string>
     <string name="last_successful_backup">Último backup bem-sucedido: %s</string>
     <string name="backups_output_directory">Local de saída de backups</string>
-    <string name="suggest_new_sources_summary">Solicitação para ativar fontes recém-adicionadas após a atualização do aplicativo</string>
     <string name="sources_catalog">Catálogo de fontes</string>
     <string name="content_type_manga">Obra</string>
     <string name="error_multiple_states_not_supported">A filtragem por múltiplas situações não é suportada por esta fonte</string>
@@ -831,7 +821,6 @@
 
     <string name="obtain">Obtenha</string>
     <string name="reading_s">Lendo %s</string>
-    <string name="rpc_skip_nsfw_summary">Não usar RPC para conteúdo adulto</string>
     <string name="invalid_token">Token inválido: %s</string>
     <string name="show_floating_control_button">Mostrar botão de controle flutuante</string>
     <string name="unavailable">Indisponível</string>
@@ -895,7 +884,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

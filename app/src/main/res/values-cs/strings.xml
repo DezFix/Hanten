@@ -76,7 +76,6 @@
     <string name="favourites_category_empty">Prázdná kategorie</string>
     <string name="text_feed_holder">Nové kapitoly toho co čtete jsou zobrazeny zde</string>
     <string name="search_results">Výsledky vyhledávání</string>
-    <string name="new_version_s">Nová verze: %s</string>
     <string name="updates_feed_cleared">Vyčištěno</string>
     <string name="rotate_screen">Otočit displej</string>
     <string name="update">Aktualizovat</string>
@@ -87,8 +86,6 @@
     <string name="repeat_password">Zopakujte heslo</string>
     <string name="about">O</string>
     <string name="app_version">Verze %s</string>
-    <string name="check_for_updates">Zkontrolovat aktualizace</string>
-    <string name="no_update_available">Nejsou dostupné žádné aktualizace</string>
     <string name="scale_mode">Režim měřítka</string>
     <string name="zoom_mode_fit_center">Pasovat do středu</string>
     <string name="zoom_mode_fit_height">Pasovat na výšku</string>
@@ -283,8 +280,6 @@
     <string name="nothing_here">Nic tu není</string>
     <string name="scrobbling_empty_hint">Pro sledování pokroku čtení, vyberte Menu → Sledovat na displeji detailů mangy.</string>
     <string name="services">Služby</string>
-    <string name="allow_unstable_updates">Povolit nestabilní aktualizace</string>
-    <string name="allow_unstable_updates_summary">Přijímat oznámení o nestabilních sestaveních</string>
     <string name="download_started">Stahování začalo</string>
     <string name="got_it">Mám to</string>
     <string name="sources_reorder_tip">Klikněte a přidržte na předmětu pro přeskupení</string>
@@ -303,7 +298,6 @@
     <string name="resume">Vrátit</string>
     <string name="paused">Pozastaveno</string>
     <string name="remove_completed">Odstranit dokončené</string>
-    <string name="downloads_wifi_only_summary">Zastavit stahování při měnění na mobilní data</string>
     <string name="suggestion_manga">Doporučení: %s</string>
     <string name="suggestions_notifications_summary">Občas zobrazit oznámení s navrženou mangou</string>
     <string name="more">Více</string>
@@ -340,7 +334,6 @@
     <string name="download_option_first_n_chapters">První %s</string>
     <string name="download_option_next_unread_n_chapters">Další nepřečtené %s</string>
     <string name="download_option_all_unread">Všechny nepřečtené kapitoly</string>
-    <string name="download_option_all_unread_b">Všechny nepřečtené kapitoly (%s)</string>
     <string name="pick_custom_directory">Vyberte vlastní adresář</string>
     <string name="no_access_to_file">Nemáte žádný přístup k tomuto souboru nebo adresáři</string>
     <string name="local_manga_directories">Lokální adresář mang</string>
@@ -417,7 +410,6 @@
     <string name="port">Port</string>
     <string name="webtoon_zoom_summary">Povolit přiblížení v gestu ve webtoon režimu</string>
     <string name="clear_source_cookies_summary">Vyčistit cookies pouze pro specifikované domény. Ve většině případech bude neplatná autorizace</string>
-    <string name="download_option_manual_selection">Vyberte kapitoly manuálně</string>
     <string name="description">Popis</string>
     <string name="state_upcoming">Již brzy</string>
     <string name="no_manga_sources_found">Na Váš dotaz nebyly nalezeny žádné zdroje mang</string>
@@ -458,8 +450,6 @@
     <string name="enhanced_colors_summary">Snižuje banding, ale může ovlivnit výkon</string>
     <string name="state_abandoned">Upuštěný</string>
     <string name="enhanced_colors">32-bitový režim barev</string>
-    <string name="suggest_new_sources_summary">Výzva k povolení nově přidaných zdrojů po aktualizaci aplikace</string>
-    <string name="suggest_new_sources">Navrhnout nové zdroje po aktualizaci aplikace</string>
     <string name="periodic_backups">Pravidelné zálohy</string>
     <string name="backup_frequency">Frekvence vytváření záloh</string>
     <string name="frequency_every_day">Každý den</string>
@@ -850,7 +840,6 @@
     <string name="obtain">Získat</string>
     <string name="reading_s">Čtení %s</string>
     <string name="read_on_s">Číst na %s</string>
-    <string name="rpc_skip_nsfw_summary">Nepoužívat RPC pro mangu pro dospělé</string>
     <string name="invalid_token">Neplatný token: %s</string>
     <string name="show_floating_control_button">Zobrazit plovoucí ovládací tlačítko</string>
     <string name="unavailable">Nedostupné</string>
@@ -899,7 +888,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     

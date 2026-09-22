@@ -89,7 +89,6 @@
     <string name="notification_sound">Aviseringsljud</string>
     <string name="vibration">Vibration</string>
     <string name="favourites_categories">Favoritkategorier</string>
-    <string name="no_update_available">Inga tillgängliga uppdateringar</string>
     <string name="backup_information">Du kan säkerhetskopiera din historik och dina favoriter och återställa senare</string>
     <string name="just_now">Just nu</string>
     <string name="yesterday">Igår</string>
@@ -164,7 +163,6 @@
     <string name="favourites_category_empty">Tom kategori</string>
     <string name="read_later">Läs senare</string>
     <string name="updates">Uppdateringar</string>
-    <string name="new_version_s">Ny version: %s</string>
     <string name="text_local_holder_secondary">Spara något från en onlinekatalog eller importera från en fil.</string>
     <string name="recent_manga">Nytt</string>
     <string name="manga_save_location">Nedladdningsmapp</string>
@@ -190,7 +188,6 @@
     <string name="passwords_mismatch">Lösenord stämmer inte överens</string>
     <string name="about">Om</string>
     <string name="app_version">Version %s</string>
-    <string name="check_for_updates">Leta efter uppdateringar</string>
     <string name="right_to_left">Höger-till-vänster</string>
     <string name="scale_mode">Skalningsläge</string>
     <string name="zoom_mode_fit_center">Centrera</string>
@@ -335,7 +332,6 @@
     <string name="state_upcoming">Kommande</string>
     <string name="content_type_hentai">Hentai</string>
     <string name="content_type_comics">Serier</string>
-    <string name="allow_unstable_updates_summary">Ta emot aviseringar om instabila uppdateringar</string>
     <string name="got_it">Jag förstår</string>
     <string name="pause">Pausa</string>
     <string name="restore">Återställ</string>
@@ -346,7 +342,6 @@
     <string name="show_in_grid_view">Visa i rutnätsvy</string>
     <string name="nothing_here">Det finns inget här</string>
     <string name="services">Tjänster</string>
-    <string name="allow_unstable_updates">Tillåt instabila uppdateringar</string>
     <string name="comics_archive_import_description">Du kan välja en eller flera .cbz- eller .zip-filer. Varje fil kommer läsas in som separata manga.</string>
     <string name="prefetch_content">Innehållsnedladdning på förhand</string>
     <string name="scrobbling_empty_hint">För att spåra ditt läsförlopp, tryck på Meny → Spårning på mangans informationsskärm.</string>
@@ -460,7 +455,6 @@
     <string name="clear_source_cookies_summary">Rensa kakorna för en specifik domän. I flesta fall ogiltiggörs tidigare auktorisering</string>
     <string name="download_option_whole_manga">Hela mangan</string>
     <string name="webtoon_zoom_summary">Tillåt inzoomningsgest i webtoon-läge</string>
-    <string name="download_option_all_unread_b">Alla olästa kapitel (%s)</string>
     <string name="pick_custom_directory">Välj en egen mapp</string>
     <string name="download_option_all_unread">Alla olästa kapitel</string>
     <string name="local_manga_directories">Lokala mangamappar</string>
@@ -493,20 +487,16 @@
     <string name="downloads_cancelled">Nedladdningarna har avbrutits</string>
     <string name="too_many_requests_message_retry">För många förfrågningar. Försök igen efter %s</string>
     <string name="no_access_to_file">Du har inte tillgång till denna fil eller mapp</string>
-    <string name="download_option_manual_selection">Välj kapitel manuellt</string>
     <string name="reader_info_bar_summary">Visa aktuell tid och läsförlopp längst upp på skärmen</string>
     <string name="password">Lösenord</string>
     <string name="authorization_optional">Auktorisering (valfritt)</string>
     <string name="by_relevance">Relevans</string>
     <string name="data_not_restored_text">Kontrollera att du har valt den rätta säkerhetskopian</string>
-    <string name="suggest_new_sources">Föreslå nya källor efter appen uppdaterats</string>
     <string name="frequency_once_per_month">En gång i månaden</string>
     <string name="remove_completed_downloads_confirm">Din nedladdningshistorik kommer tas bort permanent. Inga nedladdade filer påverkas</string>
-    <string name="downloads_wifi_only_summary">Stoppa nedladdningar vid anslutning till ett mobilt nätverk</string>
     <string name="port">Port</string>
     <string name="progress">Förlopp</string>
     <string name="main_screen_sections">Huvudskärmssektioner</string>
-    <string name="suggest_new_sources_summary">Tillfråga om att aktivera nyligen tillagda källor efter en applikationsuppdatering</string>
     <string name="sync_auth">Logga in på synkroniseringskonto</string>
     <string name="in_progress">Pågår</string>
     <string name="state">Publiceringsstatus</string>
@@ -766,7 +756,6 @@
     
 <string name="downloads_charging_only">Download only when charging</string>
     
-<string name="downloads_charging_only_summary">Items will only be downloaded when the device is charging</string>
     
 <string name="remove_downloads_confirm">Remove selected downloads?</string>
     
@@ -1045,7 +1034,6 @@
     
 <string name="read_on_s">Read on %s</string>
     
-<string name="rpc_skip_nsfw_summary">Do not use RPC for adult content</string>
     
 <string name="invalid_token">Invalid token: %s</string>
     
