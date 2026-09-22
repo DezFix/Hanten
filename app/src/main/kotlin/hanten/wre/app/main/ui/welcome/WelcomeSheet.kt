@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.core.view.updatePadding
@@ -20,6 +21,7 @@ import hanten.wre.app.core.prefs.AppSettings
 import javax.inject.Inject
 import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.nav.router
+import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.sheet.BaseAdaptiveSheet
 import hanten.wre.app.core.ui.widgets.ChipsView
 import hanten.wre.app.core.util.ext.consume
@@ -64,6 +66,7 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 
 		viewModel.locales.observe(viewLifecycleOwner, ::onLocalesChanged)
 		viewModel.types.observe(viewLifecycleOwner, ::onTypesChanged)
+		viewModel.listMode.observe(viewLifecycleOwner, ::onListModeChanged)
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
@@ -78,6 +81,7 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		when (data) {
 			is ContentType -> viewModel.setTypeChecked(data, !chip.isChecked)
 			is Locale -> viewModel.setLocaleChecked(data, !chip.isChecked)
+			is ListMode -> viewModel.setListMode(data)
 		}
 	}
 
@@ -134,5 +138,26 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 			},
 		)
 	}
+
+	private fun onListModeChanged(selected: ListMode) {
+		val chips = viewBinding?.chipsListMode ?: return
+		chips.setChips(
+			ListMode.entries.map {
+				ChipsView.ChipModel(
+					title = getString(it.titleResId),
+					isChecked = it == selected,
+					data = it,
+				)
+			},
+		)
+	}
+
+	@get:StringRes
+	private val ListMode.titleResId: Int
+		get() = when (this) {
+			ListMode.LIST -> R.string.list
+			ListMode.DETAILED_LIST -> R.string.detailed_list
+			ListMode.GRID -> R.string.grid
+		}
 
 }

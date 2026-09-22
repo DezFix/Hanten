@@ -159,6 +159,24 @@
 				android:layout_marginTop="@dimen/margin_normal"
 				app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
 
+			<TextView
+				android:id="@+id/textView_list_mode_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/margin_normal"
+				android:layout_marginTop="@dimen/margin_normal"
+				android:singleLine="true"
+				android:text="@string/list_mode"
+				android:textAppearance="?textAppearanceTitleSmall" />
+
+			<hanten.wre.app.core.ui.widgets.ChipsView
+				android:id="@+id/chips_list_mode"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/margin_normal"
+				android:layout_marginTop="@dimen/margin_normal"
+				app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </LinearLayout>

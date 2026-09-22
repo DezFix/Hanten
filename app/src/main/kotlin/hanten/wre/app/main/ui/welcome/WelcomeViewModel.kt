@@ -7,6 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import hanten.wre.app.core.LocalizedAppContext
+import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.util.LocaleComparator
 import hanten.wre.app.core.util.ext.mapSortedByCount
@@ -25,6 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
 	private val repository: MangaSourcesRepository,
+	private val settings: AppSettings,
 	@LocalizedAppContext context: Context,
 ) : BaseViewModel() {
 
@@ -50,6 +53,17 @@ class WelcomeViewModel @Inject constructor(
 			error = null,
 		),
 	)
+
+	/**
+	 * Beta: library appearance picked on the welcome screen.
+	 * Written straight to settings, no migration involved.
+	 */
+	val listMode = MutableStateFlow(settings.favoritesListMode)
+
+	fun setListMode(mode: ListMode) {
+		listMode.value = mode
+		settings.favoritesListMode = mode
+	}
 
 	init {
 		updateJob = launchJob(Dispatchers.IO) {
