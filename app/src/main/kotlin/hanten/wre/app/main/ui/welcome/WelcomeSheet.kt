@@ -47,18 +47,28 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		this,
 	)
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		// Beta: newcomers must not dismiss onboarding by accident
+		// (outside tap / back / swipe) — only the Done button closes it.
+		isCancelable = false
+	}
+
 	override fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?): SheetWelcomeBinding {
 		return SheetWelcomeBinding.inflate(inflater, container, false)
 	}
 
 	override fun onViewBindingCreated(binding: SheetWelcomeBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
+		// Block swipe-to-dismiss; the sheet is closed via the Done button only.
+		setExpanded(isExpanded = false, isLocked = true)
 		binding.textViewWelcomeTitle.isGone = resources.getBoolean(R.bool.is_tablet)
 		binding.chipsLocales.onChipClickListener = this
 		binding.chipsType.onChipClickListener = this
 		binding.chipBackup.setOnClickListener(this)
 		binding.chipSync.setOnClickListener(this)
 		binding.chipDirectories.setOnClickListener(this)
+		binding.buttonDone.setOnClickListener(this)
 		binding.switchCrashReporting.isChecked = settings.isCrashAnalyticsEnabled
 		binding.switchCrashReporting.setOnCheckedChangeListener { _, isChecked ->
 			settings.isCrashAnalyticsEnabled = isChecked
@@ -104,6 +114,10 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
             R.id.chip_directories -> {
                 router.openDirectoriesSettings()
             }
+
+			R.id.button_done -> {
+				dismiss()
+			}
 		}
 	}
 
