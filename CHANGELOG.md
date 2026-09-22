@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.4.1
+Date: 2026-09-22
+
+### Починили источники (парсеры v2026.09.22)
+- ReadManga, MintManga, SeiManga: авторы и статусы с новой вёрстки
+- MangaLib: описания больше не сырым JSON, даты глав починены
+- Remanga: авторы из карточки тайтла
+- TomiloLib: главы грузятся параллельно, рейтинг и тома поправлены
+- MangaLib.com: рейтинг с сайта
+- ZenManga стал InkStory: новый API, каталог, страницы
+- MangaWtf: поднят на новом API
+- JoiMang: удалённое по жалобе правообладателя помечается недоступным сразу, без долгого зависания
+
 ## 2.4.0
 Date: 2026-09-22
 
