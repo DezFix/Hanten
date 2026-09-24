@@ -12,6 +12,7 @@ import hanten.wre.app.parsers.util.runCatchingCancellable
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.stats.data.StatsEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +25,24 @@ class StatsCollector @Inject constructor(
 
 	private val viewModelScope = RetainedLifecycleCoroutineScope(lifecycle)
 	private val stats = LongSparseArray<Entry>(1)
+
+	/**
+	 * Upserts carry absolute totals, so a single consumer is enough: independent coroutines could
+	 * land out of order and write an older, smaller total over a newer one.
+	 */
+	private val pendingWrites = Channel<StatsEntity>(Channel.CONFLATED)
+
+	init {
+		viewModelScope.launch(Dispatchers.IO) {
+			for (entity in pendingWrites) {
+				runCatchingCancellable {
+					db.getStatsDao().upsert(entity)
+				}.onFailure { e ->
+					e.printStackTraceDebug("StatsCollector::commit")
+				}
+			}
+		}
+	}
 
 	@Synchronized
 	fun onStateChanged(mangaId: Long, state: ReaderState) {
@@ -64,17 +83,17 @@ class StatsCollector @Inject constructor(
 
 	@Synchronized
 	fun onPause(mangaId: Long) {
+		val entry = stats[mangaId] ?: return
 		stats.remove(mangaId)
+		// Flush what was accumulated since the last state change, otherwise the time spent on the
+		// final page (and any session that never changed page) never reaches the database
+		if (entry.stats.duration > 0L || entry.stats.pages > 0) {
+			pendingWrites.trySend(entry.stats)
+		}
 	}
 
 	private fun commit(entity: StatsEntity) {
-		viewModelScope.launch(Dispatchers.IO) {
-			runCatchingCancellable {
-				db.getStatsDao().upsert(entity)
-			}.onFailure { e ->
-				e.printStackTraceDebug("StatsCollector::commit")
-			}
-		}
+		pendingWrites.trySend(entity)
 	}
 
 	private data class Entry(

@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
@@ -97,7 +98,11 @@ class DetailsViewModel @Inject constructor(
 	private val intent = MangaIntent(savedStateHandle)
 	private var loadingJob: Job
 	private val scrobblingUpdates = mutableMapOf<Int, Channel<ScrobblingUpdate>>()
-	val mangaId = intent.mangaId
+
+	// A link or QR code carries only a source url, so the database id is known after resolving it
+	private val resolvedMangaId = MutableStateFlow(intent.mangaId)
+	val mangaId: Long
+		get() = resolvedMangaId.value
 	val sourceTitle = intent.sourceTitle
 	private val scrobblers: Set<@JvmSuppressWildcards Scrobbler> by lazy { scrobblersProvider.get() }
 
@@ -105,18 +110,21 @@ class DetailsViewModel @Inject constructor(
 		mangaDetails.value = intent.manga?.let { MangaDetails(it) }
 	}
 
-	val history = historyRepository.observeOne(mangaId)
-		.onEach { h ->
-			readingState.value = h?.let(::ReaderState)
-		}.withErrorHandling()
+	val history = resolvedMangaId.flatMapLatest {
+		historyRepository.observeOne(it)
+	}.onEach { h ->
+		readingState.value = h?.let(::ReaderState)
+	}.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, null)
 
-	val favouriteCategories = interactor.observeFavourite(mangaId)
-		.withErrorHandling()
+	val favouriteCategories = resolvedMangaId.flatMapLatest {
+		interactor.observeFavourite(it)
+	}.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptySet())
 
-	val isStatsAvailable = statsRepository.observeHasStats(mangaId)
-		.withErrorHandling()
+	val isStatsAvailable = resolvedMangaId.flatMapLatest {
+		statsRepository.observeHasStats(it)
+	}.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, false)
 
 	val remoteManga = MutableStateFlow<Manga?>(null)
@@ -274,6 +282,9 @@ class DetailsViewModel @Inject constructor(
 				}
 			}.collect {
 				mangaDetails.value = it
+				// A source-url link has no database id until the parser resolved it
+				resolvedMangaId.value = it.id.takeIf { id -> id != MangaIntent.ID_NONE }
+					?: resolvedMangaId.value
 			}
 	}
 

@@ -43,9 +43,11 @@ class ShikimoriExportUseCase @Inject constructor(
 		if (favourites.isEmpty()) {
 			return@withContext ExportResult(0, emptyList())
 		}
+		// Must not degrade to an empty map: Shikimori's create is an upsert, so treating every title
+		// as new would push a zero score over an existing one on the website
 		val existingRates = runCatchingCancellable {
 			repository.getUserRates()
-		}.getOrNull().orEmpty().associateBy { it.targetId }
+		}.getOrThrow().associateBy { it.targetId }
 		val semaphore = Semaphore(MAX_PARALLELISM)
 		val results = supervisorScope {
 			favourites.take(MAX_TITLES).map { manga ->
@@ -89,10 +91,12 @@ class ShikimoriExportUseCase @Inject constructor(
 		runCatchingCancellable {
 			repository.createRate(manga.id, target.id)
 		}.getOrNull() ?: return manga.title
-		runCatchingCancellable {
+		// Report a failed progress push instead of counting it as exported: the link exists now, so
+		// a later run would skip this title and the remote progress would stay missing for good
+		val pushed = runCatchingCancellable {
 			pushProgress(manga)
-		}
-		return null
+		}.isSuccess
+		return if (pushed) null else manga.title
 	}
 
 	private suspend fun linkExisting(manga: Manga, rate: ShikimoriUserRate) {
@@ -110,28 +114,29 @@ class ShikimoriExportUseCase @Inject constructor(
 		)
 	}
 
-	private suspend fun pushProgress(manga: Manga) {
-		val history = historyRepository.getOne(manga) ?: return
+	private suspend fun pushProgress(manga: Manga): Boolean {
+		val history = historyRepository.getOne(manga) ?: return true
 		val chapters = runCatchingCancellable {
 			mangaRepositoryFactory.create(manga.source).getDetails(manga).chapters
-		}.getOrNull() ?: return
+		}.getOrNull() ?: return false
 		if (chapters.isNullOrEmpty()) {
-			return
+			return false
 		}
 		val index = chapters.indexOfFirst { it.id == history.chapterId }
 		if (index < 0) {
-			return
+			return false
 		}
 		val isLast = index == chapters.size - 1
 		val completed = isLast && ReadingProgress.isCompleted(history.percent)
-		val entity = db.getScrobblingDao().find(ScrobblerService.SHIKIMORI.id, manga.id) ?: return
-		repository.updateRate(
+		val entity = db.getScrobblingDao().find(ScrobblerService.SHIKIMORI.id, manga.id) ?: return false
+		// Chapter count and status go in one PATCH: the rating/status overload carries no chapters
+		repository.updateRateWithProgress(
 			rateId = entity.id,
 			mangaId = manga.id,
-			rating = 0f,
+			chapter = index + 1,
 			status = if (completed) STATUS_COMPLETED else STATUS_WATCHING,
-			comment = null,
 		)
+		return true
 	}
 
 	private fun String.normalizeKey() = lowercase().filter { it.isLetterOrDigit() }

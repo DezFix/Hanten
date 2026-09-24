@@ -105,6 +105,37 @@ abstract class StatsDao {
 		query: SupportSQLiteQuery
 	): Map<@MapColumn("tag_name") String, @MapColumn("d") Long>
 
+	@RawQuery
+	protected abstract suspend fun getTotalsImpl(query: SupportSQLiteQuery): StatsTotals?
+
+	/**
+	 * Duration and pages under the same conditions as the per-manga / per-tag breakdowns.
+	 * Summing [getTagDurationStats] instead would count a manga once per tag.
+	 */
+	suspend fun getTotals(
+		fromDate: Long,
+		isNsfw: Boolean?,
+		favouriteCategories: Set<Long>
+	): StatsTotals {
+		val conditions = ArrayList<String>()
+		conditions.add("(SELECT deleted_at FROM history WHERE history.manga_id = stats.manga_id) = 0")
+		conditions.add("stats.started_at >= $fromDate")
+		if (favouriteCategories.isNotEmpty()) {
+			val ids = favouriteCategories.joinToString(",")
+			conditions.add("stats.manga_id IN (SELECT manga_id FROM favourites WHERE category_id IN ($ids))")
+		}
+		if (isNsfw != null) {
+			val flag = if (isNsfw) 1 else 0
+			conditions.add("manga.nsfw = $flag")
+		}
+		val where = conditions.joinToString(separator = " AND ")
+		val query = SimpleSQLiteQuery(
+			"SELECT IFNULL(SUM(duration),0) AS duration, IFNULL(SUM(pages),0) AS pages " +
+				"FROM stats LEFT JOIN manga ON manga.manga_id = stats.manga_id WHERE $where",
+		)
+		return getTotalsImpl(query) ?: StatsTotals(duration = 0L, pages = 0)
+	}
+
 	@Query("SELECT * FROM stats ORDER BY started_at LIMIT :limit OFFSET :offset")
 	protected abstract suspend fun findAll(offset: Int, limit: Int): List<StatsEntity>
 	fun dumpEnabled(): Flow<StatsEntity> = flow {
@@ -120,3 +151,8 @@ abstract class StatsDao {
 		}
 	}
 }
+
+data class StatsTotals(
+	val duration: Long,
+	val pages: Int,
+)

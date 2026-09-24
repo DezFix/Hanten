@@ -34,11 +34,12 @@ class StatsRepository @Inject constructor(
 		}
 		if (byGenre) {
 			val stats = db.getStatsDao().getTagDurationStats(fromDate, null, categories)
-			val total = stats.values.sum()
+			// The tag breakdown repeats a manga once per tag, so its own sum is not a total
+			val total = db.getStatsDao().getTotals(fromDate, null, categories).duration
 			val result = ArrayList<StatsRecord>(stats.size)
 			var other = StatsRecord(manga = null, tagName = null, duration = 0)
 			for ((tagName, duration) in stats) {
-				val percent = duration.toDouble() / total
+				val percent = duration.percentOf(total)
 				if (percent < 0.05) {
 					other = other.copy(duration = other.duration + duration)
 				} else {
@@ -57,10 +58,10 @@ class StatsRepository @Inject constructor(
 		val stats = db.getStatsDao().getDurationStats(fromDate, null, categories)
 		val result = ArrayList<StatsRecord>(stats.size)
 		var other = StatsRecord(manga = null, tagName = null, duration = 0)
-		val total = stats.values.sum()
+		val total = db.getStatsDao().getTotals(fromDate, null, categories).duration
 		for ((mangaEntity, duration) in stats) {
 			val manga = mangaEntity.toManga(emptySet(), null)
-			val percent = duration.toDouble() / total
+			val percent = duration.percentOf(total)
 			if (percent < 0.05) {
 				other = other.copy(duration = other.duration + duration)
 			} else {
@@ -75,6 +76,8 @@ class StatsRepository @Inject constructor(
 		}
 		return result
 	}
+
+	private fun Long.percentOf(total: Long): Double = if (total <= 0L) 0.0 else this.toDouble() / total
 
 	suspend fun getTimePerPage(mangaId: Long): Long = db.withTransaction {
 		val dao = db.getStatsDao()
@@ -92,10 +95,10 @@ class StatsRepository @Inject constructor(
 	}
 
 	/**
-	 * Beta: total pages read since [fromDate], for the summary header.
+	 * Beta: totals since [fromDate] for the summary header, filtered like the list above it.
 	 */
-	suspend fun getPeriodPagesRead(fromDate: Long): Int {
-		return db.getStatsDao().getReadPagesCountSince(fromDate)
+	suspend fun getPeriodTotals(fromDate: Long, categories: Set<Long>): StatsTotals {
+		return db.getStatsDao().getTotals(fromDate, null, categories)
 	}
 
 	suspend fun getMangaTimeline(mangaId: Long): NavigableMap<Long, Int> {

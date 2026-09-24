@@ -132,10 +132,10 @@ class HistoryRepository @Inject constructor(
 					deletedAt = 0L,
 				),
 			)
-			newChaptersUseCaseProvider.get()(manga, chapterId)
 		}
-		// Network calls must not run inside the database transaction: they would hold the write
-		// lock for the whole request and roll the local write back on a tracker failure
+		// Both calls below can hit the network for local or incomplete manga; running them inside
+		// the transaction would hold the write lock and roll the progress write back on failure
+		newChaptersUseCaseProvider.get()(manga, chapterId)
 		scrobblers.forEach { it.tryScrobble(manga, chapterId) }
 	}
 

@@ -232,6 +232,36 @@ class ShikimoriRepository @Inject constructor(
 		saveRate(response, mangaId)
 	}
 
+	/**
+	 * Progress + status in a single PATCH. The rating overload deliberately carries no chapters,
+	 * which left exported titles stuck at zero on the website.
+	 */
+	suspend fun updateRateWithProgress(rateId: Int, mangaId: Long, chapter: Int, status: String?) {
+		val payload = JSONObject()
+		payload.put(
+			"user_rate",
+			JSONObject().apply {
+				put("chapters", chapter)
+				if (status != null) {
+					put("status", status)
+				}
+			},
+		)
+		val url = BASE_URL.toHttpUrl().newBuilder()
+			.addPathSegment("api")
+			.addPathSegment("v2")
+			.addPathSegment("user_rates")
+			.addPathSegment(rateId.toString())
+			.build()
+		val request = Request.Builder().url(url).patch(payload.toRequestBody()).build()
+		val response = okHttp.newCall(request).await().parseJson()
+		val applied = response.optInt("chapters", Int.MIN_VALUE)
+		if (applied != chapter) {
+			throw IOException("Shikimori did not save the progress: sent $chapter, got $applied")
+		}
+		saveRate(response, mangaId)
+	}
+
 	override suspend fun getMangaInfo(id: Long): ScrobblerMangaInfo {
 		val request = Request.Builder()
 			.get()

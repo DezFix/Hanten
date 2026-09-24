@@ -53,9 +53,12 @@ class StatsViewModel @Inject constructor(
 				} else {
 					System.currentTimeMillis() - TimeUnit.DAYS.toMillis(p.days.toLong())
 				}
+				// Totals come from the same query conditions as the list: summing the records would
+				// inflate the time in genre mode and ignore the selected categories here
+				val totals = repository.getPeriodTotals(fromDate, categories)
 				summary.value = StatsSummary(
-					durationMs = records.sumOf { it.duration },
-					pages = repository.getPeriodPagesRead(fromDate),
+					durationMs = totals.duration,
+					pages = totals.pages,
 					days = p.days,
 				)
 			}

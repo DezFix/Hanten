@@ -45,9 +45,7 @@ class RateLimitInterceptor(
 			}
 		} else if (wait < 0) {
 			// Stale entry, lazy cleanup (negative means no block was ever set)
-			if (blockedUntil[host] != null && blockedUntil[host]!! <= now) {
-				blockedUntil.remove(host)
-			}
+			blockedUntil.remove(host, blockedUntil[host])
 		}
 		val response = chain.proceed(chain.request())
 		if (response.code == 429) {

@@ -151,7 +151,9 @@ class ScrobblingSelectorViewModel @Inject constructor(
 		}
 		val targetId = selectedItemId.value
 		if (targetId == NO_ID) {
+			// Nothing picked: just close, never create a rate against an invalid target
 			onClose.call(Unit)
+			return
 		}
 		doneJob = launchLoadingJob(Dispatchers.IO) {
 			val prevInfo = currentScrobbler.getScrobblingInfoOrNull(manga.id)
@@ -187,6 +189,8 @@ class ScrobblingSelectorViewModel @Inject constructor(
 		initJob?.cancel()
 		loadingJob?.cancel()
 		hasNextPage.value = true
+		// Clear first: a target id belongs to one scrobbler and would be sent to the next one
+		selectedItemId.value = NO_ID
 		scrobblerMangaList.value = emptyList()
 		initJob = launchJob(Dispatchers.IO) {
 			try {

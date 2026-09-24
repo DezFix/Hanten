@@ -12,7 +12,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.core.view.updatePadding
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,9 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 	@Inject
 	lateinit var settings: AppSettings
 
-	private val viewModel by viewModels<WelcomeViewModel>()
+	// Activity-scoped: tapping Done dismisses this sheet immediately, and a fragment-scoped
+	// ViewModel would cancel a queued source/locale commit that the user just made
+	private val viewModel by activityViewModels<WelcomeViewModel>()
 
 	private val backupSelectCall = registerForActivityResult(
 		ActivityResultContracts.OpenDocument(),
@@ -65,6 +67,7 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		binding.textViewWelcomeTitle.isGone = resources.getBoolean(R.bool.is_tablet)
 		binding.chipsLocales.onChipClickListener = this
 		binding.chipsType.onChipClickListener = this
+		binding.chipsListMode.onChipClickListener = this
 		binding.chipBackup.setOnClickListener(this)
 		binding.chipSync.setOnClickListener(this)
 		binding.chipDirectories.setOnClickListener(this)

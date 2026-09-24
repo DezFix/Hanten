@@ -45,6 +45,7 @@ import javax.inject.Singleton
 
 private const val MAX_PARALLELISM = 4
 private const val FILENAME_SKIP = ".notamanga"
+private const val TEMP_FILE_MIN_AGE_MS = 60_000L
 
 @Singleton
 class LocalMangaRepository @Inject constructor(
@@ -223,10 +224,13 @@ class LocalMangaRepository @Inject constructor(
 		val dirs = storageManager.getWriteableDirs()
 		runInterruptible(Dispatchers.IO) {
 			val filter = TempFileFilter()
+			// A download can take the lock right after the check above, so only reclaim temp files
+			// that are old enough not to belong to a worker that just started
+			val minAge = System.currentTimeMillis() - TEMP_FILE_MIN_AGE_MS
 			dirs.forEach { dir ->
 				dir.withChildren { children ->
 					children.forEach { child ->
-						if (filter.accept(child)) {
+						if (filter.accept(child) && child.lastModified() < minAge) {
 							child.deleteRecursively()
 						}
 					}

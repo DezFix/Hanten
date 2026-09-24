@@ -3,6 +3,7 @@ package hanten.wre.app.core.network
 import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import okio.Buffer
 import hanten.wre.app.core.network.CommonHeaders.ACCEPT_ENCODING
@@ -12,6 +13,14 @@ class CurlLoggingInterceptor(
 ) : Interceptor {
 
 	private val escapeRegex = Regex("([\\[\\]\"])")
+
+	// Values that must never reach logcat, even in a debug build
+	private val secretRegex = Regex(
+		"(?i)(client_secret|refresh_token|access_token|auth_token|password|passwd|secret|token|\"code\")" +
+			"(\\s*[=:]\\s*[\"']?)([^&\"'\\s}]+)",
+	)
+
+	private val botTokenRegex = Regex("(?i)(/bot)[^/]+")
 
 	private val sensitiveHeaders = setOf(
 		"authorization",
@@ -28,6 +37,7 @@ class CurlLoggingInterceptor(
 	private fun logRequest(request: Request) {
 		var isCompressed = false
 
+		val url = request.url.toString().redactUrl()
 		val curlCmd = StringBuilder()
 		curlCmd.append("curl")
 		if (curlOptions != null) {
@@ -45,20 +55,48 @@ class CurlLoggingInterceptor(
 
 		val body = request.body
 		if (body != null) {
-			val buffer = Buffer()
-			body.writeTo(buffer)
-			val charset = body.contentType()?.charset() ?: Charsets.UTF_8
-			curlCmd.append(" --data-raw '")
-				.append(buffer.readString(charset).replace("\n", "\\n"))
-				.append("'")
+			curlCmd.append(readBody(body)?.let { " --data-raw '" + it.replace("\n", "\\n") + "'" } ?: "")
 		}
 		if (isCompressed) {
 			curlCmd.append(" --compressed")
 		}
-		curlCmd.append(" \"").append(request.url.toString().escape()).append('"')
+		curlCmd.append(" \"").append(url.escape()).append('"')
 
-		log("---cURL (" + request.url + ")")
+		log("---cURL (" + url + ")")
 		log(curlCmd.toString())
+	}
+
+	/**
+	 * Reads at most [MAX_LOGGED_BODY] bytes, skips uploads entirely and masks secrets: an OAuth
+	 * refresh request would otherwise print the client secret, and a backup upload would be
+	 * buffered in full.
+	 */
+	private fun readBody(body: RequestBody): String? {
+		val contentType = body.contentType()
+		if (contentType != null && (
+				contentType.type == "multipart" || contentType.subtype == "form-data"
+			)
+		) {
+			return null
+		}
+		val length = body.contentLength()
+		if (length > MAX_LOGGED_BODY) {
+			return null
+		}
+		return runCatching {
+			val buffer = Buffer()
+			body.writeTo(buffer)
+			val charset = contentType?.charset() ?: Charsets.UTF_8
+			buffer.readString(charset).maskSecrets()
+		}.getOrNull()
+	}
+
+	private fun String.maskSecrets() = secretRegex.replace(this) { match ->
+		match.groupValues[1] + match.groupValues[2] + "***"
+	}
+
+	private fun String.redactUrl() = botTokenRegex.replace(this) { match ->
+		match.groupValues[1] + "***"
 	}
 
 	private fun String.escape() = replace(escapeRegex) { match ->
@@ -67,5 +105,10 @@ class CurlLoggingInterceptor(
 
 	private fun log(msg: String) {
 		Log.d("CURL", msg)
+	}
+
+	private companion object {
+
+		const val MAX_LOGGED_BODY = 4096L
 	}
 }
