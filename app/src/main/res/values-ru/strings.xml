@@ -560,6 +560,8 @@
     <string name="all_time">Всё время</string>
     <string name="day">День</string>
     <string name="less_than_minute">Меньше минуты</string>
+    <string name="less_than_minute_short">&lt;1 м</string>
+    <string name="less_than_one_short">&lt;1</string>
     <string name="statistics">Статистика</string>
     <string name="clear_stats">Очистить статистику</string>
     <string name="stats_cleared">Статистика очищена</string>

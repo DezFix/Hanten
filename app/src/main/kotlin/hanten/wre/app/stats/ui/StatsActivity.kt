@@ -200,17 +200,24 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
         val showDaily = summary.days > 0 && summary.days < Int.MAX_VALUE
         viewBinding.layoutSummaryDaily.isGone = !showDaily
         if (showDaily) {
-            viewBinding.textSummaryDailyValue.text = (summary.pages / summary.days).toString()
+            // Integer division would show a flat "0" for any period shorter than a page per day
+            viewBinding.textSummaryDailyValue.text = if (summary.pages < summary.days) {
+                getString(R.string.less_than_one_short)
+            } else {
+                (summary.pages / summary.days).toString()
+            }
         }
     }
 
     private fun formatDuration(durationMs: Long): String {
         val minutes = TimeUnit.MILLISECONDS.toMinutes(durationMs).toInt()
-        return ReadingTime(
+        val readingTime = ReadingTime(
             minutes = minutes % 60,
             hours = minutes / 60,
             isContinue = false,
-        ).format(resources)
+        )
+        // Compact symbols instead of words: "12h 30m" / "<1 m" so the card never has to wrap
+        return readingTime.formatShort(resources) ?: getString(R.string.less_than_minute_short)
     }
 
     override fun onInflate(stub: ViewStub?, inflated: View) {

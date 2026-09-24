@@ -609,6 +609,8 @@
     <string name="reading_stats">Reading statistics</string>
     <string name="other_manga">Other manga</string>
     <string name="less_than_minute">Less than a minute</string>
+    <string name="less_than_minute_short">&lt;1 m</string>
+    <string name="less_than_one_short" translatable="false">&lt;1</string>
     <string name="statistics">Statistics</string>
     <string name="clear_stats">Clear statistics</string>
     <string name="stats_cleared">Statistics cleared</string>

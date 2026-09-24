@@ -90,6 +90,17 @@ open class CoilImageView @JvmOverloads constructor(
 		listeners?.forEach { it.onCancel(request) }
 	}
 
+	override fun onDetachedFromWindow() {
+		// A request whose lifecycle is not resolved keeps its target alive until the network
+		// answers, so a pending favicon/cover load would retain the whole detached hierarchy
+		// (fragment onDestroyView -> RecyclerView leak). Rebinding always enqueues a new request.
+		currentRequest?.dispose()
+		currentRequest = null
+		networkWaitingJob?.cancel()
+		networkWaitingJob = null
+		super.onDetachedFromWindow()
+	}
+
 	override fun onError(request: ImageRequest, result: ErrorResult) {
 		super.onError(request, result)
 		listeners?.forEach { it.onError(request, result) }
