@@ -17,8 +17,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
-import hanten.wre.app.core.prefs.AppSettings
-import javax.inject.Inject
 import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.ListMode
@@ -37,13 +35,9 @@ import java.util.Locale
 class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipClickListener, View.OnClickListener,
 	ActivityResultCallback<Uri?> {
 
-	@Inject
-	lateinit var settings: AppSettings
-
 	// Activity-scoped: tapping Done dismisses this sheet immediately, and a fragment-scoped
 	// ViewModel would cancel a queued source/locale commit that the user just made
 	private val viewModel by activityViewModels<WelcomeViewModel>()
-
 	private val backupSelectCall = registerForActivityResult(
 		ActivityResultContracts.OpenDocument(),
 		this,
@@ -70,10 +64,6 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		binding.chipBackup.setOnClickListener(this)
 		binding.chipSync.setOnClickListener(this)
 		binding.chipDirectories.setOnClickListener(this)
-		binding.switchCrashReporting.isChecked = settings.isCrashAnalyticsEnabled
-		binding.switchCrashReporting.setOnCheckedChangeListener { _, isChecked ->
-			settings.isCrashAnalyticsEnabled = isChecked
-		}
 
 		viewModel.locales.observe(viewLifecycleOwner, ::onLocalesChanged)
 		viewModel.types.observe(viewLifecycleOwner, ::onTypesChanged)

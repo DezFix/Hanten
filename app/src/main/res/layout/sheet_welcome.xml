@@ -62,6 +62,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/sync_auth"
+						android:visibility="gone"
 						app:chipIcon="@drawable/ic_sync" />
 
 					<com.google.android.material.chip.Chip
@@ -75,53 +76,6 @@
 				</com.google.android.material.chip.ChipGroup>
 
 			</HorizontalScrollView>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="@dimen/margin_normal"
-				android:layout_marginTop="8dp"
-				android:gravity="center_vertical"
-				android:orientation="horizontal">
-
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:orientation="vertical">
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/crash_reporting"
-						android:textAppearance="?textAppearanceTitleSmall" />
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="2dp"
-						android:text="@string/crash_reporting_summary"
-						android:textAppearance="?textAppearanceBodySmall" />
-
-				</LinearLayout>
-
-				<com.google.android.material.materialswitch.MaterialSwitch
-					android:id="@+id/switch_crash_reporting"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/margin_normal"
-					android:checked="false" />
-
-			</LinearLayout>
-
-			<TextView
-				android:id="@+id/textView_hint"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:paddingHorizontal="@dimen/margin_normal"
-				android:text="@string/welcome_text"
-				android:textAppearance="?textAppearanceBodyMedium" />
 
 			<TextView
 				android:id="@+id/textView_locales_title"
