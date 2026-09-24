@@ -126,6 +126,15 @@ class WelcomeViewModel @Inject constructor(
 		val enabledSources = allSources.filterTo(EnumSet.noneOf(MangaParserSource::class.java)) { x ->
 			x.contentType in types && x.locale in languages
 		}
-		repository.setSourcesEnabledExclusive(enabledSources)
+		// Never leave the app without a single source: the sheet is dismissible now, and a user who
+		// unticks everything must still end up with a working library instead of empty screens
+		val safe = if (enabledSources.isEmpty()) {
+			allSources.filterTo(EnumSet.noneOf(MangaParserSource::class.java)) { x ->
+				x.contentType == ContentType.MANGA
+			}
+		} else {
+			enabledSources
+		}
+		repository.setSourcesEnabledExclusive(safe)
 	}
 }

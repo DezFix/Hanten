@@ -49,11 +49,12 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		this,
 	)
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		// Beta: newcomers must not dismiss onboarding by accident
-		// (outside tap / back / swipe) — only the Done button closes it.
-		isCancelable = false
+	// Accidental protection without a trap: a stray tap outside must not skip setup, while the back
+	// button and dragging keep working. The sheet used to be locked and non-cancelable, which could
+	// leave the Done button below the fold with no way to reach it.
+	override fun onStart() {
+		super.onStart()
+		dialog?.setCanceledOnTouchOutside(false)
 	}
 
 	override fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?): SheetWelcomeBinding {
@@ -62,8 +63,6 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 
 	override fun onViewBindingCreated(binding: SheetWelcomeBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
-		// Block swipe-to-dismiss; the sheet is closed via the Done button only.
-		setExpanded(isExpanded = false, isLocked = true)
 		binding.textViewWelcomeTitle.isGone = resources.getBoolean(R.bool.is_tablet)
 		binding.chipsLocales.onChipClickListener = this
 		binding.chipsType.onChipClickListener = this
