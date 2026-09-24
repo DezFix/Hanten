@@ -42,6 +42,11 @@ class DebugSettingsFragment : BasePreferenceFragment(R.string.debug), Preference
 			true
 		}
 
+		KEY_OPEN_WELCOME -> {
+			router.showWelcomeSheet()
+			true
+		}
+
 		else -> super.onPreferenceTreeClick(preference)
 	}
 
@@ -68,5 +73,6 @@ class DebugSettingsFragment : BasePreferenceFragment(R.string.debug), Preference
 		const val KEY_LEAK_CANARY = "leak_canary"
 		const val KEY_WORK_INSPECTOR = "work_inspector"
 		const val KEY_TEST_PARSER = "test_parser"
+		const val KEY_OPEN_WELCOME = "open_welcome"
 	}
 }
