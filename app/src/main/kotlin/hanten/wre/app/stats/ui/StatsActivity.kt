@@ -124,7 +124,9 @@ class StatsActivity : BaseActivity<ActivityStatsBinding>(),
             bottom = bars.bottom,
         )
         viewBinding.chart.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            val baseMargin = topMargin
+            // Do not read the base margin back from the view: the XML margin is overridden per side
+            val baseMargin = resources.getDimensionPixelSize(R.dimen.margin_large)
+            topMargin = baseMargin
             bottomMargin = if (isTablet) baseMargin + bars.bottom else baseMargin
             marginStart = baseMargin + bars.start(v)
             marginEnd = if (isTablet) baseMargin else baseMargin + bars.end(v)
