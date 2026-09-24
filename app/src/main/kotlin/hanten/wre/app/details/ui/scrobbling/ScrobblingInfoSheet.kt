@@ -40,6 +40,10 @@ class ScrobblingInfoSheet :
 	private val viewModel by activityViewModels<DetailsViewModel>()
 	private var scrobblerIndex: Int = -1
 
+	// Spinner and RatingBar fire their callbacks for programmatic changes too, and every applied
+	// state emits again from the database, so unguarded callbacks ping-pong remote updates forever.
+	private var isBinding = true
+
 	private var menu: PopupMenu? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +90,9 @@ class ScrobblingInfoSheet :
 
 
 	override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+		if (isBinding) {
+			return
+		}
 		viewModel.updateScrobbling(
 			index = scrobblerIndex,
 			rating = requireViewBinding().ratingBar.rating / requireViewBinding().ratingBar.numStars,
@@ -96,13 +103,14 @@ class ScrobblingInfoSheet :
 	override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
 	override fun onRatingChanged(ratingBar: RatingBar, rating: Float, fromUser: Boolean) {
-		if (fromUser) {
-			viewModel.updateScrobbling(
-				index = scrobblerIndex,
-				rating = rating / ratingBar.numStars,
-				status = ScrobblingStatus.entries.getOrNull(requireViewBinding().spinnerStatus.selectedItemPosition),
-			)
+		if (isBinding || !fromUser) {
+			return
 		}
+		viewModel.updateScrobbling(
+			index = scrobblerIndex,
+			rating = rating / ratingBar.numStars,
+			status = ScrobblingStatus.entries.getOrNull(requireViewBinding().spinnerStatus.selectedItemPosition),
+		)
 	}
 
 	override fun onClick(v: View) {
@@ -124,12 +132,14 @@ class ScrobblingInfoSheet :
 		}
 		val binding = viewBinding ?: return
 		binding.textViewTitle.text = scrobbling.title
+		isBinding = true
 		binding.ratingBar.rating = scrobbling.rating * binding.ratingBar.numStars
 		binding.textViewDescription.text = scrobbling.description?.sanitize()
 		binding.spinnerStatus.setSelection(scrobbling.status?.ordinal ?: -1)
 		binding.imageViewLogo.contentDescription = getString(scrobbling.scrobbler.titleResId)
 		binding.imageViewLogo.setImageResource(scrobbling.scrobbler.iconResId)
 		binding.imageViewCover.setImageAsync(scrobbling.coverUrl)
+		isBinding = false
 	}
 
 	override fun onMenuItemClick(item: MenuItem): Boolean {

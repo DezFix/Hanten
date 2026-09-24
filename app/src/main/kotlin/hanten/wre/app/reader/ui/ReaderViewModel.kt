@@ -440,7 +440,8 @@ class ReaderViewModel @Inject constructor(
     }
 
     fun updateReadingProgress() {
-        viewModelScope.launch(Dispatchers.IO) {
+        // Called from onDestroy too: a failing cache/database write must not take the process down
+        launchJob(Dispatchers.IO + SkipErrors) {
             val manga = manga.filterNotNull().first()
             progressUpdateUseCase(manga)
             getCurrentPage()?.let { pageLoader.updateCache(it) }

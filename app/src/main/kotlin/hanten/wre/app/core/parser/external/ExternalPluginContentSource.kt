@@ -19,6 +19,7 @@ import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.parsers.model.MangaState
 import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.mihon.parsers.model.RATING_UNKNOWN
 import hanten.wre.app.parsers.util.find
 import hanten.wre.app.parsers.util.ifNullOrEmpty
 import hanten.wre.app.parsers.util.mapNotNullToSet
@@ -255,7 +256,11 @@ class ExternalPluginContentSource(
 		altTitles = setOfNotNull(getStringOrNull(COLUMN_ALT_TITLE)),
 		url = getString(COLUMN_URL),
 		publicUrl = getString(COLUMN_PUBLIC_URL),
-		rating = getFloat(COLUMN_RATING),
+		// Plugins are third-party code: a rating outside the 0..1 contract would poison sorting
+		// and persisted metadata, and RATING_UNKNOWN is the only allowed negative value
+		rating = getFloat(COLUMN_RATING).let {
+			if (it.isNaN() || it.isInfinite()) RATING_UNKNOWN else it.coerceIn(0f, 1f)
+		},
 		contentRating = if (getBooleanOrDefault(COLUMN_IS_NSFW, false)) {
 			ContentRating.ADULT
 		} else {

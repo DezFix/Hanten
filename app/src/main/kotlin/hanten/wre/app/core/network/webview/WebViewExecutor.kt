@@ -115,12 +115,23 @@ class WebViewExecutor @Inject constructor(
                     webView.webViewClient = object : WebViewClient() {
                         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                             val url = request?.url ?: return false
-                            val requestHost = url.host
-                            if (originalHost != null && requestHost != null && requestHost.contains(originalHost)) {
+                            return shouldNavigate(url.host)
+                        }
+
+                        @Suppress("OverridingDeprecatedMember")
+                        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                            return shouldNavigate(android.net.Uri.parse(url).host)
+                        }
+
+                        private fun shouldNavigate(requestHost: String?): Boolean {
+                            if (originalHost != null && requestHost != null &&
+                                (requestHost.equals(originalHost, ignoreCase = true) ||
+                                    requestHost.endsWith(".$originalHost", ignoreCase = true))
+                            ) {
                                 return false
                             }
                             if (BuildConfig.DEBUG) {
-                                Log.d("WebViewExecutor", "Blocked redirect to external domain: $url")
+                                Log.d("WebViewExecutor", "Blocked redirect to external domain: $requestHost")
                             }
                             return true
                         }

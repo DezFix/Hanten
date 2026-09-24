@@ -14,6 +14,7 @@ import hanten.wre.app.core.ui.util.ReversibleAction
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.core.util.ext.computeSize
 import hanten.wre.app.core.util.ext.onEachWhile
+import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.domain.BranchComparator
 import hanten.wre.app.details.domain.DetailsInteractor
@@ -36,8 +37,10 @@ import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
 import hanten.wre.app.stats.data.StatsRepository
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -50,6 +53,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.findById
@@ -92,6 +96,7 @@ class DetailsViewModel @Inject constructor(
 
 	private val intent = MangaIntent(savedStateHandle)
 	private var loadingJob: Job
+	private val scrobblingUpdates = mutableMapOf<Int, Channel<ScrobblingUpdate>>()
 	val mangaId = intent.mangaId
 	val sourceTitle = intent.sourceTitle
 	private val scrobblers: Set<@JvmSuppressWildcards Scrobbler> by lazy { scrobblersProvider.get() }
@@ -212,17 +217,34 @@ class DetailsViewModel @Inject constructor(
 
 	fun updateScrobbling(index: Int, rating: Float, status: ScrobblingStatus?) {
 		val scrobbler = getScrobbler(index) ?: return
-		launchJob(Dispatchers.IO) {
-			scrobbler.updateScrobblingInfo(
-				mangaId = mangaId,
-				rating = rating,
-				status = status,
-				comment = null,
-			)
+		// Conflated channel per scrobbler: remote updates run one at a time and a burst of
+		// interactions (dragging the rating bar) collapses into the last value instead of racing.
+		val updates = scrobblingUpdates.getOrPut(index) {
+			Channel<ScrobblingUpdate>(Channel.CONFLATED).also { channel ->
+				viewModelScope.launch(Dispatchers.IO) {
+					for (update in channel) {
+						try {
+							scrobbler.updateScrobblingInfo(
+								mangaId = mangaId,
+								rating = update.rating,
+								status = update.status,
+								comment = null,
+							)
+						} catch (e: CancellationException) {
+							throw e
+						} catch (e: Throwable) {
+							e.printStackTraceDebug("DetailsViewModel::updateScrobbling")
+							errorEvent.call(e)
+						}
+					}
+				}
+			}
 		}
+		updates.trySend(ScrobblingUpdate(rating = rating, status = status))
 	}
 
 	fun unregisterScrobbling(index: Int) {
+		scrobblingUpdates.remove(index)?.close()
 		val scrobbler = getScrobbler(index) ?: return
 		launchJob(Dispatchers.IO) {
 			scrobbler.unregisterScrobbling(
@@ -267,4 +289,9 @@ class DetailsViewModel @Inject constructor(
 		}
 		return scrobbler
 	}
+
+	private data class ScrobblingUpdate(
+		val rating: Float,
+		val status: ScrobblingStatus?,
+	)
 }

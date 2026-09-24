@@ -66,10 +66,16 @@ class RateLimitInterceptor(
 	}
 
 	private fun String.parseRetryAfter(): Long {
-		return toLongOrNull()?.let { TimeUnit.SECONDS.toMillis(it) }
-			?: runCatching {
-				ZonedDateTime.parse(this, DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli()
-			}.getOrDefault(0L)
+		val seconds = toLongOrNull()
+		if (seconds != null) {
+			return TimeUnit.SECONDS.toMillis(seconds)
+		}
+		val target = runCatching {
+			ZonedDateTime.parse(this, DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli()
+		}.getOrNull() ?: return 0L
+		// HTTP-date is an absolute wall-clock timestamp, not a delay: the caller adds it to the
+		// monotonic clock and reports it as a wait, so it must be converted to a relative value
+		return (target - System.currentTimeMillis()).coerceAtLeast(0L)
 	}
 
 	private companion object {

@@ -79,8 +79,16 @@ class LocalMangaZipOutput(
 				output.finish()
 			}
 		}
-		rootFile.deleteAwait()
-		output.file.renameTo(rootFile)
+		// The old archive is the only good copy until the new one is in place: drop it only when a
+		// plain rename cannot take its place, and never report a finished download without a file
+		val renamed = runInterruptible(Dispatchers.IO) {
+			if (output.file.renameTo(rootFile)) {
+				true
+			} else {
+				rootFile.delete() && output.file.renameTo(rootFile)
+			}
+		}
+		check(renamed) { "Failed to replace $rootFile" }
 		Unit
 	}
 

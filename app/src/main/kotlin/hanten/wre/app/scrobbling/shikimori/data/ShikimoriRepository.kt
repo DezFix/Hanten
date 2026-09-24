@@ -26,13 +26,16 @@ import hanten.wre.app.scrobbling.common.domain.model.ScrobblerMangaInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerType
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
+import okio.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 
 private const val DOMAIN = "shikimori.io"
 private const val REDIRECT_URI = "hanten://shikimori-auth"
 private const val BASE_URL = "https://$DOMAIN/"
 private const val MANGA_PAGE_SIZE = 10
+private const val RATING_MAX = 10
 
 @Singleton
 class ShikimoriRepository @Inject constructor(
@@ -185,11 +188,13 @@ class ShikimoriRepository @Inject constructor(
 	}
 
 	override suspend fun updateRate(rateId: Int, mangaId: Long, rating: Float, status: String?, comment: String?) {
+		// `score` is an integer column: a decimal string ("7.0") is not the same thing as 7 here
+		val score = rating.roundToInt().coerceIn(0, RATING_MAX)
 		val payload = JSONObject()
 		payload.put(
 			"user_rate",
 			JSONObject().apply {
-				put("score", rating.toString())
+				put("score", score)
 				if (comment != null) {
 					put("text", comment)
 				}
@@ -206,6 +211,12 @@ class ShikimoriRepository @Inject constructor(
 			.build()
 		val request = Request.Builder().url(url).patch(payload.toRequestBody()).build()
 		val response = okHttp.newCall(request).await().parseJson()
+		// The endpoint answers 200 even when a field was silently dropped, so never report success
+		// on a score the user can not see on shikimori.one
+		val applied = response.optInt("score", Int.MIN_VALUE)
+		if (applied != score) {
+			throw IOException("Shikimori did not save the score: sent $score, got $applied")
+		}
 		saveRate(response, mangaId)
 	}
 

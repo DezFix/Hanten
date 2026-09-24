@@ -62,9 +62,13 @@ abstract class SyncProvider : ContentProvider() {
 			return null
 		}
 		val db = database.openHelper.writableDatabase
-		if (db.insert(table, SQLiteDatabase.CONFLICT_IGNORE, values) < 0) {
-			db.update(table, values)
+		// Update first. A plain insert on an existing key returns -1 with CONFLICT_IGNORE, which
+		// also swallows genuine failures (NOT NULL violation): the fallback update then matches no
+		// row and the insert still reports success, so rows are lost without any error.
+		if (db.updateByKey(table, values) > 0) {
+			return uri
 		}
+		db.insert(table, SQLiteDatabase.CONFLICT_ABORT, values)
 		return uri
 	}
 
@@ -100,7 +104,7 @@ abstract class SyncProvider : ContentProvider() {
 		}
 	}
 
-	private fun SupportSQLiteDatabase.update(table: String, values: ContentValues) {
+	private fun SupportSQLiteDatabase.updateByKey(table: String, values: ContentValues): Int {
 		val keys = when (table) {
 			TABLE_TAGS -> listOf("tag_id")
 			TABLE_MANGA_TAGS -> listOf("tag_id", "manga_id")
@@ -112,7 +116,7 @@ abstract class SyncProvider : ContentProvider() {
 		}
 		val whereClause = keys.joinToString(" AND ") { "`$it` = ?" }
 		val whereArgs = Array<Any>(keys.size) { i -> values.get("`${keys[i]}`") ?: values.get(keys[i]) }
-		this.update(table, SQLiteDatabase.CONFLICT_IGNORE, values, whereClause, whereArgs)
+		return this.update(table, SQLiteDatabase.CONFLICT_REPLACE, values, whereClause, whereArgs)
 	}
 
 	@EntryPoint

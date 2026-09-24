@@ -25,6 +25,7 @@ import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import java.security.SecureRandom
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 
 private const val REDIRECT_URI = "hanten://mal-auth"
 private const val BASE_WEB_URL = "https://myanimelist.net"
@@ -65,6 +66,12 @@ class MALRepository @Inject constructor(
 			body.add("code", code)
 			body.add("redirect_uri", REDIRECT_URI)
 			body.add("code_verifier", codeVerifier)
+		} else {
+			// Refresh grant: without these two fields the request is an empty POST and a dead
+			// session can never recover
+			body.add("client_id", clientId)
+			body.add("grant_type", "refresh_token")
+			body.add("refresh_token", checkNotNull(storage.refreshToken) { "MAL refresh token is missing" })
 		}
 		val request = Request.Builder()
 			.post(body.build())
@@ -154,9 +161,15 @@ class MALRepository @Inject constructor(
 
 	override suspend fun updateRate(rateId: Int, mangaId: Long, rating: Float, status: String?, comment: String?) {
 		val body = FormBody.Builder()
-			.add("status", status.toString())
-			.add("score", rating.toInt().toString())
-			.add("comments", comment.orEmpty())
+		// `status` and `comment` are optional on MAL: sending a literal "null" or wiping an
+		// existing note during an unrelated score update is worse than omitting the field
+		if (status != null) {
+			body.add("status", status)
+		}
+		body.add("score", rating.roundToInt().toString())
+		if (comment != null) {
+			body.add("comments", comment)
+		}
 		val url = BASE_API_URL.toHttpUrl().newBuilder()
 			.addPathSegment("manga")
 			.addPathSegment(rateId.toString())

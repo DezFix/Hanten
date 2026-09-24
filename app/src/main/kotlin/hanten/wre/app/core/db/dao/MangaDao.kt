@@ -69,6 +69,8 @@ abstract class MangaDao {
 			AND NOT EXISTS(SELECT * FROM suggestions WHERE suggestions.manga_id == manga.manga_id)
 			AND NOT EXISTS(SELECT * FROM scrobblings WHERE scrobblings.manga_id == manga.manga_id)
 			AND NOT EXISTS(SELECT * FROM local_index WHERE local_index.manga_id == manga.manga_id)
+			AND NOT EXISTS(SELECT * FROM download_queue WHERE download_queue.manga_id == manga.manga_id)
+			AND NOT EXISTS(SELECT * FROM smart_downloads WHERE smart_downloads.manga_id == manga.manga_id)
 			AND manga.manga_id NOT IN (:idsToKeep)
 		""",
 	)
