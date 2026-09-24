@@ -744,8 +744,13 @@
     <string name="enable_all_sources">Включить все источники манги</string>
     <string name="test_connection">Тестовое соединение</string>
     <string name="send_backups_telegram">Отправлять резервные копии в Telegram</string>
+    <string name="send_backups_telegram_summary">Копии загружаются через вашего собственного Telegram-бота, автору приложения ничего не передаётся</string>
+    <string name="telegram_bot_token">Токен бота</string>
+    <string name="telegram_bot_token_summary">Токен вашего собственного бота, созданного через @BotFather</string>
     <string name="telegram_chat_id_summary">Введите ID чата, куда следует отправлять резервные копии</string>
-    <string name="open_telegram_bot_summary">Нажмите, чтобы открыть чат с Hanten Backup Bot</string>
+    <string name="telegram_chat_id_detected">Определён автоматически по вашему боту</string>
+    <string name="open_telegram_bot_summary">Нажмите, чтобы открыть чат со своим ботом</string>
+    <string name="open_telegram_bot_no_username">Сначала отправьте тестовое сообщение, чтобы связать бота</string>
     <string name="handle_links">Обработка ссылок</string>
     <string name="enable_all_sources_summary">Все доступные источники манги будут включены навсегда</string>
     <string name="translation">Перевод</string>
@@ -1040,4 +1045,5 @@
     <string name="scrobbler_import_done">Импортировано: %1$d, пропущено: %2$d</string>
     <string name="scrobbler_export">Выгрузить библиотеку</string>
     <string name="scrobbler_export_done">Выгружено: %1$d, пропущено: %2$d</string>
+    <string name="scrobbler_unregister_prompt">Тайл также будет удалён из вашего списка %s на сайте.</string>
 </resources>
