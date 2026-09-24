@@ -70,7 +70,6 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
 		binding.chipBackup.setOnClickListener(this)
 		binding.chipSync.setOnClickListener(this)
 		binding.chipDirectories.setOnClickListener(this)
-		binding.buttonDone.setOnClickListener(this)
 		binding.switchCrashReporting.isChecked = settings.isCrashAnalyticsEnabled
 		binding.switchCrashReporting.setOnCheckedChangeListener { _, isChecked ->
 			settings.isCrashAnalyticsEnabled = isChecked
@@ -116,10 +115,6 @@ class WelcomeSheet : BaseAdaptiveSheet<SheetWelcomeBinding>(), ChipsView.OnChipC
             R.id.chip_directories -> {
                 router.openDirectoriesSettings()
             }
-
-			R.id.button_done -> {
-				dismiss()
-			}
 		}
 	}
 

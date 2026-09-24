@@ -52,15 +52,20 @@
 
 	<PreferenceCategory
 		android:key="backup_periodic_tg"
-		android:title="@string/telegram_integration"
-		app:isPreferenceVisible="false"
-		tools:isPreferenceVisible="true">
+		android:title="@string/telegram_integration">
 
 		<SwitchPreferenceCompat
 			android:defaultValue="false"
 			android:dependency="backup_periodic"
 			android:key="backup_periodic_tg_enabled"
+			android:summary="@string/send_backups_telegram_summary"
 			android:title="@string/send_backups_telegram" />
+
+		<EditTextPreference
+			android:dependency="backup_periodic_tg_enabled"
+			android:inputType="textPassword"
+			android:key="backup_periodic_tg_token"
+			android:title="@string/telegram_bot_token" />
 
 		<EditTextPreference
 			android:dependency="backup_periodic_tg_enabled"

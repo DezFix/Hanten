@@ -568,8 +568,16 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 	val isBackupTelegramUploadEnabled: Boolean
 		get() = prefs.getBoolean(KEY_BACKUP_TG_ENABLED, false)
 
-	val backupTelegramChatId: String?
+	var backupTelegramChatId: String?
 		get() = prefs.getString(KEY_BACKUP_TG_CHAT, null)?.nullIfEmpty()
+		set(value) = prefs.edit { putString(KEY_BACKUP_TG_CHAT, value) }
+
+	val backupTelegramToken: String?
+		get() = prefs.getString(KEY_BACKUP_TG_TOKEN, null)?.nullIfEmpty()
+
+	var backupTelegramBotName: String?
+		get() = prefs.getString(KEY_BACKUP_TG_BOT_NAME, null)?.nullIfEmpty()
+		set(value) = prefs.edit { putString(KEY_BACKUP_TG_BOT_NAME, value) }
 
 	val isReadingTimeEstimationEnabled: Boolean
 		get() = prefs.getBoolean(KEY_READING_TIME, true)
@@ -868,6 +876,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_COLLAPSE_DESCRIPTION = "description_collapse"
 		const val KEY_BACKUP_TG_ENABLED = "backup_periodic_tg_enabled"
 		const val KEY_BACKUP_TG_CHAT = "backup_periodic_tg_chat_id"
+		const val KEY_BACKUP_TG_TOKEN = "backup_periodic_tg_token"
+		const val KEY_BACKUP_TG_BOT_NAME = "backup_periodic_tg_bot_name"
 		const val KEY_MANGA_LIST_BADGES = "manga_list_badges"
 		const val KEY_CRASH_ANALYTICS_ENABLED = "crash_analytics_enabled"
 		const val KEY_SOURCE_ERROR_REPORTS = "source_error_reports"

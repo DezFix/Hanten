@@ -43,6 +43,11 @@ class PeriodicalBackupSettingsViewModel @Inject constructor(
 		launchJob(Dispatchers.IO) {
 			try {
 				isTelegramCheckLoading.value = true
+				// A numeric chat id is the only thing a user cannot guess, and the bot knows it
+				// after the user has pressed Start at least once
+				if (settings.backupTelegramChatId == null) {
+					telegramUploader.discoverChatId()?.let { settings.backupTelegramChatId = it.toString() }
+				}
 				telegramUploader.sendTestMessage()
 				onActionDone.call(ReversibleAction(R.string.connection_ok, null))
 			} finally {

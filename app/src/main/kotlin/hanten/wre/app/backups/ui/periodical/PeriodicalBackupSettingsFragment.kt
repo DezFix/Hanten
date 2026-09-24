@@ -38,7 +38,10 @@ class PeriodicalBackupSettingsFragment : BasePreferenceFragment(R.string.periodi
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 		addPreferencesFromResource(R.xml.pref_backup_periodic)
-		findPreference<PreferenceCategory>(AppSettings.KEY_BACKUP_TG)?.isVisible = viewModel.isTelegramAvailable
+		// Always visible: the bot is the user's own, so this is where the token gets configured
+		findPreference<PreferenceCategory>(AppSettings.KEY_BACKUP_TG)?.isVisible = true
+		findPreference<EditTextPreference>(AppSettings.KEY_BACKUP_TG_TOKEN)?.summaryProvider =
+			EditTextFallbackSummaryProvider(R.string.telegram_bot_token_summary)
 		findPreference<EditTextPreference>(AppSettings.KEY_BACKUP_TG_CHAT)?.summaryProvider =
 			EditTextFallbackSummaryProvider(R.string.telegram_chat_id_summary)
 	}
@@ -61,7 +64,6 @@ class PeriodicalBackupSettingsFragment : BasePreferenceFragment(R.string.periodi
 				viewModel.checkTelegram()
 				true
 			}
-
 			else -> return super.onPreferenceTreeClick(preference)
 		}
 		if (!result) {

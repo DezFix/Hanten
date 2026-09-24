@@ -28,7 +28,7 @@ These notes help AI agents work effectively in this Android/Kotlin codebase by c
   - PRs build `debug` and attach APK artifacts.
   - No nightly workflow (removed; the `nightly` gradle variant still exists but is unused).
 - Required secrets: `KEYSTORE_FILE` (base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
-- Local dev: If env vars missing, Gradle prompts interactively; `local.properties` may supply values like `tg_backup_bot_token`.
+- Local dev: If env vars missing, Gradle prompts interactively; `local.properties` may supply the SDK path.
 - Signature check: `AppValidator` verifies keystore SHA-256; release builds must match the configured fingerprint.
 
 ## Key Modules & Responsibilities
