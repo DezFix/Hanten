@@ -13,6 +13,7 @@ import androidx.core.text.method.LinkMovementMethodCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
@@ -156,8 +157,17 @@ class ScrobblingInfoSheet :
 			}
 
 			R.id.action_unregister -> {
-				viewModel.unregisterScrobbling(scrobblerIndex)
-				dismiss()
+				val scrobbling = viewModel.scrobblingInfo.value.getOrNull(scrobblerIndex) ?: return false
+				// This now deletes the entry on the website too, so it must not happen on a stray tap
+				MaterialAlertDialogBuilder(requireContext())
+					.setTitle(R.string.remove)
+					.setMessage(getString(R.string.scrobbler_unregister_prompt, getString(scrobbling.scrobbler.titleResId)))
+					.setNegativeButton(android.R.string.cancel, null)
+					.setPositiveButton(R.string.delete) { _, _ ->
+						viewModel.unregisterScrobbling(scrobblerIndex)
+						dismiss()
+					}
+					.show()
 			}
 
 			R.id.action_edit -> {

@@ -123,7 +123,19 @@ class ShikimoriRepository @Inject constructor(
 	}
 
 	override suspend fun unregister(mangaId: Long) {
-		return db.getScrobblingDao().delete(ScrobblerService.SHIKIMORI.id, mangaId)
+		val entity = db.getScrobblingDao().find(ScrobblerService.SHIKIMORI.id, mangaId)
+		if (entity != null) {
+			// Removing the link only locally leaves the title in the user list on the website
+			val url = BASE_URL.toHttpUrl().newBuilder()
+				.addPathSegment("api")
+				.addPathSegment("v2")
+				.addPathSegment("user_rates")
+				.addPathSegment(entity.id.toString())
+				.build()
+			val request = Request.Builder().url(url).delete().build()
+			okHttp.newCall(request).await().use { }
+		}
+		db.getScrobblingDao().delete(ScrobblerService.SHIKIMORI.id, mangaId)
 	}
 
 	override fun logout() {

@@ -96,7 +96,19 @@ class MALRepository @Inject constructor(
 	}
 
 	override suspend fun unregister(mangaId: Long) {
-		return db.getScrobblingDao().delete(ScrobblerService.MAL.id, mangaId)
+		val entity = db.getScrobblingDao().find(ScrobblerService.MAL.id, mangaId)
+		if (entity != null) {
+			// Removing the link only locally leaves the title in the user list on the website
+			val url = BASE_API_URL.toHttpUrl().newBuilder()
+				.addPathSegment("v2")
+				.addPathSegment("manga")
+				.addPathSegment(entity.id.toString())
+				.addPathSegment("my_list_status")
+				.build()
+			val request = Request.Builder().url(url).delete().build()
+			okHttp.newCall(request).await().use { }
+		}
+		db.getScrobblingDao().delete(ScrobblerService.MAL.id, mangaId)
 	}
 
 	override suspend fun findManga(query: String, offset: Int): List<ScrobblerManga> {

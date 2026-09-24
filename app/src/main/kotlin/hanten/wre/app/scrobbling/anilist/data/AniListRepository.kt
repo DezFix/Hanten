@@ -119,7 +119,19 @@ class AniListRepository @Inject constructor(
 		}
 
 	override suspend fun unregister(mangaId: Long) {
-		return db.getScrobblingDao().delete(ScrobblerService.ANILIST.id, mangaId)
+		val entity = db.getScrobblingDao().find(ScrobblerService.ANILIST.id, mangaId)
+		if (entity != null) {
+			// Removing the link only locally leaves the title in the user list on the website
+			doRequest(
+				REQUEST_MUTATION,
+				"""
+					DeleteMediaListEntry(id: ${entity.id}) {
+						deleted
+					}
+				""",
+			)
+		}
+		db.getScrobblingDao().delete(ScrobblerService.ANILIST.id, mangaId)
 	}
 
 	override fun logout() {
