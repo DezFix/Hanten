@@ -149,7 +149,7 @@ class LocalMangaRepository @Inject constructor(
 		return result
 	}
 
-	suspend fun deleteChapters(manga: Manga, ids: Set<Long>) = lock.withLock(manga) {
+	suspend fun deleteChapters(manga: Manga, ids: Set<Long>) = lock.withLock(manga.id) {
 		val subject = if (manga.isLocal) manga else checkNotNull(findSavedManga(manga, withDetails = false)) {
 			"Manga is not stored on local storage"
 		}.manga

@@ -157,11 +157,11 @@ class TrackingRepository @Inject constructor(
 	}
 
 	suspend fun saveUpdates(updates: MangaUpdates) {
+		val isNewChapters = updates is MangaUpdates.Success && updates.isValid && updates.newChapters.isNotEmpty()
 		db.withTransaction {
 			val track = getOrCreateTrack(updates.manga.id).mergeWith(updates)
 			db.getTracksDao().upsert(track)
-			if (updates is MangaUpdates.Success && updates.isValid && updates.newChapters.isNotEmpty()) {
-				progressUpdateUseCase(updates.manga)
+			if (isNewChapters) {
 				val logEntity = TrackLogEntity(
 					mangaId = updates.manga.id,
 					chapters = updates.newChapters.joinToString("\n") { x -> x.name },
@@ -170,6 +170,11 @@ class TrackingRepository @Inject constructor(
 				)
 				db.getTrackLogsDao().insert(logEntity)
 			}
+		}
+		// Network I/O must stay outside the transaction, otherwise a parser failure rolls back the
+		// track upsert and the update log, and the write lock is held for the whole request
+		if (isNewChapters) {
+			progressUpdateUseCase(updates.manga)
 		}
 	}
 

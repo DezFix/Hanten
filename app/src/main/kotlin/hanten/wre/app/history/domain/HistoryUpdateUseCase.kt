@@ -13,15 +13,17 @@ import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.domain.DeleteReadChaptersUseCase
 import hanten.wre.app.reader.ui.ReaderState
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.runCatchingCancellable
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class HistoryUpdateUseCase @Inject constructor(
 	private val historyRepository: HistoryRepository,
 	private val settings: AppSettings,
@@ -36,6 +38,24 @@ class HistoryUpdateUseCase @Inject constructor(
 
 	@Volatile
 	private var lastCheckedChapterId: Long = -1L
+
+	// Page turns fire this many times per second. Independent writes could land out of order and
+	// roll the history back to an older page, so they are serialized and only the newest survives.
+	private val pendingUpdates = Channel<PendingUpdate>(Channel.CONFLATED)
+
+	init {
+		processLifecycleScope.launch(Dispatchers.IO) {
+			for (update in pendingUpdates) {
+				runCatchingCancellable {
+					withContext(NonCancellable) {
+						invoke(update.manga, update.readerState, update.percent)
+					}
+				}.onFailure {
+					it.printStackTraceDebug("HistoryUpdateUseCase::invokeAsync")
+				}
+			}
+		}
+	}
 
 	suspend operator fun invoke(manga: Manga, readerState: ReaderState, percent: Float) {
 		historyRepository.addOrUpdate(
@@ -57,13 +77,19 @@ class HistoryUpdateUseCase @Inject constructor(
 		manga: Manga,
 		readerState: ReaderState,
 		percent: Float
-	) = processLifecycleScope.launch(Dispatchers.IO, CoroutineStart.ATOMIC) {
-		runCatchingCancellable {
-			withContext(NonCancellable) {
-				invoke(manga, readerState, percent)
-			}
-		}.onFailure {
-			it.printStackTraceDebug("HistoryUpdateUseCase::invokeAsync")
-		}
+	) {
+		pendingUpdates.trySend(
+			PendingUpdate(
+				manga = manga,
+				readerState = readerState,
+				percent = percent,
+			),
+		)
 	}
+
+	private data class PendingUpdate(
+		val manga: Manga,
+		val readerState: ReaderState,
+		val percent: Float,
+	)
 }

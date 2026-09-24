@@ -133,8 +133,10 @@ class HistoryRepository @Inject constructor(
 				),
 			)
 			newChaptersUseCaseProvider.get()(manga, chapterId)
-			scrobblers.forEach { it.tryScrobble(manga, chapterId) }
 		}
+		// Network calls must not run inside the database transaction: they would hold the write
+		// lock for the whole request and roll the local write back on a tracker failure
+		scrobblers.forEach { it.tryScrobble(manga, chapterId) }
 	}
 
 	suspend fun getOne(manga: Manga): MangaHistory? {

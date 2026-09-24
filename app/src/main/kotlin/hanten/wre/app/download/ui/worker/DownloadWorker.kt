@@ -62,7 +62,6 @@ import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.data.LocalStorageCache
 import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.data.PageCache
-import hanten.wre.app.local.data.TempFileFilter
 import hanten.wre.app.local.data.input.LocalMangaParser
 import hanten.wre.app.local.data.output.LocalMangaOutput
 import hanten.wre.app.local.domain.DeleteReadChaptersUseCase
@@ -201,7 +200,7 @@ class DownloadWorker @AssistedInject constructor(
 		var manga = subject
 		val chaptersToSkip = excludedIds.toMutableSet()
 		val pausingReceiver = PausingReceiver(id, PausingHandle.current())
-		mangaLock.withLock(manga) {
+		mangaLock.withLock(manga.id) {
 			ContextCompat.registerReceiver(
 				applicationContext,
 				pausingReceiver,
@@ -330,9 +329,9 @@ class DownloadWorker @AssistedInject constructor(
 					applicationContext.unregisterReceiver(pausingReceiver)
 					output?.closeQuietly()
 					output?.cleanup()
-					destination.listFiles(TempFileFilter())?.forEach {
-						it.deleteAwait()
-					}
+					// Do not sweep *.tmp here: `destination` is the shared download root, so this
+					// deleted other workers' in-flight pages and archives. Orphans left by a killed
+					// process are reclaimed by LocalMangaRepository.cleanup(), which takes the lock.
 				}
 			}
 		}

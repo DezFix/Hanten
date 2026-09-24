@@ -180,6 +180,9 @@ abstract class HistoryDao : MangaQueryBuilder.ConditionCallback {
 	@Query("UPDATE history SET deleted_at = :deletedAt WHERE manga_id = :mangaId")
 	protected abstract suspend fun setDeletedAt(mangaId: Long, deletedAt: Long)
 
+	@Query("UPDATE history SET percent = :percent WHERE manga_id = :mangaId")
+	abstract suspend fun setPercent(mangaId: Long, percent: Float): Int
+
 	@Query("UPDATE history SET deleted_at = :deletedAt WHERE created_at >= :minDate AND deleted_at = 0")
 	protected abstract suspend fun setDeletedAtAfter(minDate: Long, deletedAt: Long)
 

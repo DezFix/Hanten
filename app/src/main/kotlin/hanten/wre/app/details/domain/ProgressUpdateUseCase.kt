@@ -52,12 +52,9 @@ class ProgressUpdateUseCase @Inject constructor(
 		val ppc = 1f / chaptersCount
 		val result = ppc * chapterIndex + ppc * pagePercent
 		if (result != history.percent) {
-			database.getHistoryDao().update(
-				history.copy(
-					chapterId = chapter.id,
-					percent = result,
-				),
-			)
+			// Write only the recalculated value: the row may already hold a newer page/scroll from
+			// the reader, and overwriting it with this snapshot would move the user backwards
+			database.getHistoryDao().setPercent(manga.id, result)
 		}
 		return result
 	}

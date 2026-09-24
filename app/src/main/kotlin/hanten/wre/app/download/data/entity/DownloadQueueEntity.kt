@@ -58,6 +58,7 @@ data class DownloadQueueEntity(
         if (wifiOnly != other.wifiOnly) return false
         if (charging_only != other.charging_only) return false
         if (offPeakOnly != other.offPeakOnly) return false
+        if (isPaused != other.isPaused) return false
 
         return true
     }
@@ -71,6 +72,7 @@ data class DownloadQueueEntity(
         result = 31 * result + wifiOnly.hashCode()
         result = 31 * result + charging_only.hashCode()
         result = 31 * result + offPeakOnly.hashCode()
+        result = 31 * result + isPaused.hashCode()
         return result
     }
 }
