@@ -213,7 +213,9 @@ class SuggestionsWorker @AssistedInject constructor(
 					relevance = computeRelevance(manga.tags, tags),
 				)
 			}.toList()
-			.sortedBy { it.relevance }
+			// Relevance is "higher is better" everywhere else (see SuggestionDao ORDER BY),
+			// so the best matches must be the ones kept
+			.sortedByDescending { it.relevance }
 			.take(MAX_RESULTS)
 		suggestionRepository.replace(suggestions)
 		if (appSettings.isSuggestionsNotificationAvailable
@@ -389,6 +391,11 @@ class SuggestionsWorker @AssistedInject constructor(
 
 	@FloatRange(from = 0.0, to = 1.0)
 	private fun computeRelevance(mangaTags: Set<MangaTag>, allTags: List<String>): Float {
+		// Without tags the maximum weight is 0 and the ratio below becomes NaN, which SQLite
+		// silently stores as NULL instead of a score
+		if (mangaTags.isEmpty()) {
+			return 0f
+		}
 		val maxWeight = (allTags.size + allTags.size + 1 - mangaTags.size) * mangaTags.size / 2.0
 		val weight = mangaTags.sumOf { tag ->
 			val index = allTags.inexactIndexOf(tag.title, TAG_EQ_THRESHOLD)
