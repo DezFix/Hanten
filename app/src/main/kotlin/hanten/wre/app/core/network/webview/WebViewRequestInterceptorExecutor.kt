@@ -200,8 +200,11 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
 
     @MainThread
     private fun obtainWebView(): WebView {
-        // Clean up any previous WebView instances
-        cleanupOldWebViews()
+        // Drop references to collected WebView instances; do NOT destroy live ones -
+        // each request destroys its own WebView upon completion.
+        synchronized(activeWebViews) {
+            activeWebViews.removeAll { it.get() == null }
+        }
 
         val wv = WebView(context).apply {
             configureForParser(null)
@@ -219,27 +222,6 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
         }
 
         return wv
-    }
-
-    @MainThread
-    private fun cleanupOldWebViews() {
-        synchronized(activeWebViews) {
-            val iterator = activeWebViews.iterator()
-            while (iterator.hasNext()) {
-                val ref = iterator.next()
-                val webView = ref.get()
-                if (webView == null) {
-                    // WebView was garbage collected
-                    iterator.remove()
-                } else {
-                    // Destroy still-active WebView
-                    Log.d(TAG_VRF, "Destroying previous WebView instance")
-                    webView.destroy()
-                    iterator.remove()
-                }
-            }
-        }
-        webViewCached = null
     }
 
     @MainThread

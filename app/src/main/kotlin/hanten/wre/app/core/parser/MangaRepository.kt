@@ -75,11 +75,10 @@ interface MangaRepository {
 				LocalMangaSource -> return localMangaRepository
 				UnknownMangaSource -> return EmptyMangaRepository(source)
 			}
-			cache[source]?.get()?.let { return it }
-			return synchronized(cache) {
+			synchronized(cache) {
 				cache[source]?.get()?.let { return it }
 				val repository = createRepository(source)
-				if (repository != null) {
+				return if (repository != null) {
 					cache[source] = WeakReference(repository)
 					repository
 				} else {

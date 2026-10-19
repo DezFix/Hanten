@@ -69,8 +69,12 @@ class WebViewExecutor @Inject constructor(
 
             try {
                 if (baseUrl.isNullOrEmpty()) {
-                    return@withContext suspendCoroutine { cont ->
-                        webView.evaluateJavascript(script) { cont.resume(it.takeUnless { r -> r == "null" }) }
+                    return@withContext withTimeout(timeoutMs) {
+                        suspendCancellableCoroutine { cont ->
+                            webView.evaluateJavascript(script) { result ->
+                                cont.resume(result.takeUnless { r -> r == "null" })
+                            }
+                        }
                     }
                 }
 

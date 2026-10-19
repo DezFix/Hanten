@@ -220,10 +220,11 @@ class SuggestionsWorker @AssistedInject constructor(
 		suggestionRepository.replace(suggestions)
 		if (appSettings.isSuggestionsNotificationAvailable
 			&& applicationContext.checkNotificationPermission(MANGA_CHANNEL_ID)
+			&& suggestions.isNotEmpty()
 		) {
 			for (i in 0..3) {
 				try {
-					val manga = suggestions[Random.nextInt(0, suggestions.size / 3)]
+					val manga = suggestions[Random.nextInt(0, (suggestions.size / 3).coerceAtLeast(1))]
 					val details = mangaRepositoryFactory.create(manga.manga.source)
 						.getDetails(manga.manga)
 					if (details.chapters.isNullOrEmpty()) {

@@ -22,6 +22,11 @@ class CurlLoggingInterceptor(
 
 	private val botTokenRegex = Regex("(?i)(/bot)[^/]+")
 
+	// Query-string secrets (access_token=, api_key=, ...) in logged URLs
+	private val urlSecretRegex = Regex(
+		"(?i)([?&](?:access_token|refresh_token|auth_token|token|api_key|apikey|secret|password)=)[^&\\s]+",
+	)
+
 	private val sensitiveHeaders = setOf(
 		"authorization",
 		"proxy-authorization",
@@ -95,8 +100,13 @@ class CurlLoggingInterceptor(
 		match.groupValues[1] + match.groupValues[2] + "***"
 	}
 
-	private fun String.redactUrl() = botTokenRegex.replace(this) { match ->
-		match.groupValues[1] + "***"
+	private fun String.redactUrl(): String {
+		val withoutBotToken = botTokenRegex.replace(this) { match ->
+			match.groupValues[1] + "***"
+		}
+		return urlSecretRegex.replace(withoutBotToken) { match ->
+			match.groupValues[1] + "***"
+		}
 	}
 
 	private fun String.escape() = replace(escapeRegex) { match ->

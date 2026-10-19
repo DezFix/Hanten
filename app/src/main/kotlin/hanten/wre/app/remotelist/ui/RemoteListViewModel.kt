@@ -30,7 +30,6 @@ import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.domain.model.LocalManga
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaParserSource
-import hanten.wre.app.parsers.util.sizeOrZero
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -74,6 +73,7 @@ open class RemoteListViewModel @Inject constructor(
 	private val listError = MutableStateFlow<Throwable?>(null)
 	private var loadingJob: Job? = null
 	private var randomJob: Job? = null
+	private var fetchedCount = 0
 
 	override val content = combine(
 		mangaList.map { it?.skipNsfwIfNeeded() },
@@ -142,26 +142,31 @@ open class RemoteListViewModel @Inject constructor(
 
 	protected fun loadList(filterState: FilterCoordinator.Snapshot, append: Boolean): Job {
 		loadingJob?.let {
-			if (it.isActive) return it
+			if (it.isActive) {
+				if (append) return it
+				it.cancel()
+			}
 		}
 		return launchLoadingJob(Dispatchers.IO) {
 			try {
 				listError.value = null
 				val list = repository.getList(
-					offset = if (append) mangaList.value.sizeOrZero() else 0,
+					offset = if (append) fetchedCount else 0,
 					order = filterState.sortOrder,
 					filter = filterState.listFilter,
 				)
 				val prevList = mangaList.value.orEmpty()
 				if (!append) {
+					fetchedCount = list.size
 					mangaList.value = list.distinctById()
 				} else if (list.isNotEmpty()) {
+					fetchedCount += list.size
 					mangaList.value = (prevList + list).distinctById()
 				}
 				hasNextPage.value = if (append) {
 					prevList != mangaList.value
 				} else {
-					list.size > prevList.size || hasNextPage.value
+					list.isNotEmpty()
 				}
 			} catch (e: CancellationException) {
 				throw e

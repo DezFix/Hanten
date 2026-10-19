@@ -77,7 +77,9 @@ class PreferencesCookieJar(
 	}
 
 	override suspend fun clear(): Boolean {
-		cache.clear()
+		synchronized(this) {
+			cache.clear()
+		}
 		withContext(Dispatchers.IO) {
 			prefs.edit(commit = false) { clear() }
 		}

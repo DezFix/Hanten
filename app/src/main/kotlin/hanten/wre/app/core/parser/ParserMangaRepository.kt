@@ -46,7 +46,7 @@ class ParserMangaRepository(
 		get() = parser.filterCapabilities
 
 	override var defaultSortOrder: SortOrder
-		get() = getConfig().defaultSortOrder ?: sortOrders.first()
+		get() = getConfig().defaultSortOrder?.takeIf { it in sortOrders } ?: sortOrders.first()
 		set(value) {
 			getConfig().defaultSortOrder = value
 		}
@@ -63,7 +63,7 @@ class ParserMangaRepository(
 	override fun intercept(chain: Interceptor.Chain): Response = parser.intercept(chain)
 
 	override suspend fun getList(offset: Int, order: SortOrder?, filter: MangaListFilter?): List<Manga> {
-		return withMirrors {
+		return withMirrors(emptyIsValid = true) {
 			parser.getList(offset, order ?: defaultSortOrder, filter ?: MangaListFilter.EMPTY)
 		}
 	}
@@ -86,7 +86,9 @@ class ParserMangaRepository(
 		parser.getFavicons()
 	}
 
-	override suspend fun getRelatedMangaImpl(seed: Manga): List<Manga> = parser.getRelatedManga(seed)
+	override suspend fun getRelatedMangaImpl(seed: Manga): List<Manga> = withMirrors(emptyIsValid = true) {
+		parser.getRelatedManga(seed)
+	}
 
 	override suspend fun getDetailsImpl(manga: Manga): Manga = withMirrors {
 		parser.getDetails(manga)
@@ -110,23 +112,24 @@ class ParserMangaRepository(
 
 	fun getConfig() = parser.config as SourceSettings
 
-	private suspend fun <T : Any> withMirrors(block: suspend () -> T): T {
+	private suspend fun <T : Any> withMirrors(emptyIsValid: Boolean = false, block: suspend () -> T): T {
 		if (!mirrorSwitcher.isEnabled) {
 			return block()
 		}
 		val initialResult = runCatchingCancellable { block() }
-		if (initialResult.isValidResult()) {
+		if (initialResult.isValidResult(emptyIsValid)) {
 			return initialResult.getOrThrow()
 		}
 		val newResult = mirrorSwitcher.trySwitchMirror(this, block)
 		return newResult ?: initialResult.getOrThrow()
 	}
 
-	private fun Result<Any>.isValidResult() = fold(
+	private fun Result<Any>.isValidResult(emptyIsValid: Boolean) = fold(
 		onSuccess = {
-			when (it) {
-				is Collection<*> -> it.isNotEmpty()
-				else -> true
+			when {
+				it !is Collection<*> -> true
+				emptyIsValid -> true
+				else -> it.isNotEmpty()
 			}
 		},
 		onFailure = {
