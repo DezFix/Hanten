@@ -42,7 +42,14 @@ abstract class BaseNovelRepository(
 
 	override suspend fun getPageUrl(page: MangaPage): String = page.url
 
-	override suspend fun getFilterOptions(): MangaListFilterOptions = MangaListFilterOptions()
+	@Volatile
+	private var cachedFilterOptions: MangaListFilterOptions? = null
+
+	override suspend fun getFilterOptions(): MangaListFilterOptions = cachedFilterOptions
+		?: loadFilterOptions().also { cachedFilterOptions = it }
+
+	/** Loads options from the source. The result is cached by [getFilterOptions]. */
+	protected open suspend fun loadFilterOptions(): MangaListFilterOptions = MangaListFilterOptions()
 
 	override suspend fun getRelatedMangaImpl(seed: Manga): List<Manga> = emptyList()
 

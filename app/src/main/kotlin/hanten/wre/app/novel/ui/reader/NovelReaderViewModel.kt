@@ -14,8 +14,10 @@ import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.novel.data.epub.EpubParser
 import hanten.wre.app.novel.data.pdf.PdfRendererHelper
+import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +27,15 @@ import kotlinx.coroutines.withContext
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import java.io.File
+import java.net.URI
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
+
+data class NovelChapterContent(
+	val html: String,
+	val version: Long,
+)
 
 @HiltViewModel
 class NovelReaderViewModel @Inject constructor(
@@ -52,8 +62,10 @@ class NovelReaderViewModel @Inject constructor(
 	private val _currentChapter = MutableStateFlow<MangaChapter?>(null)
 	val currentChapter: StateFlow<MangaChapter?> = _currentChapter.asStateFlow()
 
-	private val _chapterContent = MutableStateFlow<String?>(null)
-	val chapterContent: StateFlow<String?> = _chapterContent.asStateFlow()
+	private val _chapterContent = MutableStateFlow<NovelChapterContent?>(null)
+	val chapterContent: StateFlow<NovelChapterContent?> = _chapterContent.asStateFlow()
+
+	private val chapterContentVersion = AtomicLong(0)
 
 	private val _isReadingLoading = MutableStateFlow(false)
 	val isReadingLoading: StateFlow<Boolean> = _isReadingLoading.asStateFlow()
@@ -69,6 +81,34 @@ class NovelReaderViewModel @Inject constructor(
 	private var epubParser: EpubParser? = null
 	private var pdfHelper: PdfRendererHelper? = null
 
+	private val prefetchedChapters = ConcurrentHashMap<Long, String>()
+
+	@Volatile
+	private var isChapterContentReady = false
+
+	val refererUrl: String
+		get() {
+			val manga = _manga.value
+			val source = manga?.source
+			val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
+			if (novelSource != null) {
+				return "https://${novelSource.domain}/"
+			}
+			val publicUrl = manga?.publicUrl.orEmpty()
+			if (publicUrl.isNotEmpty()) {
+				try {
+					val uri = URI(publicUrl)
+					val host = uri.host
+					if (!host.isNullOrBlank()) {
+						return "${uri.scheme ?: "https"}://$host/"
+					}
+				} catch (e: Exception) {
+					e.printStackTraceDebug()
+				}
+			}
+			return "https://lnori.com/"
+		}
+
 	init {
 		loadNovel()
 	}
@@ -80,6 +120,7 @@ class NovelReaderViewModel @Inject constructor(
 	}
 
 	fun loadNovel() {
+		prefetchedChapters.clear()
 		launchJob(Dispatchers.IO) {
 			_isReadingLoading.value = true
 			try {
@@ -160,11 +201,11 @@ class NovelReaderViewModel @Inject constructor(
 				if (chapterList.isNotEmpty()) {
 					loadChapterAtIndex(startIdx)
 				} else {
-					_chapterContent.value = "<div style='padding: 32px; text-align: center;'><p>No chapters found for this novel.</p></div>"
+					setChapterContent("<div style='padding: 32px; text-align: center;'><p>No chapters found for this novel.</p></div>")
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
-				_chapterContent.value = "<div style='padding: 32px; text-align: center;'><p>Error loading novel details.</p></div>"
+				setChapterContent("<div style='padding: 32px; text-align: center;'><p>Error loading novel details.</p></div>")
 			} finally {
 				_isReadingLoading.value = false
 			}
@@ -177,20 +218,23 @@ class NovelReaderViewModel @Inject constructor(
 		val target = list[index]
 		_currentChapterIndex.value = index
 		_currentChapter.value = target
+		isChapterContentReady = false
 
 		launchJob(Dispatchers.IO) {
 			_isReadingLoading.value = true
 			try {
-				val content = fetchChapterHtml(target)
+				restoreScrollProgress(target)
+				val content = prefetchedChapters.remove(target.id) ?: fetchChapterHtml(target)
 				if (content.isNullOrBlank()) {
-					_chapterContent.value = "<div style='padding: 32px; text-align: center;'><p>Unable to load chapter content.</p><p style='opacity: 0.7; font-size: 0.9em;'>Please check your network connection and try again.</p></div>"
+					setChapterContent("<div style='padding: 32px; text-align: center;'><p>Unable to load chapter content.</p><p style='opacity: 0.7; font-size: 0.9em;'>Please check your network connection and try again.</p></div>")
 				} else {
-					_chapterContent.value = content
+					setChapterContent(content)
+					isChapterContentReady = true
+					prefetchNextChapter(index)
 				}
-				saveReadingProgress(0f)
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
-				_chapterContent.value = "<div style='padding: 32px; text-align: center;'><p>Error loading chapter.</p></div>"
+				setChapterContent("<div style='padding: 32px; text-align: center;'><p>Error loading chapter.</p></div>")
 			} finally {
 				_isReadingLoading.value = false
 			}
@@ -210,17 +254,60 @@ class NovelReaderViewModel @Inject constructor(
 
 		launchJob(Dispatchers.IO) {
 			try {
-				val html = fetchChapterHtml(nextChapter)
+				val html = prefetchedChapters.remove(nextChapter.id) ?: fetchChapterHtml(nextChapter)
 				if (!html.isNullOrBlank()) {
 					_currentChapterIndex.value = nextIdx
 					_currentChapter.value = nextChapter
 					onChapterAppended.call(Pair(nextChapter.title.orEmpty(), html))
 					saveReadingProgress(0f)
+					prefetchNextChapter(nextIdx)
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
 			}
 		}
+	}
+
+	private suspend fun restoreScrollProgress(chapter: MangaChapter) {
+		val cur = _manga.value ?: return
+		val history = try {
+			historyRepository.getOne(cur)
+		} catch (e: CancellationException) {
+			throw e
+		} catch (e: Exception) {
+			e.printStackTraceDebug()
+			null
+		}
+		// Only reuse history progress when it points at the chapter being opened, otherwise start from the top
+		val percent = if (history?.chapterId == chapter.id) history.percent else 0f
+		_scrollProgress.value = percent.coerceIn(0f, 1f)
+	}
+
+	private fun prefetchNextChapter(currentIndex: Int) {
+		if (_isPdf.value) return
+		val list = _chapters.value
+		val nextIdx = currentIndex + 1
+		if (nextIdx !in list.indices) return
+		val nextChapter = list[nextIdx]
+		if (prefetchedChapters.containsKey(nextChapter.id)) return
+		if (prefetchedChapters.size >= MAX_PREFETCHED_CHAPTERS) {
+			prefetchedChapters.clear()
+		}
+		launchJob(Dispatchers.IO) {
+			try {
+				val html = fetchChapterHtml(nextChapter)
+				if (!html.isNullOrBlank()) {
+					prefetchedChapters[nextChapter.id] = html
+				}
+			} catch (e: Exception) {
+				e.printStackTraceDebug()
+			}
+		}
+	}
+
+	private fun setChapterContent(html: String) {
+		// Version keeps state emissions unique even when the same chapter HTML is loaded again
+		_chapterContent.value = NovelChapterContent(html, chapterContentVersion.incrementAndGet())
 	}
 
 	private suspend fun fetchChapterHtml(chapter: MangaChapter): String? = withContext(Dispatchers.IO) {
@@ -253,7 +340,10 @@ class NovelReaderViewModel @Inject constructor(
 
 	fun updateScrollProgress(percent: Float) {
 		_scrollProgress.value = percent
-		saveReadingProgress(percent)
+		// Do not write progress while a new chapter is still loading, otherwise the saved position is clobbered
+		if (isChapterContentReady) {
+			saveReadingProgress(percent)
+		}
 	}
 
 	private fun saveReadingProgress(percent: Float) {
@@ -275,4 +365,8 @@ class NovelReaderViewModel @Inject constructor(
 	fun getPdfHelper(): PdfRendererHelper? = pdfHelper
 
 	fun getEpubParser(): EpubParser? = epubParser
+
+	companion object {
+		private const val MAX_PREFETCHED_CHAPTERS = 4
+	}
 }

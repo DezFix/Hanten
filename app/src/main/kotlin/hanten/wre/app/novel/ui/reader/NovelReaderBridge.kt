@@ -10,6 +10,8 @@ class NovelReaderBridge(
 	private val onScroll: (percent: Float) -> Unit,
 	private val onNearBottomReached: () -> Unit,
 	private val onCenterTapped: () -> Unit,
+	private val onPreviousChapter: () -> Unit,
+	private val onNextChapter: () -> Unit,
 	private val onPageChange: (currentPage: Int, totalPages: Int) -> Unit,
 ) {
 
@@ -31,6 +33,20 @@ class NovelReaderBridge(
 	fun onCenterTap() {
 		scope.launch(Dispatchers.Main) {
 			onCenterTapped()
+		}
+	}
+
+	@JavascriptInterface
+	fun requestPreviousChapter() {
+		scope.launch(Dispatchers.Main) {
+			onPreviousChapter()
+		}
+	}
+
+	@JavascriptInterface
+	fun requestNextChapter() {
+		scope.launch(Dispatchers.Main) {
+			onNextChapter()
 		}
 	}
 

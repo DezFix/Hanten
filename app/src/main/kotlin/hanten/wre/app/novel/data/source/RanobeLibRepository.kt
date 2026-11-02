@@ -6,6 +6,7 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.model.MangaListFilter
 import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaListFilterOptions
 import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.parsers.model.MangaState
 import hanten.wre.app.parsers.model.MangaTag
@@ -13,6 +14,7 @@ import hanten.wre.app.parsers.model.SortOrder
 import hanten.wre.app.parsers.util.formatSimple
 import hanten.wre.app.parsers.util.longHashCode
 import okhttp3.OkHttpClient
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -45,9 +47,45 @@ class RanobeLibRepository(
 	override var defaultSortOrder: SortOrder = SortOrder.POPULARITY
 
 	override val filterCapabilities: MangaListFilterCapabilities = MangaListFilterCapabilities(
+		isMultipleTagsSupported = true,
 		isSearchSupported = true,
-		isSearchWithFiltersSupported = false,
+		isSearchWithFiltersSupported = true,
 	)
+
+	override suspend fun loadFilterOptions(): MangaListFilterOptions {
+		val data = JSONObject(fetchString("$apiBase/constants?fields[]=genres&fields[]=tags", headers))
+			.optJSONObject("data")
+			?: return MangaListFilterOptions()
+		val tags = LinkedHashSet<MangaTag>()
+		tags += parseConstantTags(data.optJSONArray("genres"), "g")
+		tags += parseConstantTags(data.optJSONArray("tags"), "t")
+		return MangaListFilterOptions(
+			availableTags = tags,
+			availableStates = STATES,
+		)
+	}
+
+	private fun parseConstantTags(array: JSONArray?, prefix: String): List<MangaTag> {
+		if (array == null) return emptyList()
+		val result = ArrayList<MangaTag>(array.length())
+		for (i in 0 until array.length()) {
+			val tag = array.optJSONObject(i) ?: continue
+			if (!tag.supportsSite(SITE_ID)) continue
+			val title = tag.optString("name").takeIf { it.isNotBlank() } ?: continue
+			val id = tag.optInt("id", 0)
+			if (id == 0) continue
+			result += MangaTag(title = title, key = "$prefix$id", source = source)
+		}
+		return result
+	}
+
+	private fun JSONObject.supportsSite(siteId: Int): Boolean {
+		val sites = optJSONArray("site_ids") ?: return false
+		for (i in 0 until sites.length()) {
+			if (sites.optInt(i) == siteId) return true
+		}
+		return false
+	}
 
 	override suspend fun getList(offset: Int, order: SortOrder?, filter: MangaListFilter?): List<Manga> {
 		val page = (offset / PAGE_SIZE) + 1
@@ -62,6 +100,15 @@ class RanobeLibRepository(
 			.addQueryParameter("page", page.toString())
 			.addQueryParameter("limit", PAGE_SIZE.toString())
 		filter?.query?.takeIf { it.isNotBlank() }?.let { builder.addQueryParameter("q", it) }
+		for (state in filter?.states.orEmpty()) {
+			STATE_IDS[state]?.let { builder.addQueryParameter("status[]", it.toString()) }
+		}
+		for (tag in filter?.tags.orEmpty()) {
+			when (tag.key.firstOrNull()) {
+				'g' -> builder.addQueryParameter("genres[]", tag.key.drop(1))
+				't' -> builder.addQueryParameter("tags[]", tag.key.drop(1))
+			}
+		}
 		val (sortBy, sortType) = when (order ?: defaultSortOrder) {
 			SortOrder.UPDATED -> "last_chapter_at" to "desc"
 			SortOrder.NEWEST -> "created_at" to "desc"
@@ -225,5 +272,19 @@ class RanobeLibRepository(
 		const val API_HOST = "api.cdnlibs.org"
 		const val SITE_ID = 3
 		const val PAGE_SIZE = 20
+		val STATES: Set<MangaState> = linkedSetOf(
+			MangaState.ONGOING,
+			MangaState.FINISHED,
+			MangaState.UPCOMING,
+			MangaState.PAUSED,
+			MangaState.ABANDONED,
+		)
+		val STATE_IDS: Map<MangaState, Int> = mapOf(
+			MangaState.ONGOING to 1,
+			MangaState.FINISHED to 2,
+			MangaState.UPCOMING to 3,
+			MangaState.PAUSED to 4,
+			MangaState.ABANDONED to 5,
+		)
 	}
 }

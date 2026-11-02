@@ -35,6 +35,7 @@ import javax.inject.Inject
 class NovelReaderActivity :
 	BaseFullscreenActivity<ActivityNovelReaderBinding>(),
 	NovelReaderConfigSheet.Callback,
+	NovelChaptersSheet.Callback,
 	Slider.OnSliderTouchListener,
 	Slider.OnChangeListener {
 
@@ -56,6 +57,7 @@ class NovelReaderActivity :
 	private lateinit var readerSettings: NovelReaderSettings
 	private var isUiVisible = true
 	private var isSliderTracking = false
+	private var isWebViewReady = false
 	@Volatile
 	private var defaultUserAgent: String? = null
 
@@ -114,6 +116,12 @@ class NovelReaderActivity :
 			onCenterTapped = {
 				toggleUiVisibility()
 			},
+			onPreviousChapter = {
+				viewModel.switchChapter(-1)
+			},
+			onNextChapter = {
+				viewModel.switchChapter(1)
+			},
 			onPageChange = { cur, total ->
 				viewBinding.textProgress.text = "$cur / $total"
 			},
@@ -139,13 +147,24 @@ class NovelReaderActivity :
 						}
 					}
 					val host = url.host.orEmpty()
-					if (host.equals("img.lnori.com", ignoreCase = true) || host.endsWith(".lnori.com", ignoreCase = true)) {
-						return interceptLnoriImage(request)
+					val isImageRequest = !request.isForMainFrame && (
+						request.requestHeaders?.get("Accept")?.startsWith("image/") == true ||
+							IMAGE_EXTENSIONS.any { path.endsWith(it, ignoreCase = true) }
+						)
+					if (isImageRequest || host.equals("img.lnori.com", ignoreCase = true) ||
+						host.endsWith(".lnori.com", ignoreCase = true)
+					) {
+						return interceptProtectedImage(request)
 					}
 					super.shouldInterceptRequest(view, request)
 				} catch (e: Throwable) {
 					null
 				}
+			}
+
+			override fun onPageFinished(view: WebView?, url: String?) {
+				super.onPageFinished(view, url)
+				isWebViewReady = true
 			}
 		}
 	}
@@ -160,6 +179,9 @@ class NovelReaderActivity :
 	private fun setupControls() {
 		viewBinding.buttonPrev.setOnClickListener { viewModel.switchChapter(-1) }
 		viewBinding.buttonNext.setOnClickListener { viewModel.switchChapter(1) }
+		viewBinding.buttonChapters.setOnClickListener {
+			showChaptersSheet()
+		}
 		viewBinding.buttonFontSettings.setOnClickListener {
 			NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
 		}
@@ -190,7 +212,8 @@ class NovelReaderActivity :
 			viewBinding.progressBar.isVisible = loading
 		}
 
-		viewModel.chapterContent.observe(this) { html ->
+		viewModel.chapterContent.observe(this) { content ->
+			val html = content?.html
 			if (!html.isNullOrEmpty()) {
 				renderChapterContent(html)
 			}
@@ -211,14 +234,33 @@ class NovelReaderActivity :
 
 	private fun renderChapterContent(html: String) {
 		val title = viewModel.currentChapter.value?.title ?: ""
-		val fullDoc = NovelHtmlTemplate.buildDocument(title, html, readerSettings)
+		val initialProgress = viewModel.scrollProgress.value.coerceIn(0f, 1f)
+		val fullDoc = NovelHtmlTemplate.buildDocument(title, html, readerSettings, initialProgress)
 		val chapterUrl = viewModel.currentChapter.value?.url?.substringBefore('#')
 		val isOnline = !chapterUrl.isNullOrEmpty() && (chapterUrl.startsWith("http://") || chapterUrl.startsWith("https://"))
 		val baseUrl = if (isOnline) chapterUrl else "https://futon.reader/"
+		isWebViewReady = false
 		viewBinding.webView.loadDataWithBaseURL(baseUrl, fullDoc, "text/html", "UTF-8", null)
 	}
 
-	private fun interceptLnoriImage(request: WebResourceRequest): WebResourceResponse? {
+	private fun showChaptersSheet() {
+		val chapters = viewModel.chapters.value
+		if (chapters.isEmpty()) return
+		if (supportFragmentManager.findFragmentByTag(NovelChaptersSheet.TAG) != null) return
+		val titles = ArrayList<String>(chapters.size)
+		for ((index, chapter) in chapters.withIndex()) {
+			val chapterTitle = chapter.title?.takeIf { it.isNotBlank() } ?: (index + 1).toString()
+			titles.add(chapterTitle)
+		}
+		NovelChaptersSheet.newInstance(titles, viewModel.currentChapterIndex.value)
+			.show(supportFragmentManager, NovelChaptersSheet.TAG)
+	}
+
+	override fun onChapterSelected(index: Int) {
+		viewModel.loadChapterAtIndex(index)
+	}
+
+	private fun interceptProtectedImage(request: WebResourceRequest): WebResourceResponse? {
 		var response: Response? = null
 		return try {
 			val urlString = request.url.toString()
@@ -229,7 +271,7 @@ class NovelReaderActivity :
 			val okHttpRequest = Request.Builder()
 				.url(urlString)
 				.method(request.method, null)
-				.header("Referer", "https://lnori.com/")
+				.header("Referer", viewModel.refererUrl)
 				.apply {
 					if (!userAgent.isNullOrBlank()) {
 						header("User-Agent", userAgent)
@@ -302,14 +344,18 @@ class NovelReaderActivity :
 		readerSettings = settings
 		viewBinding.webView.setBackgroundColor(settings.effectiveBackgroundColor)
 
-		if (modeChanged) {
-			val currentHtml = viewModel.chapterContent.value
+		val currentHtml = viewModel.chapterContent.value?.html
+		if (modeChanged || !isWebViewReady) {
 			if (!currentHtml.isNullOrEmpty()) {
 				renderChapterContent(currentHtml)
 			}
 		} else {
+			val percent = viewModel.scrollProgress.value.coerceIn(0f, 1f)
 			val cssText = org.json.JSONObject.quote(settings.toCssVariables())
-			viewBinding.webView.evaluateJavascript("updateStyles($cssText);", null)
+			viewBinding.webView.evaluateJavascript(
+				"window.applySettings($cssText); window.restoreProgress($percent);",
+				null,
+			)
 		}
 	}
 
@@ -328,5 +374,9 @@ class NovelReaderActivity :
 		if (fromUser) {
 			viewBinding.textProgress.text = "${value.toInt()}%"
 		}
+	}
+
+	private companion object {
+		val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".bmp")
 	}
 }

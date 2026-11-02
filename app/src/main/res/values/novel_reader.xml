@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="novel_chapters_title">Chapters</string>
+    <string name="novel_chapters_empty">No chapters</string>
+</resources>

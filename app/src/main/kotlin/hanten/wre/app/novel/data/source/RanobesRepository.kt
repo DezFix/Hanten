@@ -13,6 +13,7 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.model.MangaListFilter
 import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaListFilterOptions
 import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.parsers.model.SortOrder
@@ -22,6 +23,7 @@ import hanten.wre.app.parsers.util.longHashCode
  * Ranobes (ranobes.com). The site is a DLE engine without a public API:
  * `/ranobe/` is the catalog, `/popular.html` the all-time top, `/ranobe/{id}-{slug}.html`
  * the novel page and `/chapters/{slug}/page/{n}/` the paginated chapter list.
+ * `/cloud/genre/` lists genres, `/cloud/genre/{slug}/page/{n}/` is the genre-filtered catalog.
  * There is no server-side title search, so search is done locally by [SearchV2Helper].
  */
 class RanobesRepository(
@@ -43,9 +45,27 @@ class RanobesRepository(
 		isSearchWithFiltersSupported = false,
 	)
 
+	override suspend fun loadFilterOptions(): MangaListFilterOptions {
+		val doc = fetchDocument("$baseUrl/cloud/genre/")
+		val tags = LinkedHashMap<String, MangaTag>()
+		for (link in doc.select("a[href*=/cloud/genre/]")) {
+			// Slugs are kept as the site emits them (raw UTF-8); OkHttp percent-encodes them in the request.
+			val slug = link.attr("href").substringAfter("/cloud/genre/", "").trim('/')
+			if (slug.isEmpty()) continue
+			val title = link.selectFirst("h3.title")?.text()?.trim()?.takeIf { it.isNotEmpty() }
+				?: link.text().trim().takeIf { it.isNotEmpty() }
+				?: continue
+			tags.putIfAbsent(slug, MangaTag(title = title, key = slug, source = source))
+		}
+		return MangaListFilterOptions(availableTags = tags.values.toSet())
+	}
+
 	override suspend fun getList(offset: Int, order: SortOrder?, filter: MangaListFilter?): List<Manga> {
 		val page = (offset / PAGE_SIZE) + 1
+		val genre = filter?.tags?.firstOrNull()
 		val url = when {
+			// The genre catalog has no sort parameter: with a genre selected the sort order is ignored.
+			genre != null -> genreUrl(genre.key, page)
 			(page > 1) -> "$baseUrl/ranobe/page/$page/"
 			(order ?: defaultSortOrder) == SortOrder.POPULARITY -> "$baseUrl/popular.html"
 			else -> "$baseUrl/ranobe/"
@@ -57,6 +77,12 @@ class RanobesRepository(
 			result.putIfAbsent(manga.id, manga)
 		}
 		return result.values.toList()
+	}
+
+	private fun genreUrl(genre: String, page: Int): String = if (page > 1) {
+		"$baseUrl/cloud/genre/$genre/page/$page/"
+	} else {
+		"$baseUrl/cloud/genre/$genre/"
 	}
 
 	private fun parseNovelItem(article: Element): Manga? {

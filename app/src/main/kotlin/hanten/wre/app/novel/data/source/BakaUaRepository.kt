@@ -5,8 +5,10 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.model.MangaListFilter
 import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaListFilterOptions
 import hanten.wre.app.parsers.model.MangaPage
 import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.parsers.model.SortOrder
 import hanten.wre.app.parsers.util.longHashCode
 import okhttp3.OkHttpClient
@@ -15,7 +17,8 @@ import org.jsoup.nodes.Element
 /**
  * Baka.in.ua — Ukrainian fan-translation library. The site has no public API,
  * so this repository uses the same HTML pages as the browser: /fictions for the
- * catalog, /fictions/{slug} for details and /chapters/{slug} for chapter text.
+ * catalog, /fictions/genres/{slug} for a genre-filtered catalog, /fictions/{slug}
+ * for details and /chapters/{slug} for chapter text.
  */
 class BakaUaRepository(
 	cache: MemoryContentCache,
@@ -34,15 +37,33 @@ class BakaUaRepository(
 
 	override val filterCapabilities: MangaListFilterCapabilities = MangaListFilterCapabilities(
 		isSearchSupported = true,
-		isSearchWithFiltersSupported = false,
+		isSearchWithFiltersSupported = true,
 	)
 
+	override suspend fun loadFilterOptions(): MangaListFilterOptions {
+		val doc = fetchDocument("$baseUrl/fictions")
+		val tags = LinkedHashMap<String, MangaTag>()
+		for (link in doc.select("a[href^=/fictions/genres/]")) {
+			// Genre cards and tag chips have a name; «more» arrows (no turbo frame, no <p>) do not.
+			if (!link.hasAttr("data-turbo-frame") && link.selectFirst("p") == null) continue
+			val slug = link.attr("href").substringAfterLast('/').trim()
+			if (slug.isEmpty()) continue
+			val title = link.selectFirst("p")?.text()?.trim()?.takeIf { it.isNotEmpty() }
+				?: link.text().trim().takeIf { it.isNotEmpty() }
+				?: continue
+			tags.putIfAbsent(slug, MangaTag(title = title, key = slug, source = source))
+		}
+		return MangaListFilterOptions(availableTags = tags.values.toSet())
+	}
+
 	override suspend fun getList(offset: Int, order: SortOrder?, filter: MangaListFilter?): List<Manga> {
-		// Baka renders the whole catalog on /fictions; extra pages are empty.
+		// Baka renders the whole catalog (or genre) page at once; extra pages are empty.
 		if (offset > 0) {
 			return emptyList()
 		}
-		val doc = fetchDocument("$baseUrl/fictions")
+		val genre = filter?.tags?.firstOrNull()
+		val url = if (genre != null) "$baseUrl/fictions/genres/${genre.key}" else "$baseUrl/fictions"
+		val doc = fetchDocument(url)
 		val query = filter?.query?.trim()
 		val result = LinkedHashMap<Long, Manga>()
 		for (article in doc.select("article")) {

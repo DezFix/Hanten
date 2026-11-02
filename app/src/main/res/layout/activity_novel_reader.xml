@@ -44,7 +44,18 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="?actionBarSize"
-			app:popupTheme="@style/ThemeOverlay.Hanten" />
+			app:popupTheme="@style/ThemeOverlay.Hanten">
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_chapters"
+				style="?materialIconButtonStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end"
+				android:contentDescription="@string/novel_chapters_title"
+				app:icon="@drawable/ic_list" />
+
+		</com.google.android.material.appbar.MaterialToolbar>
 
 	</com.google.android.material.appbar.AppBarLayout>
 

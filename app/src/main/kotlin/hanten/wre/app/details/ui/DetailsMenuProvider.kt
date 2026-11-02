@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import hanten.wre.app.R
 import hanten.wre.app.core.model.LocalMangaSource
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.os.AppShortcutManager
@@ -45,7 +46,8 @@ class DetailsMenuProvider(
 		val mangaDetails = viewModel.mangaDetails.value
 		val manga = mangaDetails?.toManga()
 		menu.findItem(R.id.action_share).isVisible = manga != null && AppRouter.isShareSupported(manga)
-		menu.findItem(R.id.action_save).isVisible = manga?.source != null && manga.source != LocalMangaSource
+		menu.findItem(R.id.action_save).isVisible =
+			manga?.source != null && manga.source != LocalMangaSource && !manga.isNovel
 		menu.findItem(R.id.action_delete).isVisible = mangaDetails?.local != null
 		menu.findItem(R.id.action_browser).isVisible = manga?.publicUrl?.isHttpUrl() == true
 		menu.findItem(R.id.action_alternatives).isVisible = manga?.source != LocalMangaSource

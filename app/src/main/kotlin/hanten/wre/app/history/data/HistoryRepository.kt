@@ -13,6 +13,7 @@ import hanten.wre.app.core.db.entity.toMangaTags
 import hanten.wre.app.core.db.entity.toMangaTagsList
 import hanten.wre.app.core.model.MangaHistory
 import hanten.wre.app.core.model.isLocal
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.model.toMangaSources
 import hanten.wre.app.core.parser.MangaDataRepository
@@ -68,6 +69,13 @@ class HistoryRepository @Inject constructor(
 	suspend fun getLastOrNull(): Manga? {
 		val entity = db.getHistoryDao().findAll(0, 1).firstOrNull() ?: return null
 		return entity.toManga()
+	}
+
+	suspend fun getLastOrNull(isNovel: Boolean): Manga? {
+		return db.getHistoryDao().findAll(0, MODE_LOOKUP_LIMIT)
+			.asSequence()
+			.map { it.toManga() }
+			.firstOrNull { it.isNovel == isNovel }
 	}
 
 	fun observeLast(): Flow<Manga?> {
@@ -232,4 +240,8 @@ class HistoryRepository @Inject constructor(
 	}
 
 	private fun HistoryWithManga.toManga() = manga.toManga(tags.toMangaTags(), null)
+
+	companion object {
+		private const val MODE_LOOKUP_LIMIT = 50
+	}
 }

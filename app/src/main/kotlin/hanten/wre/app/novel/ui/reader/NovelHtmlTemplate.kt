@@ -8,9 +8,11 @@ object NovelHtmlTemplate {
 		title: String,
 		initialChapterHtml: String,
 		settings: NovelReaderSettings,
+		initialProgress: Float = 0f,
 	): String {
 		val cssVars = settings.toCssVariables()
 		val isPaged = settings.readingMode == NovelReadingMode.PAGED
+		val startProgress = initialProgress.coerceIn(0f, 1f)
 
 		val pagedStyle = if (isPaged) {
 			"""
@@ -115,6 +117,7 @@ object NovelHtmlTemplate {
 
 			<script>
 				const isPagedMode = $isPaged;
+				const initialProgress = $startProgress;
 				let isNearBottomNotified = false;
 
 				function notifyScroll() {
@@ -159,8 +162,12 @@ object NovelHtmlTemplate {
 
 				// Touch / Tap handling
 				document.addEventListener('click', function(e) {
-					// Ignore if user clicked a link
-					if (e.target.closest('a')) return;
+					// Ignore if user clicked a link or interacted with a form control
+					if (e.target.closest('a, input, textarea, select')) return;
+
+					// Ignore taps that finish a text selection
+					const selection = window.getSelection();
+					if (selection && selection.toString().length > 0) return;
 
 					const width = window.innerWidth;
 					const x = e.clientX;
@@ -183,7 +190,13 @@ object NovelHtmlTemplate {
 					} else {
 						const leftZone = width * 0.25;
 						const rightZone = width * 0.75;
-						if (x >= leftZone && x <= rightZone) {
+						if (x < leftZone) {
+							// Left zone: previous chapter
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestPreviousChapter();
+						} else if (x > rightZone) {
+							// Right zone: next chapter
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestNextChapter();
+						} else {
 							// Center tap: toggle UI
 							if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
 						}
@@ -223,6 +236,31 @@ object NovelHtmlTemplate {
 						const maxScroll = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
 						window.scrollTo(0, maxScroll * percent);
 					}
+				}
+
+				function restoreProgress(percent) {
+					const p = Math.min(1.0, Math.max(0.0, percent || 0));
+					if (p <= 0) return;
+					if (isPagedMode) {
+						const container = document.getElementById('reader-container');
+						if (!container) return;
+						const totalPages = Math.round(container.scrollWidth / window.innerWidth) || 1;
+						const page = Math.round(p * totalPages) - 1;
+						container.scrollLeft = Math.max(0, Math.min(totalPages - 1, page)) * window.innerWidth;
+						return;
+					}
+					scrollToPercent(p);
+				}
+
+				window.restoreProgress = restoreProgress;
+				window.applySettings = updateStyles;
+
+				if (initialProgress > 0) {
+					window.addEventListener('load', function() {
+						setTimeout(function() {
+							restoreProgress(initialProgress);
+						}, 60);
+					});
 				}
 			</script>
 		</body>

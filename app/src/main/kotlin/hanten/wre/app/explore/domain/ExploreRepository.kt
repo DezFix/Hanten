@@ -1,5 +1,6 @@
 package hanten.wre.app.explore.domain
 
+import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.prefs.AppSettings
@@ -22,12 +23,12 @@ class ExploreRepository @Inject constructor(
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 ) {
 
-	suspend fun findRandomManga(tagsLimit: Int): Manga {
+	suspend fun findRandomManga(tagsLimit: Int, isNovel: Boolean): Manga {
 		val tagsBlacklist = TagsBlacklist(settings.suggestionsTagsBlacklist, 0.4f)
 		val tags = historyRepository.getPopularTags(tagsLimit).mapNotNull {
 			if (it in tagsBlacklist) null else it.title
 		}
-		val sources = sourcesRepository.getEnabledSources()
+		val sources = sourcesRepository.getEnabledSources().filter { it.isNovelSource == isNovel }
 		check(sources.isNotEmpty()) { "No sources available" }
 		for (i in 0..4) {
 			val list = getList(sources.random(), tags, tagsBlacklist)

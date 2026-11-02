@@ -104,7 +104,10 @@ class ExploreViewModel @Inject constructor(
 		launchJob(Dispatchers.IO) {
 			isRandomLoading.value = true
 			try {
-				val manga = exploreRepository.findRandomManga(tagsLimit = 8)
+				val manga = exploreRepository.findRandomManga(
+					tagsLimit = 8,
+					isNovel = appMode.value.isNovel,
+				)
 				onOpenManga.call(manga)
 			} finally {
 				isRandomLoading.value = false

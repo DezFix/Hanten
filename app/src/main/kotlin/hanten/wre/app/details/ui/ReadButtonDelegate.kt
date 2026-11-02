@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.combine
 import hanten.wre.app.R
 import hanten.wre.app.core.model.isLocal
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.core.util.ext.getThemeColor
@@ -102,7 +103,8 @@ class ReadButtonDelegate(
 		val history = viewModel.historyInfo.value
 		menu.findItem(R.id.action_incognito)?.isVisible = !history.isIncognitoMode
 		menu.findItem(R.id.action_forget)?.isVisible = history.history != null
-		menu.findItem(R.id.action_download)?.isVisible = viewModel.getMangaOrNull()?.isLocal == false
+		val manga = viewModel.getMangaOrNull()
+		menu.findItem(R.id.action_download)?.isVisible = manga != null && !manga.isLocal && !manga.isNovel
 	}
 
 	private fun openReader(isIncognitoMode: Boolean) {
