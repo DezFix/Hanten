@@ -18,6 +18,7 @@
 | [ROADMAP.md](./ROADMAP.md) | продукт/мейнтейнер | чего не хватает относительно Mihon/Kotatsu/Komikku/Panels/Suwayomi, приоритеты |
 | [SECURITY.md](./SECURITY.md) | мейнтейнер, релиз-инженер | secret-scan, история токенов, бэкапы, сеть, Mihon, чеклист перед релизом |
 | [FUTON_PORT.md](./FUTON_PORT.md) | мейнтейнер | что забрать из Futon, какие источники разбирать отдельно, отчёт агента |
+| [NOVEL_ROADMAP.md](./NOVEL_ROADMAP.md) | продукт/мейнтейнер | паритет новелл с мангой, улучшения читалки, этапы 2.6–2.8 |
 | [../AGENTS.md](../AGENTS.md) | все | стиль кода, команды, паттерны Hilt/Flow/Worker |
 | [../CI.md](../CI.md) | релиз-инженер | подпись, keystore, GitHub Actions |
 | [../DESIGN.md](../DESIGN.md) | дизайнер/UI | дизайн-система (целевая, не всё реализовано) |
