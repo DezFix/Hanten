@@ -176,6 +176,7 @@ class ExploreViewModel @Inject constructor(
 		allSourcesEnabled: Boolean,
 		hasNewSources: Boolean,
 	): List<ListModel> {
+		val isNovel = appMode.value.isNovel
 		val result = ArrayList<ListModel>(sources.size + 3)
 		result += ExploreButtons(randomLoading)
 		if (recommendation.isNotEmpty()) {
@@ -184,7 +185,7 @@ class ExploreViewModel @Inject constructor(
 		}
 		if (sources.isNotEmpty()) {
 			result += ListHeader(
-				textRes = R.string.remote_sources,
+				textRes = if (isNovel) R.string.remote_novel_sources else R.string.remote_sources,
 				buttonTextRes = if (allSourcesEnabled) R.string.manage else R.string.catalog,
 				badge = if (!allSourcesEnabled && hasNewSources) "" else null,
 			)
@@ -192,8 +193,12 @@ class ExploreViewModel @Inject constructor(
 		} else {
 			result += EmptyHint(
 				icon = R.drawable.ic_empty_common,
-				textPrimary = R.string.no_manga_sources,
-				textSecondary = R.string.no_manga_sources_text,
+				textPrimary = if (isNovel) R.string.no_novel_sources else R.string.no_manga_sources,
+				textSecondary = if (isNovel) {
+					R.string.no_novel_sources_text
+				} else {
+					R.string.no_manga_sources_text
+				},
 				actionStringRes = R.string.catalog,
 			)
 		}

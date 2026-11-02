@@ -44,35 +44,46 @@ class BakaUaRepository(
 		}
 		val doc = fetchDocument("$baseUrl/fictions")
 		val query = filter?.query?.trim()
-		return doc.select("h2 a[href^=/fictions/]")
-			.mapNotNull { link ->
-				val href = link.absUrl("href").ifBlank { "$baseUrl${link.attr("href")}" }
-				val title = link.text().trim()
-				if (title.isBlank()) {
-					return@mapNotNull null
-				}
-				if (!query.isNullOrEmpty() && !title.contains(query, ignoreCase = true)) {
-					return@mapNotNull null
-				}
-				val cover = link.parents()
-					.firstNotNullOfOrNull { it.selectFirst("img[src]") }
-					?.let { img -> img.absUrl("src").ifBlank { "$baseUrl${img.attr("src")}" } }
-				Manga(
-					id = "${source.name}_$href".longHashCode(),
-					title = title,
-					altTitles = emptySet(),
-					url = href,
-					publicUrl = href,
-					rating = 0f,
-					contentRating = null,
-					coverUrl = cover,
-					tags = emptySet(),
-					state = null,
-					authors = emptySet(),
-					largeCoverUrl = cover,
-					source = source,
-				)
+		val result = LinkedHashMap<Long, Manga>()
+		for (article in doc.select("article")) {
+			val link = article.selectFirst("p a[href^=/fictions/]")
+				?: article.selectFirst("a[href^=/fictions/]")
+				?: continue
+			val relHref = link.attr("href")
+			if (relHref.contains("/fictions/genres/") || relHref.contains("/fictions/calendar")) {
+				continue
 			}
+			val href = link.absUrl("href").ifBlank { "$baseUrl$relHref" }
+			val title = link.text().trim().ifBlank {
+				article.selectFirst("img[alt]")?.attr("alt")?.trim().orEmpty()
+			}
+			if (title.isBlank()) {
+				continue
+			}
+			if (!query.isNullOrEmpty() && !title.contains(query, ignoreCase = true)) {
+				continue
+			}
+			val cover = article.selectFirst("img[src]")?.let { img ->
+				img.absUrl("src").ifBlank { "$baseUrl${img.attr("src")}" }
+			}?.takeIf { it.isNotBlank() && !it.startsWith("data:") }
+			val manga = Manga(
+				id = "${source.name}_$href".longHashCode(),
+				title = title,
+				altTitles = emptySet(),
+				url = href,
+				publicUrl = href,
+				rating = 0f,
+				contentRating = null,
+				coverUrl = cover,
+				tags = emptySet(),
+				state = null,
+				authors = emptySet(),
+				largeCoverUrl = cover,
+				source = source,
+			)
+			result.putIfAbsent(manga.id, manga)
+		}
+		return result.values.toList()
 	}
 
 	override suspend fun getDetailsImpl(manga: Manga): Manga {

@@ -29,8 +29,8 @@ android {
 		applicationId 'hanten.wre.app'
 		minSdk = 23
 		targetSdk = 36
-		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 20403
-        versionName project.hasProperty('versionName') ? project.property('versionName') : '2.4.3'
+		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 20500
+        versionName project.hasProperty('versionName') ? project.property('versionName') : '2.5.0'
         generatedDensities = []
 		testInstrumentationRunner 'hanten.wre.app.HiltTestRunner'
 		ksp {
@@ -274,6 +274,7 @@ sentry {
 
 	// Disable all uploads 
 	includeSourceContext = false
+	includeProguardMapping = false
 	autoUploadProguardMapping = false
 	autoUploadSourceContext = false
 	

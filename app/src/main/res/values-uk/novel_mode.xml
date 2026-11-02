@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remote_novel_sources">Джерела новел</string>
+    <string name="search_novel">Пошук новел</string>
+    <string name="no_novel_sources">Немає джерел новел</string>
+    <string name="no_novel_sources_text">Увімкніть джерела новел, щоб читати їх онлайн</string>
+</resources>

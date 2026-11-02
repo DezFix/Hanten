@@ -6,12 +6,12 @@ import coil3.request.ImageResult
 import hanten.wre.app.core.model.unwrap
 import hanten.wre.app.core.network.CommonHeaders
 import hanten.wre.app.core.util.ext.mangaSourceKey
-import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
 
 class MangaSourceHeaderInterceptor : Interceptor {
 
 	override suspend fun intercept(chain: Interceptor.Chain): ImageResult {
-		val mangaSource = chain.request.extras[mangaSourceKey]?.unwrap() as? MangaParserSource ?: return chain.proceed()
+		val mangaSource = chain.request.extras[mangaSourceKey]?.unwrap() as? MangaSource ?: return chain.proceed()
 		val request = chain.request
 		val newHeaders = request.httpHeaders.newBuilder()
 			.set(CommonHeaders.MANGA_SOURCE, mangaSource.name)

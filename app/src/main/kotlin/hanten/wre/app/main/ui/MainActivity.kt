@@ -176,6 +176,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 				viewModel.feedCounter.observe(this@MainActivity, ::onFeedCounterChanged)
 				viewModel.onFirstStart.observeEvent(this@MainActivity) { router.showWelcomeSheet() }
 				viewModel.appMode.observe(this@MainActivity) {
+					viewBinding.searchBar.hint = getString(
+						if (it.isNovel) R.string.search_novel else R.string.search_manga,
+					)
 					invalidateOptionsMenu()
 					navigationDelegate.reloadCurrentFragment()
 				}

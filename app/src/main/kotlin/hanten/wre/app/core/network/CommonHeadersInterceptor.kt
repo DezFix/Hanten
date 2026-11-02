@@ -6,6 +6,7 @@ import hanten.wre.app.core.parser.MangaLoaderContextImpl
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.parser.ParserMangaRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
+import hanten.wre.app.novel.data.source.NovelParserSource
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
@@ -43,9 +44,13 @@ class CommonHeadersInterceptor @Inject constructor(
 		if (headersBuilder[CommonHeaders.USER_AGENT] == null) {
 			headersBuilder[CommonHeaders.USER_AGENT] = mangaLoaderContextLazy.get().getDefaultUserAgent()
 		}
-		if (headersBuilder[CommonHeaders.REFERER] == null && repository != null) {
-			val idn = IDN.toASCII(repository.domain)
-			headersBuilder.trySet(CommonHeaders.REFERER, "https://$idn/")
+		if (headersBuilder[CommonHeaders.REFERER] == null) {
+			// Novel covers are served from third-party CDNs that reject requests
+			// without a referer of the source site.
+			val refererHost = (source as? NovelParserSource)?.domain ?: repository?.domain
+			if (refererHost != null) {
+				headersBuilder.trySet(CommonHeaders.REFERER, "https://${IDN.toASCII(refererHost)}/")
+			}
 		}
 		val newRequest = request.newBuilder().headers(headersBuilder.build()).build()
 		return repository?.interceptSafe(ProxyChain(chain, newRequest)) ?: chain.proceed(newRequest)

@@ -39,8 +39,27 @@
 
 ## Проверка
 
-`./gradlew :app:compileDebugKotlin`, `:app:lintDebug`, `:app:assembleDebug`
-(включая `checkDebugDuplicateClasses`) — успешно. Юнит-тесты не запускались.
+`./gradlew :app:compileDebugKotlin`, `:app:lintDebug`, `:app:testDebugUnitTest`,
+`:app:assembleDebug`, `:app:assembleRelease` — успешно. Debug и release APK
+проверены на эмуляторе (Android 15): каталоги всех трёх новелл-источников,
+обложки, карточка произведения, чтение главы, переключение режима.
+
+## Исправления после первого теста (2.5.0)
+
+- **RanobeLib 403 на обложках.** CDN отдаёт картинки только с `Referer`
+  сайта-источника. `MangaSourceHeaderInterceptor` теперь передаёт любой
+  `MangaSource` (не только `MangaParserSource`), а `CommonHeadersInterceptor`
+  подставляет `Referer: https://<domain>/` для `NovelParserSource`.
+- **Ranobes «ошибка сети».** Сайт переехал на `ranobes.com` и сменил разметку.
+  `RanobesRepository` переписан под текущий сайт: каталог `/ranobe/`,
+  топ `/popular.html`, главы `/chapters/{slug}/page/N/`, текст `#arrticle`;
+  старые ссылки `ranobes.net`/`ranobes.top` перенаправляются на `.com`.
+  Поиск по названию на сайте недоступен — работает локальная фильтрация.
+- **Baka.in.ua: одинаковые обложки.** Парсер брал `h2 a` (5 промо-блоков) и
+  ближайший `img` родителя. Теперь разбираются карточки `article` каталога,
+  у каждой своя обложка и название.
+- **Путаница «манга/новеллы».** В режиме новелл заголовок списка и подсказка
+  поиска теперь «Источники новелл» / «Поиск новелл» (ru/uk/en), а не «манга».
 
 ## Не входит в этот заход
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remote_novel_sources">Novel sources</string>
+    <string name="search_novel">Search novels</string>
+    <string name="no_novel_sources">No novel sources</string>
+    <string name="no_novel_sources_text">Enable novel sources to read novels online</string>
+</resources>

@@ -12,8 +12,8 @@ enum class NovelParserSource(
 ) : MangaSource {
 	RANOBES(
 		title = "Ranobes",
-		domain = "ranobes.net",
-		defaultUrl = "https://ranobes.net",
+		domain = "ranobes.com",
+		defaultUrl = "https://ranobes.com",
 		locale = "ru",
 	),
 	RANOBELIB(
