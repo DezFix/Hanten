@@ -8,6 +8,10 @@ import android.content.Context
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.google.common.io.ByteStreams
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import hanten.wre.app.backups.data.BackupRepository
 import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.prefs.AppSettings
@@ -22,12 +26,47 @@ import java.io.FileInputStream
 import java.util.EnumSet
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-import javax.inject.Inject
 import javax.inject.Provider
 
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface AppBackupAgentEntryPoint {
+    fun mihonExtensionManager(): Provider<MihonExtensionManager>
+    fun mangaDatabase(): MangaDatabase
+    fun appSettings(): AppSettings
+}
+
 class AppBackupAgent : BackupAgent() {
-    @Inject
-    lateinit var mihonExtensionManager: Provider<MihonExtensionManager>
+
+    private val entryPoint: AppBackupAgentEntryPoint by lazy {
+        EntryPointAccessors.fromApplication(
+            applicationContext,
+            AppBackupAgentEntryPoint::class.java,
+        )
+    }
+
+    private val mihonExtensionManager: Provider<MihonExtensionManager> by lazy {
+        entryPoint.mihonExtensionManager()
+    }
+
+    private val backupRepository: BackupRepository by lazy {
+        val database = entryPoint.mangaDatabase()
+        val settings = entryPoint.appSettings()
+        BackupRepository(
+            database = database,
+            settings = settings,
+            tapGridSettings = TapGridSettings(applicationContext),
+            mangaSourcesRepository = MangaSourcesRepository(
+                context = applicationContext,
+                db = database,
+                settings = settings,
+                mihonExtensionManager = mihonExtensionManager.get(),
+            ),
+            savedFiltersRepository = SavedFiltersRepository(
+                context = applicationContext,
+            ),
+        )
+    }
 
 	override fun onBackup(
 		oldState: ParcelFileDescriptor?,
@@ -46,20 +85,7 @@ class AppBackupAgent : BackupAgent() {
 
 		val file = createBackupFile(
 			this,
-			BackupRepository(
-				database = MangaDatabase(context = applicationContext),
-				settings = AppSettings(applicationContext),
-				tapGridSettings = TapGridSettings(applicationContext),
-				mangaSourcesRepository = MangaSourcesRepository(
-					context = applicationContext,
-					db = MangaDatabase(context = applicationContext),
-					settings = AppSettings(applicationContext),
-					mihonExtensionManager = mihonExtensionManager.get(),
-				),
-				savedFiltersRepository = SavedFiltersRepository(
-					context = applicationContext,
-				),
-			),
+			backupRepository,
 		)
 		try {
 			fullBackupFile(file, data)
@@ -80,20 +106,7 @@ class AppBackupAgent : BackupAgent() {
 			restoreBackupFile(
 				data.fileDescriptor,
 				size,
-				BackupRepository(
-					database = MangaDatabase(applicationContext),
-					settings = AppSettings(applicationContext),
-					tapGridSettings = TapGridSettings(applicationContext),
-					mangaSourcesRepository = MangaSourcesRepository(
-						context = applicationContext,
-						db = MangaDatabase(context = applicationContext),
-						settings = AppSettings(applicationContext),
-						mihonExtensionManager = mihonExtensionManager.get(),
-					),
-					savedFiltersRepository = SavedFiltersRepository(
-						context = applicationContext,
-					),
-				),
+				backupRepository,
 			)
 			destination.delete()
 		} else {

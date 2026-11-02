@@ -92,6 +92,7 @@ jobs:
   build:
     needs: check_version
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout code
@@ -112,6 +113,17 @@ jobs:
 
       - name: Install Android packages
         run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Unit tests and lint
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: >
+          ./gradlew
+          :app:testDebugUnitTest
+          :app:lintDebug
+          --stacktrace
+          --no-build-cache
+          --no-configuration-cache
 
       - name: Get version from tag
         id: version

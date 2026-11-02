@@ -2,6 +2,7 @@ package hanten.wre.app.details.data
 
 import hanten.wre.app.core.model.getLocale
 import hanten.wre.app.core.model.isLocal
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.withOverride
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.local.domain.model.LocalManga
@@ -53,6 +54,9 @@ data class MangaDetails(
 
     val isRestricted: Boolean
         get() = manga.state == MangaState.RESTRICTED
+
+    val isNovel: Boolean
+        get() = manga.isNovel
 
     private val mergedManga by lazy {
         if (localManga == null) {

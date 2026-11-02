@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="smart_resume">Розумне продовження</string>
+    <string name="smart_resume_summary">Коли з’являються нові розділи, продовжувати з наступного розділу, якщо попередній останній розділ було майже дочитано.</string>
+    <string name="smart_resume_rule">Вважати розділ прочитаним за</string>
+    <string name="smart_resume_percentage">Відсотком</string>
+    <string name="smart_resume_pages_remaining">Залишеними сторінками</string>
+    <string name="smart_resume_threshold">Поріг завершення</string>
+    <string name="smart_resume_percentage_summary">Досягнуто щонайменше %1$d%% сторінок, включно з поточною.</string>
+    <plurals name="smart_resume_pages_summary">
+        <item quantity="one">До кінця розділу не більше %d сторінки.</item>
+        <item quantity="few">До кінця розділу не більше %d сторінок.</item>
+        <item quantity="many">До кінця розділу не більше %d сторінок.</item>
+        <item quantity="other">До кінця розділу не більше %d сторінок.</item>
+    </plurals>
+    <string name="smart_resume_percentage_error">Введіть ціле число від 1 до 100.</string>
+    <string name="smart_resume_pages_error">Введіть ціле число від 0 до 2147483647.</string>
+    <string name="smart_resume_wait">Чекати оновлення розділів</string>
+    <string name="smart_resume_wait_summary">Чекати, доки Hanten перевірить оновлення розділів, перш ніж вибирати, звідки продовжити.</string>
+    <string name="smart_resume_wait_help_title">Про очікування оновлень розділів</string>
+    <string name="smart_resume_wait_help">Вимк.: продовжувати за списком розділів, який уже має Hanten. Якщо нові розділи з’являться пізніше, позиція читання не зміниться.\n\nУвімк.: дочекатися звичайної перевірки оновлень розділів у Hanten перед продовженням. Це може тривати довше. Hanten може використати раніше завантажені відомості про розділи замість нового списку. Якщо оновлення не вдалося, продовжити зі збереженої позиції.</string>
+    <string name="smart_resume_percentage_help">Враховуються досягнуті сторінки, включно з поточною. За 90% сторінка 14 з 15 підходить, а сторінка 13 — ні. Прокручування всередині довгого зображення не враховується.</string>
+    <string name="smart_resume_pages_help">Скільки сторінок може залишитися після поточної. Вкажіть 0, щоб вимагалося дійти до останньої сторінки. Прокручування всередині довгого зображення не враховується.</string>
+    <string-array name="smart_resume_modes">
+        <item>@string/smart_resume_percentage</item>
+        <item>@string/smart_resume_pages_remaining</item>
+    </string-array>
+    <string-array name="smart_resume_mode_values">
+        <item>PERCENTAGE</item>
+        <item>PAGES_REMAINING</item>
+    </string-array>
+</resources>

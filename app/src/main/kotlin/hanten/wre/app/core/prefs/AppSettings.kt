@@ -56,6 +56,12 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		get() = prefs.getEnumValue(KEY_LIST_MODE, ListMode.GRID)
 		set(value) = prefs.edit { putEnumValue(KEY_LIST_MODE, value) }
 
+	var appMode: AppMode
+		get() = prefs.getEnumValue(KEY_APP_MODE, AppMode.MANGA)
+		set(value) = prefs.edit { putEnumValue(KEY_APP_MODE, value) }
+
+	fun observeAppMode(): Flow<AppMode> = observeAsFlow(KEY_APP_MODE) { appMode }
+
 	val theme: Int
 		get() = prefs.getString(KEY_THEME, null)?.toIntOrNull()
 			?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -354,6 +360,16 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 			prefs.edit { putStringSet(KEY_LOCAL_MANGA_DIRS, set) }
 		}
 
+	var userSpecifiedNovelDirectories: Set<File>
+		get() {
+			val set = prefs.getStringSet(KEY_LOCAL_NOVEL_DIRS, emptySet()).orEmpty()
+			return set.mapNotNullToSet { File(it).takeIfReadable() }
+		}
+		set(value) {
+			val set = value.mapToSet { it.absolutePath }
+			prefs.edit { putStringSet(KEY_LOCAL_NOVEL_DIRS, set) }
+		}
+
 	var mangaStorageDir: File?
 		get() = prefs.getString(KEY_LOCAL_STORAGE, null)?.let {
 			File(it)
@@ -529,6 +545,23 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 	var isReaderAutoscrollFabVisible: Boolean
 		get() = prefs.getBoolean(KEY_READER_AUTOSCROLL_FAB, true)
 		set(value) = prefs.edit { putBoolean(KEY_READER_AUTOSCROLL_FAB, value) }
+
+	val isSmartResumeEnabled: Boolean
+		get() = prefs.getBoolean(KEY_SMART_RESUME, false)
+
+	val smartResumeCompletionMode: ChapterCompletionMode
+		get() = ChapterCompletionMode.from(prefs.getString(KEY_SMART_RESUME_MODE, null))
+
+	val smartResumePercentage: Int
+		get() = prefs.getString(KEY_SMART_RESUME_PERCENTAGE, null)?.toIntOrNull()
+			?.takeIf { it in 1..100 } ?: 90
+
+	val smartResumePagesRemaining: Int
+		get() = prefs.getString(KEY_SMART_RESUME_PAGES, null)?.toIntOrNull()
+			?.takeIf { it >= 0 } ?: 1
+
+	val isSmartResumeWaitForUpdates: Boolean
+		get() = prefs.getBoolean(KEY_SMART_RESUME_WAIT, false)
 
 	val isPagesPreloadEnabled: Boolean
 		get() {
@@ -794,6 +827,11 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_PAGES_NUMBERS = "pages_numbers"
 		const val KEY_SCREENSHOTS_POLICY = "screenshots_policy"
 		const val KEY_PAGES_PRELOAD = "pages_preload"
+		const val KEY_SMART_RESUME = "reader_smart_resume"
+		const val KEY_SMART_RESUME_MODE = "reader_smart_resume_mode"
+		const val KEY_SMART_RESUME_PERCENTAGE = "reader_smart_resume_percentage"
+		const val KEY_SMART_RESUME_PAGES = "reader_smart_resume_pages"
+		const val KEY_SMART_RESUME_WAIT = "reader_smart_resume_wait"
 		const val KEY_SUGGESTIONS = "suggestions"
 		const val KEY_SUGGESTIONS_WIFI_ONLY = "suggestions_wifi"
 		const val KEY_SUGGESTIONS_EXCLUDE_NSFW = "suggestions_exclude_nsfw"
@@ -846,6 +884,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_PROXY_PASSWORD = "proxy_password"
 		const val KEY_IMAGES_PROXY = "images_proxy_2"
 		const val KEY_LOCAL_MANGA_DIRS = "local_manga_dirs"
+		const val KEY_LOCAL_NOVEL_DIRS = "local_novel_dirs"
+		const val KEY_APP_MODE = "app_mode"
 		const val KEY_DISABLE_NSFW = "no_nsfw"
 		const val KEY_RELATED_MANGA = "related_manga"
 		const val KEY_NAV_MAIN = "nav_main"

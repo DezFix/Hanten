@@ -200,6 +200,7 @@ dependencies {
 	implementation libs.okhttp
 	implementation libs.okhttp.tls
 	implementation libs.okhttp.dnsoverhttps
+	implementation libs.okhttp.brotli
 	implementation libs.okio
 	implementation libs.kotlinx.serialization.json
 	implementation libs.kotlinx.serialization.json.okio

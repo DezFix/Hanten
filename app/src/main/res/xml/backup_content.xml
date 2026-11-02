@@ -6,6 +6,24 @@
 	<exclude
 		domain="sharedpref"
 		path="_local_index.xml" />
+	<exclude
+		domain="sharedpref"
+		path="hanten.wre.app_preferences.xml" />
+	<exclude
+		domain="sharedpref"
+		path="hanten.wre.app.debug_preferences.xml" />
+	<exclude
+		domain="sharedpref"
+		path="cookies.xml" />
+	<exclude
+		domain="sharedpref"
+		path="SHIKIMORI.xml" />
+	<exclude
+		domain="sharedpref"
+		path="ANILIST.xml" />
+	<exclude
+		domain="sharedpref"
+		path="MAL.xml" />
 	<exclude domain="database" />
 	<exclude domain="device_database" />
 	<exclude domain="external" />

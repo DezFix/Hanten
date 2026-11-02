@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.plus
 import hanten.wre.app.core.exceptions.EmptyHistoryException
+import hanten.wre.app.core.prefs.AppMode
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.observeAsFlow
 import hanten.wre.app.core.prefs.observeAsStateFlow
@@ -58,6 +59,12 @@ class MainViewModel @Inject constructor(
 		valueProducer = { isIncognitoModeEnabled },
 	)
 
+	val appMode = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.IO,
+		key = AppSettings.KEY_APP_MODE,
+		valueProducer = { appMode },
+	)
+
 	init {
 		launchJob(Dispatchers.IO) {
 			if (sourcesRepository.isSetupRequired()) {
@@ -75,5 +82,9 @@ class MainViewModel @Inject constructor(
 
 	fun setIncognitoMode(isEnabled: Boolean) {
 		settings.isIncognitoModeEnabled = isEnabled
+	}
+
+	fun toggleAppMode() {
+		settings.appMode = if (settings.appMode == AppMode.NOVEL) AppMode.MANGA else AppMode.NOVEL
 	}
 }

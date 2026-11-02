@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.onEach
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.ui.AllBookmarksFragment
 import hanten.wre.app.core.nav.AppRouter
+import hanten.wre.app.core.prefs.AppMode
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.NavItem
 import hanten.wre.app.core.ui.util.RecyclerViewOwner
@@ -41,6 +42,7 @@ import hanten.wre.app.explore.ui.ExploreFragment
 import hanten.wre.app.favourites.ui.container.FavouritesContainerFragment
 import hanten.wre.app.history.ui.HistoryListFragment
 import hanten.wre.app.local.ui.LocalListFragment
+import hanten.wre.app.novel.ui.local.NovelLocalListFragment
 import hanten.wre.app.suggestions.ui.SuggestionsFragment
 import hanten.wre.app.tracker.ui.feed.FeedFragment
 import hanten.wre.app.tracker.ui.updates.UpdatesFragment
@@ -189,7 +191,11 @@ class MainNavigationDelegate(
 			R.id.nav_favorites -> FavouritesContainerFragment::class.java
 			R.id.nav_explore -> ExploreFragment::class.java
 			R.id.nav_feed -> FeedFragment::class.java
-			R.id.nav_local -> LocalListFragment::class.java
+			R.id.nav_local -> if (settings.appMode == AppMode.NOVEL) {
+				NovelLocalListFragment::class.java
+			} else {
+				LocalListFragment::class.java
+			}
 			R.id.nav_suggestions -> SuggestionsFragment::class.java
 			R.id.nav_bookmarks -> AllBookmarksFragment::class.java
 			R.id.nav_updated -> UpdatesFragment::class.java
@@ -202,12 +208,36 @@ class MainNavigationDelegate(
 		return true
 	}
 
+	fun reloadCurrentFragment() {
+		if (navBar.selectedItemId != R.id.nav_local) {
+			return
+		}
+		val fragmentClass = if (settings.appMode == AppMode.NOVEL) {
+			NovelLocalListFragment::class.java
+		} else {
+			LocalListFragment::class.java
+		}
+		if (fragmentManager.isStateSaved || fragmentClass.isInstance(primaryFragment)) {
+			return
+		}
+		val fragment = instantiateFragment(fragmentClass)
+		val args = buildBundle(1) {
+			putBoolean(AppRouter.KEY_IS_BOTTOMTAB, true)
+		}
+		fragment.enterTransition = MaterialFadeThrough()
+		fragmentManager.beginTransaction()
+			.setReorderingAllowed(true)
+			.replace(R.id.container, fragmentClass, args, TAG_PRIMARY)
+			.runOnCommit { onFragmentChanged(fragment, fromUser = false) }
+			.commit()
+	}
+
 	private fun getItemId(fragment: Fragment) = when (fragment) {
 		is HistoryListFragment -> R.id.nav_history
 		is FavouritesContainerFragment -> R.id.nav_favorites
 		is ExploreFragment -> R.id.nav_explore
 		is FeedFragment -> R.id.nav_feed
-		is LocalListFragment -> R.id.nav_local
+		is LocalListFragment, is NovelLocalListFragment -> R.id.nav_local
 		is SuggestionsFragment -> R.id.nav_suggestions
 		is AllBookmarksFragment -> R.id.nav_bookmarks
 		is UpdatesFragment -> R.id.nav_updated

@@ -33,7 +33,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import kotlin.ranges.contains
 
 @Singleton
@@ -81,17 +80,23 @@ class WebViewExecutor @Inject constructor(
                 val baseUri = android.net.Uri.parse(baseUrl)
                 val originalHost = baseUri.host
 
-                suspendCoroutine { continuation ->
+                suspendCancellableCoroutine { continuation ->
                     var hasResumed = false
 
                     val resumeOnce: (String?) -> Unit = { result ->
-                        if (!hasResumed) {
+                        if (!hasResumed && continuation.isActive) {
                             hasResumed = true
                             handler.removeCallbacksAndMessages(null)
                             // Immediately stop further loading/polling
                             webView.stopLoading()
                             continuation.resume(result)
                         }
+                    }
+
+                    continuation.invokeOnCancellation {
+                        hasResumed = true
+                        handler.removeCallbacksAndMessages(null)
+                        webView.stopLoading()
                     }
 
                     val contentPoller = object : Runnable {

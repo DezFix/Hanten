@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import hanten.wre.app.BuildConfig
 import hanten.wre.app.browser.BrowserCallback
 import hanten.wre.app.core.network.webview.adblock.AdBlock
 import hanten.wre.app.core.util.ext.configureForParser
@@ -31,7 +32,6 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
     private val adBlock: AdBlock?,
 ) {
 
-    private var webViewCached: WeakReference<WebView>? = null
     private val mainHandler = Handler(Looper.getMainLooper())
     private val activeWebViews = mutableSetOf<WeakReference<WebView>>()
 
@@ -39,7 +39,7 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
         url: String,
         config: InterceptionConfig
     ): List<InterceptedRequest> = withTimeout(config.timeoutMs + 5000) {
-        Log.d(TAG_VRF, "interceptRequests start url=$url injectPageScript=${!config.pageScript.isNullOrBlank()} hasFilterScript=${!config.filterScript.isNullOrBlank()}")
+        if (BuildConfig.DEBUG) Log.d(TAG_VRF, "interceptRequests start url=$url injectPageScript=${!config.pageScript.isNullOrBlank()} hasFilterScript=${!config.filterScript.isNullOrBlank()}")
         withContext(Dispatchers.Main) {
             suspendCancellableCoroutine { continuation ->
                 val resultDeferred = CompletableDeferred<List<InterceptedRequest>>()
@@ -55,12 +55,12 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
                             false
                         }
                         val match = urlOk && scriptOk
-                        Log.v(TAG_VRF, "REQ url=${request.url} method=${request.method} urlOk=$urlOk scriptOk=$scriptOk match=$match")
+                        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "REQ url=${request.url} method=${request.method} urlOk=$urlOk scriptOk=$scriptOk match=$match")
                         return match
                     }
 
                     override fun onInterceptionComplete(capturedRequests: List<InterceptedRequest>) {
-                        Log.d(TAG_VRF, "Interception complete captured=${capturedRequests.size}")
+                        if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Interception complete captured=${capturedRequests.size}")
                         if (!resultDeferred.isCompleted) {
                             resultDeferred.complete(capturedRequests)
                         }
@@ -76,13 +76,13 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
 
                 val callback = object : BrowserCallback {
                     override fun onLoadingStateChanged(isLoading: Boolean) {
-                        Log.v(TAG_VRF, "Loading state changed isLoading=$isLoading")
+                        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Loading state changed isLoading=$isLoading")
                     }
                     override fun onTitleChanged(title: CharSequence, subtitle: CharSequence?) {
-                        Log.v(TAG_VRF, "Title changed title=$title subtitle=$subtitle")
+                        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Title changed title=$title subtitle=$subtitle")
                     }
                     override fun onHistoryChanged() {
-                        Log.v(TAG_VRF, "History changed")
+                        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "History changed")
                     }
                 }
 
@@ -114,7 +114,7 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
                         mainHandler.removeCallbacks(timeoutRunnable)
                         // Clean up WebView after operation completes - must run on main thread
                         webView?.let { wv ->
-                            Log.d(TAG_VRF, "Cleaning up WebView after operation")
+                            if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Cleaning up WebView after operation")
                             if (Thread.currentThread() == Looper.getMainLooper().thread) {
                                 // Already on main thread, destroy immediately
                                 wv.stopLoading()
@@ -143,7 +143,7 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
                         mainHandler.removeCallbacks(timeoutRunnable)
                         // Clean up WebView on cancellation - must run on main thread
                         webView?.let { wv ->
-                            Log.d(TAG_VRF, "Cleaning up WebView on cancellation")
+                            if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Cleaning up WebView on cancellation")
                             if (Thread.currentThread() == Looper.getMainLooper().thread) {
                                 // Already on main thread, destroy immediately
                                 wv.stopLoading()
@@ -163,7 +163,7 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
                 } catch (e: Exception) {
                     // Clean up WebView on exception - must run on main thread
                     webView?.let { wv ->
-                        Log.d(TAG_VRF, "Cleaning up WebView on exception")
+                        if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Cleaning up WebView on exception")
                         if (Thread.currentThread() == Looper.getMainLooper().thread) {
                             // Already on main thread, destroy immediately
                             wv.destroy()
@@ -194,7 +194,7 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
             maxRequests = 1
         )
         return interceptRequests(pageUrl, config)
-            .also { Log.d(TAG_VRF, "captureWebViewUrls matched=${it.size}") }
+            .also { if (BuildConfig.DEBUG) Log.d(TAG_VRF, "captureWebViewUrls matched=${it.size}") }
             .map { it.url }
     }
 
@@ -210,13 +210,11 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
             configureForParser(null)
             // Clear any existing state
             clearHistory()
-            clearCache(true)
         }
-        Log.d(TAG_VRF, "Created fresh WebView instance")
+        if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Created fresh WebView instance")
 
         // Track this WebView
         val webViewRef = WeakReference(wv)
-        webViewCached = webViewRef
         synchronized(activeWebViews) {
             activeWebViews.add(webViewRef)
         }
@@ -229,19 +227,16 @@ class WebViewRequestInterceptorExecutor @Inject constructor(
         synchronized(activeWebViews) {
             activeWebViews.removeAll { it.get() == webView || it.get() == null }
         }
-        if (webViewCached?.get() == webView) {
-            webViewCached = null
-        }
     }
 }
 
 // If you added evaluateFilterPredicate earlier, keep it here.
 fun evaluateFilterPredicate(script: String, requestUrl: String): Boolean {
-    Log.v(TAG_VRF, "Full script: '$script'")
+    if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Full script: '$script'")
 
     val returnIdx = script.lastIndexOf("return")
     if (returnIdx == -1) {
-        Log.v(TAG_VRF, "No return in script, capturing all. url=$requestUrl")
+        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "No return in script, capturing all. url=$requestUrl")
         return true
     }
 
@@ -254,17 +249,17 @@ fun evaluateFilterPredicate(script: String, requestUrl: String): Boolean {
     }
 
     if (expr.isEmpty()) {
-        Log.v(TAG_VRF, "Empty return expression, capturing all. url=$requestUrl")
+        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Empty return expression, capturing all. url=$requestUrl")
         return true
     }
 
-    Log.v(TAG_VRF, "Evaluating predicate for url=$requestUrl expr='$expr'")
+    if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Evaluating predicate for url=$requestUrl expr='$expr'")
 
     // Simple check for url.includes('vrf=') - handle it directly without complex parsing
     if (expr == "url.includes('vrf=')" || expr == """url.includes("vrf=")""") {
         val contains = requestUrl.contains("vrf=")
         val status = if (contains) "Predicate MATCH" else "Predicate MISS"
-        Log.d(TAG_VRF, "$status url=$requestUrl expr=$expr contains=$contains")
+        if (BuildConfig.DEBUG) Log.d(TAG_VRF, "$status url=$requestUrl expr=$expr contains=$contains")
         return contains
     }
 
@@ -275,10 +270,10 @@ fun evaluateFilterPredicate(script: String, requestUrl: String): Boolean {
             .split("&&").map { it.trim() }.filter { it.isNotEmpty() }
         var allMatch = true
 
-        Log.v(TAG_VRF, "Checking clause: '$clause' with ${andTerms.size} AND terms")
+        if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Checking clause: '$clause' with ${andTerms.size} AND terms")
 
         for (term in andTerms) {
-            Log.v(TAG_VRF, "Processing term: '$term'")
+            if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Processing term: '$term'")
 
             // Handle url.includes('...') or url.includes("...")
             val singleQuoteMatch = Regex("""url\.includes\(\s*'([^']*)'\s*\)""").find(term)
@@ -288,22 +283,22 @@ fun evaluateFilterPredicate(script: String, requestUrl: String): Boolean {
             if (match != null) {
                 val needle = match.groupValues[1]
                 val contains = requestUrl.contains(needle)
-                Log.v(TAG_VRF, "Term: '$term' -> needle: '$needle' -> contains: $contains")
+                if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Term: '$term' -> needle: '$needle' -> contains: $contains")
                 if (!contains) {
                     allMatch = false
                     break
                 }
             } else {
-                Log.v(TAG_VRF, "Term does not match url.includes pattern: '$term'")
+                if (BuildConfig.DEBUG) Log.v(TAG_VRF, "Term does not match url.includes pattern: '$term'")
                 allMatch = false
                 break
             }
         }
         if (allMatch) {
-            Log.d(TAG_VRF, "Predicate MATCH url=$requestUrl clause='$clause'")
+            if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Predicate MATCH url=$requestUrl clause='$clause'")
             return true
         }
     }
-    Log.d(TAG_VRF, "Predicate MISS url=$requestUrl expr='$expr'")
+    if (BuildConfig.DEBUG) Log.d(TAG_VRF, "Predicate MISS url=$requestUrl expr='$expr'")
     return false
 }

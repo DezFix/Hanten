@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -67,14 +66,14 @@ class ShikimoriImportUseCase @Inject constructor(
 						if (match == null) {
 							null to rate
 						} else {
-							match to null
+							match to rate
 						}
 					}
 				}
 			}.awaitAll()
 		}
 		val matched = resolved.mapNotNull { (manga, rate) ->
-			if (manga != null && rate != null) manga to rate else null
+			if (manga != null) manga to rate else null
 		}
 		val skipped = resolved.mapNotNull { (manga, rate) ->
 			if (manga == null) rate else null

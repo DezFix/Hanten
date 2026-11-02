@@ -38,4 +38,10 @@ replay_pid*.log
 # Keystore files — never commit signing keys
 *.jks
 *.keystore
+*.p12
+*.pfx
+*.jceks
+# Local environment/secrets
+.env
+.env.*
 .idea/

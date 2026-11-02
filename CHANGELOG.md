@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## Unreleased
+
+### Новое
+- Режим чтения лёгких новелл: отдельная читалка с настройками шрифта, темы,
+  интервалов и режима прокрутки (порт из Futon v9.9, #121)
+- Локальные новеллы: импорт EPUB/PDF и папок, PDF-читалка
+- Источники новелл: Ranobes (RU), RanobeLib (RU), Baka.in.ua (UA)
+- Переключатель «манга/новеллы» в меню и отдельный локальный список новелл
+
+### Ограничения
+- Онлайн-источники новелл на других языках не добавлены: поддерживаемый
+  scope парсеров — RU/UK
+
 ## 2.4.3
 Date: 2026-10-19
 

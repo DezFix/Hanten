@@ -39,7 +39,6 @@ import hanten.wre.app.core.db.migrations.Migration20To21
 import hanten.wre.app.core.db.migrations.Migration21To22
 import hanten.wre.app.core.db.migrations.Migration22To23
 import hanten.wre.app.core.db.migrations.Migration23To24
-import hanten.wre.app.core.db.migrations.Migration24To23
 import hanten.wre.app.core.db.migrations.Migration24To25
 import hanten.wre.app.core.db.migrations.Migration25To26
 import hanten.wre.app.core.db.migrations.Migration26To27
@@ -56,6 +55,7 @@ import hanten.wre.app.core.db.migrations.Migration6To7
 import hanten.wre.app.core.db.migrations.Migration7To8
 import hanten.wre.app.core.db.migrations.Migration8To9
 import hanten.wre.app.core.db.migrations.Migration9To10
+import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.core.util.ext.processLifecycleScope
 import hanten.wre.app.download.data.dao.DownloadQueueDao
 import hanten.wre.app.download.data.dao.SmartDownloadDao
@@ -78,6 +78,7 @@ import hanten.wre.app.suggestions.data.SuggestionEntity
 import hanten.wre.app.tracker.data.TrackEntity
 import hanten.wre.app.tracker.data.TrackLogEntity
 import hanten.wre.app.tracker.data.TracksDao
+import java.io.File
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -159,7 +160,6 @@ fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
 	Migration21To22(),
 	Migration22To23(),
 	Migration23To24(),
-	Migration24To23(),
 	Migration24To25(),
 	Migration25To26(),
 	Migration26To27(),
@@ -186,13 +186,41 @@ private fun migrateDatabaseFile(context: Context, oldName: String, newName: Stri
 		val oldFile = context.getDatabasePath(oldName)
 		if (!oldFile.exists()) return
 		newFile.parentFile?.mkdirs()
-		oldFile.copyTo(newFile, overwrite = false)
-		arrayOf("-shm", "-wal").forEach { suffix ->
-			val oldExtra = java.io.File(oldFile.path + suffix)
+
+		// Copy to temporary names first: a partially copied hanten-db would
+		// otherwise be treated as valid on the next launch and Room would open
+		// a truncated database.
+		val tempMain = File(newFile.path + ".tmp")
+		val tempSidecars = arrayOf("-shm", "-wal").associateWith { suffix ->
+			File(tempMain.path + suffix)
+		}
+		tempMain.delete()
+		tempSidecars.values.forEach { it.delete() }
+
+		oldFile.copyTo(tempMain, overwrite = true)
+		for ((suffix, tempExtra) in tempSidecars) {
+			val oldExtra = File(oldFile.path + suffix)
 			if (oldExtra.exists()) {
-				oldExtra.copyTo(java.io.File(newFile.path + suffix), overwrite = false)
+				oldExtra.copyTo(tempExtra, overwrite = true)
 			}
 		}
+
+		// Replace sidecars first, the main file last. If the process dies in
+		// between, the next launch sees newFile missing and retries the copy.
+		for ((suffix, tempExtra) in tempSidecars) {
+			if (tempExtra.exists()) {
+				val target = File(newFile.path + suffix)
+				target.delete()
+				check(tempExtra.renameTo(target)) {
+					"Cannot move temporary database sidecar to ${target.path}"
+				}
+			}
+		}
+		check(tempMain.renameTo(newFile)) {
+			"Cannot move temporary database to ${newFile.path}"
+		}
+	}.onFailure { e ->
+		e.printStackTraceDebug("MangaDatabase::migrateDatabaseFile")
 	}
 }
 

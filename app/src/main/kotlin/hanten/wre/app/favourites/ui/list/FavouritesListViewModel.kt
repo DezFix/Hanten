@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.plus
 import hanten.wre.app.R
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.prefs.AppSettings
@@ -85,8 +86,11 @@ class FavouritesListViewModel @Inject constructor(
 		quickFilter.appliedOptions,
 		observeListModeWithTriggers(),
 		refreshTrigger,
-	) { list, filters, mode, _ ->
-		list.mapList(mode, filters)
+		settings.observeAppMode(),
+	) { list, filters, mode, _, appMode ->
+		val isNovel = appMode.isNovel
+		val filteredList = list.filter { it.isNovel == isNovel }
+		filteredList.mapList(mode, filters)
 	}.distinctUntilChanged().onEach {
 		isPaginationReady.set(true)
 	}.catch {

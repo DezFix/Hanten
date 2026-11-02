@@ -5,15 +5,17 @@ import androidx.annotation.CheckResult
 import hanten.wre.app.R
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Date
 import java.util.Locale
 
 object BackupUtils {
 
 	private const val DIR_BACKUPS = "backups"
-	private val dateTimeFormat = SimpleDateFormat("yyyyMMdd-HHmm")
+	private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")
 
 	@CheckResult
 	fun createTempFile(context: Context): File {
@@ -27,8 +29,13 @@ object BackupUtils {
 	}
 
 	fun parseBackupDateTime(fileName: String): Date? = try {
-		dateTimeFormat.parse(fileName.substringAfterLast('_').substringBefore('.'))
-	} catch (e: ParseException) {
+		val value = fileName.substringAfterLast('_').substringBefore('.')
+		Date.from(
+			LocalDateTime.parse(value, dateTimeFormatter)
+				.atZone(ZoneId.systemDefault())
+				.toInstant(),
+		)
+	} catch (e: DateTimeParseException) {
 		e.printStackTraceDebug("BackupUtils::parseBackupDateTime")
 		null
 	}
@@ -36,7 +43,7 @@ object BackupUtils {
 	fun generateFileName(context: Context) = buildString {
 		append(context.getString(R.string.app_name).replace(' ', '_').lowercase(Locale.ROOT))
 		append('_')
-		append(dateTimeFormat.format(Date()))
+		append(dateTimeFormatter.format(LocalDateTime.now()))
 		append(".bk.zip")
 	}
 }

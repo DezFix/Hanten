@@ -14,11 +14,16 @@ import hanten.wre.app.R
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.core.util.ext.iterator
 import hanten.wre.app.details.ui.model.ChapterListItem
+import hanten.wre.app.mihon.model.MihonMangaSource
+import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentRating
+import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.Demographic
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.model.MangaState
 import hanten.wre.app.parsers.util.findById
 import hanten.wre.app.parsers.util.ifNullOrEmpty
@@ -124,7 +129,19 @@ fun Manga.getPreferredBranch(history: MangaHistory?): String? {
 }
 
 val Manga.isLocal: Boolean
-	get() = source == LocalMangaSource
+	get() = source == LocalMangaSource || source == LocalNovelSource
+
+val MangaSource.isNovelSource: Boolean
+	get() = when (val source = unwrap()) {
+		LocalNovelSource -> true
+		is NovelParserSource -> true
+		is MangaParserSource -> source.contentType == ContentType.NOVEL
+		is MihonMangaSource -> source.contentType == hanten.wre.app.mihon.parsers.model.ContentType.NOVEL
+		else -> NovelParserSource.fromName(source.name) != null
+	}
+
+val Manga.isNovel: Boolean
+	get() = source.isNovelSource
 
 val Manga.isBroken: Boolean
 	get() = source == UnknownMangaSource

@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
@@ -58,7 +59,8 @@ class ChaptersPagesSheet : BaseAdaptiveSheet<SheetChaptersPagesBinding>(),
 
 		val args = arguments ?: Bundle.EMPTY
 		var defaultTab = args.getInt(AppRouter.KEY_TAB, settings.defaultDetailsTab)
-		val adapter = ChaptersPagesAdapter(this, settings.isPagesTabEnabled)
+		val isNovel = viewModel.mangaDetails.value?.isNovel == true || viewModel.manga.value?.isNovel == true
+		val adapter = ChaptersPagesAdapter(this, settings.isPagesTabEnabled && !isNovel)
 		if (!adapter.isPagesTabEnabled) {
 			defaultTab = (defaultTab - 1).coerceAtLeast(TAB_CHAPTERS)
 		}

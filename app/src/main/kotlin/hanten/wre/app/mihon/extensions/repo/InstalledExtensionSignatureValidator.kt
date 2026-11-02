@@ -22,6 +22,17 @@ class InstalledExtensionSignatureValidator @Inject constructor(
 		return ExtensionFingerprintTrust.isTrusted(expectedFingerprint, getFingerprints(packageName))
 	}
 
+	/**
+	 * Used when a package may come from any of the configured extension repos:
+	 * accept it if its signature matches at least one non-blank repo fingerprint.
+	 */
+	fun isTrustedByAny(packageName: String, expectedFingerprints: Collection<String>): Boolean {
+		val actual = getFingerprints(packageName)
+		return expectedFingerprints.any { expected ->
+			expected.isNotBlank() && ExtensionFingerprintTrust.isTrusted(expected, actual)
+		}
+	}
+
 	private fun getFingerprints(packageName: String): Set<String> {
 		return cache.getOrPut(packageName) {
 			runCatching {

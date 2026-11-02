@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="smart_resume">Умное продолжение</string>
+    <string name="smart_resume_summary">Когда появляются новые главы, продолжать со следующей главы, если предыдущая последняя глава была почти дочитана.</string>
+    <string name="smart_resume_rule">Считать главу прочитанной по</string>
+    <string name="smart_resume_percentage">Проценту</string>
+    <string name="smart_resume_pages_remaining">Оставшимся страницам</string>
+    <string name="smart_resume_threshold">Порог завершения</string>
+    <string name="smart_resume_percentage_summary">Достигнуто не менее %1$d%% страниц, включая текущую.</string>
+    <plurals name="smart_resume_pages_summary">
+        <item quantity="one">До конца главы не больше %d страницы.</item>
+        <item quantity="few">До конца главы не больше %d страниц.</item>
+        <item quantity="many">До конца главы не больше %d страниц.</item>
+        <item quantity="other">До конца главы не больше %d страниц.</item>
+    </plurals>
+    <string name="smart_resume_percentage_error">Введите целое число от 1 до 100.</string>
+    <string name="smart_resume_pages_error">Введите целое число от 0 до 2147483647.</string>
+    <string name="smart_resume_wait">Ждать обновления глав</string>
+    <string name="smart_resume_wait_summary">Ждать, пока Hanten проверит обновления глав, прежде чем выбирать, откуда продолжить.</string>
+    <string name="smart_resume_wait_help_title">Об ожидании обновлений глав</string>
+    <string name="smart_resume_wait_help">Выкл.: продолжать по списку глав, который уже есть у Hanten. Если новые главы появятся позже, позиция чтения не изменится.\n\nВкл.: дождаться обычной проверки обновлений глав в Hanten перед продолжением. Это может занять больше времени. Hanten может использовать ранее загруженные сведения о главах вместо нового списка. Если обновление не удалось, продолжить с сохранённой позиции.</string>
+    <string name="smart_resume_percentage_help">Учитываются достигнутые страницы, включая текущую. При 90% страница 14 из 15 подходит, а страница 13 — нет. Прокрутка внутри длинного изображения не учитывается.</string>
+    <string name="smart_resume_pages_help">Сколько страниц может остаться после текущей. Укажите 0, чтобы требовалось дойти до последней страницы. Прокрутка внутри длинного изображения не учитывается.</string>
+    <string-array name="smart_resume_modes">
+        <item>@string/smart_resume_percentage</item>
+        <item>@string/smart_resume_pages_remaining</item>
+    </string-array>
+    <string-array name="smart_resume_mode_values">
+        <item>PERCENTAGE</item>
+        <item>PAGES_REMAINING</item>
+    </string-array>
+</resources>

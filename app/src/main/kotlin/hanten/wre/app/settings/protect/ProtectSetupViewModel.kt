@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.plus
+import hanten.wre.app.core.prefs.AppPasswordHasher
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.parsers.util.isNumeric
-import hanten.wre.app.parsers.util.md5
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +39,7 @@ class ProtectSetupViewModel @Inject constructor(
 			onClearText.call(Unit)
 		} else {
 			if (firstPassword.value == password) {
-				settings.appPassword = password.md5()
+				settings.appPassword = AppPasswordHasher.hash(password)
 				settings.isAppPasswordNumeric = password.isNumeric()
 				onPasswordSet.call(Unit)
 			} else {

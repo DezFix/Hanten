@@ -85,6 +85,10 @@
 	<!-- Monet theme only support S+ -->
 	<style name="ThemeOverlay.Hanten.Monet" parent="ThemeOverlay.Material3.DynamicColors.Light" />
 
+	<!-- Imported theme, the palette is generated at runtime from its primary colour -->
+	<style name="ThemeOverlay.Hanten.Custom.Light" parent="ThemeOverlay.Material3.Light" />
+	<style name="ThemeOverlay.Hanten.Custom.Dark" parent="ThemeOverlay.Material3.Dark" />
+
 	<!-- Expressive Monet theme -->
 	<style name="ThemeOverlay.Hanten.Expressive" parent="ThemeOverlay.Material3Expressive.DynamicColors.DayNight">
 		<item name="alertDialogTheme">@style/ThemeOverlay.Material3Expressive.Dialog.Alert</item>

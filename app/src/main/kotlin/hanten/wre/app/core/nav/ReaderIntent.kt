@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.bookmarks.domain.Bookmark
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.parcelable.ParcelableManga
+import hanten.wre.app.novel.ui.reader.NovelReaderActivity
+import hanten.wre.app.novel.ui.reader.pdf.PdfReaderActivity
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.reader.ui.ReaderActivity
 import hanten.wre.app.reader.ui.ReaderState
@@ -14,7 +17,7 @@ value class ReaderIntent private constructor(
 	val intent: Intent,
 ) {
 
-	class Builder(context: Context) {
+	class Builder(private val context: Context) {
 
 		private val intent = Intent(context, ReaderActivity::class.java)
 			.setAction(ACTION_MANGA_READ)
@@ -22,6 +25,11 @@ value class ReaderIntent private constructor(
 		fun manga(manga: Manga) = apply {
 			intent.putExtra(AppRouter.KEY_MANGA, ParcelableManga(manga))
 			intent.setData(AppRouter.shortMangaUrl(manga.id))
+			if (manga.url.endsWith(".pdf", ignoreCase = true) || manga.url.startsWith("pdf://")) {
+				intent.setClass(context, PdfReaderActivity::class.java)
+			} else if (manga.isNovel || manga.url.endsWith(".epub", ignoreCase = true)) {
+				intent.setClass(context, NovelReaderActivity::class.java)
+			}
 		}
 
 		fun mangaId(mangaId: Long) = apply {

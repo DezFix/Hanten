@@ -1,13 +1,9 @@
 package hanten.wre.app.core.os
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.content.pm.PackageInfoCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import hanten.wre.app.parsers.util.suspendlazy.suspendLazy
 import java.io.File
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -17,12 +13,6 @@ import javax.inject.Singleton
 class AppValidator @Inject constructor(
 	@ApplicationContext private val context: Context,
 ) {
-	@SuppressLint("InlinedApi")
-	val isOriginalApp = suspendLazy(Dispatchers.IO) {
-		val certificates = mapOf(CERT_SHA256.hexToByteArray() to PackageManager.CERT_INPUT_SHA256)
-		PackageInfoCompat.hasSignatures(context.packageManager, context.packageName, certificates, false)
-	}
-
 	/**
 	 * Verifies that an APK file is signed with our release certificate
 	 * and belongs to this application package. Used before installing updates.

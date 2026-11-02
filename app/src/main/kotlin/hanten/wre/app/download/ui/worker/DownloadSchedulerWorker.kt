@@ -42,8 +42,8 @@ class DownloadSchedulerWorker @AssistedInject constructor(
             
             Log.d("DownloadScheduler", "Active works: ${activeWorks.map { it.id to it.state }}")
 
-            if (activeWorks.any { it.state == WorkInfo.State.RUNNING }) {
-                Log.d("DownloadScheduler", "A download is already running, scheduling check in 30s")
+            if (activeWorks.isNotEmpty()) {
+                Log.d("DownloadScheduler", "A download is already queued or running, scheduling check in 30s")
                 scheduleNextCheck(30, TimeUnit.SECONDS)
                 return@runCatchingCancellable Result.success()
             }
@@ -162,7 +162,7 @@ class DownloadSchedulerWorker @AssistedInject constructor(
         val needsWifi = queue.any { it.wifiOnly }
 
         if (needsOffPeak) {
-            val delayInSeconds = calculateSecondsUntilOffPeak()
+            val delayInSeconds = calculateSecondsUntilOffPeak(settings)
             Log.d("DownloadScheduler", "Scheduling alarm check for off-peak in $delayInSeconds seconds")
             if (delayInSeconds > 0) {
                 scheduleNextCheck(delayInSeconds, TimeUnit.SECONDS)
@@ -196,26 +196,6 @@ class DownloadSchedulerWorker @AssistedInject constructor(
                 request
             )
         }
-    }
-
-    private fun calculateSecondsUntilOffPeak(): Long {
-        if (!settings.isDownloadOffPeakEnabled) return 0
-        val now = Calendar.getInstance()
-        val currentHour = now.get(Calendar.HOUR_OF_DAY)
-        val currentMinute = now.get(Calendar.MINUTE)
-        val currentSecond = now.get(Calendar.SECOND)
-        val currentTimeInSeconds = (currentHour * 60 + currentMinute) * 60 + currentSecond
-
-        val startParts = settings.downloadOffPeakStart.split(":")
-        if (startParts.size != 2) return 15 * 60
-
-        val startSeconds = ((startParts[0].toIntOrNull() ?: 0) * 60 + (startParts[1].toIntOrNull() ?: 0)) * 60
-
-        var diff = startSeconds - currentTimeInSeconds
-        if (diff <= 0) {
-            diff += 24 * 60 * 60
-        }
-        return diff.toLong()
     }
 
     companion object {

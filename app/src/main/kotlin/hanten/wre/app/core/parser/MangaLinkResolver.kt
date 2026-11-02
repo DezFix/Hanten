@@ -36,17 +36,24 @@ class MangaLinkResolver @Inject constructor(
 	}
 
 	private suspend fun resolveAppLink(uri: Uri): Manga? {
-		require(uri.pathSegments.singleOrNull() == "manga") { "Invalid url" }
-		uri.getQueryParameter("id")?.let { mangaId ->
+		// https://dezfix.github.io/manga?... has path "manga"; the worker short
+		// link uses "/m"; the custom scheme hanten://manga has the host instead.
+		val path = uri.pathSegments.lastOrNull() ?: uri.host
+		if (path != "manga" && path != "m") {
+			return null
+		}
+		uri.getQueryParameter("id")?.toLongOrNull()?.let { mangaId ->
 			// short url
-			return dataRepository.findMangaById(mangaId.toLong(), withChapters = false)
+			return dataRepository.findMangaById(mangaId, withChapters = false)
 		}
 		// short keys (s/u/n), with fallback to legacy full names
-		val sourceName = requireNotNull(
-			uri.getQueryParameter("s") ?: uri.getQueryParameter("source"),
-		) { "Source is not specified" }
+		val sourceName = (uri.getQueryParameter("s") ?: uri.getQueryParameter("source"))
+			?.takeUnless { it.isBlank() }
+			?: return null
 		val source = MangaSource(sourceName)
-		require(source != UnknownMangaSource) { "Manga source $sourceName is not supported" }
+		if (source == UnknownMangaSource) {
+			return null
+		}
 		val repo = repositoryFactory.create(source)
 		return repo.findExact(
 			url = uri.getQueryParameter("u") ?: uri.getQueryParameter("url"),

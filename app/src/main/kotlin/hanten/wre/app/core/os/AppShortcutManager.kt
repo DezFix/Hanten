@@ -22,7 +22,6 @@ import hanten.wre.app.core.db.TABLE_HISTORY
 import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.ReaderIntent
-import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.favicon.faviconUri
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.image.ThumbnailTransformation
@@ -50,7 +49,6 @@ class AppShortcutManager @Inject constructor(
 	@LocalizedAppContext private val context: Context,
 	private val coil: ImageLoader,
 	private val historyRepository: HistoryRepository,
-	private val mangaRepository: MangaDataRepository,
 	private val settings: AppSettings,
 ) : InvalidationTracker.Observer(TABLE_HISTORY), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -166,7 +164,6 @@ class AppShortcutManager @Inject constructor(
 			onSuccess = { IconCompat.createWithAdaptiveBitmap(it) },
 			onFailure = { IconCompat.createWithResource(context, R.drawable.ic_shortcut_default) },
 		)
-		mangaRepository.storeManga(manga, replaceExisting = true)
 		val title = manga.title.ifEmpty {
 			manga.altTitles.firstOrNull()
 		}.ifNullOrEmpty {

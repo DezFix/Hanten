@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_name_custom">Власна тема</string>
+    <string name="custom_theme_import">Імпорт теми з файлу</string>
+    <string name="custom_theme_import_summary">JSON-тема у форматі Idle Fantasy (Material 3)</string>
+    <string name="custom_theme_imported">Тему імпортовано та застосовано</string>
+    <string name="custom_theme_import_failed">Не вдалося імпортувати файл теми</string>
+</resources>

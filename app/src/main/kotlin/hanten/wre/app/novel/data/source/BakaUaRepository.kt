@@ -1,0 +1,139 @@
+package hanten.wre.app.novel.data.source
+
+import hanten.wre.app.core.cache.MemoryContentCache
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.model.MangaListFilter
+import hanten.wre.app.parsers.model.MangaListFilterCapabilities
+import hanten.wre.app.parsers.model.MangaPage
+import hanten.wre.app.parsers.model.MangaState
+import hanten.wre.app.parsers.model.SortOrder
+import hanten.wre.app.parsers.util.longHashCode
+import okhttp3.OkHttpClient
+import org.jsoup.nodes.Element
+
+/**
+ * Baka.in.ua — Ukrainian fan-translation library. The site has no public API,
+ * so this repository uses the same HTML pages as the browser: /fictions for the
+ * catalog, /fictions/{slug} for details and /chapters/{slug} for chapter text.
+ */
+class BakaUaRepository(
+	cache: MemoryContentCache,
+	httpClient: OkHttpClient,
+) : BaseNovelRepository(cache, httpClient, NovelParserSource.BAKA_UA) {
+
+	private val baseUrl = source.defaultUrl
+
+	override val sortOrders: Set<SortOrder> = setOf(
+		SortOrder.POPULARITY,
+		SortOrder.UPDATED,
+		SortOrder.NEWEST,
+	)
+
+	override var defaultSortOrder: SortOrder = SortOrder.UPDATED
+
+	override val filterCapabilities: MangaListFilterCapabilities = MangaListFilterCapabilities(
+		isSearchSupported = true,
+		isSearchWithFiltersSupported = false,
+	)
+
+	override suspend fun getList(offset: Int, order: SortOrder?, filter: MangaListFilter?): List<Manga> {
+		// Baka renders the whole catalog on /fictions; extra pages are empty.
+		if (offset > 0) {
+			return emptyList()
+		}
+		val doc = fetchDocument("$baseUrl/fictions")
+		val query = filter?.query?.trim()
+		return doc.select("h2 a[href^=/fictions/]")
+			.mapNotNull { link ->
+				val href = link.absUrl("href").ifBlank { "$baseUrl${link.attr("href")}" }
+				val title = link.text().trim()
+				if (title.isBlank()) {
+					return@mapNotNull null
+				}
+				if (!query.isNullOrEmpty() && !title.contains(query, ignoreCase = true)) {
+					return@mapNotNull null
+				}
+				val cover = link.parents()
+					.firstNotNullOfOrNull { it.selectFirst("img[src]") }
+					?.let { img -> img.absUrl("src").ifBlank { "$baseUrl${img.attr("src")}" } }
+				Manga(
+					id = "${source.name}_$href".longHashCode(),
+					title = title,
+					altTitles = emptySet(),
+					url = href,
+					publicUrl = href,
+					rating = 0f,
+					contentRating = null,
+					coverUrl = cover,
+					tags = emptySet(),
+					state = null,
+					authors = emptySet(),
+					largeCoverUrl = cover,
+					source = source,
+				)
+			}
+	}
+
+	override suspend fun getDetailsImpl(manga: Manga): Manga {
+		val doc = fetchDocument(manga.url)
+		val title = doc.selectFirst("h1#fiction-title")?.text()?.trim()
+			?: doc.selectFirst("meta[property=og:title]")?.attr("content")?.substringBefore('|')?.trim()
+			?: manga.title
+		val description = doc.selectFirst("meta[property=og:description]")?.attr("content")?.trim()
+		val cover = doc.selectFirst("meta[property=og:image]")?.attr("content")
+			?.let { if (it.startsWith("http")) it else "$baseUrl$it" }
+		val author = doc.selectFirst("a[rel=author]")?.text()?.trim()?.takeIf { it.isNotBlank() }
+		val chapters = doc.select("a[href^=/chapters/]")
+			.mapNotNull { link ->
+				val href = link.absUrl("href").ifBlank { "$baseUrl${link.attr("href")}" }
+				val title = link.text().trim().takeIf { it.isNotBlank() } ?: return@mapNotNull null
+				MangaChapter(
+					id = "${source.name}_$href".longHashCode(),
+					title = title,
+					number = 0f,
+					volume = 0,
+					url = href,
+					scanlator = null,
+					uploadDate = 0L,
+					branch = null,
+					source = source,
+				)
+			}
+			.distinctBy { it.id }
+			.withIndex()
+			.map { (index, chapter) ->
+				chapter.copy(number = (index + 1).toFloat())
+			}
+		return manga.copy(
+			title = title,
+			altTitles = emptySet(),
+			coverUrl = cover,
+			largeCoverUrl = cover,
+			description = description,
+			authors = setOfNotNull(author),
+			state = MangaState.ONGOING,
+			chapters = chapters,
+		)
+	}
+
+	override suspend fun getPagesImpl(chapter: MangaChapter): List<MangaPage> {
+		val doc = fetchDocument(chapter.url)
+		val content: Element = doc.selectFirst("#user-content")
+			?: doc.selectFirst("main")
+			?: doc.body()
+		content.select("script, style, iframe, ins, .ads, nav, header, footer").remove()
+		val html = content.html().trim()
+		if (html.isEmpty()) {
+			return emptyList()
+		}
+		return listOf(
+			MangaPage(
+				id = chapter.id,
+				url = html,
+				preview = null,
+				source = source,
+			),
+		)
+	}
+}

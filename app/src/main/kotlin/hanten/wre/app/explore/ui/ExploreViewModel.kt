@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hanten.wre.app.R
 import hanten.wre.app.core.model.MangaSourceInfo
+import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.os.AppShortcutManager
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.observeAsFlow
@@ -26,9 +27,12 @@ import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.list.ui.model.MangaCompactListModel
 import hanten.wre.app.suggestions.domain.SuggestionRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine as combineFlows
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
@@ -60,6 +64,12 @@ class ExploreViewModel @Inject constructor(
 		valueProducer = { isAllSourcesEnabled },
 	)
 
+	val appMode = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.IO,
+		key = AppSettings.KEY_APP_MODE,
+		valueProducer = { appMode },
+	)
+
 	private val isSuggestionsEnabled = settings.observeAsFlow(
 		key = AppSettings.KEY_SUGGESTIONS,
 		valueProducer = { isSuggestionsEnabled },
@@ -76,7 +86,8 @@ class ExploreViewModel @Inject constructor(
 		} else {
 			createContentFlow()
 		}
-	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, getLoadingStateList())
+	}.distinctUntilChanged()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, getLoadingStateList())
 
 	init {
 		launchJob(Dispatchers.IO) {
@@ -138,15 +149,23 @@ class ExploreViewModel @Inject constructor(
 		}
 	}
 
-	private fun createContentFlow() = combine(
+	private fun observeFilteredSources(): Flow<List<MangaSourceInfo>> = combineFlows(
 		sourcesRepository.observeEnabledSources(),
+		appMode,
+	) { sources, mode ->
+		val isNovel = mode.isNovel
+		sources.filter { it.mangaSource.isNovelSource == isNovel }
+	}
+
+	private fun createContentFlow(): Flow<List<ListModel>> = combine(
+		observeFilteredSources(),
 		getSuggestionFlow(),
 		isGrid,
 		isRandomLoading,
 		isAllSourcesEnabled,
 		sourcesRepository.observeHasNewSourcesForBadge(),
-	) { content, suggestions, grid, randomLoading, allSourcesEnabled, newSources ->
-		buildList(content, suggestions, grid, randomLoading, allSourcesEnabled, newSources)
+	) { sources, suggestions, grid, randomLoading, allSourcesEnabled, newSources ->
+		buildList(sources, suggestions, grid, randomLoading, allSourcesEnabled, newSources)
 	}.withErrorHandling()
 
 	private fun buildList(

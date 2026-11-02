@@ -1,7 +1,6 @@
 package hanten.wre.app.core
 
 import android.app.Application
-import android.content.Context
 import android.os.Build
 import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatDelegate
@@ -88,11 +87,6 @@ open class BaseApp : Application(), Configuration.Provider {
 		}
 		workScheduleManager.init()
 	}
-
-	override fun attachBaseContext(base: Context) {
-		super.attachBaseContext(base)
-		// ACRA removed
-	} 
 
 	@WorkerThread
 	private fun setupDatabaseObservers() {

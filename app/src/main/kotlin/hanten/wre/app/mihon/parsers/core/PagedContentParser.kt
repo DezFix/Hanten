@@ -1,6 +1,5 @@
 package hanten.wre.app.mihon.parsers.core
 
-import androidx.annotation.VisibleForTesting
 import hanten.wre.app.mihon.parsers.ContentLoaderContext
 import hanten.wre.app.mihon.parsers.InternalParsersApi
 import hanten.wre.app.mihon.parsers.model.Content
@@ -13,7 +12,7 @@ import hanten.wre.app.mihon.parsers.util.Paginator
 public abstract class PagedContentParser(
 	context: ContentLoaderContext,
 	source: ContentSource,
-	@VisibleForTesting(otherwise = VisibleForTesting.PROTECTED) @JvmField public val pageSize: Int,
+	@JvmField public val pageSize: Int,
 	searchPageSize: Int = pageSize,
 ) : AbstractContentParser(context, source) {
 

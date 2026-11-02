@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_name_custom">Custom</string>
+    <string name="custom_theme_import">Import theme file</string>
+    <string name="custom_theme_import_summary">Import an Idle Fantasy compatible Material 3 theme JSON</string>
+    <string name="custom_theme_imported">Theme imported and applied</string>
+    <string name="custom_theme_import_failed">Could not import this theme file</string>
+</resources>

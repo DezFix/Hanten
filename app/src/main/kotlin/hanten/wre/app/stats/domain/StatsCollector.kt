@@ -85,10 +85,14 @@ class StatsCollector @Inject constructor(
 	fun onPause(mangaId: Long) {
 		val entry = stats[mangaId] ?: return
 		stats.remove(mangaId)
-		// Flush what was accumulated since the last state change, otherwise the time spent on the
-		// final page (and any session that never changed page) never reaches the database
-		if (entry.stats.duration > 0L || entry.stats.pages > 0) {
-			pendingWrites.trySend(entry.stats)
+		// Flush what was accumulated since the last state change, including the
+		// time spent on the final page (otherwise a session that never changes
+		// page loses its tail).
+		val now = System.currentTimeMillis()
+		val gap = (now - entry.lastUpdate).coerceAtLeast(0).coerceAtMost(MAX_PAGE_DURATION_MS)
+		val finalStats = entry.stats.copy(duration = entry.stats.duration + gap)
+		if (finalStats.duration > 0L || finalStats.pages > 0) {
+			pendingWrites.trySend(finalStats)
 		}
 	}
 

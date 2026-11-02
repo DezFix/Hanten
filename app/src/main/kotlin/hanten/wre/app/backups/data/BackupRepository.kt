@@ -176,7 +176,7 @@ class BackupRepository @Inject constructor(
                         getFavouritesDao().upsert(it.toEntity())
                     }
 
-                    BackupSection.SETTINGS -> input.readMap().let {
+                    BackupSection.SETTINGS -> input.readMap().withoutSecrets().let {
                         settings.upsertAll(it, isMerge)
                         CompositeResult.success()
                     }
@@ -278,11 +278,22 @@ class BackupRepository @Inject constructor(
 
     private fun dumpSettings(): String {
         val map = settings.getAllValues().toMutableMap()
-        map.remove(AppSettings.KEY_APP_PASSWORD)
-        map.remove(AppSettings.KEY_PROXY_PASSWORD)
-        map.remove(AppSettings.KEY_PROXY_LOGIN)
-        map.remove(AppSettings.KEY_INCOGNITO_MODE)
+        map.removeSecretSettings()
         return JSONObject(map).toString()
+    }
+
+    private fun Map<String, Any?>.withoutSecrets(): Map<String, Any?> {
+        return toMutableMap().apply { removeSecretSettings() }
+    }
+
+    private fun MutableMap<String, Any?>.removeSecretSettings() {
+        remove(AppSettings.KEY_APP_PASSWORD)
+        remove(AppSettings.KEY_PROXY_PASSWORD)
+        remove(AppSettings.KEY_PROXY_LOGIN)
+        remove(AppSettings.KEY_INCOGNITO_MODE)
+        remove(AppSettings.KEY_BACKUP_TG_TOKEN)
+        remove(AppSettings.KEY_BACKUP_TG_CHAT)
+        remove(AppSettings.KEY_BACKUP_TG_BOT_NAME)
     }
 
     private fun dumpReaderGridSettings(): String {

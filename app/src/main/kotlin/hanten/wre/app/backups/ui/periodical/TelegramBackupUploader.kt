@@ -16,7 +16,6 @@ import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.network.BaseHttpClient
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.parsers.util.await
-import hanten.wre.app.parsers.util.json.getBooleanOrDefault
 import hanten.wre.app.parsers.util.json.getStringOrNull
 import hanten.wre.app.parsers.util.parseJson
 import java.io.File
@@ -120,10 +119,13 @@ class TelegramBackupUploader @Inject constructor(
 			closeQuietly()
 			return
 		}
-		val jo = parseJson()
-		if (!jo.getBooleanOrDefault("ok", true)) {
-			throw RuntimeException(jo.getStringOrNull("description"))
-		}
+		val code = this.code
+		val body = runCatching { body?.string() }.getOrNull()
+		closeQuietly()
+		val description = body
+			?.let { runCatching { org.json.JSONObject(it).optString("description") }.getOrNull() }
+			?.takeIf { it.isNotBlank() }
+		throw RuntimeException(description ?: "HTTP $code")
 	}
 
 	private fun urlOf(method: String) = HttpUrl.Builder()

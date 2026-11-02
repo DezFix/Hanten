@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runInterruptible
 import hanten.wre.app.core.model.isLocal
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.MangaIntent
 import hanten.wre.app.core.os.NetworkState
 import hanten.wre.app.core.parser.CachingMangaRepository
@@ -58,7 +59,7 @@ class DetailsLoadUseCase @Inject constructor(
 				isLoaded = false,
 			),
 		)
-		if (manga.isLocal) {
+		if (manga.isLocal && !manga.isNovel) {
 			loadLocal(manga, override, force)
 		} else {
 			loadRemote(manga, override, force)

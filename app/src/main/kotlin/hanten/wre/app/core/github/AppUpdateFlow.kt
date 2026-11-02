@@ -217,7 +217,8 @@ class AppUpdateFlow @Inject constructor(
 			activity.startActivity(Intent(Intent.ACTION_VIEW, release.pageUrl.toUri()))
 			return
 		}
-		val destFile = File(File(activity.cacheDir, DIR_UPDATES), "Hanten-${release.tag}.apk")
+		val safeTag = release.tag.replace(Regex("[^A-Za-z0-9._-]"), "_")
+		val destFile = File(File(activity.cacheDir, DIR_UPDATES), "Hanten-$safeTag.apk")
 		val density = activity.resources.displayMetrics.density
 		val padding = (24 * density).toInt()
 		val layout = LinearLayout(activity).apply {

@@ -1,5 +1,6 @@
 package hanten.wre.app.details.domain
 
+import androidx.room.withTransaction
 import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.os.NetworkState
@@ -44,6 +45,9 @@ class ProgressUpdateUseCase @Inject constructor(
 			return PROGRESS_NONE
 		}
 		val chapterIndex = chapters.indexOfFirst { x -> x.id == history.chapterId }
+		if (chapterIndex < 0) {
+			return PROGRESS_NONE
+		}
 		val pagesCount = chapterRepo.getPages(chapter).size
 		if (pagesCount == 0) {
 			return PROGRESS_NONE
@@ -52,9 +56,12 @@ class ProgressUpdateUseCase @Inject constructor(
 		val ppc = 1f / chaptersCount
 		val result = ppc * chapterIndex + ppc * pagePercent
 		if (result != history.percent) {
-			// Write only the recalculated value: the row may already hold a newer page/scroll from
-			// the reader, and overwriting it with this snapshot would move the user backwards
-			database.getHistoryDao().setPercent(manga.id, result)
+			// Loading metadata may outlive a newer reader save. Never restore that stale snapshot.
+			database.withTransaction {
+				if (database.getHistoryDao().find(manga.id) == history) {
+					database.getHistoryDao().setPercent(manga.id, result)
+				}
+			}
 		}
 		return result
 	}

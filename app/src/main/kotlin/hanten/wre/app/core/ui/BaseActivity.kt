@@ -19,6 +19,8 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.DynamicColorsOptions
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -26,6 +28,7 @@ import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
 import hanten.wre.app.core.exceptions.resolve.ExceptionResolver
 import hanten.wre.app.core.nav.AppRouter
+import hanten.wre.app.core.prefs.ColorScheme
 import hanten.wre.app.core.ui.util.ActionModeDelegate
 import hanten.wre.app.core.util.ext.isWebViewUnavailable
 import hanten.wre.app.main.ui.protect.ScreenshotPolicyHelper
@@ -60,7 +63,32 @@ abstract class BaseActivity<B : ViewBinding> :
 	override fun onCreate(savedInstanceState: Bundle?) {
 		val settings = entryPoint.settings
 		isAmoledTheme = settings.isAmoledTheme
-		setTheme(settings.colorScheme.styleResId)
+		val importedTheme = entryPoint.importedThemeStore.selectedTheme.takeIf {
+			settings.colorScheme == ColorScheme.CUSTOM && DynamicColors.isDynamicColorAvailable()
+		}
+		val colorScheme = when {
+			importedTheme == null && settings.colorScheme == ColorScheme.CUSTOM -> ColorScheme.default
+			else -> settings.colorScheme
+		}
+		setTheme(colorScheme.styleResId)
+		if (importedTheme != null) {
+			val uiMode = resources.configuration.uiMode
+			val isNightMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+				Configuration.UI_MODE_NIGHT_YES
+			setTheme(
+				if (isNightMode) {
+					R.style.ThemeOverlay_Hanten_Custom_Dark
+				} else {
+					R.style.ThemeOverlay_Hanten_Custom_Light
+				},
+			)
+			DynamicColors.applyToActivityIfAvailable(
+				this,
+				DynamicColorsOptions.Builder()
+					.setContentBasedSource(importedTheme.primaryColor)
+					.build(),
+			)
+		}
 		if (isAmoledTheme) {
 			setTheme(R.style.ThemeOverlay_Hanten_Amoled)
 		}

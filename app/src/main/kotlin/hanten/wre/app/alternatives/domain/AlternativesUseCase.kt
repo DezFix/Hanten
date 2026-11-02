@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.explore.data.MangaSourcesRepository
@@ -73,7 +74,8 @@ class AlternativesUseCase @Inject constructor(
 		sourcesRepository.getDisabledSources()
 	} else {
 		sourcesRepository.getEnabledSources()
-	}.sortedByDescending { it.priority(ref) }
+	}.filter { it.isNovelSource == ref.isNovelSource }
+		.sortedByDescending { it.priority(ref) }
 
 	private fun MangaSource.priority(ref: MangaSource): Int {
 		var res = 0

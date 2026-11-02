@@ -8,6 +8,7 @@ The project uses GitHub Actions for continuous integration and automated release
 
 ### 1. Release Workflow (release.yml)
 Automatically builds and publishes signed release APKs to GitHub Releases.
+Before building, it runs unit tests and Android Lint.
 
 **Trigger:** Push a git tag with format `v*` (e.g., `v9.4.2`)
 ```bash
@@ -22,10 +23,26 @@ There is no nightly workflow: nightly APKs are not built. (The `nightly` gradle
 variant still exists in `app/build.gradle` but is unused.)
 
 ### 3. Debug Workflow (debug.yml)
-Builds debug APK on pull requests for validation.
+Runs unit tests, Android Lint and builds a debug APK on pull requests and
+pushes to `devel`.
 
-**Trigger:** On every pull request to `main` or `devel` branches
+**Trigger:** PR to `main`/`devel` or push to `devel`
 **Output:** Debug APK available as workflow artifact (7-day retention)
+
+## Parser library CI (hanten-parsers)
+
+`hanten-parsers` is a separate repository with its own workflow:
+`.github/workflows/ci.yml`.
+
+- **Compile** — `./gradlew compileKotlin` on every push to `master`, PRs
+  touching parser sources/tests, and manual runs.
+- **Pure JVM tests** — `util` and `model.search` tests only (no network).
+- **RU/UA live sweep** — `workflow_dispatch` only, runs
+  `*RuUaRevisionTest*` against real sources. It is manual because some RU
+  hosts geo-block CI runners.
+
+Java 17, Gradle 9, Ubuntu. The parser project is intentionally RU/UK-only;
+other language parsers are not part of the supported scope.
 
 ## Required GitHub Secrets
 

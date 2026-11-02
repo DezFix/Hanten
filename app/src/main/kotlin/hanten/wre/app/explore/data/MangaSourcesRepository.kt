@@ -24,6 +24,7 @@ import hanten.wre.app.core.ui.util.ReversibleHandle
 import hanten.wre.app.core.util.ext.flattenLatest
 import hanten.wre.app.mihon.MihonExtensionManager
 import hanten.wre.app.mihon.model.MihonMangaSource
+import hanten.wre.app.novel.data.source.NovelParserSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -111,7 +112,8 @@ class MangaSourcesRepository @Inject constructor(
 		if (settings.isAllSourcesEnabled) {
 			return emptySet()
 		}
-		val result = EnumSet.copyOf(allMangaSources)
+		val result = HashSet<MangaSource>(allMangaSources)
+		result.addAll(NovelParserSource.entries)
 		val enabled = dao.findAllEnabledNames()
 		for (name in enabled) {
 			val source = name.toMangaSourceOrNull() ?: continue
@@ -144,18 +146,11 @@ class MangaSourcesRepository @Inject constructor(
 			mapTo(ArrayList(size)) { it.mangaSource }
 		}
 
-		if (isDisabledOnly) {
-			val external = getExternalSources()
-			// For now, we assume external sources are always "enabled" in the sense of being present,
-			// but if they are not in the database, they are "new" to the app.
-			// Actually, let's just add them if they match the query.
-			sources.addAll(external)
-		}
-
 		if (locale != null) {
 			sources.retainAll { 
 				when (it) {
 					is MangaParserSource -> it.locale == locale
+					is NovelParserSource -> it.locale == locale
 					is hanten.wre.app.mihon.parsers.model.ContentSource -> it.locale == locale
 					else -> true
 				}
@@ -168,6 +163,7 @@ class MangaSourcesRepository @Inject constructor(
 			sources.retainAll { 
 				when (it) {
 					is MangaParserSource -> it.contentType in types
+					is NovelParserSource -> it.contentType in types
 					is hanten.wre.app.mihon.model.MihonMangaSource -> {
 						val mihonType = it.contentType
 						types.any { parsersType ->
@@ -253,7 +249,7 @@ class MangaSourcesRepository @Inject constructor(
 		val result = ArrayList<Pair<MangaSource, Boolean>>(entities.size)
 		for (entity in entities) {
 			val source = entity.toMangaSource() ?: continue
-			if (source in allMangaSources || source is AnonymousMangaSource || source is MihonMangaSource) {
+			if (source in allMangaSources || source is NovelParserSource || source is AnonymousMangaSource || source is MihonMangaSource) {
 				result.add(source to entity.isEnabled)
 			}
 		}
@@ -313,36 +309,43 @@ class MangaSourcesRepository @Inject constructor(
 	}
 
 	private suspend fun assimilateNewSources(): Boolean {
-		if (isNewSourcesAssimilated.getAndSet(true)) {
+		if (!isNewSourcesAssimilated.compareAndSet(false, true)) {
 			updateMihonTitles()
 			return false
 		}
-		
-		// Initial cache population from database
-		dao.findAll().forEach { entity ->
-			if ((entity.source.startsWith("mihon:") || entity.source.startsWith("MIHON_")) && entity.title != null) {
-				updateMihonTitle(entity.source, entity.title)
-			}
-		}
 
-		val new = getNewSources()
-		var maxSortKey = dao.getMaxSortKey()
-		val isAllEnabled = settings.isAllSourcesEnabled
-		val entities = new.map { x ->
-			MangaSourceEntity(
-				source = x.name,
-				isEnabled = if (x is MihonMangaSource) true else isAllEnabled,
-				sortKey = ++maxSortKey,
-				addedIn = BuildConfig.VERSION_CODE,
-				lastUsedAt = 0,
-				isPinned = x is MihonMangaSource,
-				cfState = CloudFlareHelper.PROTECTION_NOT_DETECTED,
-				title = x.getTitle(context),
-			)
+		try {
+			// Initial cache population from database
+			dao.findAll().forEach { entity ->
+				if ((entity.source.startsWith("mihon:") || entity.source.startsWith("MIHON_")) && entity.title != null) {
+					updateMihonTitle(entity.source, entity.title)
+				}
+			}
+
+			val new = getNewSources()
+			var maxSortKey = dao.getMaxSortKey()
+			val isAllEnabled = settings.isAllSourcesEnabled
+			val entities = new.map { x ->
+				MangaSourceEntity(
+					source = x.name,
+					isEnabled = if (x is MihonMangaSource || x is NovelParserSource) true else isAllEnabled,
+					sortKey = ++maxSortKey,
+					addedIn = BuildConfig.VERSION_CODE,
+					lastUsedAt = 0,
+					isPinned = x is MihonMangaSource,
+					cfState = CloudFlareHelper.PROTECTION_NOT_DETECTED,
+					title = x.getTitle(context),
+				)
+			}
+			dao.insertIfAbsent(entities)
+			updateMihonTitles()
+			return new.isNotEmpty()
+		} catch (e: Throwable) {
+			// A failed Mihon extension load must not permanently disable
+			// assimilation for the rest of the process.
+			isNewSourcesAssimilated.set(false)
+			throw e
 		}
-		dao.insertIfAbsent(entities)
-		updateMihonTitles()
-		return new.isNotEmpty()
 	}
 
 	private suspend fun updateMihonTitles() {
@@ -384,8 +387,9 @@ class MangaSourcesRepository @Inject constructor(
 	private suspend fun getNewSources(): MutableSet<out MangaSource> {
 		val entities = dao.findAll()
 		val result = HashSet<MangaSource>()
-        result.addAll(MangaParserSource.entries)
-        result.addAll(mihonExtensionManager.getMihonMangaSources())
+		result.addAll(MangaParserSource.entries)
+		result.addAll(NovelParserSource.entries)
+		result.addAll(mihonExtensionManager.getMihonMangaSources())
 		for (e in entities) {
 			result.remove(e.toMangaSource() ?: continue)
 		}
@@ -472,7 +476,7 @@ class MangaSourcesRepository @Inject constructor(
 			if (source.isBroken) {
 				continue
 			}
-			if (source is MangaParserSource || source is MihonMangaSource) {
+			if (source is MangaParserSource || source is NovelParserSource || source is MihonMangaSource) {
 				result.add(
 					MangaSourceInfo(
 						mangaSource = source,
@@ -506,6 +510,7 @@ class MangaSourcesRepository @Inject constructor(
 				?: hanten.wre.app.core.model.MangaSource(source, title)
 		}
 		return MangaParserSource.entries.find { it.name == source }
+			?: NovelParserSource.fromName(source)
 	}
 
 	private fun String.toMangaSourceOrNull(): MangaSource? {
@@ -514,5 +519,6 @@ class MangaSourcesRepository @Inject constructor(
 				?: hanten.wre.app.core.model.MangaSource(this)
 		}
 		return MangaParserSource.entries.find { it.name == this }
+			?: NovelParserSource.fromName(this)
 	}
 }

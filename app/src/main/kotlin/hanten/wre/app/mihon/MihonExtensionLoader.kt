@@ -8,6 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.SourceFactory
 import hanten.wre.app.mihon.compat.MihonInjektBridge
+import hanten.wre.app.mihon.extensions.repo.ExternalExtensionRepoRepository
+import hanten.wre.app.mihon.extensions.repo.ExternalExtensionType
+import hanten.wre.app.mihon.extensions.repo.InstalledExtensionSignatureValidator
 import hanten.wre.app.mihon.extensions.runtime.ExternalExtensionLoaderSupport
 import hanten.wre.app.mihon.extensions.runtime.ExternalExtensionMetadataSupport
 import hanten.wre.app.mihon.extensions.runtime.ExternalExtensionSourceLoaderSupport
@@ -18,6 +21,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 /**
@@ -29,6 +33,8 @@ import javax.inject.Singleton
 class MihonExtensionLoader @Inject constructor(
     @ApplicationContext private val applicationContext: Context,
     private val injektBridge: dagger.Lazy<MihonInjektBridge>,
+    private val repoRepositoryProvider: Provider<ExternalExtensionRepoRepository>,
+    private val signatureValidator: InstalledExtensionSignatureValidator,
 ) {
     companion object {
         private const val TAG = "MihonExtensionLoader"
@@ -194,6 +200,10 @@ class MihonExtensionLoader @Inject constructor(
             Log.w(TAG, "extractExtensionInfo($pkgName): Failed to parse libVersion from $versionName, defaulting to 1.4")
             1.4 // Default to 1.4 if parsing fails
         }
+        if (libVersion > LIB_VERSION_MAX) {
+            Log.w(TAG, "extractExtensionInfo($pkgName): libVersion $libVersion is newer than supported $LIB_VERSION_MAX")
+            return null
+        }
         
         val declaredSource = ExternalExtensionMetadataSupport.getDeclaredSourceMetadataOrNull(
             metaData = metaData,
@@ -227,7 +237,7 @@ class MihonExtensionLoader @Inject constructor(
         )
     }
     
-    private fun loadExtension(context: Context, pkgInfo: PackageInfo): MihonLoadResult {
+    private suspend fun loadExtension(context: Context, pkgInfo: PackageInfo): MihonLoadResult {
         val pkgName = pkgInfo.packageName
         val appInfo = pkgInfo.applicationInfo
             ?: run {
@@ -259,6 +269,11 @@ class MihonExtensionLoader @Inject constructor(
             Log.e(TAG, "loadExtension($pkgName) FAILED: $err")
             return MihonLoadResult.Error(pkgName, err)
         }
+        if (libVersion > LIB_VERSION_MAX) {
+            val err = "Extension lib version too new: $libVersion (max: $LIB_VERSION_MAX)"
+            Log.e(TAG, "loadExtension($pkgName) FAILED: $err")
+            return MihonLoadResult.Error(pkgName, err)
+        }
         
         val metaData = ExternalExtensionMetadataSupport.getMetaDataOrNull(appInfo)
             ?: run {
@@ -280,7 +295,17 @@ class MihonExtensionLoader @Inject constructor(
         // Get app name and language
         val appName = try { ExternalExtensionLoaderSupport.getAppLabel(context, appInfo) } catch (e: Exception) { null }
         val lang = ExternalExtensionLoaderSupport.extractLanguage(pkgName, "extension")
-        
+
+        if (!isTrusted(pkgName)) {
+            Log.w(TAG, "loadExtension($pkgName): signature does not match any configured extension repo")
+            return MihonLoadResult.Untrusted(
+                pkgName = pkgName,
+                appName = appName ?: pkgName,
+                versionCode = versionCode,
+                versionName = versionName,
+            )
+        }
+
         Log.d(TAG, "Loading extension: $pkgName (lib $libVersion, $lang) - Name: $appName")
         
         // Create ClassLoader for this extension
@@ -323,6 +348,16 @@ class MihonExtensionLoader @Inject constructor(
         )
     }
     
+    private suspend fun isTrusted(pkgName: String): Boolean {
+        val expected = repoRepositoryProvider.get()
+            .getByType(ExternalExtensionType.MIHON)
+            .map { it.signingKeyFingerprint }
+            .filter { it.isNotBlank() }
+        // No repo configured: there is nothing to compare against. Android still
+        // enforces the signing key on updates, so do not block manual installs.
+        return expected.isEmpty() || signatureValidator.isTrustedByAny(pkgName, expected)
+    }
+
     private fun loadSources(
         pkgName: String,
         sourceClassNames: String,

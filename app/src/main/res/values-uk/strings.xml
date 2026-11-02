@@ -1020,4 +1020,34 @@
     
     <string name="scrobbler_export_done">Вивантажено: %1$d, пропущено: %2$d</string>
 
+    <string name="light_novels">Ранобе</string>
+    <string name="novel_theme_dark">Темна</string>
+    <string name="novel_theme_light">Світла</string>
+    <string name="novel_theme_oled">OLED</string>
+    <string name="novel_theme_sepia">Сепія</string>
+    <string name="novel_theme_custom">Власна</string>
+    <string name="novel_font_size">Розмір шрифту</string>
+    <string name="novel_line_spacing">Міжрядковий інтервал</string>
+    <string name="novel_paragraph_margin">Відступ між абзацами</string>
+    <string name="novel_page_margin">Поля сторінки</string>
+    <string name="novel_text_color">Колір тексту</string>
+    <string name="novel_background_color">Колір фону</string>
+    <string name="novel_alignment">Вирівнювання тексту</string>
+    <string name="novel_align_left">За лівим краєм</string>
+    <string name="novel_align_justify">За шириною</string>
+    <string name="novel_reading_mode">Режим читання</string>
+    <string name="novel_scroll_continuous">Безперервне прокручування</string>
+    <string name="novel_scroll_paged">Погортально</string>
+    <string name="novel_import_file">Імпорт новели (.epub, .pdf)</string>
+    <string name="add_folder">Додати теку</string>
+    <string name="select_files">Вибрати файли</string>
+    <string name="novel_no_novels">Новел не знайдено</string>
+    <string name="novel_explore_title">Джерела новел</string>
+    <string name="novel_font_family">Шрифт</string>
+    <string name="novel_font_default">Системний</string>
+    <string name="novel_font_serif">З засічками</string>
+    <string name="novel_font_sans_serif">Без засічок</string>
+    <string name="novel_font_monospace">Моноширинний</string>
+    <string name="novel_font_custom">Власний шрифт (.ttf/.otf)</string>
+    <string name="previous_chapter">Попередній розділ</string>
 </resources>

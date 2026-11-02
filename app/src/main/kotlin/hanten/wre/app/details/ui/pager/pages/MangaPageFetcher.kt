@@ -19,6 +19,7 @@ import okio.FileSystem
 import okio.Path.Companion.toOkioPath
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.network.imageproxy.ImageProxyInterceptor
+import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.MimeTypes
 import hanten.wre.app.core.util.ext.fetch
@@ -44,6 +45,9 @@ class MangaPageFetcher(
 ) : Fetcher {
 
 	override suspend fun fetch(): FetchResult? {
+		if (page.source.isNovelSource) {
+			return null
+		}
 		if (!page.preview.isNullOrEmpty()) {
 			runCatchingCancellable {
 				imageLoader.fetch(checkNotNull(page.preview), options)

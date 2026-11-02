@@ -16,6 +16,7 @@ import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.core.util.ext.toLocaleOrNull
 import hanten.wre.app.mihon.model.MihonMangaSource
 import hanten.wre.app.mihon.parsers.model.ContentType as MihonContentType
+import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.MangaSource
@@ -33,6 +34,11 @@ data object LocalMangaSource : MangaSource {
 	override val name = "LOCAL"
 }
 
+data object LocalNovelSource : MangaSource {
+	override val name = "LOCAL_NOVEL"
+	val contentType = ContentType.NOVEL
+}
+
 data object UnknownMangaSource : MangaSource {
 	override val name = "UNKNOWN"
 }
@@ -45,6 +51,7 @@ fun MangaSource(name: String?, title: String? = null): MangaSource {
 	when (name ?: return UnknownMangaSource) {
 		UnknownMangaSource.name -> return UnknownMangaSource
 		LocalMangaSource.name -> return LocalMangaSource
+		LocalNovelSource.name -> return LocalNovelSource
 		TestMangaSource.name -> return TestMangaSource
 	}
 	if (name.startsWith("content:")) {
@@ -55,6 +62,9 @@ fun MangaSource(name: String?, title: String? = null): MangaSource {
 		return AnonymousMangaSource(name, title)
 	}
 	MangaParserSource.entries.forEach {
+		if (it.name == name) return it
+	}
+	NovelParserSource.entries.forEach {
 		if (it.name == name) return it
 	}
 	return UnknownMangaSource
@@ -97,10 +107,20 @@ tailrec fun MangaSource.unwrap(): MangaSource = if (this is MangaSourceInfo) {
 	this
 }
 
-fun MangaSource.getLocale(): Locale? = (unwrap() as? MangaParserSource)?.locale?.toLocaleOrNull()
+fun MangaSource.getLocale(): Locale? = when (val source = unwrap()) {
+	is MangaParserSource -> source.locale.toLocaleOrNull()
+	is NovelParserSource -> source.locale.toLocaleOrNull()
+	else -> null
+}
 
 fun MangaSource.getSummary(context: Context): String? = when (val source = unwrap()) {
 	is MangaParserSource -> {
+		val type = context.getString(source.contentType.titleResId)
+		val locale = source.locale.toLocale().getDisplayName(context)
+		context.getString(R.string.source_summary_pattern, type, locale)
+	}
+
+	is NovelParserSource -> {
 		val type = context.getString(source.contentType.titleResId)
 		val locale = source.locale.toLocale().getDisplayName(context)
 		context.getString(R.string.source_summary_pattern, type, locale)
@@ -134,7 +154,9 @@ fun MangaSource.getSummary(context: Context): String? = when (val source = unwra
 
 fun MangaSource.getTitle(context: Context): String = when (val source = unwrap()) {
 	is MangaParserSource -> source.title
+	is NovelParserSource -> source.title
 	LocalMangaSource -> context.getString(R.string.local_storage)
+	LocalNovelSource -> context.getString(R.string.light_novels)
 	TestMangaSource -> context.getString(R.string.test_parser)
 	is ExternalMangaSource -> source.resolveName(context)
 	is MihonMangaSource -> source.displayName.also { updateMihonTitle(source.name, it) }

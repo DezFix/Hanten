@@ -15,6 +15,9 @@ import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.mihon.MihonExtensionManager
 import hanten.wre.app.mihon.MihonMangaRepository
 import hanten.wre.app.mihon.model.MihonMangaSource
+import hanten.wre.app.novel.data.LocalNovelRepository
+import hanten.wre.app.novel.data.source.NovelParserSource
+import hanten.wre.app.novel.data.source.RanobesRepository
 import hanten.wre.app.parsers.MangaLoaderContext
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
@@ -60,6 +63,7 @@ interface MangaRepository {
 	class Factory @Inject constructor(
 		@ApplicationContext private val context: Context,
 		private val localMangaRepository: LocalMangaRepository,
+		private val localNovelRepository: javax.inject.Provider<LocalNovelRepository>,
 		private val loaderContext: MangaLoaderContext,
 		private val contentCache: MemoryContentCache,
 		private val mirrorSwitcher: MirrorSwitcher,
@@ -73,6 +77,7 @@ interface MangaRepository {
 			when (source) {
 				is MangaSourceInfo -> return create(source.mangaSource)
 				LocalMangaSource -> return localMangaRepository
+				hanten.wre.app.core.model.LocalNovelSource -> return localNovelRepository.get()
 				UnknownMangaSource -> return EmptyMangaRepository(source)
 			}
 			synchronized(cache) {
@@ -93,6 +98,23 @@ interface MangaRepository {
 				cache = contentCache,
 				mirrorSwitcher = mirrorSwitcher,
 			)
+
+			is NovelParserSource -> when (source) {
+				NovelParserSource.RANOBES -> RanobesRepository(
+					cache = contentCache,
+					httpClient = loaderContext.httpClient,
+				)
+
+				NovelParserSource.RANOBELIB -> hanten.wre.app.novel.data.source.RanobeLibRepository(
+					cache = contentCache,
+					httpClient = loaderContext.httpClient,
+				)
+
+				NovelParserSource.BAKA_UA -> hanten.wre.app.novel.data.source.BakaUaRepository(
+					cache = contentCache,
+					httpClient = loaderContext.httpClient,
+				)
+			}
 
 			TestMangaSource -> TestMangaRepository(
 				loaderContext = loaderContext,

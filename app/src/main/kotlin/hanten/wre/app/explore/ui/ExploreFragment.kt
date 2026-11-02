@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
 import hanten.wre.app.core.model.LocalMangaSource
+import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.parser.external.ExternalMangaSource
@@ -78,6 +79,7 @@ class ExploreFragment :
 		with(binding.recyclerView) {
 			adapter = exploreAdapter
 			setHasFixedSize(true)
+			setItemViewCacheSize(20)
 			SpanSizeResolver(this, resources.getDimensionPixelSize(R.dimen.explore_grid_width)).attach()
 			addItemDecoration(TypedListSpacingDecoration(context, false))
 			checkNotNull(sourceSelectionController).attachToRecyclerView(this)
@@ -123,7 +125,11 @@ class ExploreFragment :
 
 	override fun onClick(v: View) {
 		when (v.id) {
-			R.id.button_local -> router.openList(LocalMangaSource, null, null)
+			R.id.button_local -> router.openList(
+				if (viewModel.appMode.value.isNovel) LocalNovelSource else LocalMangaSource,
+				null,
+				null,
+			)
 			R.id.button_bookmarks -> router.openBookmarks()
 			R.id.button_more -> router.openSuggestions()
 			R.id.button_downloads -> router.openDownloads()

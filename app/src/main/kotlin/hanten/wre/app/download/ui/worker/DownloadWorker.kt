@@ -164,14 +164,18 @@ class DownloadWorker @AssistedInject constructor(
 		} catch (e: Exception) {
 			Log.e("DownloadWorker", "Work failed for manga: ${manga.title}", e)
 			e.printStackTraceDebug("DownloadWorker::doWork")
-			Result.failure(
-				currentState.copy(
-					error = e,
-					errorMessage = e.getDisplayMessage(applicationContext.resources),
-					eta = -1L,
-					isStuck = false,
-				).toWorkData(),
+			val state = currentState.copy(
+				error = e,
+				errorMessage = e.getDisplayMessage(applicationContext.resources),
+				eta = -1L,
+				isStuck = false,
 			)
+			val retry = e.isRetryableDownloadError() && runAttemptCount < MAX_RETRY_ATTEMPTS
+			if (retry) {
+				Result.retry()
+			} else {
+				Result.failure(state.toWorkData())
+			}
 		} finally {
 			notificationManager.cancel(id.hashCode())
 			Log.d("DownloadWorker", "Triggering scheduler from finally block")
@@ -246,7 +250,7 @@ class DownloadWorker @AssistedInject constructor(
 							checkIsPaused()
 							launch {
 								semaphore.withPermit {
-									runFailsafe {
+									val pageResult = runFailsafe {
 										val url = repo.getPageUrl(page)
 										val file = cache[url]
 											?: downloadFile(url, destination, repo.source)
@@ -260,7 +264,12 @@ class DownloadWorker @AssistedInject constructor(
 											file.deleteAwait()
 										}
 									}
-									send(pageIndex)
+									// A skipped/failed page must not be reported as downloaded:
+									// otherwise the progress reaches 100% and the chapter is
+									// flushed with a hole.
+									if (pageResult != null) {
+										send(pageIndex)
+									}
 								}
 							}
 						}
@@ -628,9 +637,16 @@ class DownloadWorker @AssistedInject constructor(
 			.build()
 	}
 
+	private fun Exception.isRetryableDownloadError(): Boolean {
+		return this is IOException ||
+			this is TooManyRequestExceptions ||
+			cause is IOException
+	}
+
 	companion object {
 
 		const val MAX_FAILSAFE_ATTEMPTS = 2
+		const val MAX_RETRY_ATTEMPTS = 2
 		const val MAX_PAGES_PARALLELISM = 4
 		const val DOWNLOAD_ERROR_DELAY = 2_000L
 		const val MAX_RETRY_DELAY = 7_200_000L // 2 hours

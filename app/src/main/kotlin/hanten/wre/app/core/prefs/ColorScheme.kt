@@ -24,6 +24,7 @@ enum class ColorScheme(
 	MAMIMI(R.style.ThemeOverlay_Hanten_Mamimi, R.string.theme_name_mamimi),
 	KANADE(R.style.ThemeOverlay_Hanten_Kanade, R.string.theme_name_kanade),
 	ITSUKA(R.style.ThemeOverlay_Hanten_Itsuka, R.string.theme_name_itsuka),
+	CUSTOM(R.style.ThemeOverlay_Hanten_Custom_Light, R.string.theme_name_custom),
 	;
 
 	companion object {
@@ -37,6 +38,7 @@ enum class ColorScheme(
 
 		fun getAvailableList(): List<ColorScheme> {
 			val list = ColorScheme.entries.toMutableList()
+			list.remove(CUSTOM)
 			if (!DynamicColors.isDynamicColorAvailable()) {
 				list.remove(MONET)
 				list.remove(EXPRESSIVE)

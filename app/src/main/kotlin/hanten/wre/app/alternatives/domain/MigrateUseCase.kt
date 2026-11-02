@@ -45,7 +45,7 @@ constructor(
 			newManga
 		}
 		mangaDataRepository.storeManga(newDetails, replaceExisting = true)
-		database.withTransaction {
+		val newHistory = database.withTransaction {
 			// replace favorites
 			val favoritesDao = database.getFavouritesDao()
 			val oldFavourites = favoritesDao.findAllRaw(oldDetails.id)
@@ -89,31 +89,34 @@ constructor(
 				tracksDao.delete(oldDetails.id)
 				tracksDao.upsert(newTrack)
 			}
-			// scrobbling
-			for (scrobbler in scrobblers) {
-				if (!scrobbler.isEnabled) {
-					continue
-				}
-				val prevInfo = scrobbler.getScrobblingInfoOrNull(oldDetails.id) ?: continue
-				scrobbler.unregisterScrobbling(oldDetails.id)
-				scrobbler.linkManga(newDetails.id, prevInfo.targetId)
-				scrobbler.updateScrobblingInfo(
-					mangaId = newDetails.id,
-					rating = prevInfo.rating,
-					status =
-						prevInfo.status ?: when {
-							newHistory == null -> ScrobblingStatus.PLANNED
-							newHistory.percent == 1f -> ScrobblingStatus.COMPLETED
-							else -> ScrobblingStatus.READING
-						},
-					comment = prevInfo.comment,
+			newHistory
+		}
+		// Tracker network calls must stay outside the transaction: a slow or
+		// failing tracker must not hold the SQLite write lock or roll back the
+		// local migration.
+		for (scrobbler in scrobblers) {
+			if (!scrobbler.isEnabled) {
+				continue
+			}
+			val prevInfo = scrobbler.getScrobblingInfoOrNull(oldDetails.id) ?: continue
+			scrobbler.unregisterScrobbling(oldDetails.id)
+			scrobbler.linkManga(newDetails.id, prevInfo.targetId)
+			scrobbler.updateScrobblingInfo(
+				mangaId = newDetails.id,
+				rating = prevInfo.rating,
+				status =
+					prevInfo.status ?: when {
+						newHistory == null -> ScrobblingStatus.PLANNED
+						newHistory.percent == 1f -> ScrobblingStatus.COMPLETED
+						else -> ScrobblingStatus.READING
+					},
+				comment = prevInfo.comment,
+			)
+			if (newHistory != null) {
+				scrobbler.scrobble(
+					manga = newDetails,
+					chapterId = newHistory.chapterId,
 				)
-				if (newHistory != null) {
-					scrobbler.scrobble(
-						manga = newDetails,
-						chapterId = newHistory.chapterId,
-					)
-				}
 			}
 		}
 		progressUpdateUseCase(newManga)
