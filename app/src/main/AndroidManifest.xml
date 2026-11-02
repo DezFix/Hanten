@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest
-	android:versionCode="20403"
-	android:versionName="2.4.3"
+	android:versionCode="20500"
+	android:versionName="2.5.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 

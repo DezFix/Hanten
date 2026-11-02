@@ -5,7 +5,6 @@ All notable changes to this project are documented in this file.
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
 ## 2.5.0
-Date: 2026-11-02
 
 ### Новое
 - Режим чтения лёгких новелл: отдельная читалка с настройками шрифта, темы,
