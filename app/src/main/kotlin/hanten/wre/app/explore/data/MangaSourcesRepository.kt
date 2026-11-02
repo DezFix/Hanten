@@ -134,7 +134,9 @@ class MangaSourcesRepository @Inject constructor(
 		assimilateNewSources()
 		val entities = dao.findAll().toMutableList()
 		if (isDisabledOnly && !settings.isAllSourcesEnabled) {
-			entities.removeAll { it.isEnabled }
+			// Novel sources are enabled on first start, so hiding enabled entries would
+			// remove them from the catalog entirely.
+			entities.removeAll { it.isEnabled && it.toMangaSource() !is NovelParserSource }
 		}
 		if (isNewOnly) {
 			entities.retainAll { it.addedIn == BuildConfig.VERSION_CODE }
