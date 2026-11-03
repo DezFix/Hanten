@@ -1031,4 +1031,6 @@
     <string name="novel_auto_scroll_speed">%1$.1f screens/min</string>
     <string name="novel_auto_scroll_paged">Auto-scroll is off in page flip mode</string>
     <string name="novel_fullscreen">Fullscreen</string>
+    <string name="novel_chapter_heading">Chapter %1$s</string>
+    <string name="novel_chapter_heading_volume">Chapter %1$d.%2$s</string>
 </resources>

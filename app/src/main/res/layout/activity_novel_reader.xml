@@ -30,34 +30,6 @@
 		android:indeterminate="true"
 		android:visibility="gone" />
 
-	<!-- Top App Bar -->
-	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/appbar_top"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:elevation="4dp"
-		app:elevation="4dp"
-		app:liftOnScroll="false">
-
-		<com.google.android.material.appbar.MaterialToolbar
-			android:id="@+id/toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="?actionBarSize"
-			app:popupTheme="@style/ThemeOverlay.Hanten">
-
-			<com.google.android.material.button.MaterialButton
-				android:id="@+id/button_chapters"
-				style="?materialIconButtonStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="end"
-				android:contentDescription="@string/novel_chapters_title"
-				app:icon="@drawable/ic_list" />
-
-		</com.google.android.material.appbar.MaterialToolbar>
-
-	</com.google.android.material.appbar.AppBarLayout>
-
 	<!-- Bottom Docked Toolbar -->
 	<com.google.android.material.card.MaterialCardView
 		android:id="@+id/card_bottom"
@@ -122,6 +94,14 @@
 					android:textAppearance="?textAppearanceLabelMedium"
 					android:textColor="?colorOnSurfaceVariant"
 					tools:text="Chapter 1 (45%)" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_chapters"
+					style="?materialIconButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/novel_chapters_title"
+					app:icon="@drawable/ic_list" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_bookmark"

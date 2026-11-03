@@ -56,9 +56,12 @@ class TelegramBackupUploader @Inject constructor(
 		val request = Request.Builder()
 			.url(urlOf("getMe").build())
 			.build()
-		val username = client.newCall(request).await().parseJson()
-			.getJSONObject("result")
-			.getStringOrNull("username")
+		val response = client.newCall(request).await().parseJson()
+		if (!response.optBoolean("ok", false)) {
+			val error = response.optString("description").ifBlank { "Telegram getMe failed" }
+			throw RuntimeException(error)
+		}
+		val username = response.optJSONObject("result")?.getStringOrNull("username")
 		settings.backupTelegramBotName = username
 		sendMessage(context.getString(R.string.backup_tg_echo))
 	}

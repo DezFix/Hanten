@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-	android:versionCode="20602"
-	android:versionName="2.6.2"
+	android:versionCode="20603"
+	android:versionName="2.6.3"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 

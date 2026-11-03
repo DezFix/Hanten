@@ -38,8 +38,8 @@ object NovelHtmlTemplate {
 				column-width: var(--column-width, 100vw);
 				column-gap: var(--page-gap, 0px);
 				column-fill: auto;
-				height: calc(100vh - var(--reader-safe-top) - var(--reader-safe-bottom) - 2 * var(--reader-page-margin));
-				margin: calc(var(--reader-safe-top) + var(--reader-page-margin)) 0 calc(var(--reader-safe-bottom) + var(--reader-page-margin)) 0;
+				height: calc(100vh - var(--reader-safe-top) - var(--reader-safe-bottom) - var(--reader-page-margin));
+				margin: var(--reader-safe-top) 0 calc(var(--reader-safe-bottom) + var(--reader-page-margin)) 0;
 				padding: 0 calc(var(--page-gap, 0px) / 2);
 				box-sizing: border-box;
 			}
@@ -53,7 +53,7 @@ object NovelHtmlTemplate {
 			}
 			#content {
 				width: 100%;
-				padding: calc(var(--reader-safe-top) + var(--reader-page-margin)) var(--reader-page-margin) calc(var(--reader-safe-bottom) + var(--reader-page-margin)) var(--reader-page-margin);
+				padding: var(--reader-safe-top) var(--reader-page-margin) calc(var(--reader-safe-bottom) + var(--reader-page-margin)) var(--reader-page-margin);
 				margin: 0;
 				box-sizing: border-box;
 			}
@@ -119,6 +119,14 @@ object NovelHtmlTemplate {
 					display: block;
 					margin: 1.2em auto;
 					border-radius: 6px;
+				}
+				.chapter-heading {
+					text-align: center;
+					text-indent: 0;
+					font-size: 1.35em;
+					margin: 0 0 1.2em 0;
+					break-after: avoid;
+					-webkit-column-break-after: avoid;
 				}
 				.chapter-divider {
 					border-top: 1px dashed rgba(128, 128, 128, 0.4);

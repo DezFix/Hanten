@@ -1098,4 +1098,6 @@
     <string name="novel_auto_scroll_speed">%1$.1f экр./мин</string>
     <string name="novel_auto_scroll_paged">Автопрокрутка недоступна в постраничном режиме</string>
     <string name="novel_fullscreen">Полноэкранный режим</string>
+    <string name="novel_chapter_heading">Глава %1$s</string>
+    <string name="novel_chapter_heading_volume">Глава %1$d.%2$s</string>
 </resources>

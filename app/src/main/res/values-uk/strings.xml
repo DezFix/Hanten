@@ -1101,4 +1101,6 @@
     <string name="novel_auto_scroll_speed">%1$.1f екр./хв</string>
     <string name="novel_auto_scroll_paged">Автопрокрутка недоступна в посторінковому режимі</string>
     <string name="novel_fullscreen">Повноекранний режим</string>
+    <string name="novel_chapter_heading">Розділ %1$s</string>
+    <string name="novel_chapter_heading_volume">Розділ %1$d.%2$s</string>
 </resources>

@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.6.3
+
+### Улучшено
+- В читалке новелл убрана пустая верхняя шапка: название главы или
+  «Глава 1.1» теперь добавляется в начало текста и само отодвигает абзацы
+- Верхний отступ текста уменьшен, чтобы не было пустой полосы под строкой
+  состояния
+
+### Исправлено
+- Резервное копирование в Telegram: ошибка `getMe` и ответ без `result`
+  больше не вызывают `JSONException`, показывается текст ошибки API
+- Ожидаемая ошибка авторизации трекера (`ScrobblerAuthRequiredException`)
+  больше не отправляется как падение приложения
+
 ## 2.6.2
 
 ### Улучшено

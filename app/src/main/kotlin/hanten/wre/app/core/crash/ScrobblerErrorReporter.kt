@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
@@ -29,7 +30,8 @@ class ScrobblerErrorReporter @Inject constructor(
 		if (!io.sentry.Sentry.isEnabled()) {
 			return
 		}
-		if (error is CancellationException) {
+		if (error is CancellationException || error is ScrobblerAuthRequiredException) {
+			// Missing/expired tracker auth is an expected state, not an app error.
 			return
 		}
 		val key = "scrobbler|${service?.name ?: "unknown"}|${error.javaClass.simpleName}"

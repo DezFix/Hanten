@@ -2,6 +2,7 @@ package hanten.wre.app.novel.ui.reader
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -36,6 +37,7 @@ import hanten.wre.app.novel.data.source.BaseNovelRepository
 import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.parsers.util.formatSimple
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
@@ -109,7 +111,6 @@ class NovelReaderActivity :
 		readerSettings = NovelReaderSettings.load(this)
 		isAutoScrollActive = savedInstanceState?.getBoolean(STATE_AUTO_SCROLL_ACTIVE) ?: false
 
-		setupToolbar()
 		setupWebView()
 		setupControls()
 		observeViewModel()
@@ -141,17 +142,6 @@ class NovelReaderActivity :
 		bookmarkJob?.cancel()
 		viewBinding.webView.destroy()
 		super.onDestroy()
-	}
-
-	private fun setupToolbar() {
-		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = false)
-		val initialTitle = viewModel.manga.value?.title ?: getString(R.string.loading_)
-		title = initialTitle
-		supportActionBar?.title = initialTitle
-		supportActionBar?.subtitle = null
-		viewBinding.toolbar.setNavigationOnClickListener {
-			onBackPressedDispatcher.onBackPressed()
-		}
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -258,7 +248,6 @@ class NovelReaderActivity :
 
 	override fun onApplyWindowInsets(v: View, insets: androidx.core.view.WindowInsetsCompat): androidx.core.view.WindowInsetsCompat {
 		val systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars())
-		viewBinding.appbarTop.setPadding(0, systemBars.top, 0, 0)
 		viewBinding.cardBottom.setPadding(0, 0, 0, systemBars.bottom)
 		systemTopInset = systemBars.top
 		systemBottomInset = systemBars.bottom
@@ -267,7 +256,7 @@ class NovelReaderActivity :
 	}
 
 	private fun updateReaderSafeArea() {
-		val top = systemTopInset + if (isUiVisible) viewBinding.toolbar.height else 0
+		val top = systemTopInset
 		val bottom = if (isUiVisible) viewBinding.cardBottom.height else systemBottomInset
 		if (safeTopPx == top && safeBottomPx == bottom) return
 		safeTopPx = top
@@ -301,14 +290,12 @@ class NovelReaderActivity :
 		viewModel.manga.observe(this) { manga ->
 			if (manga != null) {
 				title = manga.title
-				supportActionBar?.title = manga.title
 				observeBookmarks(manga)
 			}
 		}
 
 		viewModel.currentChapter.observe(this) { chapter ->
 			if (chapter != null) {
-				supportActionBar?.subtitle = chapter.title
 				val idx = viewModel.currentChapterIndex.value + 1
 				val total = viewModel.chapters.value.size
 				viewBinding.textProgress.text = if (total > 0) "$idx / $total" else chapter.title
@@ -434,8 +421,28 @@ class NovelReaderActivity :
 		return novelSource?.locale?.takeIf { it.isNotBlank() } ?: Locale.getDefault().language
 	}
 
+	private fun chapterHeading(chapter: MangaChapter?): String {
+		if (chapter == null) return ""
+		val title = chapter.title?.trim().orEmpty()
+		if (title.isNotEmpty()) return title
+		val number = chapter.number.takeIf { it > 0f }?.formatSimple()
+			?: (viewModel.currentChapterIndex.value + 1).toString()
+		return if (chapter.volume > 0) {
+			getString(R.string.novel_chapter_heading_volume, chapter.volume, number)
+		} else {
+			getString(R.string.novel_chapter_heading, number)
+		}
+	}
+
 	private fun renderChapterContent(html: String) {
-		val title = viewModel.currentChapter.value?.title ?: ""
+		val chapter = viewModel.currentChapter.value
+		val title = chapter?.title ?: ""
+		val heading = chapterHeading(chapter)
+		val content = if (heading.isNotBlank()) {
+			"<h1 class=\"chapter-heading\">${TextUtils.htmlEncode(heading)}</h1>$html"
+		} else {
+			html
+		}
 		val bookmarkState = queueBookmarkRestore()
 		val initialProgress = if (bookmarkState != null) {
 			0f
@@ -444,7 +451,7 @@ class NovelReaderActivity :
 		}
 		val fullDoc = NovelHtmlTemplate.buildDocument(
 			title = title,
-			initialChapterHtml = html,
+			initialChapterHtml = content,
 			settings = readerSettings,
 			initialProgress = initialProgress,
 			safeTopPx = safeTopPx,
@@ -551,7 +558,6 @@ class NovelReaderActivity :
 
 	private fun toggleUiVisibility() {
 		isUiVisible = !isUiVisible
-		viewBinding.appbarTop.isVisible = isUiVisible
 		viewBinding.cardBottom.isVisible = isUiVisible
 		applySystemBarsVisibility()
 		viewBinding.coordinator.post { updateReaderSafeArea() }
