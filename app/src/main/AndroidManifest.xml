@@ -155,6 +155,10 @@
 			android:exported="false"
 			android:theme="@style/Theme.Hanten" />
 		<activity
+			android:name="hanten.wre.app.novel.ui.downloads.NovelDownloadsActivity"
+			android:exported="false"
+			android:label="@string/novel_downloads" />
+		<activity
 			android:name="hanten.wre.app.search.ui.MangaListActivity"
 			android:exported="true"
 			android:label="@string/manga_list">

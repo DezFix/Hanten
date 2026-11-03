@@ -87,6 +87,32 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 			NovelTextAlign.LEFT -> binding.buttonAlignLeft.isChecked = true
 			NovelTextAlign.JUSTIFY -> binding.buttonAlignJustify.isChecked = true
 		}
+
+		// Auto-scroll
+		binding.sliderAutoScroll.value = currentSettings.autoScrollSpeed.coerceIn(0f, 3f)
+		binding.textAutoScrollValue.text = formatAutoScrollSpeed(currentSettings.autoScrollSpeed)
+
+		// Fullscreen
+		binding.switchFullscreen.isChecked = currentSettings.fullscreen
+
+		// Tap zones
+		when (currentSettings.leftTapAction) {
+			NovelTapAction.PAGE -> binding.buttonLeftPage.isChecked = true
+			NovelTapAction.CHAPTER -> binding.buttonLeftChapter.isChecked = true
+		}
+		when (currentSettings.rightTapAction) {
+			NovelTapAction.PAGE -> binding.buttonRightPage.isChecked = true
+			NovelTapAction.CHAPTER -> binding.buttonRightChapter.isChecked = true
+		}
+	}
+
+	@SuppressLint("SetTextI18n")
+	private fun formatAutoScrollSpeed(speed: Float): String {
+		return if (speed <= 0f) {
+			getString(R.string.novel_auto_scroll_off)
+		} else {
+			getString(R.string.novel_auto_scroll_speed, speed)
+		}
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -141,6 +167,39 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 					else -> NovelTextAlign.LEFT
 				}
 				updateSettings { copy(textAlignment = newAlign) }
+			}
+		}
+
+		binding.sliderAutoScroll.addOnChangeListener { _, value, fromUser ->
+			if (fromUser) {
+				binding.textAutoScrollValue.text = formatAutoScrollSpeed(value)
+				updateSettings { copy(autoScrollSpeed = value) }
+			}
+		}
+
+		binding.switchFullscreen.setOnCheckedChangeListener { _, isChecked ->
+			updateSettings { copy(fullscreen = isChecked) }
+		}
+
+		binding.toggleGroupLeftZone.addOnButtonCheckedListener { _, checkedId, isChecked ->
+			if (isChecked) {
+				val action = if (checkedId == R.id.button_left_page) {
+					NovelTapAction.PAGE
+				} else {
+					NovelTapAction.CHAPTER
+				}
+				updateSettings { copy(leftTapAction = action) }
+			}
+		}
+
+		binding.toggleGroupRightZone.addOnButtonCheckedListener { _, checkedId, isChecked ->
+			if (isChecked) {
+				val action = if (checkedId == R.id.button_right_page) {
+					NovelTapAction.PAGE
+				} else {
+					NovelTapAction.CHAPTER
+				}
+				updateSettings { copy(rightTapAction = action) }
 			}
 		}
 	}

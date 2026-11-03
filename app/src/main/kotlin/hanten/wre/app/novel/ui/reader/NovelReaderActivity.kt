@@ -11,7 +11,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.isGone
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
@@ -19,10 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
+import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.util.MimeTypes
+import hanten.wre.app.core.util.ext.getParcelableExtraCompat
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
@@ -30,6 +34,8 @@ import hanten.wre.app.databinding.ActivityNovelReaderBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.source.BaseNovelRepository
 import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaChapter
+import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,6 +43,7 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.io.File
 import java.io.FilterInputStream
 import java.io.InputStream
 import java.time.Instant
@@ -80,6 +87,9 @@ class NovelReaderActivity :
 	private var isUiVisible = true
 	private var isSliderTracking = false
 	private var isWebViewReady = false
+	private var isAutoScrollActive = false
+	private var pendingBookmarkRestore: ReaderState? = null
+	private var isBookmarkRestoreConsumed = false
 	private var safeTopPx = 0
 	private var safeBottomPx = 0
 	private var systemTopInset = 0
@@ -87,10 +97,15 @@ class NovelReaderActivity :
 	@Volatile
 	private var defaultUserAgent: String? = null
 
+	private val initialReaderState: ReaderState? by lazy {
+		intent.getParcelableExtraCompat<ReaderState>(ReaderIntent.EXTRA_STATE)
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityNovelReaderBinding.inflate(layoutInflater))
 		readerSettings = NovelReaderSettings.load(this)
+		isAutoScrollActive = savedInstanceState?.getBoolean(STATE_AUTO_SCROLL_ACTIVE) ?: false
 
 		setupToolbar()
 		setupWebView()
@@ -98,11 +113,26 @@ class NovelReaderActivity :
 		observeViewModel()
 		screenOrientationHelper.applySettings()
 		applyKeepScreenOn()
+		applySystemBarsVisibility()
+		updateAutoScrollButton()
 	}
 
 	override fun onResume() {
 		super.onResume()
 		applyKeepScreenOn()
+		applySystemBarsVisibility()
+	}
+
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+		outState.putBoolean(STATE_AUTO_SCROLL_ACTIVE, isAutoScrollActive)
+	}
+
+	override fun onWindowFocusChanged(hasFocus: Boolean) {
+		super.onWindowFocusChanged(hasFocus)
+		if (hasFocus) {
+			applySystemBarsVisibility()
+		}
 	}
 
 	override fun onDestroy() {
@@ -170,6 +200,19 @@ class NovelReaderActivity :
 				return try {
 					val url = request?.url ?: return null
 					val path = url.path.orEmpty()
+					// Offline novel cache rewrites images to file:// URLs.
+					// Only files inside the novel cache may be served to the WebView.
+					if (url.scheme == "file") {
+						val cacheRoot = File(filesDir, "novels").canonicalFile
+						val file = File(path).canonicalFile
+						if (file.path.startsWith(cacheRoot.path + File.separator) && file.isFile) {
+							val ext = file.extension
+							val mime = MimeTypes.getMimeTypeFromExtension(ext)?.toString()
+								?: "application/octet-stream"
+							return WebResourceResponse(mime, null, file.inputStream())
+						}
+						return null
+					}
 					val epubParser = viewModel.getEpubParser()
 					if (epubParser != null && (url.scheme == "epub" || url.host == "futon.reader")) {
 						val cleanPath = path.removePrefix("/")
@@ -199,6 +242,8 @@ class NovelReaderActivity :
 			override fun onPageFinished(view: WebView?, url: String?) {
 				super.onPageFinished(view, url)
 				isWebViewReady = true
+				applyPendingBookmarkRestore()
+				applyAutoScrollState()
 			}
 		}
 	}
@@ -238,6 +283,7 @@ class NovelReaderActivity :
 			NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
 		}
 		viewBinding.buttonBookmark.setOnClickListener { toggleBookmark() }
+		viewBinding.buttonAutoScroll.setOnClickListener { toggleAutoScroll() }
 
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)
@@ -284,6 +330,10 @@ class NovelReaderActivity :
 			if (!isSliderTracking) {
 				viewBinding.sliderProgress.value = (percent * 100f).coerceIn(0f, 100f)
 			}
+			if (isAutoScrollActive && percent >= 0.999f) {
+				isAutoScrollActive = false
+				applyAutoScrollState()
+			}
 		}
 	}
 
@@ -312,34 +362,73 @@ class NovelReaderActivity :
 		val manga = viewModel.manga.value ?: return
 		val chapter = viewModel.currentChapter.value ?: return
 		val existing = bookmarks.firstOrNull { it.chapterId == chapter.id }
-		lifecycleScope.launch(Dispatchers.IO) {
-			if (existing != null) {
+		if (existing != null) {
+			lifecycleScope.launch(Dispatchers.IO) {
 				bookmarksRepository.removeBookmarks(setOf(existing.pageId))
-			} else {
-				val percent = viewModel.scrollProgress.value.coerceIn(0.01f, 1f)
-				bookmarksRepository.addBookmark(
-					Bookmark(
-						manga = manga.copy(chapters = viewModel.chapters.value),
-						pageId = chapter.id,
-						chapterId = chapter.id,
-						page = (percent * 100).roundToInt().coerceIn(1, 100),
-						scroll = 0,
-						imageUrl = manga.coverUrl.orEmpty(),
-						createdAt = Instant.now(),
-						percent = percent,
-					),
-				)
+				launch(Dispatchers.Main) {
+					Toast.makeText(this@NovelReaderActivity, R.string.bookmark_remove, Toast.LENGTH_SHORT).show()
+				}
 			}
-			val message = if (existing != null) R.string.bookmark_remove else R.string.bookmark_add
+			return
+		}
+		viewBinding.webView.evaluateJavascript(
+			"(function(){try{return window.getCurrentParagraph();}catch(e){return -1;}})()",
+		) { result ->
+			val parsed = result?.trim()?.toIntOrNull()
+			saveBookmark(manga, chapter, parsed ?: -1)
+		}
+	}
+
+	private fun saveBookmark(manga: Manga, chapter: MangaChapter, paragraphIndex: Int) {
+		val percent = viewModel.scrollProgress.value.coerceIn(0.01f, 1f)
+		lifecycleScope.launch(Dispatchers.IO) {
+			bookmarksRepository.addBookmark(
+				Bookmark(
+					manga = manga.copy(chapters = viewModel.chapters.value),
+					pageId = chapter.id,
+					chapterId = chapter.id,
+					page = (percent * 100).roundToInt().coerceIn(1, 100),
+					scroll = paragraphIndex,
+					imageUrl = manga.coverUrl.orEmpty(),
+					createdAt = Instant.now(),
+					percent = percent,
+				),
+			)
 			launch(Dispatchers.Main) {
-				Toast.makeText(this@NovelReaderActivity, message, Toast.LENGTH_SHORT).show()
+				Toast.makeText(this@NovelReaderActivity, R.string.bookmark_add, Toast.LENGTH_SHORT).show()
 			}
 		}
 	}
 
+	private fun queueBookmarkRestore(): ReaderState? {
+		if (isBookmarkRestoreConsumed) return null
+		val state = initialReaderState ?: return null
+		val chapter = viewModel.currentChapter.value ?: return null
+		if (state.chapterId != chapter.id) return null
+		pendingBookmarkRestore = state
+		return state
+	}
+
+	private fun applyPendingBookmarkRestore() {
+		val state = pendingBookmarkRestore ?: return
+		pendingBookmarkRestore = null
+		isBookmarkRestoreConsumed = true
+		val percent = (state.page / 100f).coerceIn(0f, 1f)
+		val paragraph = state.scroll
+		viewBinding.webView.evaluateJavascript(
+			"window.restoreProgress($percent); window.restoreBookmark($paragraph, $percent);",
+			null,
+		)
+	}
+
 	private fun renderChapterContent(html: String) {
 		val title = viewModel.currentChapter.value?.title ?: ""
-		val initialProgress = viewModel.scrollProgress.value.coerceIn(0f, 1f)
+		val bookmarkState = queueBookmarkRestore()
+		val initialProgress = if (bookmarkState != null) {
+			0f
+		} else {
+			viewModel.scrollProgress.value.coerceIn(0f, 1f)
+		}
 		val fullDoc = NovelHtmlTemplate.buildDocument(
 			title = title,
 			initialChapterHtml = html,
@@ -450,13 +539,64 @@ class NovelReaderActivity :
 		isUiVisible = !isUiVisible
 		viewBinding.appbarTop.isVisible = isUiVisible
 		viewBinding.cardBottom.isVisible = isUiVisible
+		applySystemBarsVisibility()
 		viewBinding.coordinator.post { updateReaderSafeArea() }
+	}
+
+	private fun applySystemBarsVisibility() {
+		val controller = WindowCompat.getInsetsController(window, window.decorView)
+		if (isUiVisible || !readerSettings.fullscreen) {
+			controller.show(WindowInsetsCompat.Type.systemBars())
+			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+		} else {
+			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+			controller.hide(WindowInsetsCompat.Type.systemBars())
+		}
+	}
+
+	private fun toggleAutoScroll() {
+		if (readerSettings.readingMode == NovelReadingMode.PAGED) {
+			Toast.makeText(this, R.string.novel_auto_scroll_paged, Toast.LENGTH_SHORT).show()
+			return
+		}
+		if (readerSettings.autoScrollSpeed <= 0f) {
+			NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
+			return
+		}
+		isAutoScrollActive = !isAutoScrollActive
+		applyAutoScrollState()
+	}
+
+	private fun applyAutoScrollState() {
+		if (isAutoScrollActive && readerSettings.readingMode == NovelReadingMode.PAGED) {
+			isAutoScrollActive = false
+		}
+		updateAutoScrollButton()
+		if (!isWebViewReady) return
+		val command = if (isAutoScrollActive) "window.startAutoScroll();" else "window.stopAutoScroll();"
+		viewBinding.webView.evaluateJavascript(
+			"window.setAutoScrollSpeed(${readerSettings.autoScrollSpeed});$command",
+			null,
+		)
+	}
+
+	private fun updateAutoScrollButton() {
+		viewBinding.buttonAutoScroll.setIconResource(
+			if (isAutoScrollActive) R.drawable.ic_action_pause else R.drawable.ic_action_resume,
+		)
+		viewBinding.buttonAutoScroll.setContentDescriptionAndTooltip(R.string.automatic_scroll)
 	}
 
 	override fun onNovelSettingsChanged(settings: NovelReaderSettings) {
 		val modeChanged = settings.readingMode != readerSettings.readingMode
 		readerSettings = settings
 		viewBinding.webView.setBackgroundColor(settings.effectiveBackgroundColor)
+		applySystemBarsVisibility()
+
+		if (modeChanged && settings.readingMode == NovelReadingMode.PAGED && isAutoScrollActive) {
+			isAutoScrollActive = false
+			Toast.makeText(this, R.string.novel_auto_scroll_paged, Toast.LENGTH_SHORT).show()
+		}
 
 		val currentHtml = viewModel.chapterContent.value?.html
 		if (modeChanged || !isWebViewReady) {
@@ -472,11 +612,15 @@ class NovelReaderActivity :
 					density = resources.displayMetrics.density,
 				),
 			)
+			val leftAction = org.json.JSONObject.quote(settings.leftTapAction.name)
+			val rightAction = org.json.JSONObject.quote(settings.rightTapAction.name)
 			viewBinding.webView.evaluateJavascript(
-				"window.applySettings($cssText); window.restoreProgress($percent);",
+				"window.applySettings($cssText); window.setTapZones($leftAction, $rightAction); " +
+					"window.restoreProgress($percent);",
 				null,
 			)
 		}
+		applyAutoScrollState()
 	}
 
 	override fun onStartTrackingTouch(slider: Slider) {
@@ -533,6 +677,7 @@ class NovelReaderActivity :
 	}
 
 	private companion object {
+		const val STATE_AUTO_SCROLL_ACTIVE = "novel_auto_scroll_active"
 		val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".bmp")
 	}
 }

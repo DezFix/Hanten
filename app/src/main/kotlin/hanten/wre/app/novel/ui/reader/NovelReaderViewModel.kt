@@ -14,8 +14,10 @@ import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.novel.data.epub.EpubParser
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.novel.data.pdf.PdfRendererHelper
 import hanten.wre.app.novel.data.source.NovelParserSource
+import hanten.wre.app.novel.domain.NovelSmartResume
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
 import kotlinx.coroutines.CancellationException
@@ -44,6 +46,7 @@ class NovelReaderViewModel @Inject constructor(
 	private val mangaDataRepository: MangaDataRepository,
 	private val mangaRepositoryFactory: hanten.wre.app.core.parser.MangaRepository.Factory,
 	private val historyRepository: HistoryRepository,
+	private val offlineRepository: NovelOfflineRepository,
 	val settings: AppSettings,
 ) : BaseViewModel() {
 
@@ -89,6 +92,14 @@ class NovelReaderViewModel @Inject constructor(
 
 	private val isIncognito: Boolean =
 		savedStateHandle.get<Boolean>(ReaderIntent.EXTRA_INCOGNITO) ?: false
+
+	// isSmartResumeWaitForUpdates is irrelevant here: novels have no update pass, so saved progress is final
+	private val smartResume = NovelSmartResume(
+		enabled = settings.isSmartResumeEnabled,
+		mode = settings.smartResumeCompletionMode,
+		percentage = settings.smartResumePercentage,
+		pagesRemaining = settings.smartResumePagesRemaining,
+	)
 
 	val contentBaseUrl: String
 		get() {
@@ -188,24 +199,52 @@ class NovelReaderViewModel @Inject constructor(
 						)
 					}
 				} else {
-					// Online novel or database chapters
+					// Online novel or database chapters. Offline cache is the last fallback.
 					val repo = mangaRepositoryFactory.create(current.source)
-					val fullDetails = repo.getDetails(current)
-					fullDetails.chapters.orEmpty()
+					val onlineChapters = try {
+						repo.getDetails(current).chapters.orEmpty()
+					} catch (e: CancellationException) {
+						throw e
+					} catch (e: Exception) {
+						e.printStackTraceDebug()
+						emptyList()
+					}
+					onlineChapters.ifEmpty {
+						current.chapters.orEmpty().ifEmpty {
+							offlineRepository.listCachedChapters(current.id).mapIndexed { index, cached ->
+								MangaChapter(
+									id = cached.chapterId,
+									title = cached.title,
+									number = (index + 1).toFloat(),
+									volume = 0,
+									url = "",
+									uploadDate = 0L,
+									source = current.source,
+									scanlator = null,
+									branch = null,
+								)
+							}
+						}
+					}
 				}
 
 				_chapters.value = chapterList
 
-				// Determine start chapter
+				// Determine start chapter. Explicit chapter and bookmark openings keep their target.
 				val targetChapterId = initialState?.chapterId
 				val startIdx = if (targetChapterId != null) {
 					chapterList.indexOfFirst { it.id == targetChapterId }.coerceAtLeast(0)
 				} else {
 					val lastHistory = historyRepository.getOne(current)
-					if (lastHistory != null) {
-						chapterList.indexOfFirst { it.id == lastHistory.chapterId }.coerceAtLeast(0)
-					} else {
+					if (lastHistory == null) {
 						0
+					} else {
+						val savedIdx = chapterList.indexOfFirst { it.id == lastHistory.chapterId }
+						if (savedIdx < 0) {
+							0
+						} else {
+							smartResume.resolveStartIndex(savedIdx, chapterList.size, lastHistory.percent)
+						}
 					}
 				}
 
@@ -349,6 +388,10 @@ class NovelReaderViewModel @Inject constructor(
 
 		val curManga = _manga.value ?: return@withContext null
 		try {
+			offlineRepository.readChapter(curManga.id, chapter.id)?.takeIf { it.isNotBlank() }?.let {
+				return@withContext it
+			}
+
 			// Online novel source: fetch pages / chapter content
 			val repo = mangaRepositoryFactory.create(curManga.source)
 			val pages = repo.getPages(chapter)
@@ -362,7 +405,13 @@ class NovelReaderViewModel @Inject constructor(
 					textBuilder.append("<p>${trimmed}</p>")
 				}
 			}
-			textBuilder.toString()
+			val html = textBuilder.toString()
+			if (html.isNotBlank()) {
+				launchJob(Dispatchers.IO) {
+					offlineRepository.cacheChapter(curManga, chapter, html)
+				}
+			}
+			html
 		} catch (e: Exception) {
 			e.printStackTraceDebug()
 			null

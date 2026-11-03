@@ -1,7 +1,6 @@
 package hanten.wre.app.novel.ui.reader
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -11,6 +10,11 @@ import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
 import kotlin.math.roundToInt
+
+enum class NovelTapAction {
+	PAGE,
+	CHAPTER,
+}
 
 data class NovelReaderSettings(
 	val fontSizeSp: Float = 18f,
@@ -23,6 +27,10 @@ data class NovelReaderSettings(
 	val pageMarginDp: Int = 18,
 	val textAlignment: NovelTextAlign = NovelTextAlign.LEFT,
 	val readingMode: NovelReadingMode = NovelReadingMode.CONTINUOUS_SCROLL,
+	val fullscreen: Boolean = false,
+	val autoScrollSpeed: Float = 0f,
+	val leftTapAction: NovelTapAction = NovelTapAction.PAGE,
+	val rightTapAction: NovelTapAction = NovelTapAction.PAGE,
 ) {
 	val effectiveBackgroundColor: Int
 		get() = if (theme == NovelTheme.CUSTOM) customBackgroundColor else theme.backgroundColor
@@ -65,6 +73,10 @@ data class NovelReaderSettings(
 		private const val KEY_PAGE_MARGIN = "novel_page_margin"
 		private const val KEY_TEXT_ALIGN = "novel_text_align"
 		private const val KEY_READING_MODE = "novel_reading_mode"
+		private const val KEY_FULLSCREEN = "novel_fullscreen"
+		private const val KEY_AUTO_SCROLL_SPEED = "novel_auto_scroll_speed"
+		private const val KEY_LEFT_TAP_ACTION = "novel_tap_left_action"
+		private const val KEY_RIGHT_TAP_ACTION = "novel_tap_right_action"
 
 		fun load(context: Context): NovelReaderSettings {
 			val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -79,6 +91,10 @@ data class NovelReaderSettings(
 				pageMarginDp = prefs.getInt(KEY_PAGE_MARGIN, 18),
 				textAlignment = prefs.getEnumValue(KEY_TEXT_ALIGN, NovelTextAlign.LEFT),
 				readingMode = prefs.getEnumValue(KEY_READING_MODE, NovelReadingMode.CONTINUOUS_SCROLL),
+				fullscreen = prefs.getBoolean(KEY_FULLSCREEN, false),
+				autoScrollSpeed = prefs.getFloat(KEY_AUTO_SCROLL_SPEED, 0f),
+				leftTapAction = prefs.getEnumValue(KEY_LEFT_TAP_ACTION, NovelTapAction.PAGE),
+				rightTapAction = prefs.getEnumValue(KEY_RIGHT_TAP_ACTION, NovelTapAction.PAGE),
 			)
 		}
 
@@ -95,6 +111,10 @@ data class NovelReaderSettings(
 				putInt(KEY_PAGE_MARGIN, settings.pageMarginDp)
 				putEnumValue(KEY_TEXT_ALIGN, settings.textAlignment)
 				putEnumValue(KEY_READING_MODE, settings.readingMode)
+				putBoolean(KEY_FULLSCREEN, settings.fullscreen)
+				putFloat(KEY_AUTO_SCROLL_SPEED, settings.autoScrollSpeed)
+				putEnumValue(KEY_LEFT_TAP_ACTION, settings.leftTapAction)
+				putEnumValue(KEY_RIGHT_TAP_ACTION, settings.rightTapAction)
 			}
 		}
 	}

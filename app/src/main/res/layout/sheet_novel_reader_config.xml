@@ -231,6 +231,118 @@
 
 		</com.google.android.material.button.MaterialButtonToggleGroup>
 
+		<!-- Auto-scroll -->
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/novel_auto_scroll"
+				android:textAppearance="?textAppearanceTitleSmall" />
+
+			<TextView
+				android:id="@+id/text_autoScroll_value"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?textAppearanceBodyMedium"
+				android:text="@string/novel_auto_scroll_off" />
+
+		</LinearLayout>
+
+		<com.google.android.material.slider.Slider
+			android:id="@+id/slider_autoScroll"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:stepSize="0.1"
+			android:valueFrom="0.0"
+			android:valueTo="3.0" />
+
+		<!-- Fullscreen -->
+		<com.google.android.material.materialswitch.MaterialSwitch
+			android:id="@+id/switch_fullscreen"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="@string/novel_fullscreen" />
+
+		<!-- Tap zones -->
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="@string/novel_tap_zones"
+			android:textAppearance="?textAppearanceTitleSmall" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:text="@string/novel_tap_left"
+			android:textAppearance="?textAppearanceBodyMedium" />
+
+		<com.google.android.material.button.MaterialButtonToggleGroup
+			android:id="@+id/toggleGroup_leftZone"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			app:singleSelection="true">
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_left_page"
+				style="?materialButtonOutlinedStyle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/novel_tap_page" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_left_chapter"
+				style="?materialButtonOutlinedStyle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/novel_tap_chapter" />
+
+		</com.google.android.material.button.MaterialButtonToggleGroup>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:text="@string/novel_tap_right"
+			android:textAppearance="?textAppearanceBodyMedium" />
+
+		<com.google.android.material.button.MaterialButtonToggleGroup
+			android:id="@+id/toggleGroup_rightZone"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			app:singleSelection="true">
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_right_page"
+				style="?materialButtonOutlinedStyle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/novel_tap_page" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_right_chapter"
+				style="?materialButtonOutlinedStyle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/novel_tap_chapter" />
+
+		</com.google.android.material.button.MaterialButtonToggleGroup>
+
 	</LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
