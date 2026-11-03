@@ -11,6 +11,7 @@ import hanten.wre.app.databinding.SheetNovelReaderConfigBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
+import java.util.Locale
 
 class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
@@ -79,7 +80,7 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 		// Line Spacing
 		binding.sliderLineSpacing.value = currentSettings.lineSpacingMultiplier.coerceIn(1.0f, 2.4f)
-		binding.textLineSpacingValue.text = String.format("%.1f", currentSettings.lineSpacingMultiplier)
+		binding.textLineSpacingValue.text = String.format(Locale.getDefault(), "%.1f", currentSettings.lineSpacingMultiplier)
 
 		// Text Alignment
 		when (currentSettings.textAlignment) {
@@ -128,7 +129,7 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 		binding.sliderLineSpacing.addOnChangeListener { _, value, fromUser ->
 			if (fromUser) {
-				binding.textLineSpacingValue.text = String.format("%.1f", value)
+				binding.textLineSpacingValue.text = String.format(Locale.getDefault(), "%.1f", value)
 				updateSettings { copy(lineSpacingMultiplier = value) }
 			}
 		}

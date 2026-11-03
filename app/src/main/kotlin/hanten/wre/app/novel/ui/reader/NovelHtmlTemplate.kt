@@ -9,8 +9,11 @@ object NovelHtmlTemplate {
 		initialChapterHtml: String,
 		settings: NovelReaderSettings,
 		initialProgress: Float = 0f,
+		safeTopPx: Int = 0,
+		safeBottomPx: Int = 0,
+		density: Float = 1f,
 	): String {
-		val cssVars = settings.toCssVariables()
+		val cssVars = settings.toCssVariables(safeTopPx, safeBottomPx, density)
 		val isPaged = settings.readingMode == NovelReadingMode.PAGED
 		val startProgress = initialProgress.coerceIn(0f, 1f)
 
@@ -34,8 +37,8 @@ object NovelHtmlTemplate {
 				column-width: 100vw;
 				column-gap: 0px;
 				column-fill: auto;
-				height: calc(100vh - 2 * var(--reader-page-margin));
-				margin: var(--reader-page-margin) 0;
+				height: calc(100vh - var(--reader-safe-top) - var(--reader-safe-bottom) - 2 * var(--reader-page-margin));
+				margin: calc(var(--reader-safe-top) + var(--reader-page-margin)) 0 calc(var(--reader-safe-bottom) + var(--reader-page-margin)) 0;
 				padding: 0 var(--reader-page-margin);
 				box-sizing: border-box;
 			}
@@ -48,7 +51,7 @@ object NovelHtmlTemplate {
 				min-height: 100vh;
 			}
 			#content {
-				padding: var(--reader-page-margin);
+				padding: calc(var(--reader-safe-top) + var(--reader-page-margin)) var(--reader-page-margin) calc(var(--reader-safe-bottom) + var(--reader-page-margin)) var(--reader-page-margin);
 				max-width: 800px;
 				margin: 0 auto;
 				box-sizing: border-box;
@@ -208,7 +211,9 @@ object NovelHtmlTemplate {
 					if (!content) return;
 					const divider = document.createElement('div');
 					divider.className = 'chapter-divider';
-					divider.innerHTML = '<h2>' + title + '</h2>';
+					const heading = document.createElement('h2');
+					heading.textContent = title;
+					divider.appendChild(heading);
 					content.appendChild(divider);
 
 					const tempDiv = document.createElement('div');
@@ -252,8 +257,15 @@ object NovelHtmlTemplate {
 					scrollToPercent(p);
 				}
 
+				function setSafeArea(top, bottom) {
+					const root = document.documentElement;
+					root.style.setProperty('--reader-safe-top', Math.max(0, top | 0) + 'px');
+					root.style.setProperty('--reader-safe-bottom', Math.max(0, bottom | 0) + 'px');
+				}
+
 				window.restoreProgress = restoreProgress;
 				window.applySettings = updateStyles;
+				window.setSafeArea = setSafeArea;
 
 				if (initialProgress > 0) {
 					window.addEventListener('load', function() {

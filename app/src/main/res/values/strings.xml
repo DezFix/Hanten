@@ -187,6 +187,9 @@
     <string name="queued">Queued</string>
     <string name="chapter_is_missing">The chapter is missing</string>
     <string name="about_app_translation_summary">Translate this app</string>
+    <string name="legal_notice">Legal notice</string>
+    <string name="legal_notice_summary">Content ownership and takedown policy</string>
+    <string name="legal_notice_text">Hanten does not host, store or distribute content. It is a client that displays pages publicly available on third-party websites configured by the user. All content belongs to its respective owners. DMCA and other takedown requests must be sent to the site that hosts the content; the app developers are not affiliated with those sites and do not bypass paywalls, accounts or DRM. Users are responsible for complying with the law and with the terms of the sources they use.</string>
     <string name="about_app_translation">Translation</string>
     <string name="auth_complete">Authorized</string>
     <string name="auth_not_supported_by">Logging in on %s is not supported</string>

@@ -10,6 +10,7 @@ import hanten.wre.app.core.util.ext.putEnumValue
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
+import kotlin.math.roundToInt
 
 data class NovelReaderSettings(
 	val fontSizeSp: Float = 18f,
@@ -29,9 +30,14 @@ data class NovelReaderSettings(
 	val effectiveTextColor: Int
 		get() = if (theme == NovelTheme.CUSTOM) customTextColor else theme.textColor
 
-	fun toCssVariables(): String {
+	fun toCssVariables(
+		safeTopPx: Int = 0,
+		safeBottomPx: Int = 0,
+		density: Float = 1f,
+	): String {
 		val bgHex = String.format("#%06X", 0xFFFFFF and effectiveBackgroundColor)
 		val textHex = String.format("#%06X", 0xFFFFFF and effectiveTextColor)
+		val pageMarginPx = (pageMarginDp * density).roundToInt().coerceAtLeast(0)
 		return """
 			:root {
 				--reader-bg: $bgHex;
@@ -40,7 +46,9 @@ data class NovelReaderSettings(
 				--reader-font-family: $fontFamily, serif;
 				--reader-line-height: $lineSpacingMultiplier;
 				--reader-paragraph-margin: ${paragraphMarginEm}em;
-				--reader-page-margin: ${pageMarginDp}px;
+				--reader-page-margin: ${pageMarginPx}px;
+				--reader-safe-top: ${safeTopPx.coerceAtLeast(0)}px;
+				--reader-safe-bottom: ${safeBottomPx.coerceAtLeast(0)}px;
 				--reader-text-align: ${textAlignment.cssValue};
 			}
 		""".trimIndent()

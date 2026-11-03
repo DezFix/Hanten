@@ -102,6 +102,15 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 				true
 			}
 
+			"about_legal" -> {
+				androidx.appcompat.app.AlertDialog.Builder(requireContext())
+					.setTitle(R.string.legal_notice)
+					.setMessage(R.string.legal_notice_text)
+					.setPositiveButton(android.R.string.ok, null)
+					.show()
+				true
+			}
+
 			AppSettings.KEY_LINK_GITHUB -> {
 				openLink(R.string.url_github, preference.title)
 				true

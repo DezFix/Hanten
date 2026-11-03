@@ -27,6 +27,12 @@ enum class NovelParserSource(
 		domain = "baka.in.ua",
 		defaultUrl = "https://baka.in.ua",
 		locale = "uk",
+	),
+	RANOBE_ME(
+		title = "Ranobe.me",
+		domain = "ranobe.me",
+		defaultUrl = "https://ranobe.me",
+		locale = "ru",
 	);
 
 	companion object {

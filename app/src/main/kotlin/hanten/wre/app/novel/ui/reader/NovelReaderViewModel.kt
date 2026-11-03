@@ -86,6 +86,13 @@ class NovelReaderViewModel @Inject constructor(
 	@Volatile
 	private var isChapterContentReady = false
 
+	val contentBaseUrl: String
+		get() {
+			val source = _manga.value?.source
+			val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
+			return if (novelSource != null) "https://${novelSource.domain}/" else "https://futon.reader/"
+		}
+
 	val refererUrl: String
 		get() {
 			val manga = _manga.value
@@ -325,7 +332,7 @@ class NovelReaderViewModel @Inject constructor(
 			val textBuilder = StringBuilder()
 			for (page in pages) {
 				val trimmed = page.url.trim()
-				if (trimmed.startsWith("<p") || trimmed.startsWith("<div") || trimmed.startsWith("<html") || trimmed.startsWith("<span") || trimmed.startsWith("<article")) {
+				if (trimmed.startsWith("<")) {
 					textBuilder.append(trimmed)
 				} else if (trimmed.isNotEmpty()) {
 					textBuilder.append("<p>${trimmed}</p>")

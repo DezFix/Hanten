@@ -80,6 +80,10 @@ class MangaSourcesRepository @Inject constructor(
         }
 	)
 
+	val allNovelSources: Set<NovelParserSource> = Collections.unmodifiableSet(
+		EnumSet.allOf(NovelParserSource::class.java),
+	)
+
 	suspend fun getEnabledSources(): List<MangaSource> {
 		assimilateNewSources()
 		val order = settings.sourcesSortOrder
@@ -113,7 +117,7 @@ class MangaSourcesRepository @Inject constructor(
 			return emptySet()
 		}
 		val result = HashSet<MangaSource>(allMangaSources)
-		result.addAll(NovelParserSource.entries)
+		result.addAll(allNovelSources)
 		val enabled = dao.findAllEnabledNames()
 		for (name in enabled) {
 			val source = name.toMangaSourceOrNull() ?: continue
@@ -134,9 +138,7 @@ class MangaSourcesRepository @Inject constructor(
 		assimilateNewSources()
 		val entities = dao.findAll().toMutableList()
 		if (isDisabledOnly && !settings.isAllSourcesEnabled) {
-			// Novel sources are enabled on first start, so hiding enabled entries would
-			// remove them from the catalog entirely.
-			entities.removeAll { it.isEnabled && it.toMangaSource() !is NovelParserSource }
+			entities.removeAll { it.isEnabled }
 		}
 		if (isNewOnly) {
 			entities.retainAll { it.addedIn == BuildConfig.VERSION_CODE }
@@ -224,7 +226,7 @@ class MangaSourcesRepository @Inject constructor(
 			val enabled = enabledSources.mapToSet { it.source }
 			allMangaSources.count { x ->
 				x.name !in enabled && (!skipNsfw || !x.isNsfw())
-			}
+			} + allNovelSources.count { it.name !in enabled }
 		}.distinctUntilChanged().onStart { assimilateNewSources() }
 	}
 
@@ -268,9 +270,8 @@ class MangaSourcesRepository @Inject constructor(
 	suspend fun setSourcesEnabledExclusive(sources: Set<MangaSource>) {
 		db.withTransaction {
 			assimilateNewSources()
-			for (s in allMangaSources) {
-				dao.setEnabled(s.name, s in sources)
-			}
+			allMangaSources.forEach { dao.setEnabled(it.name, it in sources) }
+			allNovelSources.forEach { dao.setEnabled(it.name, it in sources) }
 		}
 	}
 
@@ -291,7 +292,7 @@ class MangaSourcesRepository @Inject constructor(
 
 	fun observeHasNewSources(): Flow<Boolean> = observeIsNsfwDisabled().map { skipNsfw ->
 		val sources = dao.findAllFromVersion(BuildConfig.VERSION_CODE).toSources(skipNsfw, null)
-		sources.isNotEmpty() && sources.size != allMangaSources.size
+		sources.isNotEmpty() && sources.size != allMangaSources.size + allNovelSources.size
 	}.onStart { assimilateNewSources() }
 
 	fun observeHasNewSourcesForBadge(): Flow<Boolean> = combine(
@@ -330,7 +331,7 @@ class MangaSourcesRepository @Inject constructor(
 			val entities = new.map { x ->
 				MangaSourceEntity(
 					source = x.name,
-					isEnabled = if (x is MihonMangaSource || x is NovelParserSource) true else isAllEnabled,
+					isEnabled = if (x is MihonMangaSource) true else isAllEnabled,
 					sortKey = ++maxSortKey,
 					addedIn = BuildConfig.VERSION_CODE,
 					lastUsedAt = 0,
@@ -390,7 +391,7 @@ class MangaSourcesRepository @Inject constructor(
 		val entities = dao.findAll()
 		val result = HashSet<MangaSource>()
 		result.addAll(MangaParserSource.entries)
-		result.addAll(NovelParserSource.entries)
+		result.addAll(allNovelSources)
 		result.addAll(mihonExtensionManager.getMihonMangaSources())
 		for (e in entities) {
 			result.remove(e.toMangaSource() ?: continue)

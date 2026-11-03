@@ -58,6 +58,10 @@ class NovelReaderActivity :
 	private var isUiVisible = true
 	private var isSliderTracking = false
 	private var isWebViewReady = false
+	private var safeTopPx = 0
+	private var safeBottomPx = 0
+	private var systemTopInset = 0
+	private var systemBottomInset = 0
 	@Volatile
 	private var defaultUserAgent: String? = null
 
@@ -173,7 +177,25 @@ class NovelReaderActivity :
 		val systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars())
 		viewBinding.appbarTop.setPadding(0, systemBars.top, 0, 0)
 		viewBinding.cardBottom.setPadding(0, 0, 0, systemBars.bottom)
+		systemTopInset = systemBars.top
+		systemBottomInset = systemBars.bottom
+		viewBinding.coordinator.post { updateReaderSafeArea() }
 		return insets
+	}
+
+	private fun updateReaderSafeArea() {
+		val top = systemTopInset + if (isUiVisible) viewBinding.toolbar.height else 0
+		val bottom = if (isUiVisible) viewBinding.cardBottom.height else systemBottomInset
+		if (safeTopPx == top && safeBottomPx == bottom) return
+		safeTopPx = top
+		safeBottomPx = bottom
+		if (isWebViewReady) {
+			val percent = viewModel.scrollProgress.value.coerceIn(0f, 1f)
+			viewBinding.webView.evaluateJavascript(
+				"window.setSafeArea($top, $bottom); window.restoreProgress($percent);",
+				null,
+			)
+		}
 	}
 
 	private fun setupControls() {
@@ -235,10 +257,18 @@ class NovelReaderActivity :
 	private fun renderChapterContent(html: String) {
 		val title = viewModel.currentChapter.value?.title ?: ""
 		val initialProgress = viewModel.scrollProgress.value.coerceIn(0f, 1f)
-		val fullDoc = NovelHtmlTemplate.buildDocument(title, html, readerSettings, initialProgress)
+		val fullDoc = NovelHtmlTemplate.buildDocument(
+			title = title,
+			initialChapterHtml = html,
+			settings = readerSettings,
+			initialProgress = initialProgress,
+			safeTopPx = safeTopPx,
+			safeBottomPx = safeBottomPx,
+			density = resources.displayMetrics.density,
+		)
 		val chapterUrl = viewModel.currentChapter.value?.url?.substringBefore('#')
 		val isOnline = !chapterUrl.isNullOrEmpty() && (chapterUrl.startsWith("http://") || chapterUrl.startsWith("https://"))
-		val baseUrl = if (isOnline) chapterUrl else "https://futon.reader/"
+		val baseUrl = if (isOnline) chapterUrl else viewModel.contentBaseUrl
 		isWebViewReady = false
 		viewBinding.webView.loadDataWithBaseURL(baseUrl, fullDoc, "text/html", "UTF-8", null)
 	}
@@ -337,6 +367,7 @@ class NovelReaderActivity :
 		isUiVisible = !isUiVisible
 		viewBinding.appbarTop.isVisible = isUiVisible
 		viewBinding.cardBottom.isVisible = isUiVisible
+		viewBinding.coordinator.post { updateReaderSafeArea() }
 	}
 
 	override fun onNovelSettingsChanged(settings: NovelReaderSettings) {
@@ -351,7 +382,13 @@ class NovelReaderActivity :
 			}
 		} else {
 			val percent = viewModel.scrollProgress.value.coerceIn(0f, 1f)
-			val cssText = org.json.JSONObject.quote(settings.toCssVariables())
+			val cssText = org.json.JSONObject.quote(
+				settings.toCssVariables(
+					safeTopPx = safeTopPx,
+					safeBottomPx = safeBottomPx,
+					density = resources.displayMetrics.density,
+				),
+			)
 			viewBinding.webView.evaluateJavascript(
 				"window.applySettings($cssText); window.restoreProgress($percent);",
 				null,

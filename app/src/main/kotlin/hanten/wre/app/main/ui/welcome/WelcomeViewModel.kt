@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import hanten.wre.app.core.LocalizedAppContext
+import hanten.wre.app.core.model.getLocale
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.BaseViewModel
@@ -14,13 +15,13 @@ import hanten.wre.app.core.util.LocaleComparator
 import hanten.wre.app.core.util.ext.mapSortedByCount
 import hanten.wre.app.core.util.ext.sortedWithSafe
 import hanten.wre.app.core.util.ext.toList
-import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.filter.ui.model.FilterProperty
+import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.MangaParserSource
+import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.util.mapToSet
-import java.util.EnumSet
 import java.util.Locale
 import javax.inject.Inject
 
@@ -31,8 +32,13 @@ class WelcomeViewModel @Inject constructor(
 	@LocalizedAppContext context: Context,
 ) : BaseViewModel() {
 
-	private val allSources = repository.allMangaSources
-	private val localesGroups by lazy { allSources.groupBy { it.locale.toLocale() } }
+	private val allSources: List<MangaSource> = buildList {
+		addAll(repository.allMangaSources)
+		addAll(repository.allNovelSources)
+	}
+	private val localesGroups by lazy {
+		allSources.groupBy { it.getLocale() ?: Locale.ROOT }
+	}
 
 	private var updateJob: Job
 
@@ -67,9 +73,13 @@ class WelcomeViewModel @Inject constructor(
 
 	init {
 		updateJob = launchJob(Dispatchers.IO) {
-			val contentTypes = allSources.mapSortedByCount { it.contentType }
+			val contentTypes = allSources.mapSortedByCount { it.contentTypeOrNull() ?: ContentType.OTHER }
 			types.value = types.value.copy(
 				availableItems = contentTypes,
+				selectedItems = buildSet {
+					add(ContentType.MANGA)
+					if (ContentType.NOVEL in contentTypes) add(ContentType.NOVEL)
+				},
 				isLoading = false,
 			)
 			val languages = localesGroups.keys.associateBy { x -> x.language }
@@ -123,18 +133,24 @@ class WelcomeViewModel @Inject constructor(
 	private suspend fun commit() {
 		val languages = locales.value.selectedItems.mapToSet { it.language }
 		val types = types.value.selectedItems
-		val enabledSources = allSources.filterTo(EnumSet.noneOf(MangaParserSource::class.java)) { x ->
-			x.contentType in types && x.locale in languages
+		val enabledSources = allSources.filter { source ->
+			val type = source.contentTypeOrNull()
+			val language = source.getLocale()?.language.orEmpty()
+			type != null && type in types && language in languages
 		}
 		// Never leave the app without a single source: the sheet is dismissible now, and a user who
 		// unticks everything must still end up with a working library instead of empty screens
 		val safe = if (enabledSources.isEmpty()) {
-			allSources.filterTo(EnumSet.noneOf(MangaParserSource::class.java)) { x ->
-				x.contentType == ContentType.MANGA
-			}
+			allSources.filter { it.contentTypeOrNull() == ContentType.MANGA }
 		} else {
 			enabledSources
 		}
-		repository.setSourcesEnabledExclusive(safe)
+		repository.setSourcesEnabledExclusive(safe.toSet())
+	}
+
+	private fun MangaSource.contentTypeOrNull(): ContentType? = when (this) {
+		is MangaParserSource -> contentType
+		is NovelParserSource -> contentType
+		else -> null
 	}
 }

@@ -151,13 +151,15 @@ class RanobeLibRepository(
 		val data = JSONObject(fetchString("$apiBase/manga/${chapter.url}", headers))
 			.optJSONObject("data")
 			?: return emptyList()
-		val content = data.optString("content").takeIf { it.isNotBlank() }
-			?: data.optString("body").takeIf { it.isNotBlank() }
-			?: return emptyList()
+		val content = data.opt("content") ?: data.opt("body") ?: return emptyList()
+		val html = RanobeLibContentParser.toHtml(content, data.opt("attachments"))
+		if (html.isBlank()) {
+			return emptyList()
+		}
 		return listOf(
 			MangaPage(
 				id = chapter.id,
-				url = content,
+				url = html,
 				preview = null,
 				source = source,
 			),

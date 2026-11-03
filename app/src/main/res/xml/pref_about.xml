@@ -47,6 +47,13 @@
 		app:allowDividerAbove="true" />
 
 	<Preference
+		android:key="about_legal"
+		android:icon="@drawable/ic_info_outline"
+		android:persistent="false"
+		android:summary="@string/legal_notice_summary"
+		android:title="@string/legal_notice" />
+
+	<Preference
 		android:key="about_github"
 		android:icon="@drawable/ic_web"
 		android:persistent="false"

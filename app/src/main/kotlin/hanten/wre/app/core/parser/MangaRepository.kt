@@ -114,6 +114,11 @@ interface MangaRepository {
 					cache = contentCache,
 					httpClient = loaderContext.httpClient,
 				)
+
+				NovelParserSource.RANOBE_ME -> hanten.wre.app.novel.data.source.RanobeMeRepository(
+					cache = contentCache,
+					httpClient = loaderContext.httpClient,
+				)
 			}
 
 			TestMangaSource -> TestMangaRepository(
