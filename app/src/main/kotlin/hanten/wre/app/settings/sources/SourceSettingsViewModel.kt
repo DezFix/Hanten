@@ -24,6 +24,7 @@ import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.mihon.MihonMangaRepository
+import hanten.wre.app.novel.data.source.BaseNovelRepository
 import hanten.wre.app.parsers.MangaParserAuthProvider
 import hanten.wre.app.parsers.exception.AuthRequiredException
 import javax.inject.Inject
@@ -54,6 +55,9 @@ class SourceSettingsViewModel @Inject constructor(
 				browserUrl.value = "https://${repository.domain}"
 				repository.getConfig().subscribe(this)
 				loadUsername(repository.getAuthProvider())
+			}
+			is BaseNovelRepository -> {
+				browserUrl.value = "https://${repository.source.domain}"
 			}
 			is MihonMangaRepository -> {
 				val httpSource = repository.mihonSource as? HttpSource
