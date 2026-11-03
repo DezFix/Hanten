@@ -33,6 +33,7 @@ import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.databinding.ActivityNovelReaderBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.source.BaseNovelRepository
+import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.reader.ui.ReaderState
@@ -47,6 +48,7 @@ import java.io.File
 import java.io.FilterInputStream
 import java.io.InputStream
 import java.time.Instant
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -158,11 +160,17 @@ class NovelReaderActivity :
 			javaScriptEnabled = true
 			domStorageEnabled = true
 			allowFileAccess = true
-			loadWithOverviewMode = true
-			useWideViewPort = true
+			loadWithOverviewMode = false
+			useWideViewPort = false
+			textZoom = 100
 			displayZoomControls = false
 			builtInZoomControls = false
 			defaultUserAgent = userAgentString
+		}
+		with(viewBinding.webView) {
+			isVerticalScrollBarEnabled = false
+			isHorizontalScrollBarEnabled = false
+			overScrollMode = View.OVER_SCROLL_NEVER
 		}
 
 		viewBinding.webView.setBackgroundColor(readerSettings.effectiveBackgroundColor)
@@ -265,9 +273,8 @@ class NovelReaderActivity :
 		safeTopPx = top
 		safeBottomPx = bottom
 		if (isWebViewReady) {
-			val percent = viewModel.scrollProgress.value.coerceIn(0f, 1f)
 			viewBinding.webView.evaluateJavascript(
-				"window.setSafeArea($top, $bottom); window.restoreProgress($percent);",
+				"window.captureAnchor(); window.setSafeArea($top, $bottom); window.restoreAnchor();",
 				null,
 			)
 		}
@@ -421,6 +428,12 @@ class NovelReaderActivity :
 		)
 	}
 
+	private fun contentLanguage(): String {
+		val source = viewModel.manga.value?.source
+		val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
+		return novelSource?.locale?.takeIf { it.isNotBlank() } ?: Locale.getDefault().language
+	}
+
 	private fun renderChapterContent(html: String) {
 		val title = viewModel.currentChapter.value?.title ?: ""
 		val bookmarkState = queueBookmarkRestore()
@@ -437,6 +450,7 @@ class NovelReaderActivity :
 			safeTopPx = safeTopPx,
 			safeBottomPx = safeBottomPx,
 			density = resources.displayMetrics.density,
+			language = contentLanguage(),
 		)
 		val chapterUrl = viewModel.currentChapter.value?.url?.substringBefore('#')
 		val isOnline = !chapterUrl.isNullOrEmpty() && (chapterUrl.startsWith("http://") || chapterUrl.startsWith("https://"))
@@ -592,6 +606,7 @@ class NovelReaderActivity :
 		readerSettings = settings
 		viewBinding.webView.setBackgroundColor(settings.effectiveBackgroundColor)
 		applySystemBarsVisibility()
+		viewBinding.coordinator.post { updateReaderSafeArea() }
 
 		if (modeChanged && settings.readingMode == NovelReadingMode.PAGED && isAutoScrollActive) {
 			isAutoScrollActive = false
@@ -604,7 +619,6 @@ class NovelReaderActivity :
 				renderChapterContent(currentHtml)
 			}
 		} else {
-			val percent = viewModel.scrollProgress.value.coerceIn(0f, 1f)
 			val cssText = org.json.JSONObject.quote(
 				settings.toCssVariables(
 					safeTopPx = safeTopPx,
@@ -613,7 +627,7 @@ class NovelReaderActivity :
 				),
 			)
 			viewBinding.webView.evaluateJavascript(
-				"window.applySettings($cssText); window.restoreProgress($percent);",
+				"window.applySettings($cssText);",
 				null,
 			)
 		}
@@ -642,17 +656,25 @@ class NovelReaderActivity :
 			val delta = if (appSettings.isReaderNavigationInverted) 1 else -1
 			when (keyCode) {
 				KeyEvent.KEYCODE_VOLUME_UP -> {
-					viewModel.switchChapter(delta)
+					turnPageOrChapter(delta)
 					return true
 				}
 
 				KeyEvent.KEYCODE_VOLUME_DOWN -> {
-					viewModel.switchChapter(-delta)
+					turnPageOrChapter(-delta)
 					return true
 				}
 			}
 		}
 		return super.onKeyDown(keyCode, event)
+	}
+
+	private fun turnPageOrChapter(delta: Int) {
+		if (readerSettings.readingMode == NovelReadingMode.PAGED) {
+			viewBinding.webView.evaluateJavascript("window.turnPage($delta);", null)
+		} else {
+			viewModel.switchChapter(delta)
+		}
 	}
 
 	override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {

@@ -12,6 +12,7 @@ object NovelHtmlTemplate {
 		safeTopPx: Int = 0,
 		safeBottomPx: Int = 0,
 		density: Float = 1f,
+		language: String = "en",
 	): String {
 		val cssVars = settings.toCssVariables(safeTopPx, safeBottomPx, density)
 		val isPaged = settings.readingMode == NovelReadingMode.PAGED
@@ -26,20 +27,20 @@ object NovelHtmlTemplate {
 				padding: 0;
 			}
 			#reader-container {
-				width: 100vw;
-				height: 100vh;
-				overflow-x: scroll;
+				position: fixed;
+				inset: 0;
+				overflow-x: auto;
 				overflow-y: hidden;
-				scroll-snap-type: x mandatory;
+				overscroll-behavior: contain;
 				-webkit-overflow-scrolling: touch;
 			}
 			#content {
-				column-width: 100vw;
-				column-gap: 0px;
+				column-width: var(--column-width, 100vw);
+				column-gap: var(--page-gap, 0px);
 				column-fill: auto;
 				height: calc(100vh - var(--reader-safe-top) - var(--reader-safe-bottom) - 2 * var(--reader-page-margin));
 				margin: calc(var(--reader-safe-top) + var(--reader-page-margin)) 0 calc(var(--reader-safe-bottom) + var(--reader-page-margin)) 0;
-				padding: 0 var(--reader-page-margin);
+				padding: 0 calc(var(--page-gap, 0px) / 2);
 				box-sizing: border-box;
 			}
 			"""
@@ -61,7 +62,7 @@ object NovelHtmlTemplate {
 
 		return """
 		<!DOCTYPE html>
-		<html>
+		<html lang="$language">
 		<head>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -80,21 +81,41 @@ object NovelHtmlTemplate {
 					transition: background-color 0.2s ease, color 0.2s ease;
 					-webkit-text-size-adjust: 100%;
 					user-select: text;
+					overflow-wrap: break-word;
+					hyphens: var(--reader-hyphens);
+					-webkit-hyphens: var(--reader-hyphens);
+					widows: 2;
+					orphans: 2;
 				}
 				p {
 					margin: 0 0 var(--reader-paragraph-margin) 0;
+					text-indent: var(--reader-indent);
 					text-align: var(--reader-text-align);
 					word-wrap: break-word;
 					text-rendering: optimizeLegibility;
 				}
-				h1, h2, h3, h4 {
+				h1 + p, h2 + p, h3 + p, h4 + p,
+				blockquote p, li p, figcaption p {
+					text-indent: 0;
+				}
+				h1, h2, h3, h4, h5, h6 {
 					color: var(--reader-text);
 					margin: 1.5em 0 0.8em 0;
-					text-align: center;
+					text-align: left;
+					text-indent: 0;
+					break-after: avoid;
+					-webkit-column-break-after: avoid;
+				}
+				img, figure, table, pre, blockquote, svg {
+					break-inside: avoid;
+					-webkit-column-break-inside: avoid;
+					page-break-inside: avoid;
 				}
 				img {
 					max-width: 100%;
+					max-height: 90vh;
 					height: auto;
+					object-fit: contain;
 					display: block;
 					margin: 1.2em auto;
 					border-radius: 6px;
@@ -127,6 +148,7 @@ object NovelHtmlTemplate {
 				const PROGRESS_NOTIFY_INTERVAL_MS = 1000;
 				let isNearBottomNotified = false;
 				let lastProgressNotifyTs = 0;
+				let pageStep = window.innerWidth;
 
 				let autoScrollSpeed = ${settings.autoScrollSpeed};
 				let autoScrollRunning = false;
@@ -144,12 +166,40 @@ object NovelHtmlTemplate {
 					}
 				}
 
+				function relayoutPaged() {
+					if (!isPagedMode) return;
+					const container = document.getElementById('reader-container');
+					const content = document.getElementById('content');
+					if (!container || !content) return;
+					const size = container.clientWidth;
+					if (size <= 0) return;
+					const rootStyle = getComputedStyle(document.documentElement);
+					const margin = parseFloat(rootStyle.getPropertyValue('--reader-page-margin')) || 0;
+					const fontSize = parseFloat(rootStyle.getPropertyValue('--reader-font-size')) || 18;
+					const gap = margin * 2;
+					const divisor = Math.max(1, Math.min(2, Math.ceil(size / (34 * fontSize))));
+					const columnWidth = Math.max(1, size / divisor - gap);
+					content.style.setProperty('--page-gap', gap + 'px');
+					content.style.setProperty('--column-width', columnWidth + 'px');
+					pageStep = size;
+				}
+
+				function pageCount() {
+					const container = document.getElementById('reader-container');
+					if (!container || pageStep <= 0) return 1;
+					return Math.max(1, Math.round(container.scrollWidth / pageStep));
+				}
+
+				function currentPageIndex() {
+					const container = document.getElementById('reader-container');
+					if (!container || pageStep <= 0) return 0;
+					return Math.max(0, Math.round(container.scrollLeft / pageStep));
+				}
+
 				function notifyScroll() {
 					if (isPagedMode) {
-						const container = document.getElementById('reader-container');
-						if (!container) return;
-						const cur = Math.round(container.scrollLeft / window.innerWidth) + 1;
-						const total = Math.round(container.scrollWidth / window.innerWidth) || 1;
+						const total = pageCount();
+						const cur = Math.min(total, currentPageIndex() + 1);
 						if (window.AndroidNovelBridge) {
 							window.AndroidNovelBridge.onPageChanged(cur, total);
 							window.AndroidNovelBridge.onScrollProgress(cur / total);
@@ -182,48 +232,67 @@ object NovelHtmlTemplate {
 					window.addEventListener('scroll', notifyScroll, { passive: true });
 				}
 
-				// Touch / Tap handling
-				document.addEventListener('click', function(e) {
-					// Ignore if user clicked a link or interacted with a form control
-					if (e.target.closest('a, input, textarea, select')) return;
+				// Touch / Tap handling. Use pointerup with a small threshold so swipes
+				// do not accidentally turn a page or switch a chapter.
+				let tapStartX = 0;
+				let tapStartY = 0;
 
-					// Ignore taps that finish a text selection
+				function atPageEnd() {
+					const container = document.getElementById('reader-container');
+					if (!container) return true;
+					return container.scrollLeft >= container.scrollWidth - container.clientWidth - 2;
+				}
+
+				function atPageStart() {
+					const container = document.getElementById('reader-container');
+					if (!container) return true;
+					return container.scrollLeft <= 2;
+				}
+
+				function turnPage(direction) {
+					if (!isPagedMode) {
+						if (window.AndroidNovelBridge) {
+							if (direction < 0) window.AndroidNovelBridge.requestPreviousChapter();
+							else window.AndroidNovelBridge.requestNextChapter();
+						}
+						return;
+					}
+					const container = document.getElementById('reader-container');
+					if (!container) return;
+					if (direction > 0 && atPageEnd()) {
+						if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestNextChapter();
+						return;
+					}
+					if (direction < 0 && atPageStart()) {
+						if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestPreviousChapter();
+						return;
+					}
+					container.scrollBy({ left: direction * pageStep, behavior: 'smooth' });
+				}
+
+				document.addEventListener('pointerdown', function(e) {
+					tapStartX = e.clientX;
+					tapStartY = e.clientY;
+				}, { passive: true });
+
+				document.addEventListener('pointerup', function(e) {
+					if (Math.abs(e.clientX - tapStartX) > 8 || Math.abs(e.clientY - tapStartY) > 8) return;
+					if (e.target.closest('a, input, textarea, select')) return;
 					const selection = window.getSelection();
 					if (selection && selection.toString().length > 0) return;
 
 					const width = window.innerWidth;
 					const x = e.clientX;
-
-					if (isPagedMode) {
-						const leftZone = width * 0.3;
-						const rightZone = width * 0.7;
-						const container = document.getElementById('reader-container');
-
-						if (x < leftZone) {
-							// Previous page
-							if (container) container.scrollBy({ left: -width, behavior: 'smooth' });
-						} else if (x > rightZone) {
-							// Next page
-							if (container) container.scrollBy({ left: width, behavior: 'smooth' });
-						} else {
-							// Center tap: toggle UI
-							if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
-						}
+					const leftZone = isPagedMode ? width * 0.3 : width * 0.25;
+					const rightZone = isPagedMode ? width * 0.7 : width * 0.75;
+					if (x < leftZone) {
+						turnPage(-1);
+					} else if (x > rightZone) {
+						turnPage(1);
 					} else {
-						const leftZone = width * 0.25;
-						const rightZone = width * 0.75;
-						if (x < leftZone) {
-							// Left zone: previous chapter
-							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestPreviousChapter();
-						} else if (x > rightZone) {
-							// Right zone: next chapter
-							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestNextChapter();
-						} else {
-							// Center tap: toggle UI
-							if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
-						}
+						if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
 					}
-				});
+				}, { passive: true });
 
 				function appendChapter(title, chapterHtml) {
 					const content = document.getElementById('content');
@@ -241,46 +310,97 @@ object NovelHtmlTemplate {
 						content.appendChild(tempDiv.firstChild);
 					}
 					assignParagraphIds();
+					if (isPagedMode) relayoutPaged();
 					isNearBottomNotified = false;
 				}
 
 				function updateStyles(cssText) {
+					captureAnchor();
 					const styleTag = document.getElementById('reader-dynamic-styles');
 					if (styleTag) {
 						styleTag.innerHTML = cssText;
 					}
+					if (isPagedMode) {
+						// Force reflow before recalculating page count.
+						void document.body.offsetWidth;
+						relayoutPaged();
+					}
+					restoreAnchor();
 				}
 
 				function scrollToPercent(percent) {
+					const p = Math.min(1.0, Math.max(0.0, percent || 0));
 					if (isPagedMode) {
 						const container = document.getElementById('reader-container');
-						if (container) {
-							container.scrollLeft = (container.scrollWidth - window.innerWidth) * percent;
-						}
+						if (!container) return;
+						const pages = pageCount();
+						const page = Math.max(0, Math.min(pages - 1, Math.round(p * (pages - 1))));
+						container.scrollLeft = page * pageStep;
 					} else {
 						const maxScroll = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
-						window.scrollTo(0, maxScroll * percent);
+						window.scrollTo(0, maxScroll * p);
 					}
 				}
 
 				function restoreProgress(percent) {
-					const p = Math.min(1.0, Math.max(0.0, percent || 0));
-					if (p <= 0) return;
-					if (isPagedMode) {
-						const container = document.getElementById('reader-container');
-						if (!container) return;
-						const totalPages = Math.round(container.scrollWidth / window.innerWidth) || 1;
-						const page = Math.round(p * totalPages) - 1;
-						container.scrollLeft = Math.max(0, Math.min(totalPages - 1, page)) * window.innerWidth;
-						return;
-					}
-					scrollToPercent(p);
+					scrollToPercent(percent);
 				}
 
 				function setSafeArea(top, bottom) {
 					const root = document.documentElement;
 					root.style.setProperty('--reader-safe-top', Math.max(0, top | 0) + 'px');
 					root.style.setProperty('--reader-safe-bottom', Math.max(0, bottom | 0) + 'px');
+				}
+
+				// Keep the same block at the top when CSS/safe-area changes cause reflow.
+				let savedAnchor = null;
+
+				function blockTop(block) {
+					if (isPagedMode) {
+						const container = document.getElementById('reader-container');
+						const rect = block.getBoundingClientRect();
+						const containerRect = container.getBoundingClientRect();
+						return rect.left - containerRect.left + container.scrollLeft;
+					}
+					return block.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+				}
+
+				function captureAnchor() {
+					const blocks = getParagraphElements();
+					if (!blocks.length) return;
+					const position = isPagedMode
+						? document.getElementById('reader-container').scrollLeft
+						: (window.scrollY || window.pageYOffset);
+					let index = 0;
+					for (let i = 0; i < blocks.length; i++) {
+						if (blockTop(blocks[i]) <= position + 1) index = i; else break;
+					}
+					const block = blocks[index];
+					const top = blockTop(block);
+					const size = isPagedMode ? block.getBoundingClientRect().width : block.getBoundingClientRect().height;
+					savedAnchor = {
+						index: index,
+						fraction: size > 0 ? Math.max(0, Math.min(1, (position - top) / size)) : 0,
+					};
+				}
+
+				function restoreAnchor() {
+					const anchor = savedAnchor;
+					savedAnchor = null;
+					if (!anchor) return;
+					const blocks = getParagraphElements();
+					const block = blocks[Math.max(0, Math.min(blocks.length - 1, anchor.index))];
+					if (!block) return;
+					const top = blockTop(block);
+					const size = isPagedMode ? block.getBoundingClientRect().width : block.getBoundingClientRect().height;
+					const target = Math.max(0, top + size * anchor.fraction);
+					if (isPagedMode) {
+						const container = document.getElementById('reader-container');
+						const page = Math.floor(target / pageStep);
+						container.scrollLeft = page * pageStep;
+					} else {
+						window.scrollTo(0, target);
+					}
 				}
 
 				// Paragraph anchors for bookmarks
@@ -330,8 +450,8 @@ object NovelHtmlTemplate {
 						if (!container) return false;
 						const containerRect = container.getBoundingClientRect();
 						const offset = target.getBoundingClientRect().left - containerRect.left + container.scrollLeft;
-						const page = Math.max(0, Math.floor(offset / window.innerWidth));
-						container.scrollLeft = page * window.innerWidth;
+						const page = Math.max(0, Math.floor(offset / pageStep));
+						container.scrollLeft = page * pageStep;
 					} else {
 						const top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - 8;
 						window.scrollTo(0, Math.max(0, top));
@@ -410,18 +530,24 @@ object NovelHtmlTemplate {
 				window.restoreProgress = restoreProgress;
 				window.applySettings = updateStyles;
 				window.setSafeArea = setSafeArea;
+				window.captureAnchor = captureAnchor;
+				window.restoreAnchor = restoreAnchor;
 				window.getCurrentParagraph = getCurrentParagraph;
 				window.scrollToParagraph = scrollToParagraph;
 				window.restoreBookmark = restoreBookmark;
 				window.setAutoScrollSpeed = setAutoScrollSpeed;
 				window.startAutoScroll = startAutoScroll;
 				window.stopAutoScroll = stopAutoScroll;
+				window.turnPage = turnPage;
 
 				assignParagraphIds();
+				relayoutPaged();
+				window.addEventListener('resize', relayoutPaged);
 
 				if (initialProgress > 0) {
 					window.addEventListener('load', function() {
 						setTimeout(function() {
+							relayoutPaged();
 							restoreProgress(initialProgress);
 						}, 60);
 					});
