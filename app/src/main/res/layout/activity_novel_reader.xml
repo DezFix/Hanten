@@ -125,6 +125,14 @@
 					tools:text="Chapter 1 (45%)" />
 
 				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_bookmark"
+					style="?materialIconButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/bookmark_add"
+					app:icon="@drawable/ic_bookmark" />
+
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_font_settings"
 					style="?materialIconButtonFilledTonalStyle"
 					android:layout_width="wrap_content"

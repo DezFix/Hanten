@@ -30,6 +30,11 @@ class BookmarksRepository @Inject constructor(
 			.distinctUntilChanged()
 	}
 
+	fun observeBookmark(manga: Manga, chapterId: Long): Flow<Bookmark?> {
+		return db.getBookmarksDao().observeByChapter(manga.id, chapterId).map { it?.toBookmark(manga) }
+			.distinctUntilChanged()
+	}
+
 	fun observeBookmarks(manga: Manga): Flow<List<Bookmark>> {
 		return db.getBookmarksDao().observe(manga.id).mapItems { it.toBookmark(manga) }
 			.distinctUntilChanged()

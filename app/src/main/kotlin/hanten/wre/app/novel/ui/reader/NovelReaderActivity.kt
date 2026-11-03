@@ -2,11 +2,14 @@ package hanten.wre.app.novel.ui.reader
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -14,22 +17,32 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.bookmarks.domain.Bookmark
+import hanten.wre.app.bookmarks.domain.BookmarksRepository
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.util.MimeTypes
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
+import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.databinding.ActivityNovelReaderBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.source.BaseNovelRepository
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.reader.ui.ScreenOrientationHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.FilterInputStream
 import java.io.InputStream
+import java.time.Instant
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class NovelReaderActivity :
@@ -45,6 +58,15 @@ class NovelReaderActivity :
 	@Inject
 	@MangaHttpClient
 	lateinit var baseOkHttpClient: OkHttpClient
+
+	@Inject
+	lateinit var screenOrientationHelper: ScreenOrientationHelper
+
+	@Inject
+	lateinit var bookmarksRepository: BookmarksRepository
+
+	private var bookmarks: List<Bookmark> = emptyList()
+	private var bookmarkJob: Job? = null
 
 	private val imageOkHttpClient by lazy {
 		baseOkHttpClient.newBuilder()
@@ -74,9 +96,17 @@ class NovelReaderActivity :
 		setupWebView()
 		setupControls()
 		observeViewModel()
+		screenOrientationHelper.applySettings()
+		applyKeepScreenOn()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		applyKeepScreenOn()
 	}
 
 	override fun onDestroy() {
+		bookmarkJob?.cancel()
 		viewBinding.webView.destroy()
 		super.onDestroy()
 	}
@@ -207,6 +237,7 @@ class NovelReaderActivity :
 		viewBinding.buttonFontSettings.setOnClickListener {
 			NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
 		}
+		viewBinding.buttonBookmark.setOnClickListener { toggleBookmark() }
 
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)
@@ -218,6 +249,7 @@ class NovelReaderActivity :
 			if (manga != null) {
 				title = manga.title
 				supportActionBar?.title = manga.title
+				observeBookmarks(manga)
 			}
 		}
 
@@ -228,6 +260,7 @@ class NovelReaderActivity :
 				val total = viewModel.chapters.value.size
 				viewBinding.textProgress.text = if (total > 0) "$idx / $total" else chapter.title
 			}
+			updateBookmarkButton()
 		}
 
 		viewModel.isReadingLoading.observe(this) { loading ->
@@ -250,6 +283,56 @@ class NovelReaderActivity :
 		viewModel.scrollProgress.observe(this) { percent ->
 			if (!isSliderTracking) {
 				viewBinding.sliderProgress.value = (percent * 100f).coerceIn(0f, 100f)
+			}
+		}
+	}
+
+	private fun observeBookmarks(manga: Manga) {
+		bookmarkJob?.cancel()
+		bookmarkJob = lifecycleScope.launch {
+			bookmarksRepository.observeBookmarks(manga).collect { items ->
+				bookmarks = items
+				updateBookmarkButton()
+			}
+		}
+	}
+
+	private fun updateBookmarkButton() {
+		val chapterId = viewModel.currentChapter.value?.id
+		val isBookmarked = bookmarks.any { it.chapterId == chapterId }
+		viewBinding.buttonBookmark.setIconResource(
+			if (isBookmarked) R.drawable.ic_bookmark_added else R.drawable.ic_bookmark,
+		)
+		viewBinding.buttonBookmark.setContentDescriptionAndTooltip(
+			if (isBookmarked) R.string.bookmark_remove else R.string.bookmark_add,
+		)
+	}
+
+	private fun toggleBookmark() {
+		val manga = viewModel.manga.value ?: return
+		val chapter = viewModel.currentChapter.value ?: return
+		val existing = bookmarks.firstOrNull { it.chapterId == chapter.id }
+		lifecycleScope.launch(Dispatchers.IO) {
+			if (existing != null) {
+				bookmarksRepository.removeBookmarks(setOf(existing.pageId))
+			} else {
+				val percent = viewModel.scrollProgress.value.coerceIn(0.01f, 1f)
+				bookmarksRepository.addBookmark(
+					Bookmark(
+						manga = manga.copy(chapters = viewModel.chapters.value),
+						pageId = chapter.id,
+						chapterId = chapter.id,
+						page = (percent * 100).roundToInt().coerceIn(1, 100),
+						scroll = 0,
+						imageUrl = manga.coverUrl.orEmpty(),
+						createdAt = Instant.now(),
+						percent = percent,
+					),
+				)
+			}
+			val message = if (existing != null) R.string.bookmark_remove else R.string.bookmark_add
+			launch(Dispatchers.Main) {
+				Toast.makeText(this@NovelReaderActivity, message, Toast.LENGTH_SHORT).show()
 			}
 		}
 	}
@@ -410,6 +493,42 @@ class NovelReaderActivity :
 	override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
 		if (fromUser) {
 			viewBinding.textProgress.text = "${value.toInt()}%"
+		}
+	}
+
+	override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+		if (appSettings.isReaderVolumeButtonsEnabled) {
+			val delta = if (appSettings.isReaderNavigationInverted) 1 else -1
+			when (keyCode) {
+				KeyEvent.KEYCODE_VOLUME_UP -> {
+					viewModel.switchChapter(delta)
+					return true
+				}
+
+				KeyEvent.KEYCODE_VOLUME_DOWN -> {
+					viewModel.switchChapter(-delta)
+					return true
+				}
+			}
+		}
+		return super.onKeyDown(keyCode, event)
+	}
+
+	override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+		if (appSettings.isReaderVolumeButtonsEnabled &&
+			(keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
+		) {
+			return true
+		}
+		return super.onKeyUp(keyCode, event)
+	}
+
+	private fun applyKeepScreenOn() {
+		val flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+		if (appSettings.isReaderKeepScreenOn) {
+			window.addFlags(flags)
+		} else {
+			window.clearFlags(flags)
 		}
 	}
 

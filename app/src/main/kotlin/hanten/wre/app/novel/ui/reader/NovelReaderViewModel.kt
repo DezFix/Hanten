@@ -3,6 +3,7 @@ package hanten.wre.app.novel.ui.reader
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.MangaDataRepository
@@ -85,6 +86,9 @@ class NovelReaderViewModel @Inject constructor(
 
 	@Volatile
 	private var isChapterContentReady = false
+
+	private val isIncognito: Boolean =
+		savedStateHandle.get<Boolean>(ReaderIntent.EXTRA_INCOGNITO) ?: false
 
 	val contentBaseUrl: String
 		get() {
@@ -231,6 +235,7 @@ class NovelReaderViewModel @Inject constructor(
 			_isReadingLoading.value = true
 			try {
 				restoreScrollProgress(target)
+				applyInitialProgress(target)
 				val content = prefetchedChapters.remove(target.id) ?: fetchChapterHtml(target)
 				if (content.isNullOrBlank()) {
 					setChapterContent("<div style='padding: 32px; text-align: center;'><p>Unable to load chapter content.</p><p style='opacity: 0.7; font-size: 0.9em;'>Please check your network connection and try again.</p></div>")
@@ -275,8 +280,27 @@ class NovelReaderViewModel @Inject constructor(
 		}
 	}
 
+	private fun applyInitialProgress(chapter: MangaChapter) {
+		val state = initialState ?: return
+		if (state.chapterId != chapter.id) return
+		val percent = when {
+			state.page in 1..100 -> state.page / 100f
+			state.scroll in 1..100 -> state.scroll / 100f
+			else -> return
+		}
+		_scrollProgress.value = percent
+	}
+
+	private fun isIncognitoMode(manga: Manga): Boolean {
+		return isIncognito || settings.isIncognitoModeEnabled(manga.isNsfw())
+	}
+
 	private suspend fun restoreScrollProgress(chapter: MangaChapter) {
 		val cur = _manga.value ?: return
+		if (isIncognitoMode(cur)) {
+			_scrollProgress.value = 0f
+			return
+		}
 		val history = try {
 			historyRepository.getOne(cur)
 		} catch (e: CancellationException) {
@@ -356,6 +380,7 @@ class NovelReaderViewModel @Inject constructor(
 	private fun saveReadingProgress(percent: Float) {
 		val cur = _manga.value ?: return
 		val chap = _currentChapter.value ?: return
+		if (isIncognitoMode(cur)) return
 		viewModelScope.launch(Dispatchers.IO) {
 			val chaps = _chapters.value
 			historyRepository.addOrUpdate(
