@@ -11,11 +11,6 @@ import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
 import kotlin.math.roundToInt
 
-enum class NovelTapAction {
-	PAGE,
-	CHAPTER,
-}
-
 data class NovelReaderSettings(
 	val fontSizeSp: Float = 18f,
 	val theme: NovelTheme = NovelTheme.DARK,
@@ -29,8 +24,6 @@ data class NovelReaderSettings(
 	val readingMode: NovelReadingMode = NovelReadingMode.CONTINUOUS_SCROLL,
 	val fullscreen: Boolean = false,
 	val autoScrollSpeed: Float = 0f,
-	val leftTapAction: NovelTapAction = NovelTapAction.PAGE,
-	val rightTapAction: NovelTapAction = NovelTapAction.PAGE,
 ) {
 	val effectiveBackgroundColor: Int
 		get() = if (theme == NovelTheme.CUSTOM) customBackgroundColor else theme.backgroundColor
@@ -75,8 +68,6 @@ data class NovelReaderSettings(
 		private const val KEY_READING_MODE = "novel_reading_mode"
 		private const val KEY_FULLSCREEN = "novel_fullscreen"
 		private const val KEY_AUTO_SCROLL_SPEED = "novel_auto_scroll_speed"
-		private const val KEY_LEFT_TAP_ACTION = "novel_tap_left_action"
-		private const val KEY_RIGHT_TAP_ACTION = "novel_tap_right_action"
 
 		fun load(context: Context): NovelReaderSettings {
 			val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -93,8 +84,6 @@ data class NovelReaderSettings(
 				readingMode = prefs.getEnumValue(KEY_READING_MODE, NovelReadingMode.CONTINUOUS_SCROLL),
 				fullscreen = prefs.getBoolean(KEY_FULLSCREEN, false),
 				autoScrollSpeed = prefs.getFloat(KEY_AUTO_SCROLL_SPEED, 0f),
-				leftTapAction = prefs.getEnumValue(KEY_LEFT_TAP_ACTION, NovelTapAction.PAGE),
-				rightTapAction = prefs.getEnumValue(KEY_RIGHT_TAP_ACTION, NovelTapAction.PAGE),
 			)
 		}
 
@@ -113,8 +102,6 @@ data class NovelReaderSettings(
 				putEnumValue(KEY_READING_MODE, settings.readingMode)
 				putBoolean(KEY_FULLSCREEN, settings.fullscreen)
 				putFloat(KEY_AUTO_SCROLL_SPEED, settings.autoScrollSpeed)
-				putEnumValue(KEY_LEFT_TAP_ACTION, settings.leftTapAction)
-				putEnumValue(KEY_RIGHT_TAP_ACTION, settings.rightTapAction)
 			}
 		}
 	}

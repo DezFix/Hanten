@@ -545,12 +545,12 @@ class NovelReaderActivity :
 
 	private fun applySystemBarsVisibility() {
 		val controller = WindowCompat.getInsetsController(window, window.decorView)
-		if (isUiVisible || !readerSettings.fullscreen) {
-			controller.show(WindowInsetsCompat.Type.systemBars())
-			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-		} else {
+		if (readerSettings.fullscreen) {
 			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 			controller.hide(WindowInsetsCompat.Type.systemBars())
+		} else {
+			controller.show(WindowInsetsCompat.Type.systemBars())
+			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
 		}
 	}
 
@@ -612,11 +612,8 @@ class NovelReaderActivity :
 					density = resources.displayMetrics.density,
 				),
 			)
-			val leftAction = org.json.JSONObject.quote(settings.leftTapAction.name)
-			val rightAction = org.json.JSONObject.quote(settings.rightTapAction.name)
 			viewBinding.webView.evaluateJavascript(
-				"window.applySettings($cssText); window.setTapZones($leftAction, $rightAction); " +
-					"window.restoreProgress($percent);",
+				"window.applySettings($cssText); window.restoreProgress($percent);",
 				null,
 			)
 		}

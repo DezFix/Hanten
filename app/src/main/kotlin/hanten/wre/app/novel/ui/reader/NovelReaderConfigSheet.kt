@@ -94,16 +94,6 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 		// Fullscreen
 		binding.switchFullscreen.isChecked = currentSettings.fullscreen
-
-		// Tap zones
-		when (currentSettings.leftTapAction) {
-			NovelTapAction.PAGE -> binding.buttonLeftPage.isChecked = true
-			NovelTapAction.CHAPTER -> binding.buttonLeftChapter.isChecked = true
-		}
-		when (currentSettings.rightTapAction) {
-			NovelTapAction.PAGE -> binding.buttonRightPage.isChecked = true
-			NovelTapAction.CHAPTER -> binding.buttonRightChapter.isChecked = true
-		}
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -179,28 +169,6 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 		binding.switchFullscreen.setOnCheckedChangeListener { _, isChecked ->
 			updateSettings { copy(fullscreen = isChecked) }
-		}
-
-		binding.toggleGroupLeftZone.addOnButtonCheckedListener { _, checkedId, isChecked ->
-			if (isChecked) {
-				val action = if (checkedId == R.id.button_left_page) {
-					NovelTapAction.PAGE
-				} else {
-					NovelTapAction.CHAPTER
-				}
-				updateSettings { copy(leftTapAction = action) }
-			}
-		}
-
-		binding.toggleGroupRightZone.addOnButtonCheckedListener { _, checkedId, isChecked ->
-			if (isChecked) {
-				val action = if (checkedId == R.id.button_right_page) {
-					NovelTapAction.PAGE
-				} else {
-					NovelTapAction.CHAPTER
-				}
-				updateSettings { copy(rightTapAction = action) }
-			}
 		}
 	}
 

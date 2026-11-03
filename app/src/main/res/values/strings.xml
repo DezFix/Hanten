@@ -1031,9 +1031,4 @@
     <string name="novel_auto_scroll_speed">%1$.1f screens/min</string>
     <string name="novel_auto_scroll_paged">Auto-scroll is off in page flip mode</string>
     <string name="novel_fullscreen">Fullscreen</string>
-    <string name="novel_tap_zones">Tap zones</string>
-    <string name="novel_tap_left">Left edge</string>
-    <string name="novel_tap_right">Right edge</string>
-    <string name="novel_tap_page">Page</string>
-    <string name="novel_tap_chapter">Chapter</string>
 </resources>

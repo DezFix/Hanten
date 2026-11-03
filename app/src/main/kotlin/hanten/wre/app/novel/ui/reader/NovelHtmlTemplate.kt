@@ -51,9 +51,9 @@ object NovelHtmlTemplate {
 				min-height: 100vh;
 			}
 			#content {
+				width: 100%;
 				padding: calc(var(--reader-safe-top) + var(--reader-page-margin)) var(--reader-page-margin) calc(var(--reader-safe-bottom) + var(--reader-page-margin)) var(--reader-page-margin);
-				max-width: 800px;
-				margin: 0 auto;
+				margin: 0;
 				box-sizing: border-box;
 			}
 			"""
@@ -124,9 +124,7 @@ object NovelHtmlTemplate {
 				const PARAGRAPH_SELECTOR = '#content p, #content blockquote, #content h1, #content h2, #content h3, ' +
 					'#content h4, #content h5, #content h6, #content figure';
 				const AUTO_SCROLL_PAUSE_MS = 1200;
-				const PROGRESS_NOTIFY_INTERVAL_MS = 200;
-				let tapLeftAction = "${settings.leftTapAction.name}";
-				let tapRightAction = "${settings.rightTapAction.name}";
+				const PROGRESS_NOTIFY_INTERVAL_MS = 1000;
 				let isNearBottomNotified = false;
 				let lastProgressNotifyTs = 0;
 
@@ -185,22 +183,6 @@ object NovelHtmlTemplate {
 				}
 
 				// Touch / Tap handling
-				function performTapAction(action, direction) {
-					if (action === 'CHAPTER') {
-						if (window.AndroidNovelBridge) {
-							if (direction < 0) window.AndroidNovelBridge.requestPreviousChapter();
-							else window.AndroidNovelBridge.requestNextChapter();
-						}
-						return;
-					}
-					if (isPagedMode) {
-						const container = document.getElementById('reader-container');
-						if (container) container.scrollBy({ left: direction * window.innerWidth, behavior: 'smooth' });
-					} else {
-						window.scrollBy({ top: direction * window.innerHeight, behavior: 'smooth' });
-					}
-				}
-
 				document.addEventListener('click', function(e) {
 					// Ignore if user clicked a link or interacted with a form control
 					if (e.target.closest('a, input, textarea, select')) return;
@@ -211,23 +193,37 @@ object NovelHtmlTemplate {
 
 					const width = window.innerWidth;
 					const x = e.clientX;
-					const leftZone = width / 3;
-					const rightZone = width * 2 / 3;
 
-					if (x < leftZone) {
-						performTapAction(tapLeftAction, -1);
-					} else if (x > rightZone) {
-						performTapAction(tapRightAction, 1);
+					if (isPagedMode) {
+						const leftZone = width * 0.3;
+						const rightZone = width * 0.7;
+						const container = document.getElementById('reader-container');
+
+						if (x < leftZone) {
+							// Previous page
+							if (container) container.scrollBy({ left: -width, behavior: 'smooth' });
+						} else if (x > rightZone) {
+							// Next page
+							if (container) container.scrollBy({ left: width, behavior: 'smooth' });
+						} else {
+							// Center tap: toggle UI
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
+						}
 					} else {
-						// Center tap: toggle UI
-						if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
+						const leftZone = width * 0.25;
+						const rightZone = width * 0.75;
+						if (x < leftZone) {
+							// Left zone: previous chapter
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestPreviousChapter();
+						} else if (x > rightZone) {
+							// Right zone: next chapter
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.requestNextChapter();
+						} else {
+							// Center tap: toggle UI
+							if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
+						}
 					}
 				});
-
-				function setTapZones(left, right) {
-					if (left === 'PAGE' || left === 'CHAPTER') tapLeftAction = left;
-					if (right === 'PAGE' || right === 'CHAPTER') tapRightAction = right;
-				}
 
 				function appendChapter(title, chapterHtml) {
 					const content = document.getElementById('content');
@@ -417,7 +413,6 @@ object NovelHtmlTemplate {
 				window.getCurrentParagraph = getCurrentParagraph;
 				window.scrollToParagraph = scrollToParagraph;
 				window.restoreBookmark = restoreBookmark;
-				window.setTapZones = setTapZones;
 				window.setAutoScrollSpeed = setAutoScrollSpeed;
 				window.startAutoScroll = startAutoScroll;
 				window.stopAutoScroll = stopAutoScroll;
