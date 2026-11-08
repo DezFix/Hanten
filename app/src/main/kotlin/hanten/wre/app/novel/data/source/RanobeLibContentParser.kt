@@ -2,6 +2,7 @@ package hanten.wre.app.novel.data.source
 
 import org.json.JSONArray
 import org.json.JSONObject
+import org.jsoup.Jsoup
 
 /**
  * RanobeLib returns chapter text as a ProseMirror-like JSON document instead of HTML.
@@ -24,6 +25,12 @@ object RanobeLibContentParser {
 		return buildString {
 			renderNode(root, images, this)
 		}.trim()
+	}
+
+	fun toPlainText(content: Any?): String? {
+		val html = toHtml(content, null)
+		if (html.isBlank()) return null
+		return Jsoup.parse(html).text().trim().takeIf { it.isNotBlank() }
 	}
 
 	private fun parseJson(raw: String): JSONObject? {

@@ -4,6 +4,17 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.6.4
+
+### Исправлено
+- RanobeLib: описание больше не показывается сырым JSON
+- RanobeLib: прогресс больше не подставляется из номера главы при первом
+  открытии книги
+- Обновлены парсеры манги: Com-X, MangaChan, TomiloLib, InkStory и MangaWtf
+  (старый API InkStory заменён, MangaWtf скрыт как дубль)
+- Закладка открывается только при переходе из списка закладок, а не при
+  обычном открытии главы
+
 ## 2.6.3
 
 ### Улучшено

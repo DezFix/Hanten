@@ -274,7 +274,6 @@ class NovelReaderViewModel @Inject constructor(
 			_isReadingLoading.value = true
 			try {
 				restoreScrollProgress(target)
-				applyInitialProgress(target)
 				val content = prefetchedChapters.remove(target.id) ?: fetchChapterHtml(target)
 				if (content.isNullOrBlank()) {
 					setChapterContent("<div style='padding: 32px; text-align: center;'><p>Unable to load chapter content.</p><p style='opacity: 0.7; font-size: 0.9em;'>Please check your network connection and try again.</p></div>")
@@ -317,17 +316,6 @@ class NovelReaderViewModel @Inject constructor(
 				e.printStackTraceDebug()
 			}
 		}
-	}
-
-	private fun applyInitialProgress(chapter: MangaChapter) {
-		val state = initialState ?: return
-		if (state.chapterId != chapter.id) return
-		val percent = when {
-			state.page in 1..100 -> state.page / 100f
-			state.scroll in 1..100 -> state.scroll / 100f
-			else -> return
-		}
-		_scrollProgress.value = percent
 	}
 
 	private fun isIncognitoMode(manga: Manga): Boolean {

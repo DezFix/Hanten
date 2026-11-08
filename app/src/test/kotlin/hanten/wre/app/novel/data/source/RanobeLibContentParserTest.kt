@@ -62,4 +62,16 @@ class RanobeLibContentParserTest {
 	fun keepsPlainTextUntouched() {
 		assertEquals("plain text", RanobeLibContentParser.toHtml("plain text", null))
 	}
+
+	@Test
+	fun convertsJsonSummaryToPlainText() {
+		val summary = """
+			{"type":"doc","content":[
+				{"type":"paragraph","content":[{"type":"text","text":"First line"}]},
+				{"type":"paragraph","content":[{"type":"text","text":"Second line"}]}
+			]}
+		""".trimIndent()
+
+		assertEquals("First line Second line", RanobeLibContentParser.toPlainText(summary))
+	}
 }

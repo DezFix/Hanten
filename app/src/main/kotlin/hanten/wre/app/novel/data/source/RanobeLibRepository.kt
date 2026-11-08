@@ -139,7 +139,7 @@ class RanobeLibRepository(
 				?.optString("average")?.toFloatOrNull()?.div(10f) ?: 0f,
 			coverUrl = cover?.optString("thumbnail")?.takeIf { it.isNotBlank() },
 			largeCoverUrl = cover?.optString("default")?.takeIf { it.isNotBlank() },
-			description = data.optString("summary").takeIf { it.isNotBlank() },
+			description = data.opt("summary")?.let(RanobeLibContentParser::toPlainText),
 			tags = parseTags(data),
 			authors = parseAuthors(data),
 			state = parseState(data),

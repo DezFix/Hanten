@@ -102,6 +102,9 @@ class NovelReaderActivity :
 	private var defaultUserAgent: String? = null
 
 	private val initialReaderState: ReaderState? by lazy {
+		if (!intent.getBooleanExtra(ReaderIntent.EXTRA_BOOKMARK, false)) {
+			return@lazy null
+		}
 		intent.getParcelableExtraCompat<ReaderState>(ReaderIntent.EXTRA_STATE)
 	}
 

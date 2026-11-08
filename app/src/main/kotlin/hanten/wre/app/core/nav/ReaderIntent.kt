@@ -57,7 +57,9 @@ value class ReaderIntent private constructor(
 				page = bookmark.page,
 				scroll = bookmark.scroll,
 			),
-		)
+		).apply {
+			intent.putExtra(EXTRA_BOOKMARK, true)
+		}
 
 		fun build() = ReaderIntent(intent)
 	}
@@ -67,5 +69,6 @@ value class ReaderIntent private constructor(
 		const val EXTRA_STATE = "state"
 		const val EXTRA_BRANCH = "branch"
 		const val EXTRA_INCOGNITO = "incognito"
+		const val EXTRA_BOOKMARK = "bookmark"
 	}
 }
