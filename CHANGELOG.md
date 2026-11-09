@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.6.5
+
+### Исправлено
+- WaManga: главы после перезагрузки сайта открываются по актуальному UUID,
+  а не по устаревшему из кэша
+- WaManga: ссылки на manhwa используют `/manhwa/` вместо `/manga/`
+- WaManga: битые файлы страниц на стороне сайта больше не маскируются под
+  ошибку парсера
+
 ## 2.6.4
 
 ### Исправлено
