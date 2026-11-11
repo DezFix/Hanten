@@ -60,8 +60,7 @@ class NovelStorageManager @Inject constructor(
 				return@withContext parseFileToManga(resolvedFile)
 			}
 
-			val fileName = queryDisplayName(uri) ?: "novel_${System.currentTimeMillis()}"
-			val destFile = File(novelsDir, fileName)
+			val destFile = novelDestinationFile(uri) ?: return@withContext null
 
 			context.contentResolver.openInputStream(uri)?.use { input ->
 				FileOutputStream(destFile).use { output ->
@@ -116,6 +115,7 @@ class NovelStorageManager @Inject constructor(
 			val manga = if (isEpub) {
 				val epubParser = EpubParser(file)
 				val book = epubParser.parseBook()
+				epubParser.close()
 				val chapters = book?.chapters?.map { ec ->
 					MangaChapter(
 						id = ec.id,
@@ -194,6 +194,48 @@ class NovelStorageManager @Inject constructor(
 		}
 	}
 
+	private fun novelDestinationFile(uri: Uri): File? {
+		val dir = novelsDir
+		val type = try {
+			context.contentResolver.getType(uri)
+		} catch (e: Exception) {
+			null
+		}
+		val ext = when {
+			type?.contains("epub", ignoreCase = true) == true -> ".epub"
+			type?.contains("pdf", ignoreCase = true) == true -> ".pdf"
+			else -> null
+		}
+		val fallback = "novel_${System.currentTimeMillis()}${ext.orEmpty()}"
+		val rawName = queryDisplayName(uri)?.let { File(it).name }
+			?.takeIf { it.isNotBlank() && it != "." && it != ".." }
+		val name = when {
+			rawName == null -> fallback
+			rawName.endsWith(".epub", ignoreCase = true) || rawName.endsWith(".pdf", ignoreCase = true) -> rawName
+			ext != null -> rawName + ext
+			else -> fallback
+		}
+
+		val base = name.substringBeforeLast('.', name)
+		val suffix = name.substringAfterLast('.', "").let { if (it.isEmpty()) "" else ".$it" }
+		for (index in 0..MAX_DUPLICATE_INDEX) {
+			val candidateName = if (index == 0) name else "$base ($index)$suffix"
+			val candidate = File(dir, candidateName)
+			if (!candidate.exists()) {
+				return candidate.takeIf { isInside(dir, it) }
+			}
+		}
+		return null
+	}
+
+	private fun isInside(dir: File, file: File): Boolean {
+		return try {
+			file.canonicalPath.startsWith(dir.canonicalPath + File.separator)
+		} catch (e: Exception) {
+			false
+		}
+	}
+
 	private fun queryDisplayName(uri: Uri): String? {
 		return try {
 			context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
@@ -208,6 +250,8 @@ class NovelStorageManager @Inject constructor(
 	}
 
 	companion object {
+		private const val MAX_DUPLICATE_INDEX = 100
+
 		fun isSupportedFile(file: File): Boolean {
 			return file.extension.equals("epub", ignoreCase = true) ||
 				file.extension.equals("pdf", ignoreCase = true)

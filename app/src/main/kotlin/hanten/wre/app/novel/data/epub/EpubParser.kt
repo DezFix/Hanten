@@ -15,9 +15,18 @@ import java.io.InputStream
 
 class EpubParser(private val file: File) {
 
+	private var zipFs: FileSystem? = null
+
+	private fun zipFileSystem(): FileSystem = zipFs ?: FileSystem.SYSTEM.openZip(file.toOkioPath()).also { zipFs = it }
+
+	fun close() {
+		runCatching { zipFs?.close() }
+		zipFs = null
+	}
+
 	fun parseBook(): EpubBook? {
 		return try {
-			val zipFs = FileSystem.SYSTEM.openZip(file.toOkioPath())
+			val zipFs = zipFileSystem()
 			val opfPathStr = getOpfPath(zipFs) ?: return null
 			val opfPath = opfPathStr.toPath()
 			val opfDir = opfPath.parent?.toString()?.removePrefix("/") ?: ""
@@ -125,7 +134,7 @@ class EpubParser(private val file: File) {
 
 	fun readEntry(path: String): InputStream? {
 		return try {
-			val zipFs = FileSystem.SYSTEM.openZip(file.toOkioPath())
+			val zipFs = zipFileSystem()
 			val okioPath = path.removePrefix("/").toPath()
 			if (zipFs.exists(okioPath)) {
 				zipFs.source(okioPath).buffer().inputStream()
@@ -139,7 +148,7 @@ class EpubParser(private val file: File) {
 
 	fun getChapterHtml(href: String): String? {
 		return try {
-			val zipFs = FileSystem.SYSTEM.openZip(file.toOkioPath())
+			val zipFs = zipFileSystem()
 			val okioPath = href.removePrefix("/").toPath()
 			if (!zipFs.exists(okioPath)) return null
 			zipFs.read(okioPath) {

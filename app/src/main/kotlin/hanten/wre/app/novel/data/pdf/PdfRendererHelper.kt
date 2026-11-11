@@ -69,13 +69,16 @@ class PdfRendererHelper : AutoCloseable {
 			if (pageIndex < 0 || pageIndex >= r.pageCount) return@synchronized null
 			try {
 				val page = r.openPage(pageIndex)
-				val scale = targetWidth.toFloat() / page.width.toFloat()
-				val targetHeight = (page.height * scale).toInt().coerceAtLeast(1)
-				val bitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
-				page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-				page.close()
-				bitmapCache.put(pageIndex, bitmap)
-				bitmap
+				try {
+					val scale = targetWidth.toFloat() / page.width.toFloat()
+					val targetHeight = (page.height * scale).toInt().coerceAtLeast(1)
+					val bitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+					page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+					bitmapCache.put(pageIndex, bitmap)
+					bitmap
+				} finally {
+					runCatching { page.close() }
+				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
 				null

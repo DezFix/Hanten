@@ -13,6 +13,7 @@ class NovelReaderBridge(
 	private val onPreviousChapter: () -> Unit,
 	private val onNextChapter: () -> Unit,
 	private val onPageChange: (currentPage: Int, totalPages: Int) -> Unit,
+	private val onActiveChapter: (index: Int) -> Unit,
 ) {
 
 	@JavascriptInterface
@@ -54,6 +55,13 @@ class NovelReaderBridge(
 	fun onPageChanged(currentPage: Int, totalPages: Int) {
 		scope.launch(Dispatchers.Main) {
 			onPageChange(currentPage, totalPages)
+		}
+	}
+
+	@JavascriptInterface
+	fun onActiveChapter(index: Int) {
+		scope.launch(Dispatchers.Main) {
+			onActiveChapter(index)
 		}
 	}
 

@@ -1,11 +1,11 @@
-package hanten.wre.app.novel.data.source
+package hanten.wre.app.novel.data
 
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class RanobeLibContentParserTest {
+class NovelContentParserTest {
 
 	@Test
 	fun convertsParagraphsAndMarks() {
@@ -20,7 +20,7 @@ class RanobeLibContentParserTest {
 			]}
 		""".trimIndent()
 
-		val html = RanobeLibContentParser.toHtml(content, null)
+		val html = NovelContentParser.toHtml(content, null)
 
 		assertEquals("<p>Hello <strong>world</strong> &amp; &lt;tags&gt;</p><blockquote><p>Quote</p></blockquote>", html)
 	}
@@ -31,14 +31,14 @@ class RanobeLibContentParserTest {
 			"""{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Text"}]}]}""",
 		)
 
-		assertEquals("<p>Text</p>", RanobeLibContentParser.toHtml(root, null))
+		assertEquals("<p>Text</p>", NovelContentParser.toHtml(root, null))
 	}
 
 	@Test
 	fun convertsHorizontalRule() {
 		val content = """{"type":"doc","content":[{"type":"horizontalRule"}]}"""
 
-		assertEquals("<hr>", RanobeLibContentParser.toHtml(content, null))
+		assertEquals("<hr>", NovelContentParser.toHtml(content, null))
 	}
 
 	@Test
@@ -52,7 +52,7 @@ class RanobeLibContentParserTest {
 			"""{"name":"abc-123","extension":"jpg","url":"/uploads/ranobe/1/chapters/2/abc-123.jpg"}""",
 		)
 
-		val html = RanobeLibContentParser.toHtml(content, attachments)
+		val html = NovelContentParser.toHtml(content, attachments)
 
 		assertTrue(html.contains("src=\"https://ranobelib.me/uploads/ranobe/1/chapters/2/abc-123.jpg\""))
 		assertTrue(html.contains("<figcaption>Cover</figcaption>"))
@@ -60,7 +60,7 @@ class RanobeLibContentParserTest {
 
 	@Test
 	fun keepsPlainTextUntouched() {
-		assertEquals("plain text", RanobeLibContentParser.toHtml("plain text", null))
+		assertEquals("plain text", NovelContentParser.toHtml("plain text", null))
 	}
 
 	@Test
@@ -72,6 +72,19 @@ class RanobeLibContentParserTest {
 			]}
 		""".trimIndent()
 
-		assertEquals("First line Second line", RanobeLibContentParser.toPlainText(summary))
+		assertEquals("First line Second line", NovelContentParser.toPlainText(summary))
+	}
+
+	@Test
+	fun normalizeConvertsRawJson() {
+		val raw = """{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Глава"}]}]}"""
+
+		assertEquals("<p>Глава</p>", NovelContentParser.normalize(raw))
+	}
+
+	@Test
+	fun normalizeKeepsHtmlAndWrapsPlainText() {
+		assertEquals("<p>a</p>", NovelContentParser.normalize("<p>a</p>"))
+		assertEquals("<p>a</p><p>b</p>", NovelContentParser.normalize("a\n\nb"))
 	}
 }

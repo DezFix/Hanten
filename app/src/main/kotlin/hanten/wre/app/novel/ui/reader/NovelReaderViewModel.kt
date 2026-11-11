@@ -13,10 +13,10 @@ import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.history.data.HistoryRepository
+import hanten.wre.app.novel.data.NovelContentParser
 import hanten.wre.app.novel.data.epub.EpubParser
 import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.novel.data.pdf.PdfRendererHelper
-import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.novel.domain.NovelSmartResume
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
@@ -80,7 +80,7 @@ class NovelReaderViewModel @Inject constructor(
 	private val _isPdf = MutableStateFlow(false)
 	val isPdf: StateFlow<Boolean> = _isPdf.asStateFlow()
 
-	val onChapterAppended = MutableEventFlow<Pair<String, String>>() // title, html
+	val onChapterAppended = MutableEventFlow<Triple<String, String, Int>>() // title, html, chapter index
 
 	private var epubParser: EpubParser? = null
 	private var pdfHelper: PdfRendererHelper? = null
@@ -89,6 +89,14 @@ class NovelReaderViewModel @Inject constructor(
 
 	@Volatile
 	private var isChapterContentReady = false
+
+	// Index of the last chapter appended to the WebView document; `_currentChapterIndex`
+	// follows the viewport and may move backwards when the user scrolls up.
+	@Volatile
+	private var appendedChapterIndex = 0
+
+	@Volatile
+	private var isAppendingChapter = false
 
 	private val isIncognito: Boolean =
 		savedStateHandle.get<Boolean>(ReaderIntent.EXTRA_INCOGNITO) ?: false
@@ -103,33 +111,33 @@ class NovelReaderViewModel @Inject constructor(
 
 	val contentBaseUrl: String
 		get() {
-			val source = _manga.value?.source
-			val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
-			return if (novelSource != null) "https://${novelSource.domain}/" else "https://futon.reader/"
+			if (epubParser != null) {
+				val dir = _currentChapter.value?.url?.substringBeforeLast('/', "")
+				return EPUB_BASE_URL + if (dir.isNullOrEmpty()) "" else "$dir/"
+			}
+			val manga = _manga.value
+			return originOf(_currentChapter.value?.url)
+				?: originOf(manga?.publicUrl)
+				?: originOf(manga?.url)
+				?: EPUB_BASE_URL
 		}
 
 	val refererUrl: String
 		get() {
 			val manga = _manga.value
-			val source = manga?.source
-			val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
-			if (novelSource != null) {
-				return "https://${novelSource.domain}/"
-			}
-			val publicUrl = manga?.publicUrl.orEmpty()
-			if (publicUrl.isNotEmpty()) {
-				try {
-					val uri = URI(publicUrl)
-					val host = uri.host
-					if (!host.isNullOrBlank()) {
-						return "${uri.scheme ?: "https"}://$host/"
-					}
-				} catch (e: Exception) {
-					e.printStackTraceDebug()
-				}
-			}
-			return "https://lnori.com/"
+			return originOf(manga?.publicUrl) ?: originOf(manga?.url) ?: "https://lnori.com/"
 		}
+
+	private fun originOf(url: String?): String? {
+		if (url.isNullOrBlank()) return null
+		return try {
+			val uri = URI(url)
+			val host = uri.host
+			if (host.isNullOrBlank()) null else "${uri.scheme ?: "https"}://$host/"
+		} catch (e: Exception) {
+			null
+		}
+	}
 
 	init {
 		loadNovel()
@@ -139,6 +147,8 @@ class NovelReaderViewModel @Inject constructor(
 		super.onCleared()
 		pdfHelper?.close()
 		pdfHelper = null
+		epubParser?.close()
+		epubParser = null
 	}
 
 	fun loadNovel() {
@@ -268,6 +278,7 @@ class NovelReaderViewModel @Inject constructor(
 		val target = list[index]
 		_currentChapterIndex.value = index
 		_currentChapter.value = target
+		appendedChapterIndex = index
 		isChapterContentReady = false
 
 		launchJob(Dispatchers.IO) {
@@ -297,25 +308,41 @@ class NovelReaderViewModel @Inject constructor(
 	}
 
 	fun loadNextChapterForInfiniteScroll() {
+		if (isAppendingChapter) return
 		val list = _chapters.value
-		val nextIdx = _currentChapterIndex.value + 1
+		val nextIdx = appendedChapterIndex + 1
 		if (nextIdx !in list.indices) return
 		val nextChapter = list[nextIdx]
+		isAppendingChapter = true
 
 		launchJob(Dispatchers.IO) {
 			try {
 				val html = prefetchedChapters.remove(nextChapter.id) ?: fetchChapterHtml(nextChapter)
 				if (!html.isNullOrBlank()) {
-					_currentChapterIndex.value = nextIdx
-					_currentChapter.value = nextChapter
-					onChapterAppended.call(Pair(nextChapter.title.orEmpty(), html))
-					saveReadingProgress(0f)
+					appendedChapterIndex = nextIdx
+					onChapterAppended.call(Triple(nextChapter.title.orEmpty(), html, nextIdx))
 					prefetchNextChapter(nextIdx)
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
+			} finally {
+				isAppendingChapter = false
 			}
 		}
+	}
+
+	/** Called from the WebView when the viewport enters another appended chapter. */
+	fun onActiveChapter(index: Int) {
+		val list = _chapters.value
+		if (index !in list.indices) return
+		if (index == _currentChapterIndex.value) return
+		_currentChapterIndex.value = index
+		_currentChapter.value = list[index]
+	}
+
+	/** The activity rebuilt the document (settings/mode change): only one chapter is present. */
+	fun onReaderDocumentRebuilt() {
+		appendedChapterIndex = _currentChapterIndex.value
 	}
 
 	private fun isIncognitoMode(manga: Manga): Boolean {
@@ -383,18 +410,15 @@ class NovelReaderViewModel @Inject constructor(
 			// Online novel source: fetch pages / chapter content
 			val repo = mangaRepositoryFactory.create(curManga.source)
 			val pages = repo.getPages(chapter)
-			// For text sources, pages may contain formatted text in url or html content
-			val textBuilder = StringBuilder()
-			for (page in pages) {
-				val trimmed = page.url.trim()
-				if (trimmed.startsWith("<")) {
-					textBuilder.append(trimmed)
-				} else if (trimmed.isNotEmpty()) {
-					textBuilder.append("<p>${trimmed}</p>")
+			// Novel parsers may return HTML, plain text or a JSON document (RanobeLib).
+			val baseUrl = contentBaseUrl
+			val html = buildString {
+				for (page in pages) {
+					val part = NovelContentParser.normalize(page.url, baseUrl)
+					if (part.isNotBlank()) append(part)
 				}
 			}
-			val html = textBuilder.toString()
-			if (html.isNotBlank()) {
+			if (html.isNotBlank() && !isIncognitoMode(curManga)) {
 				launchJob(Dispatchers.IO) {
 					offlineRepository.cacheChapter(curManga, chapter, html)
 				}
@@ -437,5 +461,6 @@ class NovelReaderViewModel @Inject constructor(
 
 	companion object {
 		private const val MAX_PREFETCHED_CHAPTERS = 4
+		private const val EPUB_BASE_URL = "https://futon.reader/"
 	}
 }

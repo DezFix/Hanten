@@ -1,21 +1,35 @@
 package hanten.wre.app.novel.ui.downloads
 
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.novel.data.offline.CachedChapter
 import hanten.wre.app.novel.data.offline.CachedNovel
+import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
+import hanten.wre.app.novel.data.offline.NovelDownloadWorker
 import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.parsers.util.runCatchingCancellable
+import java.util.UUID
 import javax.inject.Inject
 
+data class ActiveNovelDownload(
+	val id: UUID,
+	val title: String,
+	val done: Int,
+	val total: Int,
+	val state: WorkInfo.State,
+)
+
 data class NovelDownloadsState(
+	val downloads: List<ActiveNovelDownload> = emptyList(),
 	val novels: List<CachedNovel> = emptyList(),
 	val chapters: Map<Long, List<CachedChapter>> = emptyMap(),
 	val expanded: Set<Long> = emptySet(),
@@ -26,6 +40,7 @@ data class NovelDownloadsState(
 @HiltViewModel
 class NovelDownloadsViewModel @Inject constructor(
 	private val repository: NovelOfflineRepository,
+	private val scheduler: NovelDownloadScheduler,
 ) : BaseViewModel() {
 
 	private val _state = MutableStateFlow(NovelDownloadsState())
@@ -33,6 +48,17 @@ class NovelDownloadsViewModel @Inject constructor(
 
 	init {
 		refresh()
+		launchJob(Dispatchers.IO) {
+			var hadActive = false
+			scheduler.observeWorks().collect { works ->
+				val downloads = works.toActiveDownloads()
+				_state.update { it.copy(downloads = downloads) }
+				if (hadActive && downloads.isEmpty()) {
+					loadState()
+				}
+				hadActive = downloads.isNotEmpty()
+			}
+		}
 	}
 
 	fun refresh() {
@@ -51,6 +77,10 @@ class NovelDownloadsViewModel @Inject constructor(
 		_state.value = current.copy(expanded = expanded)
 	}
 
+	fun cancelDownload(id: UUID) {
+		scheduler.cancel(id)
+	}
+
 	fun deleteNovel(mangaId: Long) {
 		viewModelScope.launch(Dispatchers.IO) {
 			repository.deleteNovel(mangaId)
@@ -65,6 +95,19 @@ class NovelDownloadsViewModel @Inject constructor(
 		}
 	}
 
+	private fun List<WorkInfo>.toActiveDownloads(): List<ActiveNovelDownload> = filter {
+		!it.state.isFinished
+	}.map { work ->
+		val progress = work.progress
+		ActiveNovelDownload(
+			id = work.id,
+			title = progress.getString(NovelDownloadWorker.KEY_TITLE).orEmpty(),
+			done = progress.getInt(NovelDownloadWorker.KEY_PROGRESS, 0),
+			total = progress.getInt(NovelDownloadWorker.KEY_MAX, 0),
+			state = work.state,
+		)
+	}
+
 	private fun loadState() {
 		runCatchingCancellable {
 			val novels = repository.listCachedNovels()
@@ -74,7 +117,7 @@ class NovelDownloadsViewModel @Inject constructor(
 			val expanded = _state.value.expanded.filterTo(HashSet()) { id ->
 				novels.any { it.id == id }
 			}
-			_state.value = NovelDownloadsState(
+			_state.value = _state.value.copy(
 				novels = novels,
 				chapters = chapters,
 				expanded = expanded,

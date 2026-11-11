@@ -34,7 +34,7 @@ import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.databinding.ActivityNovelReaderBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.source.BaseNovelRepository
-import hanten.wre.app.novel.data.source.NovelParserSource
+import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.util.formatSimple
@@ -190,6 +190,9 @@ class NovelReaderActivity :
 			onPageChange = { cur, total ->
 				viewBinding.textProgress.text = "$cur / $total"
 			},
+			onActiveChapter = { index ->
+				viewModel.onActiveChapter(index)
+			},
 		)
 		viewBinding.webView.addJavascriptInterface(bridge, "AndroidNovelBridge")
 
@@ -317,10 +320,10 @@ class NovelReaderActivity :
 			}
 		}
 
-		viewModel.onChapterAppended.observeEvent(this) { (title, html) ->
+		viewModel.onChapterAppended.observeEvent(this) { (title, html, index) ->
 			val quotedTitle = org.json.JSONObject.quote(title)
 			val quotedHtml = org.json.JSONObject.quote(html)
-			viewBinding.webView.evaluateJavascript("appendChapter($quotedTitle, $quotedHtml);", null)
+			viewBinding.webView.evaluateJavascript("appendChapter($quotedTitle, $quotedHtml, $index);", null)
 		}
 
 		viewModel.scrollProgress.observe(this) { percent ->
@@ -419,9 +422,8 @@ class NovelReaderActivity :
 	}
 
 	private fun contentLanguage(): String {
-		val source = viewModel.manga.value?.source
-		val novelSource = source as? NovelParserSource ?: NovelParserSource.fromName(source?.name)
-		return novelSource?.locale?.takeIf { it.isNotBlank() } ?: Locale.getDefault().language
+		val locale = (viewModel.manga.value?.source as? MangaParserSource)?.locale
+		return locale?.takeIf { it.isNotBlank() } ?: Locale.getDefault().language
 	}
 
 	private fun chapterHeading(chapter: MangaChapter?): String {
@@ -461,11 +463,13 @@ class NovelReaderActivity :
 			safeBottomPx = safeBottomPx,
 			density = resources.displayMetrics.density,
 			language = contentLanguage(),
+			chapterIndex = viewModel.currentChapterIndex.value,
 		)
 		val chapterUrl = viewModel.currentChapter.value?.url?.substringBefore('#')
 		val isOnline = !chapterUrl.isNullOrEmpty() && (chapterUrl.startsWith("http://") || chapterUrl.startsWith("https://"))
 		val baseUrl = if (isOnline) chapterUrl else viewModel.contentBaseUrl
 		isWebViewReady = false
+		viewModel.onReaderDocumentRebuilt()
 		viewBinding.webView.loadDataWithBaseURL(baseUrl, fullDoc, "text/html", "UTF-8", null)
 	}
 

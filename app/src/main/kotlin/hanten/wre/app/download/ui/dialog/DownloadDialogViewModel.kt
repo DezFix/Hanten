@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hanten.wre.app.R
 import hanten.wre.app.core.model.getPreferredBranch
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.MangaRepository
@@ -23,6 +24,7 @@ import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.data.LocalStorageManager
+import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
 import hanten.wre.app.settings.storage.DirectoryModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -46,11 +48,13 @@ class DownloadDialogViewModel @Inject constructor(
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	private val historyRepository: HistoryRepository,
 	private val settings: AppSettings,
+	private val novelScheduler: NovelDownloadScheduler,
 ) : BaseViewModel() {
 
 	val manga = savedStateHandle.require<Array<ParcelableManga>>(AppRouter.KEY_MANGA).map {
 		it.manga
 	}
+	val isNovel: Boolean = manga.firstOrNull()?.isNovel == true
 	private val mangaDetails = suspendLazy {
 		coroutineScope {
 			manga.map { m ->
@@ -72,8 +76,10 @@ class DownloadDialogViewModel @Inject constructor(
 	val isOptionsLoading = MutableStateFlow(true)
 
 	init {
-		launchJob(Dispatchers.IO) {
-			defaultFormat.value = settings.preferredDownloadFormat
+		if (!isNovel) {
+			launchJob(Dispatchers.IO) {
+				defaultFormat.value = settings.preferredDownloadFormat
+			}
 		}
 		launchJob(Dispatchers.IO) {
 			try {
@@ -82,7 +88,9 @@ class DownloadDialogViewModel @Inject constructor(
 				isOptionsLoading.value = false
 			}
 		}
-		loadAvailableDestinations()
+		if (!isNovel) {
+			loadAvailableDestinations()
+		}
 	}
 
 	fun confirm(
@@ -98,6 +106,14 @@ class DownloadDialogViewModel @Inject constructor(
 				val chapters = checkNotNull(m.chapters) { "Manga \"${m.title}\" cannot be loaded" }
 				val chaptersIds = chaptersMacro.getChaptersIds(m.id, chapters)?.toLongArray() ?: longArrayOf()
 				m to chaptersIds
+			}
+
+			if (isNovel) {
+				tasks.forEach { (m, chaptersIds) ->
+					novelScheduler.enqueue(m, chaptersIds, allowMetered)
+				}
+				onScheduled.call(true)
+				return@launchLoadingJob
 			}
 
 			if (startNow) {

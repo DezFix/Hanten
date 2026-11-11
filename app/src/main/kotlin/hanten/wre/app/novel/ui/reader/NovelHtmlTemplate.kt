@@ -13,10 +13,12 @@ object NovelHtmlTemplate {
 		safeBottomPx: Int = 0,
 		density: Float = 1f,
 		language: String = "en",
+		chapterIndex: Int = 0,
 	): String {
 		val cssVars = settings.toCssVariables(safeTopPx, safeBottomPx, density)
 		val isPaged = settings.readingMode == NovelReadingMode.PAGED
 		val startProgress = initialProgress.coerceIn(0f, 1f)
+		val safeLanguage = language.filter { it.isLetterOrDigit() || it == '-' }.ifBlank { "en" }
 
 		val pagedStyle = if (isPaged) {
 			"""
@@ -62,11 +64,11 @@ object NovelHtmlTemplate {
 
 		return """
 		<!DOCTYPE html>
-		<html lang="$language">
+		<html lang="$safeLanguage">
 		<head>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-			<title>$title</title>
+			<title>${escapeHtml(title)}</title>
 			<style id="reader-dynamic-styles">
 				$cssVars
 			</style>
@@ -143,7 +145,7 @@ object NovelHtmlTemplate {
 		<body>
 			<div id="reader-container">
 				<div id="content">
-					$initialChapterHtml
+					<div class="chapter-block" data-chapter="$chapterIndex">$initialChapterHtml</div>
 				</div>
 			</div>
 
@@ -157,6 +159,9 @@ object NovelHtmlTemplate {
 				let isNearBottomNotified = false;
 				let lastProgressNotifyTs = 0;
 				let pageStep = window.innerWidth;
+				// Page index where each appended chapter starts (paged mode only).
+				let chapterPageStarts = [0];
+				let sentChapter = null;
 
 				let autoScrollSpeed = ${settings.autoScrollSpeed};
 				let autoScrollRunning = false;
@@ -205,19 +210,25 @@ object NovelHtmlTemplate {
 				}
 
 				function notifyScroll() {
+					const info = activeChapterInfo();
+					if (info.chapter !== sentChapter) {
+						sentChapter = info.chapter;
+						if (window.AndroidNovelBridge) {
+							window.AndroidNovelBridge.onActiveChapter(info.chapter);
+						}
+					}
 					if (isPagedMode) {
 						const total = pageCount();
 						const cur = Math.min(total, currentPageIndex() + 1);
 						if (window.AndroidNovelBridge) {
 							window.AndroidNovelBridge.onPageChanged(cur, total);
-							window.AndroidNovelBridge.onScrollProgress(cur / total);
 						}
+						notifyProgress(info.percent);
 					} else {
+						notifyProgress(info.percent);
+						// Check near bottom (within 800px)
 						const scrollY = window.scrollY || window.pageYOffset;
 						const maxScroll = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
-						const percent = maxScroll > 0 ? (scrollY / maxScroll) : 0;
-						notifyProgress(Math.min(1.0, Math.max(0.0, percent)));
-						// Check near bottom (within 800px)
 						if (maxScroll - scrollY < 800) {
 							if (!isNearBottomNotified) {
 								isNearBottomNotified = true;
@@ -229,6 +240,48 @@ object NovelHtmlTemplate {
 							isNearBottomNotified = false;
 						}
 					}
+				}
+
+				function chapterBlocks() {
+					return Array.prototype.slice.call(document.querySelectorAll('#content > .chapter-block'));
+				}
+
+				// Progress is reported per chapter: the reader stores (chapterId, percent)
+				// and infinite scroll must not mix chapters in one percentage.
+				function activeChapterInfo() {
+					if (isPagedMode) {
+						const total = pageCount();
+						const cur = currentPageIndex();
+						let idx = 0;
+						for (let i = 0; i < chapterPageStarts.length; i++) {
+							if (chapterPageStarts[i] <= cur) idx = i; else break;
+						}
+						const start = chapterPageStarts[idx] || 0;
+						const end = (idx + 1 < chapterPageStarts.length) ? chapterPageStarts[idx + 1] : total;
+						const span = Math.max(1, end - start);
+						const block = chapterBlocks()[idx];
+						return {
+							index: idx,
+							chapter: block ? Number(block.dataset.chapter) : idx,
+							percent: Math.max(0, Math.min(1, (cur - start) / span)),
+						};
+					}
+					const blocks = chapterBlocks();
+					if (!blocks.length) return { index: 0, chapter: 0, percent: 0 };
+					const pos = window.scrollY || window.pageYOffset || 0;
+					const lead = window.innerHeight * 0.33;
+					let idx = 0;
+					for (let i = 0; i < blocks.length; i++) {
+						if (blockTop(blocks[i]) <= pos + lead) idx = i; else break;
+					}
+					const start = blockTop(blocks[idx]);
+					const size = blocks[idx].getBoundingClientRect().height;
+					const denom = Math.max(1, size - window.innerHeight * 0.5);
+					return {
+						index: idx,
+						chapter: Number(blocks[idx].dataset.chapter || idx),
+						percent: Math.max(0, Math.min(1, (pos - start) / denom)),
+					};
 				}
 
 				if (isPagedMode) {
@@ -302,24 +355,32 @@ object NovelHtmlTemplate {
 					}
 				}, { passive: true });
 
-				function appendChapter(title, chapterHtml) {
+				function appendChapter(title, chapterHtml, chapterIndex) {
 					const content = document.getElementById('content');
 					if (!content) return;
+					if (isPagedMode) {
+						chapterPageStarts.push(Math.max(0, pageCount() - 1));
+					}
+					const block = document.createElement('div');
+					block.className = 'chapter-block';
+					block.dataset.chapter = String(chapterIndex);
 					const divider = document.createElement('div');
 					divider.className = 'chapter-divider';
 					const heading = document.createElement('h2');
 					heading.textContent = title;
 					divider.appendChild(heading);
-					content.appendChild(divider);
+					block.appendChild(divider);
 
 					const tempDiv = document.createElement('div');
 					tempDiv.innerHTML = chapterHtml;
 					while (tempDiv.firstChild) {
-						content.appendChild(tempDiv.firstChild);
+						block.appendChild(tempDiv.firstChild);
 					}
+					content.appendChild(block);
 					assignParagraphIds();
 					if (isPagedMode) relayoutPaged();
 					isNearBottomNotified = false;
+					sentChapter = null;
 				}
 
 				function updateStyles(cssText) {
@@ -338,15 +399,24 @@ object NovelHtmlTemplate {
 
 				function scrollToPercent(percent) {
 					const p = Math.min(1.0, Math.max(0.0, percent || 0));
+					const info = activeChapterInfo();
 					if (isPagedMode) {
 						const container = document.getElementById('reader-container');
 						if (!container) return;
-						const pages = pageCount();
-						const page = Math.max(0, Math.min(pages - 1, Math.round(p * (pages - 1))));
+						const total = pageCount();
+						const start = chapterPageStarts[info.index] || 0;
+						const end = (info.index + 1 < chapterPageStarts.length) ? chapterPageStarts[info.index + 1] : total;
+						const span = Math.max(1, end - start);
+						const page = Math.max(0, Math.min(total - 1, start + Math.round(p * (span - 1))));
 						container.scrollLeft = page * pageStep;
 					} else {
-						const maxScroll = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
-						window.scrollTo(0, maxScroll * p);
+						const blocks = chapterBlocks();
+						const block = blocks[info.index];
+						if (!block) return;
+						const start = blockTop(block);
+						const size = block.getBoundingClientRect().height;
+						const target = start + Math.max(0, size - window.innerHeight * 0.5) * p;
+						window.scrollTo(0, Math.max(0, target));
 					}
 				}
 
@@ -564,5 +634,18 @@ object NovelHtmlTemplate {
 		</body>
 		</html>
 		""".trimIndent()
+	}
+
+	private fun escapeHtml(value: String): String = buildString(value.length) {
+		for (char in value) {
+			when (char) {
+				'&' -> append("&amp;")
+				'<' -> append("&lt;")
+				'>' -> append("&gt;")
+				'"' -> append("&quot;")
+				'\'' -> append("&#39;")
+				else -> append(char)
+			}
+		}
 	}
 }

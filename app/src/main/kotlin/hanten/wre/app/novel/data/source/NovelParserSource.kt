@@ -10,24 +10,6 @@ enum class NovelParserSource(
 	val locale: String = "en",
 	val contentType: ContentType = ContentType.NOVEL,
 ) : MangaSource {
-	RANOBES(
-		title = "Ranobes",
-		domain = "ranobes.com",
-		defaultUrl = "https://ranobes.com",
-		locale = "ru",
-	),
-	RANOBELIB(
-		title = "RanobeLib",
-		domain = "ranobelib.me",
-		defaultUrl = "https://ranobelib.me",
-		locale = "ru",
-	),
-	BAKA_UA(
-		title = "Baka.in.ua",
-		domain = "baka.in.ua",
-		defaultUrl = "https://baka.in.ua",
-		locale = "uk",
-	),
 	RANOBE_ME(
 		title = "Ranobe.me",
 		domain = "ranobe.me",

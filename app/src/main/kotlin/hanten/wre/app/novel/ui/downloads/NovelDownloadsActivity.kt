@@ -34,6 +34,7 @@ class NovelDownloadsActivity : BaseActivity<ActivityNovelDownloadsBinding>() {
 			onNovelClick = { novel -> viewModel.toggleExpanded(novel.id) },
 			onNovelDelete = ::confirmDeleteNovel,
 			onChapterDelete = ::confirmDeleteChapter,
+			onCancelDownload = viewModel::cancelDownload,
 		)
 		viewBinding.recyclerView.adapter = adapter
 
@@ -70,7 +71,10 @@ class NovelDownloadsActivity : BaseActivity<ActivityNovelDownloadsBinding>() {
 	}
 
 	private fun render(state: NovelDownloadsState) {
-		val items = ArrayList<NovelDownloadsItem>(state.novels.size)
+		val items = ArrayList<NovelDownloadsItem>(state.downloads.size + state.novels.size)
+		for (download in state.downloads) {
+			items += NovelDownloadsItem.Active(download)
+		}
 		for (novel in state.novels) {
 			items += NovelDownloadsItem.Novel(novel, novel.id in state.expanded)
 			if (novel.id in state.expanded) {
@@ -88,7 +92,8 @@ class NovelDownloadsActivity : BaseActivity<ActivityNovelDownloadsBinding>() {
 			chaptersCount,
 			FileSize.BYTES.format(this, state.totalSizeBytes),
 		)
-		viewBinding.textViewEmpty.isVisible = state.novels.isEmpty() && !state.isLoading
+		viewBinding.textViewEmpty.isVisible =
+			state.novels.isEmpty() && state.downloads.isEmpty() && !state.isLoading
 	}
 
 	private fun confirmDeleteNovel(novel: CachedNovel) {

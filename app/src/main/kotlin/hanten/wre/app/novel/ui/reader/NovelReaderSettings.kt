@@ -45,7 +45,7 @@ data class NovelReaderSettings(
 			:root {
 				--reader-bg: $bgHex;
 				--reader-text: $textHex;
-				--reader-font-size: ${fontSizeSp.toInt()}px;
+				--reader-font-size: ${(fontSizeSp * density).roundToInt()}px;
 				--reader-font-family: $fontFamily, serif;
 				--reader-line-height: $lineSpacingMultiplier;
 				--reader-paragraph-margin: ${paragraphMarginEm}em;

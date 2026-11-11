@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
@@ -45,6 +46,8 @@ class PdfReaderViewModel @Inject constructor(
 	private val mangaId: Long = savedStateHandle.get<Long>(AppRouter.KEY_ID) ?: initialManga?.id ?: 0L
 	private val dataUri: Uri? = savedStateHandle.get<Uri>(AppRouter.KEY_DATA)
 	private val initialState: ReaderState? = savedStateHandle.get<ReaderState>(ReaderIntent.EXTRA_STATE)
+	private val isIncognito: Boolean =
+		savedStateHandle.get<Boolean>(ReaderIntent.EXTRA_INCOGNITO) ?: false
 
 	private val _manga = MutableStateFlow<Manga?>(initialManga)
 	val manga: StateFlow<Manga?> = _manga.asStateFlow()
@@ -105,7 +108,15 @@ class PdfReaderViewModel @Inject constructor(
 					else -> null
 				}
 
-				pdfHelper = helper
+				if (!isActive) {
+					helper?.close()
+					return@launchLoadingJob
+				}
+
+				if (pdfHelper !== helper) {
+					pdfHelper?.close()
+					pdfHelper = helper
+				}
 				val count = helper?.pageCount ?: 0
 				_pageCount.value = count
 
@@ -209,8 +220,13 @@ class PdfReaderViewModel @Inject constructor(
 
 	private fun saveReadingProgress(page: Int) {
 		val cur = _manga.value ?: return
+		if (isIncognito || historyRepository.shouldSkip(cur)) return
 		val count = _pageCount.value
-		val percent = if (count > 0) page.toFloat() / count.toFloat() else 0f
+		val percent = if (count > 0) {
+			((page + 1).toFloat() / count.toFloat()).coerceIn(0f, 1f)
+		} else {
+			0f
+		}
 		viewModelScope.launch(Dispatchers.IO) {
 			val chaps = cur.chapters ?: (0 until count).map { pageIdx ->
 				MangaChapter(

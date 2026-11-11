@@ -1,5 +1,6 @@
 package hanten.wre.app.download.ui.dialog
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -32,6 +33,7 @@ import hanten.wre.app.core.util.ext.parentView
 import hanten.wre.app.core.util.ext.showOrHide
 import hanten.wre.app.databinding.DialogDownloadBinding
 import hanten.wre.app.main.ui.owners.BottomNavOwner
+import hanten.wre.app.novel.ui.downloads.NovelDownloadsActivity
 import hanten.wre.app.parsers.util.format
 import hanten.wre.app.settings.storage.DirectoryModel
 
@@ -46,7 +48,7 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 
 	override fun onBuildDialog(builder: MaterialAlertDialogBuilder): MaterialAlertDialogBuilder {
 		return super.onBuildDialog(builder)
-			.setTitle(R.string.save_manga)
+			.setTitle(if (viewModel.isNovel) R.string.save_novel else R.string.save_manga)
 			.setCancelable(true)
 	}
 
@@ -67,6 +69,12 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 
 		binding.textViewTip.isVisible = viewModel.manga.size == 1
 		binding.textViewSummary.text = viewModel.manga.joinToStringWithLimit(binding.root.context, 120) { it.title }
+		if (viewModel.isNovel) {
+			binding.cardFormat.isVisible = false
+			binding.cardDestination.isVisible = false
+			binding.textViewMore.isVisible = false
+			binding.switchStart.isVisible = false
+		}
 
 		viewModel.isLoading.observe(viewLifecycleOwner, this::onLoadingStateChanged)
 		viewModel.onScheduled.observeEvent(viewLifecycleOwner, this::onDownloadScheduled)
@@ -228,8 +236,9 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 	}
 
 	private fun onDownloadScheduled(isStarted: Boolean) {
-		val bundle = Bundle(1)
+		val bundle = Bundle(2)
 		bundle.putBoolean(ARG_STARTED, isStarted)
+		bundle.putBoolean(ARG_NOVEL, viewModel.isNovel)
 		setFragmentResult(RESULT_KEY, bundle)
 		dismiss()
 	}
@@ -318,17 +327,29 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 
 		override fun onFragmentResult(requestKey: String, result: Bundle) {
 			val isStarted = result.getBoolean(ARG_STARTED, true)
+			val isNovel = result.getBoolean(ARG_NOVEL, false)
 			val snackbar = Snackbar.make(
 				host,
-				if (isStarted) R.string.download_started else R.string.download_added,
+				when {
+					isNovel && isStarted -> R.string.novel_download_started
+					isNovel -> R.string.novel_download_added
+					isStarted -> R.string.download_started
+					else -> R.string.download_added
+				},
 				Snackbar.LENGTH_LONG,
 			)
 			(host.context.findActivity() as? BottomNavOwner)?.let {
 				snackbar.anchorView = it.bottomNav
 			}
-			val router = AppRouter.from(host)
-			if (router != null) {
-				snackbar.setAction(R.string.details) { router.openDownloads() }
+			if (isNovel) {
+				snackbar.setAction(R.string.details) {
+					host.context.startActivity(Intent(host.context, NovelDownloadsActivity::class.java))
+				}
+			} else {
+				val router = AppRouter.from(host)
+				if (router != null) {
+					snackbar.setAction(R.string.details) { router.openDownloads() }
+				}
 			}
 			snackbar.show()
 		}
@@ -338,6 +359,7 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 
 		private const val RESULT_KEY = "DOWNLOAD_STARTED"
 		private const val ARG_STARTED = "started"
+		private const val ARG_NOVEL = "novel"
 		private const val KEY_CHECKED_OPTION = "checked_opt"
 
 		fun registerCallback(
