@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.6.6
+
+### Исправлено
+- Открытие меню загрузок новелл больше не падает с `ClassCastException`:
+  Hilt entry point берётся из application-компонента, а не из activity
+
 ## 2.6.5
 
 ### Исправлено

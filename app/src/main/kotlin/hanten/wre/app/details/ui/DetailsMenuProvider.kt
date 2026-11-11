@@ -146,7 +146,10 @@ class DetailsMenuProvider(
 	}
 
 	private fun offlineEntryPoint(): NovelOfflineEntryPoint {
-		return EntryPointAccessors.fromActivity(activity, NovelOfflineEntryPoint::class.java)
+		return EntryPointAccessors.fromApplication(
+			activity.applicationContext,
+			NovelOfflineEntryPoint::class.java,
+		)
 	}
 
 	private fun showNovelOfflineDialog(manga: Manga) {
