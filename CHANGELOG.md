@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.7.3
+
+### Изменено
+- Маркер типа контента в сетке снова читаемый: тёмный баннер в левом нижнем
+  углу, как блок иконок сверху, но прижат к нижнему краю обложки.
+
 ## 2.7.2
 
 ### Исправлено

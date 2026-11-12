@@ -206,18 +206,16 @@
 	</style>
 
 	<style name="Widget.Hanten.TextView.ContentType" parent="Widget.MaterialComponents.TextView">
-		<item name="android:background">@drawable/bg_content_type_label</item>
+		<item name="android:background">@drawable/bg_content_type_banner</item>
 		<item name="android:gravity">center</item>
 		<item name="android:textAlignment">center</item>
-		<item name="android:textAppearance">?textAppearanceLabelSmall</item>
-		<item name="android:textSize">8sp</item>
-		<item name="android:textColor">#E6FFFFFF</item>
-		<item name="android:letterSpacing">0.02</item>
-		<item name="android:paddingStart">4dp</item>
-		<item name="android:paddingEnd">4dp</item>
-		<item name="android:paddingTop">1dp</item>
-		<item name="android:paddingBottom">1dp</item>
-		<item name="android:alpha">0.7</item>
+		<item name="android:textAppearance">?textAppearanceLabelMedium</item>
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">?colorOnBackground</item>
+		<item name="android:paddingStart">6dp</item>
+		<item name="android:paddingEnd">8dp</item>
+		<item name="android:paddingTop">2dp</item>
+		<item name="android:paddingBottom">2dp</item>
 	</style>
 
 	<style name="Widget.Hanten.ImageView.Cover" parent="Widget.MaterialComponents.ShapeableImageView">
