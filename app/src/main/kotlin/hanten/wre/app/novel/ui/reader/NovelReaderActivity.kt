@@ -33,11 +33,11 @@ import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.databinding.ActivityNovelReaderBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
-import hanten.wre.app.novel.data.source.BaseNovelRepository
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.util.formatSimple
+import hanten.wre.app.parsers.util.longHashCode
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +53,7 @@ import java.time.Instant
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -361,7 +362,9 @@ class NovelReaderActivity :
 	private fun toggleBookmark() {
 		val manga = viewModel.manga.value ?: return
 		val chapter = viewModel.currentChapter.value ?: return
-		val existing = bookmarks.firstOrNull { it.chapterId == chapter.id }
+		val existing = bookmarks.firstOrNull {
+			it.chapterId == chapter.id && abs(it.percent - viewModel.scrollProgress.value) < 0.02f
+		}
 		if (existing != null) {
 			lifecycleScope.launch(Dispatchers.IO) {
 				bookmarksRepository.removeBookmarks(setOf(existing.pageId))
@@ -385,7 +388,7 @@ class NovelReaderActivity :
 			bookmarksRepository.addBookmark(
 				Bookmark(
 					manga = manga.copy(chapters = viewModel.chapters.value),
-					pageId = chapter.id,
+					pageId = "${chapter.id}:${(percent * 1000).roundToInt()}".longHashCode(),
 					chapterId = chapter.id,
 					page = (percent * 100).roundToInt().coerceIn(1, 100),
 					scroll = paragraphIndex,
@@ -496,7 +499,7 @@ class NovelReaderActivity :
 			val urlString = request.url.toString()
 			val userAgent = request.requestHeaders?.get("User-Agent")
 				?: defaultUserAgent
-				?: BaseNovelRepository.DEFAULT_USER_AGENT
+				?: DEFAULT_USER_AGENT
 
 			val okHttpRequest = Request.Builder()
 				.url(urlString)
@@ -710,6 +713,8 @@ class NovelReaderActivity :
 
 	private companion object {
 		const val STATE_AUTO_SCROLL_ACTIVE = "novel_auto_scroll_active"
+		const val DEFAULT_USER_AGENT =
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 		val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".bmp")
 	}
 }

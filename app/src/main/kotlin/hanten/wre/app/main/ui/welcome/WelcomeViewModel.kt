@@ -17,7 +17,6 @@ import hanten.wre.app.core.util.ext.sortedWithSafe
 import hanten.wre.app.core.util.ext.toList
 import hanten.wre.app.explore.data.MangaSourcesRepository
 import hanten.wre.app.filter.ui.model.FilterProperty
-import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.MangaSource
@@ -34,7 +33,6 @@ class WelcomeViewModel @Inject constructor(
 
 	private val allSources: List<MangaSource> = buildList {
 		addAll(repository.allMangaSources)
-		addAll(repository.allNovelSources)
 	}
 	private val localesGroups by lazy {
 		allSources.groupBy { it.getLocale() ?: Locale.ROOT }
@@ -150,7 +148,6 @@ class WelcomeViewModel @Inject constructor(
 
 	private fun MangaSource.contentTypeOrNull(): ContentType? = when (this) {
 		is MangaParserSource -> contentType
-		is NovelParserSource -> contentType
 		else -> null
 	}
 }

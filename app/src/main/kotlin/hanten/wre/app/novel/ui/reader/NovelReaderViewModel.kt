@@ -13,7 +13,6 @@ import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.history.data.HistoryRepository
-import hanten.wre.app.novel.data.NovelContentParser
 import hanten.wre.app.novel.data.epub.EpubParser
 import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.novel.data.pdf.PdfRendererHelper
@@ -410,14 +409,8 @@ class NovelReaderViewModel @Inject constructor(
 			// Online novel source: fetch pages / chapter content
 			val repo = mangaRepositoryFactory.create(curManga.source)
 			val pages = repo.getPages(chapter)
-			// Novel parsers may return HTML, plain text or a JSON document (RanobeLib).
-			val baseUrl = contentBaseUrl
-			val html = buildString {
-				for (page in pages) {
-					val part = NovelContentParser.normalize(page.url, baseUrl)
-					if (part.isNotBlank()) append(part)
-				}
-			}
+			// Novel parsers return HTML pages; join them into a single chapter document.
+			val html = pages.joinToString(separator = "") { it.url }
 			if (html.isNotBlank() && !isIncognitoMode(curManga)) {
 				launchJob(Dispatchers.IO) {
 					offlineRepository.cacheChapter(curManga, chapter, html)

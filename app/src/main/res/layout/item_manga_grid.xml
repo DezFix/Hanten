@@ -59,16 +59,12 @@
 
 		<TextView
 			android:id="@+id/textView_content_type"
+			style="@style/Widget.Hanten.TextView.ContentType"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom|start"
-			android:background="@drawable/bg_list_icons"
-			android:paddingStart="6dp"
-			android:paddingTop="2dp"
-			android:paddingEnd="6dp"
-			android:paddingBottom="2dp"
-			android:textAppearance="?attr/textAppearanceLabelSmall"
-			android:textColor="?android:attr/textColorSecondary"
+			android:layout_margin="@dimen/card_indicator_offset"
+			android:backgroundTint="?attr/colorSurfaceContainer"
 			tools:text="Novel"
 			tools:visibility="visible" />
 

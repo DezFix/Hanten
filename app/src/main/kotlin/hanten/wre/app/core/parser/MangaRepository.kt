@@ -16,7 +16,6 @@ import hanten.wre.app.mihon.MihonExtensionManager
 import hanten.wre.app.mihon.MihonMangaRepository
 import hanten.wre.app.mihon.model.MihonMangaSource
 import hanten.wre.app.novel.data.LocalNovelRepository
-import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.MangaLoaderContext
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
@@ -96,11 +95,6 @@ interface MangaRepository {
 				parser = loaderContext.newParserInstance(source),
 				cache = contentCache,
 				mirrorSwitcher = mirrorSwitcher,
-			)
-
-			is NovelParserSource -> hanten.wre.app.novel.data.source.RanobeMeRepository(
-				cache = contentCache,
-				httpClient = loaderContext.httpClient,
 			)
 
 			TestMangaSource -> TestMangaRepository(

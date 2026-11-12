@@ -16,7 +16,6 @@ import hanten.wre.app.core.util.ext.toLocale
 import hanten.wre.app.core.util.ext.toLocaleOrNull
 import hanten.wre.app.mihon.model.MihonMangaSource
 import hanten.wre.app.mihon.parsers.model.ContentType as MihonContentType
-import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.MangaSource
@@ -64,9 +63,6 @@ fun MangaSource(name: String?, title: String? = null): MangaSource {
 	MangaParserSource.entries.forEach {
 		if (it.name == name) return it
 	}
-	NovelParserSource.entries.forEach {
-		if (it.name == name) return it
-	}
 	return UnknownMangaSource
 }
 
@@ -111,7 +107,6 @@ val MangaSource.contentType: ContentType
 	get() = when (val source = unwrap()) {
 		LocalNovelSource -> ContentType.NOVEL
 		LocalMangaSource -> ContentType.MANGA
-		is NovelParserSource -> source.contentType
 		is MangaParserSource -> source.contentType
 		is MihonMangaSource -> when (source.contentType) {
 			MihonContentType.NOVEL, MihonContentType.HENTAI_NOVEL -> ContentType.NOVEL
@@ -126,18 +121,11 @@ val MangaSource.contentType: ContentType
 
 fun MangaSource.getLocale(): Locale? = when (val source = unwrap()) {
 	is MangaParserSource -> source.locale.toLocaleOrNull()
-	is NovelParserSource -> source.locale.toLocaleOrNull()
 	else -> null
 }
 
 fun MangaSource.getSummary(context: Context): String? = when (val source = unwrap()) {
 	is MangaParserSource -> {
-		val type = context.getString(source.contentType.titleResId)
-		val locale = source.locale.toLocale().getDisplayName(context)
-		context.getString(R.string.source_summary_pattern, type, locale)
-	}
-
-	is NovelParserSource -> {
 		val type = context.getString(source.contentType.titleResId)
 		val locale = source.locale.toLocale().getDisplayName(context)
 		context.getString(R.string.source_summary_pattern, type, locale)
@@ -171,7 +159,6 @@ fun MangaSource.getSummary(context: Context): String? = when (val source = unwra
 
 fun MangaSource.getTitle(context: Context): String = when (val source = unwrap()) {
 	is MangaParserSource -> source.title
-	is NovelParserSource -> source.title
 	LocalMangaSource -> context.getString(R.string.local_storage)
 	LocalNovelSource -> context.getString(R.string.light_novels)
 	TestMangaSource -> context.getString(R.string.test_parser)

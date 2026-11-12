@@ -24,7 +24,6 @@ import hanten.wre.app.core.ui.util.ReversibleHandle
 import hanten.wre.app.core.util.ext.flattenLatest
 import hanten.wre.app.mihon.MihonExtensionManager
 import hanten.wre.app.mihon.model.MihonMangaSource
-import hanten.wre.app.novel.data.source.NovelParserSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -80,10 +79,6 @@ class MangaSourcesRepository @Inject constructor(
         }
 	)
 
-	val allNovelSources: Set<NovelParserSource> = Collections.unmodifiableSet(
-		EnumSet.allOf(NovelParserSource::class.java),
-	)
-
 	suspend fun getEnabledSources(): List<MangaSource> {
 		assimilateNewSources()
 		val order = settings.sourcesSortOrder
@@ -117,7 +112,6 @@ class MangaSourcesRepository @Inject constructor(
 			return emptySet()
 		}
 		val result = HashSet<MangaSource>(allMangaSources)
-		result.addAll(allNovelSources)
 		val enabled = dao.findAllEnabledNames()
 		for (name in enabled) {
 			val source = name.toMangaSourceOrNull() ?: continue
@@ -154,7 +148,6 @@ class MangaSourcesRepository @Inject constructor(
 			sources.retainAll { 
 				when (it) {
 					is MangaParserSource -> it.locale == locale
-					is NovelParserSource -> it.locale == locale
 					is hanten.wre.app.mihon.parsers.model.ContentSource -> it.locale == locale
 					else -> true
 				}
@@ -167,7 +160,6 @@ class MangaSourcesRepository @Inject constructor(
 			sources.retainAll { 
 				when (it) {
 					is MangaParserSource -> it.contentType in types
-					is NovelParserSource -> it.contentType in types
 					is hanten.wre.app.mihon.model.MihonMangaSource -> {
 						val mihonType = it.contentType
 						types.any { parsersType ->
@@ -226,7 +218,7 @@ class MangaSourcesRepository @Inject constructor(
 			val enabled = enabledSources.mapToSet { it.source }
 			allMangaSources.count { x ->
 				x.name !in enabled && (!skipNsfw || !x.isNsfw())
-			} + allNovelSources.count { it.name !in enabled }
+			}
 		}.distinctUntilChanged().onStart { assimilateNewSources() }
 	}
 
@@ -253,7 +245,7 @@ class MangaSourcesRepository @Inject constructor(
 		val result = ArrayList<Pair<MangaSource, Boolean>>(entities.size)
 		for (entity in entities) {
 			val source = entity.toMangaSource() ?: continue
-			if (source in allMangaSources || source is NovelParserSource || source is AnonymousMangaSource || source is MihonMangaSource) {
+			if (source in allMangaSources || source is AnonymousMangaSource || source is MihonMangaSource) {
 				result.add(source to entity.isEnabled)
 			}
 		}
@@ -271,7 +263,6 @@ class MangaSourcesRepository @Inject constructor(
 		db.withTransaction {
 			assimilateNewSources()
 			allMangaSources.forEach { dao.setEnabled(it.name, it in sources) }
-			allNovelSources.forEach { dao.setEnabled(it.name, it in sources) }
 		}
 	}
 
@@ -292,7 +283,7 @@ class MangaSourcesRepository @Inject constructor(
 
 	fun observeHasNewSources(): Flow<Boolean> = observeIsNsfwDisabled().map { skipNsfw ->
 		val sources = dao.findAllFromVersion(BuildConfig.VERSION_CODE).toSources(skipNsfw, null)
-		sources.isNotEmpty() && sources.size != allMangaSources.size + allNovelSources.size
+		sources.isNotEmpty() && sources.size != allMangaSources.size
 	}.onStart { assimilateNewSources() }
 
 	fun observeHasNewSourcesForBadge(): Flow<Boolean> = combine(
@@ -391,7 +382,6 @@ class MangaSourcesRepository @Inject constructor(
 		val entities = dao.findAll()
 		val result = HashSet<MangaSource>()
 		result.addAll(MangaParserSource.entries)
-		result.addAll(allNovelSources)
 		result.addAll(mihonExtensionManager.getMihonMangaSources())
 		for (e in entities) {
 			result.remove(e.toMangaSource() ?: continue)
@@ -479,7 +469,7 @@ class MangaSourcesRepository @Inject constructor(
 			if (source.isBroken) {
 				continue
 			}
-			if (source is MangaParserSource || source is NovelParserSource || source is MihonMangaSource) {
+			if (source is MangaParserSource || source is MihonMangaSource) {
 				result.add(
 					MangaSourceInfo(
 						mangaSource = source,
@@ -513,7 +503,6 @@ class MangaSourcesRepository @Inject constructor(
 				?: hanten.wre.app.core.model.MangaSource(source, title)
 		}
 		return MangaParserSource.entries.find { it.name == source }
-			?: NovelParserSource.fromName(source)
 	}
 
 	private fun String.toMangaSourceOrNull(): MangaSource? {
@@ -522,6 +511,5 @@ class MangaSourcesRepository @Inject constructor(
 				?: hanten.wre.app.core.model.MangaSource(this)
 		}
 		return MangaParserSource.entries.find { it.name == this }
-			?: NovelParserSource.fromName(this)
 	}
 }

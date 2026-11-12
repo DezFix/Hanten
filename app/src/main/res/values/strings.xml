@@ -459,7 +459,7 @@
     <string name="manage_categories">Manage categories</string>
     <string name="suggestions_wifi_only_summary">Do not update suggestions using metered network connections</string>
     <string name="tracker_wifi_only_summary">Do not check for new chapters using metered network connections</string>
-    <string name="search_hint">Enter manga title, genre or source name</string>
+    <string name="search_hint">Search manga, manhwa or novels by title, genre or source</string>
     <string name="progress">Progress</string>
     <string name="order_added">Added</string>
     <string name="show">Show</string>

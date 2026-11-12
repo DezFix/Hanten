@@ -44,7 +44,7 @@ class NovelOfflineRepository @Inject constructor(
 			if (!dir.exists()) dir.mkdirs()
 		}
 
-	suspend fun cacheChapter(manga: Manga, chapter: MangaChapter, html: String) =
+	suspend fun cacheChapter(manga: Manga, chapter: MangaChapter, html: String, explicit: Boolean = false) =
 		withContext(Dispatchers.IO) {
 			if (html.isBlank()) return@withContext
 			val dir = novelDir(manga)
@@ -69,12 +69,15 @@ class NovelOfflineRepository @Inject constructor(
 
 			val sizeBytes = htmlFile.length() + imageNames.sumOf { File(dir, it).length() }
 			updateMeta(dir, manga) { meta ->
+				val previous = meta.chapters.firstOrNull { it.id == chapter.id }
 				meta.copy(
 					chapters = meta.chapters.filterNot { it.id == chapter.id } + ChapterMeta(
 						id = chapter.id,
 						title = chapter.title.orEmpty(),
 						sizeBytes = sizeBytes,
 						images = imageNames,
+						downloaded = explicit || previous?.downloaded == true,
+						cachedAt = System.currentTimeMillis(),
 					),
 				)
 			}
@@ -82,8 +85,16 @@ class NovelOfflineRepository @Inject constructor(
 
 	fun readChapter(mangaId: Long, chapterId: Long): String? {
 		val dir = findNovelDir(mangaId) ?: return null
+		val file = chapterFile(dir, chapterId).takeIf { it.isFile } ?: return null
+		val chapter = readMeta(dir)?.chapters?.firstOrNull { it.id == chapterId }
+		if (chapter != null && !chapter.isExplicit && chapter.cachedAt > 0 &&
+			System.currentTimeMillis() - chapter.cachedAt > CACHE_TTL_MS
+		) {
+			// Read-only cache expired; the reader will fetch a fresh copy.
+			return null
+		}
 		return runCatchingCancellable {
-			chapterFile(dir, chapterId).takeIf { it.isFile }?.readText(Charsets.UTF_8)
+			file.readText(Charsets.UTF_8)
 		}.onFailure {
 			it.printStackTraceDebug()
 		}.getOrNull()
@@ -92,6 +103,64 @@ class NovelOfflineRepository @Inject constructor(
 	fun isChapterCached(mangaId: Long, chapterId: Long): Boolean {
 		val dir = findNovelDir(mangaId) ?: return false
 		return chapterFile(dir, chapterId).isFile
+	}
+
+	/** True only for chapters the user explicitly downloaded (not the read cache). */
+	fun isChapterDownloaded(mangaId: Long, chapterId: Long): Boolean {
+		val dir = findNovelDir(mangaId) ?: return false
+		if (!chapterFile(dir, chapterId).isFile) return false
+		val chapter = readMeta(dir)?.chapters?.firstOrNull { it.id == chapterId } ?: return true
+		return chapter.isExplicit
+	}
+
+	suspend fun getCacheSizeBytes(): Long = withContext(Dispatchers.IO) {
+		runCatchingCancellable { dirSize(rootDir) }.getOrDefault(0L)
+	}
+
+	/** Deletes expired/read-only chapters (oldest first) until the cache fits into [targetBytes]. */
+	suspend fun trimCache(targetBytes: Long) = withContext(Dispatchers.IO) {
+		data class CacheEntry(val file: File, val dir: File, val size: Long, val cachedAt: Long)
+
+		val entries = ArrayList<CacheEntry>()
+		var total = 0L
+		for (dir in rootDir.listFiles().orEmpty().filter { it.isDirectory }) {
+			val meta = readMeta(dir)
+			val byId = meta?.chapters.orEmpty().associateBy { it.id }
+			for (file in cachedChapterFiles(dir)) {
+				val chapterId = chapterIdFromFile(file) ?: continue
+				val chapter = byId[chapterId]
+				if (chapter != null && chapter.isExplicit) continue
+				val size = file.length() + chapter?.images.orEmpty().sumOf { File(dir, it).length() }
+				total += size
+				entries += CacheEntry(
+					file = file,
+					dir = dir,
+					size = size,
+					cachedAt = chapter?.cachedAt?.takeIf { it > 0 } ?: file.lastModified(),
+				)
+			}
+		}
+		if (total <= targetBytes) return@withContext
+		var current = total
+		for (entry in entries.sortedBy { it.cachedAt }) {
+			if (current <= targetBytes) break
+			val chapterId = chapterIdFromFile(entry.file) ?: continue
+			if (entry.file.delete()) {
+				current -= entry.size
+				removeMetaChapter(entry.dir, chapterId)
+			}
+		}
+	}
+
+	private fun removeMetaChapter(dir: File, chapterId: Long) {
+		synchronized(metaLock) {
+			val meta = readMeta(dir) ?: return
+			val chapter = meta.chapters.firstOrNull { it.id == chapterId } ?: return
+			val remaining = meta.chapters.filterNot { it.id == chapterId }
+			val usedImages = remaining.flatMapTo(HashSet()) { it.images }
+			chapter.images.filterNot { it in usedImages }.forEach { File(dir, it).delete() }
+			writeMeta(dir, meta.copy(chapters = remaining))
+		}
 	}
 
 	suspend fun cacheNovel(
@@ -112,7 +181,7 @@ class NovelOfflineRepository @Inject constructor(
 				}.getOrNull()
 				if (!html.isNullOrBlank()) {
 					runCatchingCancellable {
-						cacheChapter(manga, chapter, html)
+						cacheChapter(manga, chapter, html, explicit = true)
 					}.onFailure {
 						it.printStackTraceDebug()
 					}
@@ -146,6 +215,7 @@ class NovelOfflineRepository @Inject constructor(
 					chapterId = chapter.id,
 					title = chapter.title.ifBlank { defaultChapterTitle(chapter.id) },
 					sizeBytes = if (chapter.sizeBytes > 0) chapter.sizeBytes else file.length(),
+					isDownloaded = chapter.isExplicit,
 				)
 			}
 			val known = result.mapTo(HashSet()) { it.chapterId }
@@ -230,6 +300,7 @@ class NovelOfflineRepository @Inject constructor(
 			source = source,
 			chapterCount = chapterFiles.size,
 			sizeBytes = dirSize(dir),
+			isDownloaded = meta?.chapters?.any { it.isExplicit } ?: true,
 		)
 	}
 
@@ -370,7 +441,13 @@ class NovelOfflineRepository @Inject constructor(
 		val title: String = "",
 		val sizeBytes: Long = 0L,
 		val images: List<String> = emptyList(),
-	)
+		val downloaded: Boolean = false,
+		val cachedAt: Long = 0L,
+	) {
+		/** Legacy entries (no [cachedAt]) are treated as explicit downloads. */
+		val isExplicit: Boolean
+			get() = downloaded || cachedAt == 0L
+	}
 
 	private companion object {
 		private const val ROOT_DIR = "novels"
@@ -379,6 +456,7 @@ class NovelOfflineRepository @Inject constructor(
 		private const val HTML_EXTENSION = ".html"
 		private const val DEFAULT_IMAGE_EXTENSION = "jpg"
 		private const val MAX_IMAGE_BYTES = 32L * 1024L * 1024L
+		private const val CACHE_TTL_MS = 7L * 24L * 60L * 60L * 1000L
 		private const val MAX_NAME_LENGTH = 64
 		private const val USER_AGENT =
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"

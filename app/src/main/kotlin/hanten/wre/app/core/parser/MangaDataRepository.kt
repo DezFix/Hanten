@@ -20,6 +20,7 @@ import hanten.wre.app.core.db.entity.toManga
 import hanten.wre.app.core.db.entity.toMangaChapters
 import hanten.wre.app.core.db.entity.toMangaTags
 import hanten.wre.app.core.model.LocalMangaSource
+import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.nav.MangaIntent
 import hanten.wre.app.core.os.AppShortcutManager
@@ -171,7 +172,7 @@ class MangaDataRepository @Inject constructor(
 
 	suspend fun cleanupLocalManga() {
 		val dao = db.getMangaDao()
-		val broken = dao.findAllBySource(LocalMangaSource.name)
+		val broken = (dao.findAllBySource(LocalMangaSource.name) + dao.findAllBySource(LocalNovelSource.name))
 			.filter { x -> x.manga.url.toUri().toFileOrNull()?.exists() == false }
 		if (broken.isNotEmpty()) {
 			dao.delete(broken.map { it.manga })

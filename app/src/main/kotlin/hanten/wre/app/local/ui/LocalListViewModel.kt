@@ -54,7 +54,7 @@ class LocalListViewModel @Inject constructor(
 	private val localStorageManager: LocalStorageManager,
 	private val novelStorageManager: NovelStorageManager,
 	sourcesRepository: MangaSourcesRepository,
-	mangaDataRepository: MangaDataRepository,
+	private val mangaDataRepository: MangaDataRepository,
 ) : RemoteListViewModel(
 	savedStateHandle = savedStateHandle,
 	mangaRepositoryFactory = mangaRepositoryFactory,
@@ -146,6 +146,9 @@ class LocalListViewModel @Inject constructor(
 			val mangaIds = ids - novels.mapTo(HashSet<Long>()) { it.id }
 			if (mangaIds.isNotEmpty()) {
 				deleteLocalMangaUseCase(mangaIds)
+			}
+			if (novels.isNotEmpty()) {
+				mangaDataRepository.cleanupLocalManga()
 			}
 			onMangaRemoved.call(Unit)
 			onRefresh()

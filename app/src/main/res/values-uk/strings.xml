@@ -419,7 +419,7 @@
     <string name="data_not_restored_text">Переконайтеся, що ви вибрали правильний файл резервної копії</string>
     <string name="suggestions_wifi_only_summary">Не оновлювати пропозиції під час використання лімітного інтернет-з\'єднання</string>
     <string name="tracker_wifi_only_summary">Не перевіряти наявність нових розділів під час використання лімітного інтернет-з\'єднання</string>
-    <string name="search_hint">Введіть назву манґи, жанр або назву джерела</string>
+    <string name="search_hint">Пошук манґи, манхви або ранобе за назвою, жанром чи джерелом</string>
     <string name="progress">Прогрес</string>
     <string name="order_added">Додано</string>
     <string name="show">Показати</string>

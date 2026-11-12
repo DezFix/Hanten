@@ -422,7 +422,7 @@
     <string name="data_not_restored_text">Убедитесь, что вы выбрали правильный файл резервной копии</string>
     <string name="description">Описание</string>
     <string name="manage_categories">Управление категориями</string>
-    <string name="search_hint">Введите название манги, жанр или название источника</string>
+    <string name="search_hint">Поиск манги, манхвы или ранобэ по названию, жанру или источнику</string>
     <string name="show">Показать</string>
     <string name="tracker_wifi_only_summary">Не проверять наличие новых глав при использовании лимитного интернет-соединения</string>
     <string name="progress">Прогресс</string>

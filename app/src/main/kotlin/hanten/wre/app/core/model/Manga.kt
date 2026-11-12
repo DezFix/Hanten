@@ -15,7 +15,6 @@ import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.core.util.ext.iterator
 import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.mihon.model.MihonMangaSource
-import hanten.wre.app.novel.data.source.NovelParserSource
 import hanten.wre.app.parsers.model.ContentRating
 import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.parsers.model.Demographic
@@ -134,10 +133,9 @@ val Manga.isLocal: Boolean
 val MangaSource.isNovelSource: Boolean
 	get() = when (val source = unwrap()) {
 		LocalNovelSource -> true
-		is NovelParserSource -> true
 		is MangaParserSource -> source.contentType == ContentType.NOVEL
 		is MihonMangaSource -> source.contentType == hanten.wre.app.mihon.parsers.model.ContentType.NOVEL
-		else -> NovelParserSource.fromName(source.name) != null
+		else -> false
 	}
 
 val Manga.isNovel: Boolean

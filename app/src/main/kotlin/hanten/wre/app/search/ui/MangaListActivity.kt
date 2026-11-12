@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import hanten.wre.app.R
 import hanten.wre.app.core.model.LocalMangaSource
+import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.model.MangaSource
 import hanten.wre.app.core.model.getSummary
 import hanten.wre.app.core.model.getTitle
@@ -144,7 +145,7 @@ class MangaListActivity :
 		} else {
 			fm.commit {
 				setReorderingAllowed(true)
-				val fragment = if (source == LocalMangaSource) {
+				val fragment = if (source == LocalMangaSource || source == LocalNovelSource) {
 					LocalListFragment()
 				} else {
 					RemoteListFragment.newInstance(source)

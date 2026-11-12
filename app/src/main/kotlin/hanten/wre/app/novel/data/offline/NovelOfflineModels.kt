@@ -6,10 +6,12 @@ data class CachedNovel(
 	val source: String,
 	val chapterCount: Int,
 	val sizeBytes: Long,
+	val isDownloaded: Boolean = false,
 )
 
 data class CachedChapter(
 	val chapterId: Long,
 	val title: String,
 	val sizeBytes: Long,
+	val isDownloaded: Boolean = true,
 )

@@ -34,7 +34,6 @@ import hanten.wre.app.local.data.FaviconCache
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.data.LocalStorageCache
 import hanten.wre.app.mihon.MihonMangaRepository
-import hanten.wre.app.novel.data.source.BaseNovelRepository
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.runInterruptible
@@ -67,7 +66,6 @@ class FaviconFetcher(
 			)
 
 			is LocalMangaRepository -> imageLoader.fetch(R.drawable.ic_storage, options)
-			is BaseNovelRepository -> fetchNovelFavicon(repo)
 			is MihonMangaRepository -> fetchMihonIcon(repo)
 
 			else -> throw IllegalArgumentException("Unsupported repo ${repo.javaClass.simpleName}")
@@ -127,15 +125,6 @@ class FaviconFetcher(
 			isSampled = false,
 			dataSource = DataSource.DISK,
 		)
-	}
-
-	private suspend fun fetchNovelFavicon(repository: BaseNovelRepository): FetchResult {
-		val domain = repository.source.domain
-		val remote = runCatching {
-			imageLoader.fetch("https://$domain/favicon.ico", options)
-		}.getOrNull()
-		return remote ?: imageLoader.fetch(R.drawable.ic_novel, options)
-			?: throw IOException("Novel favicon not found for $domain")
 	}
 
 	private suspend fun fetchMihonIcon(repository: MihonMangaRepository): FetchResult {

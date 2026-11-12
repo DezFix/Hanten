@@ -17,7 +17,6 @@ import hanten.wre.app.explore.data.SourcesSortOrder
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
 import hanten.wre.app.mihon.MihonExtensionManager
-import hanten.wre.app.novel.data.source.NovelParserSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,7 +41,6 @@ class SourcesCatalogViewModel @Inject constructor(
 	val onActionDone = MutableEventFlow<ReversibleAction>()
 	val locales: Set<String?> = buildSet {
 		repository.allMangaSources.forEach { add(it.locale) }
-		NovelParserSource.entries.forEach { add(it.locale) }
 		mihonExtensionManager.getMihonMangaSources().forEach { add(it.locale) }
 		add(null)
 	}
@@ -145,7 +143,6 @@ class SourcesCatalogViewModel @Inject constructor(
 	private fun getContentTypes(isNsfwDisabled: Boolean): List<ContentType> {
 		val result = buildSet {
 			repository.allMangaSources.forEach { add(it.contentType) }
-			NovelParserSource.entries.forEach { add(it.contentType) }
 			mihonExtensionManager.getMihonMangaSources().forEach { 
 				when(it.contentType) {
 					hanten.wre.app.mihon.parsers.model.ContentType.MANGA -> add(ContentType.MANGA)
@@ -163,8 +160,7 @@ class SourcesCatalogViewModel @Inject constructor(
 				}
 			}
 		}.toList().sortedByDescending { type ->
-			val parsersCount = repository.allMangaSources.count { it.contentType == type } +
-				NovelParserSource.entries.count { it.contentType == type }
+			val parsersCount = repository.allMangaSources.count { it.contentType == type }
 			val mihonCount = mihonExtensionManager.getMihonMangaSources().count { 
 				when(it.contentType) {
 					hanten.wre.app.mihon.parsers.model.ContentType.MANGA -> type == ContentType.MANGA

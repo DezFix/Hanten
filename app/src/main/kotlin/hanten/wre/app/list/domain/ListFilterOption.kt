@@ -9,7 +9,7 @@ import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.model.unwrap
 import hanten.wre.app.core.parser.external.ExternalMangaSource
 import hanten.wre.app.core.parser.favicon.faviconUri
-import hanten.wre.app.novel.data.source.NovelParserSource
+import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.model.MangaTag
@@ -130,7 +130,6 @@ sealed interface ListFilterOption {
 		override val titleText: CharSequence?
 			get() = when (val source = mangaSource.unwrap()) {
 				is MangaParserSource -> source.title
-				is NovelParserSource -> source.title
 				else -> null
 			}
 

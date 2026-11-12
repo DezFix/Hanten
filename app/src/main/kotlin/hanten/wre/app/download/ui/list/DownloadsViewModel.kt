@@ -138,8 +138,8 @@ class DownloadsViewModel @Inject constructor(
 		it?.any { x -> x.canPause } == true
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.WhileSubscribed(5000), false)
 
-	val hasCancellableWorks = works.map {
-		it?.any { x -> !x.workState.isFinished } == true
+	val hasCancellableWorks = combine(works, novelWorks) { manga, novels ->
+		manga?.any { !it.workState.isFinished } == true || novels.isNotEmpty()
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.WhileSubscribed(5000), false)
 
 	fun cancel(id: UUID) {
@@ -163,6 +163,7 @@ class DownloadsViewModel @Inject constructor(
 	fun cancelAll() {
 		launchJob(Dispatchers.IO) {
 			workScheduler.cancelAll()
+			novelDownloadScheduler.cancelAll()
 			onActionDone.call(ReversibleAction(R.string.downloads_cancelled, null))
 		}
 	}
@@ -324,9 +325,12 @@ class DownloadsViewModel @Inject constructor(
 	fun refreshNovelCache() {
 		launchJob(Dispatchers.IO) {
 			runCatchingCancellable {
-				val novels = novelOfflineRepository.listCachedNovels()
+				val novels = novelOfflineRepository.listCachedNovels().filter { it.isDownloaded }
 				cachedNovels.value = novels
-				cachedNovelChapters.value = novels.associate { it.id to novelOfflineRepository.listCachedChapters(it.id) }
+				cachedNovelChapters.value = novels.associate { novel ->
+					novel.id to novelOfflineRepository.listCachedChapters(novel.id)
+						.filter { it.isDownloaded }
+				}
 			}.onFailure {
 				it.printStackTraceDebug("DownloadsViewModel::refreshNovelCache")
 			}

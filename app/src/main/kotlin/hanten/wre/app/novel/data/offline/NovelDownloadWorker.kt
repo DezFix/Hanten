@@ -1,11 +1,17 @@
 package hanten.wre.app.novel.data.offline
 
 import android.content.Context
+import android.content.pm.ServiceInfo
+import android.os.Build
+import androidx.core.app.NotificationChannelCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
+import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
@@ -20,10 +26,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
+import hanten.wre.app.R
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
-import hanten.wre.app.novel.data.NovelContentParser
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.io.IOException
@@ -42,6 +48,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
 	override suspend fun doWork(): Result {
+		setForeground(getForegroundInfo())
 		return try {
 			val mangaId = inputData.getLong(KEY_MANGA_ID, 0L)
 			val chapterIds = inputData.getLongArray(KEY_CHAPTER_IDS)?.toList().orEmpty()
@@ -51,7 +58,6 @@ class NovelDownloadWorker @AssistedInject constructor(
 				manga.chapters?.firstOrNull { it.id == chapterId }
 			}
 			val repository = repositoryFactory.create(manga.source)
-			val baseUrl = manga.originUrl()
 			val total = chapters.size
 			var done = 0
 			setProgress(progressData(manga, done, total))
@@ -60,11 +66,9 @@ class NovelDownloadWorker @AssistedInject constructor(
 					return Result.failure()
 				}
 				coroutineContext.ensureActive()
-				if (!offlineRepository.isChapterCached(manga.id, chapter.id)) {
-					val html = repository.getPages(chapter).joinToString(separator = "") { page ->
-						NovelContentParser.normalize(page.url, baseUrl)
-					}
-					offlineRepository.cacheChapter(manga, chapter, html)
+				if (!offlineRepository.isChapterDownloaded(manga.id, chapter.id)) {
+					val html = repository.getPages(chapter).joinToString(separator = "") { it.url }
+					offlineRepository.cacheChapter(manga, chapter, html, explicit = true)
 				}
 				done++
 				setProgress(progressData(manga, done, total))
@@ -77,6 +81,31 @@ class NovelDownloadWorker @AssistedInject constructor(
 		} catch (e: Throwable) {
 			e.printStackTraceDebug("NovelDownloadWorker::doWork")
 			Result.failure()
+		} finally {
+			NotificationManagerCompat.from(applicationContext).cancel(id.hashCode())
+		}
+	}
+
+	override suspend fun getForegroundInfo(): ForegroundInfo {
+		val channel = NotificationChannelCompat.Builder(CHANNEL_ID, NotificationManagerCompat.IMPORTANCE_LOW)
+			.setName(applicationContext.getString(R.string.downloads))
+			.setShowBadge(false)
+			.setSound(null, null)
+			.setVibrationEnabled(false)
+			.build()
+		NotificationManagerCompat.from(applicationContext).createNotificationChannel(channel)
+		val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+			.setSmallIcon(R.drawable.ic_download)
+			.setContentTitle(applicationContext.getString(R.string.downloads))
+			.setContentText(applicationContext.getString(R.string.novel_download_started))
+			.setOngoing(true)
+			.setPriority(NotificationCompat.PRIORITY_LOW)
+			.setCategory(NotificationCompat.CATEGORY_PROGRESS)
+			.build()
+		return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+			ForegroundInfo(id.hashCode(), notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+		} else {
+			ForegroundInfo(id.hashCode(), notification)
 		}
 	}
 
@@ -97,6 +126,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 
 		const val TAG = "novel_download"
 		const val TAG_MANGA_PREFIX = "novel_manga_"
+		private const val CHANNEL_ID = "novel_downloads"
 		const val KEY_MANGA_ID = "manga_id"
 		const val KEY_CHAPTER_IDS = "chapter_ids"
 		const val KEY_ALLOW_METERED = "allow_metered"
