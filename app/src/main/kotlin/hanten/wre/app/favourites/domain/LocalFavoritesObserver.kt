@@ -10,14 +10,16 @@ import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.local.data.index.LocalMangaIndex
 import hanten.wre.app.local.domain.LocalObserveMapper
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 @Reusable
 class LocalFavoritesObserver @Inject constructor(
 	localMangaIndex: LocalMangaIndex,
+	novelOfflineRepository: NovelOfflineRepository,
 	private val db: MangaDatabase,
-) : LocalObserveMapper<FavouriteManga, Manga>(localMangaIndex) {
+) : LocalObserveMapper<FavouriteManga, Manga>(localMangaIndex, novelOfflineRepository) {
 
 	fun observeAll(
 		order: ListSortOrder,

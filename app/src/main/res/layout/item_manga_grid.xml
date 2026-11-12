@@ -64,7 +64,6 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom|start"
 			android:layout_margin="@dimen/card_indicator_offset"
-			android:backgroundTint="?attr/colorSurfaceContainer"
 			tools:text="Novel"
 			tools:visibility="visible" />
 

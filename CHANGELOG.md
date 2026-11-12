@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.7.2
+
+### Исправлено
+- Новеллы со скачанными главами теперь помечаются значком «сохранено» в списках
+  и участвуют в фильтре «На устройстве», как манга (новый индекс `novel_downloads`).
+- Маркер типа контента в сетке стал меньше и полупрозрачным, чтобы не перекрывать
+  обложку и индикаторы.
+
 ## 2.7.1
 
 ### Изменено

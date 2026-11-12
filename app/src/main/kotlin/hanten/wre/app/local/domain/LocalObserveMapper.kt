@@ -9,10 +9,12 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.local.data.index.LocalMangaIndex
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.parsers.model.Manga
 
 abstract class LocalObserveMapper<E : Any, R : Any>(
 	private val localMangaIndex: LocalMangaIndex,
+	private val novelOfflineRepository: NovelOfflineRepository,
 ) {
 
 	protected fun Flow<Collection<E>>.mapToLocal() = onStart {
@@ -30,6 +32,7 @@ abstract class LocalObserveMapper<E : Any, R : Any>(
 					m
 				} else {
 					localMangaIndex.get(m.id, withDetails = false)?.manga
+						?: m.takeIf { novelOfflineRepository.isDownloaded(it.id) }
 				}
 				mapped?.let { mm -> toResult(item, mm) }
 			}

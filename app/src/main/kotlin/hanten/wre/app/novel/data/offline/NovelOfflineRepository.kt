@@ -8,6 +8,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import hanten.wre.app.core.network.MangaHttpClient
+import hanten.wre.app.core.db.MangaDatabase
+import hanten.wre.app.core.db.entity.NovelDownloadEntity
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
@@ -31,7 +33,10 @@ import javax.inject.Singleton
 class NovelOfflineRepository @Inject constructor(
 	@ApplicationContext private val context: Context,
 	@MangaHttpClient private val httpClient: OkHttpClient,
+	db: MangaDatabase,
 ) {
+
+	private val downloadsDao = db.getNovelDownloadsDao()
 
 	private val json = Json {
 		ignoreUnknownKeys = true
@@ -81,6 +86,9 @@ class NovelOfflineRepository @Inject constructor(
 					),
 				)
 			}
+			if (explicit) {
+				downloadsDao.upsert(NovelDownloadEntity(manga.id, System.currentTimeMillis()))
+			}
 		}
 
 	fun readChapter(mangaId: Long, chapterId: Long): String? {
@@ -111,6 +119,33 @@ class NovelOfflineRepository @Inject constructor(
 		if (!chapterFile(dir, chapterId).isFile) return false
 		val chapter = readMeta(dir)?.chapters?.firstOrNull { it.id == chapterId } ?: return true
 		return chapter.isExplicit
+	}
+
+	/** True when the novel has at least one explicitly downloaded chapter. */
+	suspend fun isDownloaded(mangaId: Long): Boolean {
+		ensureIndex()
+		return downloadsDao.contains(mangaId)
+	}
+
+	@Volatile
+	private var indexBackfilled = false
+
+	/** Builds the download index for novels downloaded before the index table existed. */
+	private suspend fun ensureIndex() {
+		if (indexBackfilled) return
+		indexBackfilled = true
+		withContext(Dispatchers.IO) {
+			if (downloadsDao.count() > 0) return@withContext
+			val now = System.currentTimeMillis()
+			for (dir in rootDir.listFiles().orEmpty().filter { it.isDirectory }) {
+				val meta = readMeta(dir) ?: continue
+				if (meta.chapters.none { it.isExplicit }) continue
+				val id = meta.id.takeIf { it != 0L }
+					?: dir.name.substringAfterLast('_').toLongOrNull()
+					?: continue
+				downloadsDao.upsert(NovelDownloadEntity(id, now))
+			}
+		}
 	}
 
 	suspend fun getCacheSizeBytes(): Long = withContext(Dispatchers.IO) {
@@ -230,16 +265,16 @@ class NovelOfflineRepository @Inject constructor(
 		}.getOrDefault(emptyList())
 	}
 
-	fun deleteNovel(mangaId: Long) {
-		val dir = findNovelDir(mangaId) ?: return
+	suspend fun deleteNovel(mangaId: Long) {
 		runCatchingCancellable {
-			dir.deleteRecursively()
+			findNovelDir(mangaId)?.deleteRecursively()
 		}.onFailure {
 			it.printStackTraceDebug()
 		}
+		downloadsDao.delete(mangaId)
 	}
 
-	fun deleteChapter(mangaId: Long, chapterId: Long) {
+	suspend fun deleteChapter(mangaId: Long, chapterId: Long) {
 		val dir = findNovelDir(mangaId) ?: return
 		runCatchingCancellable {
 			val meta = readMeta(dir) ?: return@runCatchingCancellable
@@ -251,6 +286,9 @@ class NovelOfflineRepository @Inject constructor(
 			}
 			chapterFile(dir, chapterId).delete()
 			writeMeta(dir, meta.copy(chapters = remaining))
+			if (remaining.none { it.isExplicit }) {
+				downloadsDao.delete(mangaId)
+			}
 		}.onFailure {
 			it.printStackTraceDebug()
 		}

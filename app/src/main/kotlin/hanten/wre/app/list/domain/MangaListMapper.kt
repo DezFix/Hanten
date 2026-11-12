@@ -19,6 +19,7 @@ import hanten.wre.app.list.ui.model.MangaDetailedListModel
 import hanten.wre.app.list.ui.model.MangaGridModel
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.local.data.index.LocalMangaIndex
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.tracker.domain.TrackingRepository
@@ -34,6 +35,7 @@ class MangaListMapper @Inject constructor(
 	private val historyRepository: HistoryRepository,
 	private val favouritesRepository: FavouritesRepository,
 	private val localMangaIndex: LocalMangaIndex,
+	private val novelOfflineRepository: NovelOfflineRepository,
 	private val dataRepository: MangaDataRepository,
 ) {
 
@@ -162,7 +164,8 @@ class MangaListMapper @Inject constructor(
 	}
 
 	private suspend fun isSaved(mangaId: Long, @Options options: Int): Boolean {
-		return options.isBadgeEnabled(SAVED) && mangaId in localMangaIndex
+		if (!options.isBadgeEnabled(SAVED)) return false
+		return mangaId in localMangaIndex || novelOfflineRepository.isDownloaded(mangaId)
 	}
 
 	@ColorRes
