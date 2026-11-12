@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.7.4
+
+### Изменено
+- Плашка типа контента в сетке стала компактнее (8sp, узкие отступы) и больше
+  не перекрывает кружок прогресса чтения.
+
 ## 2.7.3
 
 ### Изменено
