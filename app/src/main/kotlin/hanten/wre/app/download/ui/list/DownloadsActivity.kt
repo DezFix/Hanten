@@ -223,16 +223,20 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 	}
 
 	override fun onPrepareActionMode(controller: ListSelectionController, mode: ActionMode?, menu: Menu): Boolean {
-		val snapshot = viewModel.snapshot(controller.peekCheckedIds())
-		var canPause = true
-		var canResume = true
+		val selection = viewModel.selection(controller.peekCheckedIds())
+		var canPause = selection.works.isNotEmpty()
+		var canResume = selection.works.isNotEmpty()
 		var canCancel = true
 		var canRemove = true
-		for (item in snapshot) {
+		for (item in selection.works) {
 			canPause = canPause and item.canPause
 			canResume = canResume and item.canResume
 			canCancel = canCancel and !item.workState.isFinished
 			canRemove = canRemove and item.workState.isFinished
+		}
+		for (item in selection.novels) {
+			canCancel = canCancel and item.isActive
+			canRemove = canRemove and !item.isActive
 		}
 		menu.findItem(R.id.action_pause)?.isVisible = canPause
 		menu.findItem(R.id.action_resume)?.isVisible = canResume
@@ -257,7 +261,17 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 	}
 
 	override fun onExpandNovelClick(item: NovelDownloadItemModel) {
-		viewModel.expandCollapseNovel(item)
+		if (!selectionController.onItemClick(item.selectionId)) {
+			viewModel.expandCollapseNovel(item)
+		}
+	}
+
+	override fun onNovelLongClick(item: NovelDownloadItemModel, view: View): Boolean {
+		return selectionController.onItemLongClick(view, item.selectionId)
+	}
+
+	override fun onNovelContextClick(item: NovelDownloadItemModel, view: View): Boolean {
+		return selectionController.onItemContextClick(view, item.selectionId)
 	}
 
 	override fun onDeleteNovelClick(item: NovelDownloadItemModel) {

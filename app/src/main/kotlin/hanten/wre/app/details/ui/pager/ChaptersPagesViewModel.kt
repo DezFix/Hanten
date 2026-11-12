@@ -27,7 +27,9 @@ import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.local.domain.model.LocalManga
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.reader.ui.ReaderActivity
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ReaderViewModel
@@ -40,6 +42,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -60,6 +63,7 @@ abstract class ChaptersPagesViewModel(
 	private val workManager: androidx.work.WorkManager,
 	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
 	private val localStorageChanges: SharedFlow<LocalManga?>,
+	private val novelOfflineRepository: NovelOfflineRepository,
 ) : BaseViewModel() {
 
 	val mangaDetails = MutableStateFlow<MangaDetails?>(null)
@@ -124,16 +128,30 @@ abstract class ChaptersPagesViewModel(
 		}
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
+	private val downloadedNovelChapters = mangaDetails
+		.map { details ->
+			val manga = details?.toManga() ?: return@map emptySet<Long>()
+			if (!manga.isNovel) return@map emptySet<Long>()
+			novelOfflineRepository.listCachedChapters(manga.id)
+				.filter { it.isDownloaded }
+				.mapTo(HashSet()) { it.chapterId }
+		}
+		.flowOn(Dispatchers.IO)
+
+	private val detailsWithDownloads = combine(mangaDetails, downloadedNovelChapters) { details, downloaded ->
+		details to downloaded
+	}
+
 	val chapters = combine(
 		combine(
-			mangaDetails,
+			detailsWithDownloads,
 			readingState.map { it?.chapterId ?: 0L }.distinctUntilChanged(),
 			selectedBranch,
 			newChaptersCount,
 			bookmarks,
 			isChaptersInGridView,
 			isDownloadedOnly,
-		) { manga, currentChapterId, branch, news, bookmarks, grid, downloadedOnly ->
+		) { (manga, downloaded), currentChapterId, branch, news, bookmarks, grid, downloadedOnly ->
 			manga?.mapChapters(
 				currentChapterId = currentChapterId,
 				newCount = news,
@@ -141,6 +159,7 @@ abstract class ChaptersPagesViewModel(
 				bookmarks = bookmarks,
 				isGrid = grid,
 				isDownloadedOnly = downloadedOnly,
+				downloadedChapterIds = downloaded,
 			).orEmpty()
 		},
 		isChaptersReversed,

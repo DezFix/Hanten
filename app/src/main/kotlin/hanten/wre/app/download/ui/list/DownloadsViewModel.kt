@@ -56,9 +56,13 @@ import java.util.LinkedList
 import java.util.UUID
 import javax.inject.Inject
 
+data class DownloadSelection(
+	val works: List<DownloadItemModel> = emptyList(),
+	val novels: List<NovelDownloadItemModel> = emptyList(),
+)
+
 @HiltViewModel
-class DownloadsViewModel @Inject constructor(
-	private val workScheduler: DownloadWorker.Scheduler,
+class DownloadsViewModel @Inject constructor(	private val workScheduler: DownloadWorker.Scheduler,
 	private val mangaDataRepository: MangaDataRepository,
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	@LocalStorageChanges private val localStorageChanges: MutableSharedFlow<LocalManga?>,
@@ -159,6 +163,11 @@ class DownloadsViewModel @Inject constructor(
 					workScheduler.cancel(work.id)
 				}
 			}
+			for (item in novelItems.value) {
+				if (item.selectionId in ids) {
+					item.workId?.let(novelDownloadScheduler::cancel)
+				}
+			}
 			onActionDone.call(ReversibleAction(R.string.downloads_cancelled, null))
 		}
 	}
@@ -221,7 +230,7 @@ class DownloadsViewModel @Inject constructor(
 
 	fun remove(ids: Set<Long>, deleteFiles: Boolean) {
 		launchJob(Dispatchers.IO) {
-			val snapshot = works.value ?: return@launchJob
+			val snapshot = works.value.orEmpty()
 			val uuids = HashSet<UUID>(ids.size)
 			for (work in snapshot) {
 				if (work.id.mostSignificantBits in ids) {
@@ -236,7 +245,18 @@ class DownloadsViewModel @Inject constructor(
 					}
 				}
 			}
+			val novelIds = ids.filter { it < 0 }.map { -it }
+			for (novelId in novelIds) {
+				if (deleteFiles) {
+					novelOfflineRepository.deleteNovel(novelId)
+				} else {
+					novelOfflineRepository.hideNovel(novelId)
+				}
+			}
 			workScheduler.delete(uuids)
+			if (novelIds.isNotEmpty()) {
+				refreshNovelCache()
+			}
 			onActionDone.call(ReversibleAction(R.string.downloads_removed, null))
 			refreshStorageUsage()
 		}
@@ -277,13 +297,16 @@ class DownloadsViewModel @Inject constructor(
 		}
 	}
 
-	fun snapshot(ids: LongSet): Collection<DownloadItemModel> {
-		return works.value?.filterTo(ArrayList(ids.size)) { x -> x.id.mostSignificantBits in ids }.orEmpty()
-	}
+	fun selection(ids: LongSet): DownloadSelection = DownloadSelection(
+		works = works.value.orEmpty().filter { it.id.mostSignificantBits in ids },
+		novels = novelItems.value.filter { it.selectionId in ids },
+	)
 
-	fun allIds(): Set<Long> = works.value?.mapToSet {
-		it.id.mostSignificantBits
-	} ?: emptySet()
+	fun allIds(): Set<Long> {
+		val result = works.value?.mapTo(HashSet()) { it.id.mostSignificantBits } ?: HashSet()
+		novelItems.value.mapTo(result) { it.selectionId }
+		return result
+	}
 
 	fun expandCollapse(item: DownloadItemModel) {
 		expanded.update {

@@ -128,6 +128,7 @@ class NovelReaderActivity :
 		super.onResume()
 		applyKeepScreenOn()
 		applySystemBarsVisibility()
+		viewModel.refreshDownloadedChapters()
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
@@ -485,7 +486,9 @@ class NovelReaderActivity :
 			val chapterTitle = chapter.title?.takeIf { it.isNotBlank() } ?: (index + 1).toString()
 			titles.add(chapterTitle)
 		}
-		NovelChaptersSheet.newInstance(titles, viewModel.currentChapterIndex.value)
+		val downloadedIds = viewModel.downloadedChapterIds.value
+		val downloaded = BooleanArray(chapters.size) { index -> chapters[index].id in downloadedIds }
+		NovelChaptersSheet.newInstance(titles, viewModel.currentChapterIndex.value, downloaded)
 			.show(supportFragmentManager, NovelChaptersSheet.TAG)
 	}
 

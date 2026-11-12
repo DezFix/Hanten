@@ -34,6 +34,10 @@ data class NovelDownloadItemModel(
 	val isActive: Boolean
 		get() = workId != null
 
+	/** Stable id used by the list selection controller; negative to avoid clashing with work UUID bits. */
+	val selectionId: Long
+		get() = -mangaId
+
 	override fun areItemsTheSame(other: ListModel): Boolean {
 		if (other !is NovelDownloadItemModel) {
 			return false

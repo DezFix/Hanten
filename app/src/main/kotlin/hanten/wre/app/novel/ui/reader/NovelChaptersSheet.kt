@@ -39,6 +39,7 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 		callback = activity as? Callback ?: parentFragment as? Callback
 
 		val titles = arguments?.getStringArrayList(ARG_TITLES).orEmpty()
+		val downloaded = arguments?.getBooleanArray(ARG_DOWNLOADED) ?: BooleanArray(titles.size)
 		val currentIndex = (arguments?.getInt(ARG_CURRENT_INDEX, 0) ?: 0)
 			.coerceIn(0, (titles.size - 1).coerceAtLeast(0))
 
@@ -47,7 +48,7 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 
 		if (titles.isNotEmpty()) {
 			binding.chaptersList.layoutManager = LinearLayoutManager(requireContext())
-			binding.chaptersList.adapter = ChapterAdapter(titles, currentIndex) { index ->
+			binding.chaptersList.adapter = ChapterAdapter(titles, downloaded, currentIndex) { index ->
 				dismiss()
 				callback?.onChapterSelected(index)
 			}
@@ -63,6 +64,7 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 
 	private class ChapterAdapter(
 		private val titles: List<String>,
+		private val downloaded: BooleanArray,
 		private val currentIndex: Int,
 		private val onSelected: (Int) -> Unit,
 	) : RecyclerView.Adapter<ChapterAdapter.ViewHolder>() {
@@ -86,6 +88,7 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 				),
 			)
 			holder.itemView.isSelected = isCurrent
+			holder.binding.imageDownloaded.isVisible = downloaded.getOrElse(position) { false }
 			holder.itemView.setOnClickListener {
 				val index = holder.bindingAdapterPosition
 				if (index != RecyclerView.NO_POSITION) {
@@ -99,12 +102,18 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 		const val TAG = "NovelChaptersSheet"
 
 		private const val ARG_TITLES = "titles"
+		private const val ARG_DOWNLOADED = "downloaded"
 		private const val ARG_CURRENT_INDEX = "current_index"
 
-		fun newInstance(titles: ArrayList<String>, currentIndex: Int): NovelChaptersSheet {
+		fun newInstance(
+			titles: ArrayList<String>,
+			currentIndex: Int,
+			downloaded: BooleanArray,
+		): NovelChaptersSheet {
 			return NovelChaptersSheet().apply {
 				arguments = Bundle().apply {
 					putStringArrayList(ARG_TITLES, titles)
+					putBooleanArray(ARG_DOWNLOADED, downloaded)
 					putInt(ARG_CURRENT_INDEX, currentIndex)
 				}
 			}

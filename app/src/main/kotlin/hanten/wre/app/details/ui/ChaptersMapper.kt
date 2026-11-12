@@ -17,6 +17,7 @@ fun MangaDetails.mapChapters(
 	bookmarks: List<Bookmark>,
 	isGrid: Boolean,
 	isDownloadedOnly: Boolean,
+	downloadedChapterIds: Set<Long> = emptySet(),
 ): List<ChapterListItem> {
 	val remoteChapters = chapters[branch].orEmpty()
 	val localChapters = local?.manga?.getChapters(branch).orEmpty()
@@ -40,21 +41,23 @@ fun MangaDetails.mapChapters(
 		null
 	}
 	var isUnread = currentChapterId !in ids
-	if (!isDownloadedOnly || local?.manga?.chapters == null) {
-		for (chapter in remoteChapters) {
-			val local = localMap?.remove(chapter.id)
-			if (chapter.id == currentChapterId) {
-				isUnread = true
-			}
-			result += (local ?: chapter).toListItem(
-				isCurrent = chapter.id == currentChapterId,
-				isUnread = isUnread,
-				isNew = isUnread && result.size >= newFrom,
-				isDownloaded = local != null,
-				isBookmarked = chapter.id in bookmarked,
-				isGrid = isGrid,
-			)
+	for (chapter in remoteChapters) {
+		val localChapter = localMap?.remove(chapter.id)
+		val isDownloaded = localChapter != null || chapter.id in downloadedChapterIds
+		if (isDownloadedOnly && !isDownloaded) {
+			continue
 		}
+		if (chapter.id == currentChapterId) {
+			isUnread = true
+		}
+		result += (localChapter ?: chapter).toListItem(
+			isCurrent = chapter.id == currentChapterId,
+			isUnread = isUnread,
+			isNew = isUnread && result.size >= newFrom,
+			isDownloaded = isDownloaded,
+			isBookmarked = chapter.id in bookmarked,
+			isGrid = isGrid,
+		)
 	}
 	if (!localMap.isNullOrEmpty()) {
 		for (chapter in localMap.values) {

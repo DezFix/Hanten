@@ -28,6 +28,7 @@ import hanten.wre.app.details.domain.RelatedMangaUseCase
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.model.MangaBranch
 import hanten.wre.app.details.ui.pager.ChaptersPagesViewModel
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.list.domain.MangaListMapper
@@ -88,6 +89,7 @@ class DetailsViewModel @Inject constructor(
 	statsRepository: StatsRepository,
 	private val relationsRepository: MangaRelationsRepository,
 	private val mangaSearchRepository: MangaSearchRepository,
+	novelOfflineRepository: NovelOfflineRepository,
 ) : ChaptersPagesViewModel(
 	settings = settings,
 	interactor = interactor,
@@ -99,6 +101,7 @@ class DetailsViewModel @Inject constructor(
 	workManager = workManager,
 	deleteLocalMangaUseCase = deleteLocalMangaUseCase,
 	localStorageChanges = localStorageChanges,
+	novelOfflineRepository = novelOfflineRepository,
 ) {
 
 	private val intent = MangaIntent(savedStateHandle)

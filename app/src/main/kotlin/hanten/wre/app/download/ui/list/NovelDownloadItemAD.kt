@@ -32,6 +32,8 @@ fun novelDownloadItemAD(
 	binding.buttonDelete.setOnClickListener { listener.onDeleteNovelClick(item) }
 	binding.buttonExpand.setOnClickListener { listener.onExpandNovelClick(item) }
 	binding.root.setOnClickListener { listener.onExpandNovelClick(item) }
+	binding.root.setOnLongClickListener { listener.onNovelLongClick(item, it) }
+	binding.root.setOnCreateContextMenuListener { _, view, _ -> listener.onNovelContextClick(item, view) }
 
 	bind {
 		val context = binding.root.context

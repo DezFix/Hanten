@@ -3,6 +3,7 @@ package hanten.wre.app.novel.ui.reader
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
@@ -78,6 +79,9 @@ class NovelReaderViewModel @Inject constructor(
 
 	private val _isPdf = MutableStateFlow(false)
 	val isPdf: StateFlow<Boolean> = _isPdf.asStateFlow()
+
+	private val _downloadedChapterIds = MutableStateFlow<Set<Long>>(emptySet())
+	val downloadedChapterIds: StateFlow<Set<Long>> = _downloadedChapterIds.asStateFlow()
 
 	val onChapterAppended = MutableEventFlow<Triple<String, String, Int>>() // title, html, chapter index
 
@@ -238,6 +242,7 @@ class NovelReaderViewModel @Inject constructor(
 				}
 
 				_chapters.value = chapterList
+				refreshDownloadedChapters()
 
 				// Determine start chapter. Explicit chapter and bookmark openings keep their target.
 				val targetChapterId = initialState?.chapterId
@@ -451,6 +456,19 @@ class NovelReaderViewModel @Inject constructor(
 	fun getPdfHelper(): PdfRendererHelper? = pdfHelper
 
 	fun getEpubParser(): EpubParser? = epubParser
+
+	fun refreshDownloadedChapters() {
+		launchJob(Dispatchers.IO) {
+			val manga = _manga.value ?: return@launchJob
+			_downloadedChapterIds.value = if (manga.isNovel) {
+				offlineRepository.listCachedChapters(manga.id)
+					.filter { it.isDownloaded }
+					.mapTo(HashSet()) { it.chapterId }
+			} else {
+				emptySet()
+			}
+		}
+	}
 
 	companion object {
 		private const val MAX_PREFETCHED_CHAPTERS = 4

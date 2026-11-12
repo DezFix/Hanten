@@ -1,11 +1,13 @@
 package hanten.wre.app.novel.data.offline
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -94,10 +96,20 @@ class NovelDownloadWorker @AssistedInject constructor(
 			.setVibrationEnabled(false)
 			.build()
 		NotificationManagerCompat.from(applicationContext).createNotificationChannel(channel)
+		val contentIntent = PendingIntentCompat.getActivity(
+			applicationContext,
+			0,
+			Intent(applicationContext, hanten.wre.app.download.ui.list.DownloadsActivity::class.java).apply {
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+			},
+			0,
+			false,
+		)
 		val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
 			.setSmallIcon(R.drawable.ic_download)
 			.setContentTitle(applicationContext.getString(R.string.downloads))
 			.setContentText(applicationContext.getString(R.string.novel_download_started))
+			.setContentIntent(contentIntent)
 			.setOngoing(true)
 			.setPriority(NotificationCompat.PRIORITY_LOW)
 			.setCategory(NotificationCompat.CATEGORY_PROGRESS)

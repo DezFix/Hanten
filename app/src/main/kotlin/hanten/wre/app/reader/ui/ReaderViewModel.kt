@@ -33,6 +33,7 @@ import hanten.wre.app.details.domain.DetailsLoadUseCase
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.details.ui.pager.ChaptersPagesViewModel
 import hanten.wre.app.details.ui.pager.EmptyMangaReason
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.history.domain.HistoryUpdateUseCase
@@ -105,6 +106,7 @@ class ReaderViewModel @Inject constructor(
     addUnreadToQueueUseCase: hanten.wre.app.download.domain.usecase.AddUnreadToQueueUseCase,
     workManager: androidx.work.WorkManager,
     readerSettingsProducerFactory: ReaderSettings.Producer.Factory,
+    novelOfflineRepository: NovelOfflineRepository,
 ) : ChaptersPagesViewModel(
     settings = settings,
     interactor = interactor,
@@ -116,6 +118,7 @@ class ReaderViewModel @Inject constructor(
     workManager = workManager,
     deleteLocalMangaUseCase = deleteLocalMangaUseCase,
     localStorageChanges = localStorageChanges,
+    novelOfflineRepository = novelOfflineRepository,
 ) {
     private val intent = MangaIntent(savedStateHandle)
 
