@@ -23,12 +23,12 @@ class ExploreRepository @Inject constructor(
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 ) {
 
-	suspend fun findRandomManga(tagsLimit: Int, isNovel: Boolean): Manga {
+	suspend fun findRandomManga(tagsLimit: Int): Manga {
 		val tagsBlacklist = TagsBlacklist(settings.suggestionsTagsBlacklist, 0.4f)
 		val tags = historyRepository.getPopularTags(tagsLimit).mapNotNull {
 			if (it in tagsBlacklist) null else it.title
 		}
-		val sources = sourcesRepository.getEnabledSources().filter { it.isNovelSource == isNovel }
+		val sources = sourcesRepository.getEnabledSources()
 		check(sources.isNotEmpty()) { "No sources available" }
 		for (i in 0..4) {
 			val list = getList(sources.random(), tags, tagsBlacklist)

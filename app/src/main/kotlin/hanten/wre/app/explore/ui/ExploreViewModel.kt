@@ -64,12 +64,6 @@ class ExploreViewModel @Inject constructor(
 		valueProducer = { isAllSourcesEnabled },
 	)
 
-	val appMode = settings.observeAsStateFlow(
-		scope = viewModelScope + Dispatchers.IO,
-		key = AppSettings.KEY_APP_MODE,
-		valueProducer = { appMode },
-	)
-
 	private val isSuggestionsEnabled = settings.observeAsFlow(
 		key = AppSettings.KEY_SUGGESTIONS,
 		valueProducer = { isSuggestionsEnabled },
@@ -104,10 +98,7 @@ class ExploreViewModel @Inject constructor(
 		launchJob(Dispatchers.IO) {
 			isRandomLoading.value = true
 			try {
-				val manga = exploreRepository.findRandomManga(
-					tagsLimit = 8,
-					isNovel = appMode.value.isNovel,
-				)
+				val manga = exploreRepository.findRandomManga(tagsLimit = 8)
 				onOpenManga.call(manga)
 			} finally {
 				isRandomLoading.value = false
@@ -152,13 +143,7 @@ class ExploreViewModel @Inject constructor(
 		}
 	}
 
-	private fun observeFilteredSources(): Flow<List<MangaSourceInfo>> = combineFlows(
-		sourcesRepository.observeEnabledSources(),
-		appMode,
-	) { sources, mode ->
-		val isNovel = mode.isNovel
-		sources.filter { it.mangaSource.isNovelSource == isNovel }
-	}
+	private fun observeFilteredSources(): Flow<List<MangaSourceInfo>> = sourcesRepository.observeEnabledSources()
 
 	private fun createContentFlow(): Flow<List<ListModel>> = combine(
 		observeFilteredSources(),
@@ -179,7 +164,6 @@ class ExploreViewModel @Inject constructor(
 		allSourcesEnabled: Boolean,
 		hasNewSources: Boolean,
 	): List<ListModel> {
-		val isNovel = appMode.value.isNovel
 		val result = ArrayList<ListModel>(sources.size + 3)
 		result += ExploreButtons(randomLoading)
 		if (recommendation.isNotEmpty()) {
@@ -188,7 +172,7 @@ class ExploreViewModel @Inject constructor(
 		}
 		if (sources.isNotEmpty()) {
 			result += ListHeader(
-				textRes = if (isNovel) R.string.remote_novel_sources else R.string.remote_sources,
+				textRes = R.string.remote_sources,
 				buttonTextRes = if (allSourcesEnabled) R.string.manage else R.string.catalog,
 				badge = if (!allSourcesEnabled && hasNewSources) "" else null,
 			)
@@ -196,12 +180,8 @@ class ExploreViewModel @Inject constructor(
 		} else {
 			result += EmptyHint(
 				icon = R.drawable.ic_empty_common,
-				textPrimary = if (isNovel) R.string.no_novel_sources else R.string.no_manga_sources,
-				textSecondary = if (isNovel) {
-					R.string.no_novel_sources_text
-				} else {
-					R.string.no_manga_sources_text
-				},
+				textPrimary = R.string.no_manga_sources,
+				textSecondary = R.string.no_manga_sources_text,
 				actionStringRes = R.string.catalog,
 			)
 		}

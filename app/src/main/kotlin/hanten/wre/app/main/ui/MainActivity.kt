@@ -175,13 +175,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 				viewModel.isResumeEnabled.observe(this@MainActivity, this@MainActivity::onResumeEnabledChanged)
 				viewModel.feedCounter.observe(this@MainActivity, ::onFeedCounterChanged)
 				viewModel.onFirstStart.observeEvent(this@MainActivity) { router.showWelcomeSheet() }
-				viewModel.appMode.observe(this@MainActivity) {
-					viewBinding.searchBar.hint = getString(
-						if (it.isNovel) R.string.search_novel else R.string.search_manga,
-					)
-					invalidateOptionsMenu()
-					navigationDelegate.reloadCurrentFragment()
-				}
 				viewModel.isBottomNavPinned.observe(this@MainActivity, ::setNavbarPinned)
 				searchSuggestionViewModel.isIncognitoModeEnabled.observe(this@MainActivity, this@MainActivity::onIncognitoModeChanged)
 				initSearch()

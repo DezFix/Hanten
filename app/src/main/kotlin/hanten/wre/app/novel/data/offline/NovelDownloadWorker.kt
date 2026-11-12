@@ -81,6 +81,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 	}
 
 	private fun progressData(manga: Manga, done: Int, total: Int) = workDataOf(
+		KEY_MANGA_ID to manga.id,
 		KEY_PROGRESS to done,
 		KEY_MAX to total,
 		KEY_TITLE to manga.title,
@@ -95,6 +96,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 	companion object {
 
 		const val TAG = "novel_download"
+		const val TAG_MANGA_PREFIX = "novel_manga_"
 		const val KEY_MANGA_ID = "manga_id"
 		const val KEY_CHAPTER_IDS = "chapter_ids"
 		const val KEY_ALLOW_METERED = "allow_metered"
@@ -117,6 +119,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 					.build(),
 			)
 			.addTag(TAG)
+			.addTag(TAG_MANGA_PREFIX + manga.id)
 			.setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
 			.setInputData(
 				workDataOf(

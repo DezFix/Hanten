@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hanten.wre.app.core.ui.widgets.TwoLinesItemView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/item"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingStart="?listPreferredItemPaddingStart"
+	android:paddingEnd="?listPreferredItemPaddingEnd"
+	app:subtitleTextAppearance="?attr/textAppearanceBodySmall"
+	app:titleTextAppearance="?attr/textAppearanceTitleSmall"
+	tools:subtitle="@tools:sample/lorem[6]"
+	tools:title="@tools:sample/lorem[10]" />

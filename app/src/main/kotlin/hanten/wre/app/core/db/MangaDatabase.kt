@@ -13,6 +13,7 @@ import hanten.wre.app.core.db.converters.DataConverters
 import hanten.wre.app.core.db.dao.ChaptersDao
 import hanten.wre.app.core.db.dao.ExternalExtensionRepoDao
 import hanten.wre.app.core.db.dao.MangaDao
+import hanten.wre.app.core.db.dao.MangaRelationsDao
 import hanten.wre.app.core.db.dao.MangaSourcesDao
 import hanten.wre.app.core.db.dao.PreferencesDao
 import hanten.wre.app.core.db.dao.TagsDao
@@ -22,6 +23,7 @@ import hanten.wre.app.core.db.entity.ExternalExtensionRepoEntity
 import hanten.wre.app.core.db.entity.MangaEntity
 import hanten.wre.app.core.db.entity.MangaPrefsEntity
 import hanten.wre.app.core.db.entity.MangaSourceEntity
+import hanten.wre.app.core.db.entity.MangaRelationEntity
 import hanten.wre.app.core.db.entity.MangaTagsEntity
 import hanten.wre.app.core.db.entity.TagEntity
 import hanten.wre.app.core.db.migrations.Migration10To11
@@ -47,6 +49,7 @@ import hanten.wre.app.core.db.migrations.Migration28To29
 import hanten.wre.app.core.db.migrations.Migration29To30
 import hanten.wre.app.core.db.migrations.Migration30To31
 import hanten.wre.app.core.db.migrations.Migration31To32
+import hanten.wre.app.core.db.migrations.Migration32To33
 import hanten.wre.app.core.db.migrations.Migration2To3
 import hanten.wre.app.core.db.migrations.Migration3To4
 import hanten.wre.app.core.db.migrations.Migration4To5
@@ -84,7 +87,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-const val DATABASE_VERSION = 32
+const val DATABASE_VERSION = 33
 
 @Database(
 	entities = [
@@ -92,7 +95,7 @@ const val DATABASE_VERSION = 32
 		FavouriteCategoryEntity::class, FavouriteEntity::class, MangaPrefsEntity::class, TrackEntity::class,
 		TrackLogEntity::class, SuggestionEntity::class, BookmarkEntity::class, ScrobblingEntity::class,
 		MangaSourceEntity::class, StatsEntity::class, LocalMangaIndexEntity::class, ExternalExtensionRepoEntity::class,
-		DownloadQueueEntity::class, SmartDownloadEntity::class,
+		DownloadQueueEntity::class, SmartDownloadEntity::class, MangaRelationEntity::class,
 	],
 	version = DATABASE_VERSION,
 )
@@ -134,6 +137,8 @@ abstract class MangaDatabase : RoomDatabase() {
 	abstract fun getDownloadQueueDao(): DownloadQueueDao
 
 	abstract fun getSmartDownloadDao(): SmartDownloadDao
+
+	abstract fun getMangaRelationsDao(): MangaRelationsDao
 }
 
 fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
@@ -168,6 +173,7 @@ fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
     Migration29To30(),
     Migration30To31(),
     Migration31To32(),
+    Migration32To33(),
 )
 
 fun MangaDatabase(context: Context): MangaDatabase {

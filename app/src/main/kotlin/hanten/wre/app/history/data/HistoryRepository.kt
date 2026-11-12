@@ -71,13 +71,6 @@ class HistoryRepository @Inject constructor(
 		return entity.toManga()
 	}
 
-	suspend fun getLastOrNull(isNovel: Boolean): Manga? {
-		return db.getHistoryDao().findAll(0, MODE_LOOKUP_LIMIT)
-			.asSequence()
-			.map { it.toManga() }
-			.firstOrNull { it.isNovel == isNovel }
-	}
-
 	fun observeLast(): Flow<Manga?> {
 		return db.getHistoryDao().observeAll(1).map {
 			val first = it.firstOrNull()

@@ -44,6 +44,7 @@ import hanten.wre.app.core.image.CoilMemoryCacheKey
 import hanten.wre.app.core.model.FavouriteCategory
 import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.model.UnknownMangaSource
+import hanten.wre.app.core.model.contentType
 import hanten.wre.app.core.model.getSummary
 import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.model.titleResId
@@ -424,7 +425,13 @@ class DetailsActivity :
 		val manga = details.toManga()
 		with(viewBinding) {
 			textViewTitle.text = manga.title
-			textViewSubtitle.textAndVisible = manga.altTitles.joinToString("\n")
+			textViewSubtitle.textAndVisible = buildString {
+				append(getString(manga.contentType.titleResId))
+				if (manga.altTitles.isNotEmpty()) {
+					append('\n')
+					append(manga.altTitles.joinToString("\n"))
+				}
+			}
 			textViewNsfw16.isVisible = manga.contentRating == ContentRating.SUGGESTIVE
 			textViewNsfw18.isVisible = manga.contentRating == ContentRating.ADULT
 			textViewDescription.text = details.description.ifNullOrEmpty { getString(R.string.no_description) }

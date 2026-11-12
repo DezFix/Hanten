@@ -1,9 +1,12 @@
 package hanten.wre.app.list.ui.model
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import hanten.wre.app.core.model.contentType
 import hanten.wre.app.core.model.getTitle
+import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.model.withOverride
 import hanten.wre.app.core.ui.model.MangaOverride
 import hanten.wre.app.list.ui.ListModelDiffCallback.Companion.PAYLOAD_ANYTHING_CHANGED
@@ -28,6 +31,10 @@ sealed class MangaListModel : ListModel {
 
 	val source: MangaSource
 		get() = manga.source
+
+	@get:StringRes
+	val contentTypeResId: Int
+		get() = manga.contentType.titleResId
 
 	fun toMangaWithOverride() = manga.withOverride(override)
 

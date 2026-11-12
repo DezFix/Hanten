@@ -15,6 +15,7 @@ class DownloadsAdapter(
 
 	init {
 		addDelegate(ListItemType.DOWNLOAD, downloadItemAD(lifecycleOwner, listener))
+		addDelegate(ListItemType.NOVEL_DOWNLOAD, novelDownloadItemAD(listener))
 		addDelegate(ListItemType.STATE_LOADING, loadingStateAD())
 		addDelegate(ListItemType.STATE_EMPTY, emptyStateListAD(null))
 		addDelegate(ListItemType.HEADER, listHeaderAD(null))

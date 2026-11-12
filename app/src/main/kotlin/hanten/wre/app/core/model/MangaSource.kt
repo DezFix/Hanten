@@ -107,6 +107,23 @@ tailrec fun MangaSource.unwrap(): MangaSource = if (this is MangaSourceInfo) {
 	this
 }
 
+val MangaSource.contentType: ContentType
+	get() = when (val source = unwrap()) {
+		LocalNovelSource -> ContentType.NOVEL
+		LocalMangaSource -> ContentType.MANGA
+		is NovelParserSource -> source.contentType
+		is MangaParserSource -> source.contentType
+		is MihonMangaSource -> when (source.contentType) {
+			MihonContentType.NOVEL, MihonContentType.HENTAI_NOVEL -> ContentType.NOVEL
+			MihonContentType.MANHWA, MihonContentType.MANHUA -> ContentType.MANHWA
+			MihonContentType.HENTAI_MANGA -> ContentType.HENTAI
+			MihonContentType.COMICS -> ContentType.COMICS
+			else -> ContentType.MANGA
+		}
+
+		else -> ContentType.OTHER
+	}
+
 fun MangaSource.getLocale(): Locale? = when (val source = unwrap()) {
 	is MangaParserSource -> source.locale.toLocaleOrNull()
 	is NovelParserSource -> source.locale.toLocaleOrNull()

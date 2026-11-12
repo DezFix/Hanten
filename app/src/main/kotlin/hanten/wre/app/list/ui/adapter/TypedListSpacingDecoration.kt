@@ -45,6 +45,7 @@ class TypedListSpacingDecoration(
 				-> outRect.set(0)
             ListItemType.EXTENSION,
 			ListItemType.DOWNLOAD,
+			ListItemType.NOVEL_DOWNLOAD,
 			ListItemType.HINT_EMPTY,
 			ListItemType.MANGA_LIST_DETAILED,
 				-> outRect.set(spacingNormal)
@@ -66,6 +67,7 @@ class TypedListSpacingDecoration(
 			ListItemType.CATEGORY_LARGE,
 			ListItemType.NAV_ITEM,
 			ListItemType.CHAPTER_LIST,
+			ListItemType.NOVEL_DOWNLOAD_CHAPTER,
 			ListItemType.INFO,
 			null,
 				-> outRect.set(0)

@@ -1,11 +1,13 @@
 package hanten.wre.app.local.ui
 
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
 import hanten.wre.app.R
+import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.model.toChipModel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.parser.MangaDataRepository
@@ -25,6 +27,7 @@ import hanten.wre.app.list.domain.MangaListMapper
 import hanten.wre.app.list.domain.QuickFilterListener
 import hanten.wre.app.list.ui.model.EmptyState
 import hanten.wre.app.list.ui.model.ListModel
+import hanten.wre.app.list.ui.model.LoadingFooter
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.list.ui.model.QuickFilter
 import hanten.wre.app.list.ui.model.TipModel
@@ -32,8 +35,10 @@ import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.data.LocalStorageManager
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
+import hanten.wre.app.novel.data.NovelStorageManager
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.remotelist.ui.RemoteListViewModel
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,6 +52,7 @@ class LocalListViewModel @Inject constructor(
 	exploreRepository: ExploreRepository,
 	@param:LocalStorageChanges private val localStorageChanges: SharedFlow<LocalManga?>,
 	private val localStorageManager: LocalStorageManager,
+	private val novelStorageManager: NovelStorageManager,
 	sourcesRepository: MangaSourcesRepository,
 	mangaDataRepository: MangaDataRepository,
 ) : RemoteListViewModel(
@@ -76,6 +82,7 @@ class LocalListViewModel @Inject constructor(
 
 	override suspend fun onBuildList(list: MutableList<ListModel>) {
 		super.onBuildList(list)
+		appendNovels(list)
 		if (showInlineFilter) {
 			createFilterHeader(maxCount = 16)?.let {
 				list.add(0, it)
@@ -132,8 +139,25 @@ class LocalListViewModel @Inject constructor(
 
 	fun delete(ids: Set<Long>) {
 		launchLoadingJob(Dispatchers.IO) {
-			deleteLocalMangaUseCase(ids)
+			val novels = novelStorageManager.getAllNovels().filter { it.id in ids }
+			for (novel in novels) {
+				(novel.url.toUriOrNull()?.toFileOrNull() ?: File(novel.url)).delete()
+			}
+			val mangaIds = ids - novels.mapTo(HashSet<Long>()) { it.id }
+			if (mangaIds.isNotEmpty()) {
+				deleteLocalMangaUseCase(mangaIds)
+			}
 			onMangaRemoved.call(Unit)
+			onRefresh()
+		}
+	}
+
+	fun importNovels(uris: List<Uri>) {
+		launchJob(Dispatchers.IO) {
+			for (uri in uris) {
+				novelStorageManager.importNovel(uri)
+			}
+			onRefresh()
 		}
 	}
 
@@ -152,6 +176,21 @@ class LocalListViewModel @Inject constructor(
 			textSecondary = R.string.text_local_holder_secondary,
 			actionStringRes = R.string._import,
 		)
+	}
+
+	private suspend fun appendNovels(list: MutableList<ListModel>) {
+		if (list.any { it is MangaListModel && it.manga.source == LocalNovelSource }) {
+			return
+		}
+		val novels = novelStorageManager.getAllNovels()
+		if (novels.isEmpty()) {
+			return
+		}
+		list.removeAll { it is EmptyState }
+		val models = ArrayList<MangaListModel>(novels.size)
+		mangaListMapper.toListModelList(models, novels, settings.listMode, MangaListMapper.NO_SAVED)
+		val footerIndex = list.indexOfFirst { it is LoadingFooter }
+		list.addAll(if (footerIndex < 0) list.size else footerIndex, models)
 	}
 
 	private suspend fun createFilterHeader(maxCount: Int): QuickFilter? {

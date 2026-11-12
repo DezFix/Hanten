@@ -86,11 +86,8 @@ class FavouritesListViewModel @Inject constructor(
 		quickFilter.appliedOptions,
 		observeListModeWithTriggers(),
 		refreshTrigger,
-		settings.observeAppMode(),
-	) { list, filters, mode, _, appMode ->
-		val isNovel = appMode.isNovel
-		val filteredList = list.filter { it.isNovel == isNovel }
-		filteredList.mapList(mode, filters)
+	) { list, filters, mode, _ ->
+		list.mapList(mode, filters)
 	}.distinctUntilChanged().onEach {
 		isPaginationReady.set(true)
 	}.catch {

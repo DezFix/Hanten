@@ -31,6 +31,11 @@ import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.EnforceStorageQuotaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
+import hanten.wre.app.novel.data.offline.CachedChapter
+import hanten.wre.app.novel.data.offline.CachedNovel
+import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
+import hanten.wre.app.novel.data.offline.NovelDownloadWorker
+import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +65,8 @@ class DownloadsViewModel @Inject constructor(
 	private val localMangaRepository: LocalMangaRepository,
 	private val enforceStorageQuotaUseCase: EnforceStorageQuotaUseCase,
 	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
+	private val novelOfflineRepository: NovelOfflineRepository,
+	private val novelDownloadScheduler: NovelDownloadScheduler,
 ) : BaseViewModel() {
 
 	val storageUsage = MutableStateFlow<EnforceStorageQuotaUseCase.StorageUsage?>(null)
@@ -69,6 +76,10 @@ class DownloadsViewModel @Inject constructor(
 	private val expanded = MutableStateFlow(emptySet<UUID>())
 	private val chaptersCache = ArrayMap<UUID, StateFlow<List<DownloadChapter>?>>()
 
+	private val novelExpanded = MutableStateFlow(emptySet<Long>())
+	private val cachedNovels = MutableStateFlow<List<CachedNovel>>(emptyList())
+	private val cachedNovelChapters = MutableStateFlow<Map<Long, List<CachedChapter>>>(emptyMap())
+
 	private val works = combine(
 		workScheduler.observeWorks(),
 		expanded,
@@ -77,10 +88,46 @@ class DownloadsViewModel @Inject constructor(
 	}.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, null)
 
+	private val novelWorks = novelDownloadScheduler.observeWorks()
+		.map { list -> list.filter { !it.state.isFinished } }
+		.withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
+
+	private val novelItems: StateFlow<List<NovelDownloadItemModel>> = combine(
+		novelWorks,
+		cachedNovels,
+		cachedNovelChapters,
+		novelExpanded,
+	) { activeWorks, novels, chapters, exp ->
+		activeWorks.toNovelItems(novels, chapters, exp)
+	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
+
+	init {
+		refreshNovelCache()
+		launchJob(Dispatchers.IO) {
+			var previouslyActive = emptySet<UUID>()
+			novelDownloadScheduler.observeWorks().collect { workInfos ->
+				val active = workInfos.filterTo(HashSet()) { !it.state.isFinished }.mapTo(HashSet()) { it.id }
+				if (previouslyActive.any { it !in active }) {
+					refreshNovelCache()
+				}
+				previouslyActive = active
+			}
+		}
+	}
+
 	val onActionDone = MutableEventFlow<ReversibleAction>()
 
-	val items = works.map {
-		it?.toUiList() ?: listOf(LoadingState)
+	val items: StateFlow<List<ListModel>> = combine(works, novelItems) { manga, novels ->
+		if (manga == null) {
+			listOf<ListModel>(LoadingState)
+		} else {
+			when {
+				manga.isEmpty() && novels.isEmpty() -> emptyStateList()
+				manga.isEmpty() -> novels
+				else -> manga.toUiList() + novels
+			}
+		}
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, listOf(LoadingState))
 
 	val hasPausedWorks = works.map {
@@ -244,6 +291,98 @@ class DownloadsViewModel @Inject constructor(
 		}
 	}
 
+	fun cancelNovel(id: UUID) {
+		launchJob(Dispatchers.IO) {
+			novelDownloadScheduler.cancel(id)
+		}
+	}
+
+	fun expandCollapseNovel(item: NovelDownloadItemModel) {
+		novelExpanded.update {
+			if (item.mangaId in it) {
+				it - item.mangaId
+			} else {
+				it + item.mangaId
+			}
+		}
+	}
+
+	fun deleteNovel(item: NovelDownloadItemModel) {
+		launchJob(Dispatchers.IO) {
+			novelOfflineRepository.deleteNovel(item.mangaId)
+			refreshNovelCache()
+		}
+	}
+
+	fun deleteNovelChapter(item: NovelDownloadItemModel, chapter: NovelChapterItem) {
+		launchJob(Dispatchers.IO) {
+			novelOfflineRepository.deleteChapter(item.mangaId, chapter.id)
+			refreshNovelCache()
+		}
+	}
+
+	fun refreshNovelCache() {
+		launchJob(Dispatchers.IO) {
+			runCatchingCancellable {
+				val novels = novelOfflineRepository.listCachedNovels()
+				cachedNovels.value = novels
+				cachedNovelChapters.value = novels.associate { it.id to novelOfflineRepository.listCachedChapters(it.id) }
+			}.onFailure {
+				it.printStackTraceDebug("DownloadsViewModel::refreshNovelCache")
+			}
+		}
+	}
+
+	private fun List<WorkInfo>.toNovelItems(
+		novels: List<CachedNovel>,
+		chapters: Map<Long, List<CachedChapter>>,
+		expanded: Set<Long>,
+	): List<NovelDownloadItemModel> {
+		val result = LinkedHashMap<Long, NovelDownloadItemModel>(novels.size + size)
+		for (novel in novels) {
+			result[novel.id] = NovelDownloadItemModel(
+				mangaId = novel.id,
+				title = novel.title,
+				sourceName = novel.source,
+				chapterCount = novel.chapterCount,
+				sizeBytes = novel.sizeBytes,
+				workId = null,
+				done = 0,
+				total = 0,
+				isExpanded = novel.id in expanded,
+				chapters = chapters[novel.id].orEmpty().map { chapter ->
+					NovelChapterItem(chapter.chapterId, chapter.title, chapter.sizeBytes)
+				},
+			)
+		}
+		for (work in this) {
+			val mangaId = work.progress.getLong(NovelDownloadWorker.KEY_MANGA_ID, 0L)
+				.takeIf { it != 0L }
+				?: work.tags.firstOrNull { it.startsWith(NovelDownloadWorker.TAG_MANGA_PREFIX) }
+					?.removePrefix(NovelDownloadWorker.TAG_MANGA_PREFIX)
+					?.toLongOrNull()
+				?: continue
+			val existing = result[mangaId] ?: NovelDownloadItemModel(
+				mangaId = mangaId,
+				title = work.progress.getString(NovelDownloadWorker.KEY_TITLE).orEmpty(),
+				sourceName = "",
+				chapterCount = 0,
+				sizeBytes = 0L,
+				workId = null,
+				done = 0,
+				total = 0,
+				isExpanded = mangaId in expanded,
+				chapters = emptyList(),
+			)
+			result[mangaId] = existing.copy(
+				workId = work.id,
+				done = work.progress.getInt(NovelDownloadWorker.KEY_PROGRESS, 0),
+				total = work.progress.getInt(NovelDownloadWorker.KEY_MAX, 0),
+			)
+		}
+		return result.values.toList()
+	}
+
 	private suspend fun List<WorkInfo>.toDownloadsList(exp: Set<UUID>): List<DownloadItemModel> {
 		if (isEmpty()) {
 			return emptyList()
@@ -255,7 +394,7 @@ class DownloadsViewModel @Inject constructor(
 
 	private fun List<DownloadItemModel>.toUiList(): List<ListModel> {
 		if (isEmpty()) {
-			return emptyStateList()
+			return emptyList()
 		}
 		val queued = LinkedList<ListModel>()
 		val running = LinkedList<ListModel>()
@@ -323,7 +462,7 @@ class DownloadsViewModel @Inject constructor(
 		)
 	}
 
-	private fun emptyStateList() = listOf(
+	private fun emptyStateList(): List<ListModel> = listOf(
 		EmptyState(
 			icon = R.drawable.ic_empty_common,
 			textPrimary = R.string.text_downloads_list_holder,

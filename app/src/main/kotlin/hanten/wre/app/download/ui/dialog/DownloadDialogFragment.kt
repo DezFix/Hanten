@@ -1,6 +1,5 @@
 package hanten.wre.app.download.ui.dialog
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -33,7 +32,6 @@ import hanten.wre.app.core.util.ext.parentView
 import hanten.wre.app.core.util.ext.showOrHide
 import hanten.wre.app.databinding.DialogDownloadBinding
 import hanten.wre.app.main.ui.owners.BottomNavOwner
-import hanten.wre.app.novel.ui.downloads.NovelDownloadsActivity
 import hanten.wre.app.parsers.util.format
 import hanten.wre.app.settings.storage.DirectoryModel
 
@@ -341,15 +339,9 @@ class DownloadDialogFragment : AlertDialogFragment<DialogDownloadBinding>(), Vie
 			(host.context.findActivity() as? BottomNavOwner)?.let {
 				snackbar.anchorView = it.bottomNav
 			}
-			if (isNovel) {
-				snackbar.setAction(R.string.details) {
-					host.context.startActivity(Intent(host.context, NovelDownloadsActivity::class.java))
-				}
-			} else {
-				val router = AppRouter.from(host)
-				if (router != null) {
-					snackbar.setAction(R.string.details) { router.openDownloads() }
-				}
+			val router = AppRouter.from(host)
+			if (router != null) {
+				snackbar.setAction(R.string.details) { router.openDownloads() }
 			}
 			snackbar.show()
 		}

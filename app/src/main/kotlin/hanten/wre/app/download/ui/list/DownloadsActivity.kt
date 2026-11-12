@@ -100,6 +100,7 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 	override fun onResume() {
 		super.onResume()
 		viewModel.refreshStorageUsage()
+		viewModel.refreshNovelCache()
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
@@ -246,6 +247,36 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 			setMessage(getString(R.string.delete_chapter_confirm, chapter.name))
 			setPositiveButton(R.string.delete) { _, _ ->
 				viewModel.deleteChapter(item, chapter)
+			}
+			setNegativeButton(android.R.string.cancel, null)
+		}.show()
+	}
+
+	override fun onCancelNovelClick(item: NovelDownloadItemModel) {
+		item.workId?.let(viewModel::cancelNovel)
+	}
+
+	override fun onExpandNovelClick(item: NovelDownloadItemModel) {
+		viewModel.expandCollapseNovel(item)
+	}
+
+	override fun onDeleteNovelClick(item: NovelDownloadItemModel) {
+		buildAlertDialog(this) {
+			setTitle(R.string.novel_downloads_delete_novel)
+			setMessage(getString(R.string.novel_downloads_delete_novel_confirm, item.title))
+			setPositiveButton(R.string.delete) { _, _ ->
+				viewModel.deleteNovel(item)
+			}
+			setNegativeButton(android.R.string.cancel, null)
+		}.show()
+	}
+
+	override fun onDeleteNovelChapterClick(item: NovelDownloadItemModel, chapter: NovelChapterItem) {
+		buildAlertDialog(this) {
+			setTitle(R.string.delete_chapter)
+			setMessage(getString(R.string.delete_chapter_confirm, chapter.title))
+			setPositiveButton(R.string.delete) { _, _ ->
+				viewModel.deleteNovelChapter(item, chapter)
 			}
 			setNegativeButton(android.R.string.cancel, null)
 		}.show()

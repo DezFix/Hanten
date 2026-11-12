@@ -22,7 +22,7 @@ fun mangaListItemAD(
 	bind {
 		itemView.setTooltipCompat(item.getSummary(context))
 		binding.textViewTitle.text = item.title
-		binding.textViewSubtitle.textAndVisible = item.subtitle
+		binding.textViewSubtitle.textAndVisible = context.getString(item.contentTypeResId) + " · " + item.subtitle
 		binding.imageViewCover.setImageAsync(item.coverUrl, item.manga)
 		binding.badge.number = item.counter
 		binding.badge.isVisible = item.counter > 0

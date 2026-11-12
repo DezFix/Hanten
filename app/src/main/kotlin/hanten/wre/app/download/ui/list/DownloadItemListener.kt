@@ -18,4 +18,12 @@ interface DownloadItemListener : OnListItemClickListener<DownloadItemModel> {
 	fun onExpandClick(item: DownloadItemModel)
 
 	fun onDeleteChapterClick(item: DownloadItemModel, chapter: DownloadChapter)
+
+	fun onCancelNovelClick(item: NovelDownloadItemModel)
+
+	fun onExpandNovelClick(item: NovelDownloadItemModel)
+
+	fun onDeleteNovelClick(item: NovelDownloadItemModel)
+
+	fun onDeleteNovelChapterClick(item: NovelDownloadItemModel, chapter: NovelChapterItem)
 }

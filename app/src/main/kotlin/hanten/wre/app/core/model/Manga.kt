@@ -143,6 +143,9 @@ val MangaSource.isNovelSource: Boolean
 val Manga.isNovel: Boolean
 	get() = source.isNovelSource
 
+val Manga.contentType: ContentType
+	get() = source.contentType
+
 val Manga.isBroken: Boolean
 	get() = source == UnknownMangaSource
 

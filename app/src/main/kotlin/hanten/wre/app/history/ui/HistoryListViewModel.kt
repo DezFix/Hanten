@@ -89,13 +89,7 @@ class HistoryListViewModel @Inject constructor(
 		valueProducer = { isStatsEnabled },
 	)
 
-	private fun observeFilteredHistory() = combine(
-		observeHistory(),
-		settings.observeAppMode(),
-	) { list, appMode ->
-		val isNovel = appMode.isNovel
-		list.filter { it.manga.isNovel == isNovel }
-	}
+	private fun observeFilteredHistory() = observeHistory()
 
 	override val content = combine(
 		quickFilter.appliedOptions,

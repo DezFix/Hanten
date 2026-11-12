@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
 import hanten.wre.app.core.model.getPreferredBranch
+import hanten.wre.app.core.model.MangaRelationType
 import hanten.wre.app.core.nav.MangaIntent
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.ListMode
@@ -16,6 +17,8 @@ import hanten.wre.app.core.util.ext.computeSize
 import hanten.wre.app.core.util.ext.onEachWhile
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.details.data.MangaDetails
+import hanten.wre.app.details.data.MangaRelationsRepository
+import hanten.wre.app.details.data.RelatedEntry
 import hanten.wre.app.details.domain.BranchComparator
 import hanten.wre.app.details.domain.DetailsInteractor
 import hanten.wre.app.details.domain.DetailsLoadUseCase
@@ -36,6 +39,7 @@ import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
+import hanten.wre.app.search.domain.MangaSearchRepository
 import hanten.wre.app.stats.data.StatsRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -82,6 +86,8 @@ class DetailsViewModel @Inject constructor(
 	private val progressUpdateUseCase: ProgressUpdateUseCase,
 	private val readingTimeUseCase: ReadingTimeUseCase,
 	statsRepository: StatsRepository,
+	private val relationsRepository: MangaRelationsRepository,
+	private val mangaSearchRepository: MangaSearchRepository,
 ) : ChaptersPagesViewModel(
 	settings = settings,
 	interactor = interactor,
@@ -165,15 +171,32 @@ class DetailsViewModel @Inject constructor(
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
 
-	val relatedManga: StateFlow<List<MangaListModel>> = manga.mapLatest {
-		if (it != null && settings.isRelatedMangaEnabled) {
-			mangaListMapper.toListModelList(
-				manga = relatedMangaUseCase(it).orEmpty(),
-				mode = ListMode.GRID,
-			)
-		} else {
-			emptyList()
+	val manualRelations: StateFlow<List<RelatedEntry>> = resolvedMangaId
+		.flatMapLatest { relationsRepository.observeFor(it) }
+		.withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
+
+	val relatedManga: StateFlow<List<MangaListModel>> = combine(manga, manualRelations) { m, relations ->
+		m to relations
+	}.mapLatest { (m, relations) ->
+		if (m == null) {
+			return@mapLatest emptyList()
 		}
+		val seen = HashSet<Long>(relations.size)
+		val result = ArrayList<Manga>(relations.size)
+		for (entry in relations) {
+			if (seen.add(entry.manga.id)) {
+				result += entry.manga
+			}
+		}
+		if (settings.isRelatedMangaEnabled) {
+			for (item in relatedMangaUseCase(m).orEmpty()) {
+				if (seen.add(item.id)) {
+					result += item
+				}
+			}
+		}
+		mangaListMapper.toListModelList(result, ListMode.GRID)
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
 	val tags = manga.mapLatest {
@@ -221,6 +244,23 @@ class DetailsViewModel @Inject constructor(
 	fun reload() {
 		loadingJob.cancel()
 		loadingJob = doLoad(force = true)
+	}
+
+	suspend fun searchRelationsCandidates(query: String): List<Manga> =
+		mangaSearchRepository.getMangaSuggestion(query, limit = 30, source = null)
+
+	fun addRelation(manga: Manga, type: MangaRelationType) {
+		launchJob(Dispatchers.IO) {
+			val current = getMangaOrNull() ?: return@launchJob
+			relationsRepository.add(current.id, manga.id, type)
+		}
+	}
+
+	fun removeRelation(manga: Manga) {
+		launchJob(Dispatchers.IO) {
+			val current = getMangaOrNull() ?: return@launchJob
+			relationsRepository.removeBetween(current.id, manga.id)
+		}
 	}
 
 	fun updateScrobbling(index: Int, rating: Float, status: ScrobblingStatus?) {

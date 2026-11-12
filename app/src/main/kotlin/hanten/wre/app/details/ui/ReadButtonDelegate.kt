@@ -104,7 +104,7 @@ class ReadButtonDelegate(
 		menu.findItem(R.id.action_incognito)?.isVisible = !history.isIncognitoMode
 		menu.findItem(R.id.action_forget)?.isVisible = history.history != null
 		val manga = viewModel.getMangaOrNull()
-		menu.findItem(R.id.action_download)?.isVisible = manga != null && !manga.isLocal && !manga.isNovel
+		menu.findItem(R.id.action_download)?.isVisible = manga != null && !manga.isLocal
 	}
 
 	private fun openReader(isIncognitoMode: Boolean) {
