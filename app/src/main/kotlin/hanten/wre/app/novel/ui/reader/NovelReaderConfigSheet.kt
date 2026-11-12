@@ -91,9 +91,6 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 		// Auto-scroll
 		binding.sliderAutoScroll.value = currentSettings.autoScrollSpeed.coerceIn(0f, 3f)
 		binding.textAutoScrollValue.text = formatAutoScrollSpeed(currentSettings.autoScrollSpeed)
-
-		// Fullscreen
-		binding.switchFullscreen.isChecked = currentSettings.fullscreen
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -165,10 +162,6 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 				binding.textAutoScrollValue.text = formatAutoScrollSpeed(value)
 				updateSettings { copy(autoScrollSpeed = value) }
 			}
-		}
-
-		binding.switchFullscreen.setOnCheckedChangeListener { _, isChecked ->
-			updateSettings { copy(fullscreen = isChecked) }
 		}
 	}
 

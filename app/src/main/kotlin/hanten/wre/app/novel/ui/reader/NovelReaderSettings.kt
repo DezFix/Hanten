@@ -24,7 +24,6 @@ data class NovelReaderSettings(
 	val pageMarginDp: Int = 18,
 	val textAlignment: NovelTextAlign = NovelTextAlign.JUSTIFY,
 	val readingMode: NovelReadingMode = NovelReadingMode.CONTINUOUS_SCROLL,
-	val fullscreen: Boolean = false,
 	val autoScrollSpeed: Float = 0f,
 ) {
 	val effectiveBackgroundColor: Int
@@ -45,7 +44,7 @@ data class NovelReaderSettings(
 			:root {
 				--reader-bg: $bgHex;
 				--reader-text: $textHex;
-				--reader-font-size: ${(fontSizeSp * density).roundToInt()}px;
+				--reader-font-size: ${fontSizeSp.toInt()}px;
 				--reader-font-family: $fontFamily, serif;
 				--reader-line-height: $lineSpacingMultiplier;
 				--reader-paragraph-margin: ${paragraphMarginEm}em;
@@ -72,7 +71,6 @@ data class NovelReaderSettings(
 		private const val KEY_PAGE_MARGIN = "novel_page_margin"
 		private const val KEY_TEXT_ALIGN = "novel_text_align"
 		private const val KEY_READING_MODE = "novel_reading_mode"
-		private const val KEY_FULLSCREEN = "novel_fullscreen"
 		private const val KEY_AUTO_SCROLL_SPEED = "novel_auto_scroll_speed"
 
 		fun load(context: Context): NovelReaderSettings {
@@ -90,7 +88,6 @@ data class NovelReaderSettings(
 				pageMarginDp = prefs.getInt(KEY_PAGE_MARGIN, 18),
 				textAlignment = prefs.getEnumValue(KEY_TEXT_ALIGN, NovelTextAlign.JUSTIFY),
 				readingMode = prefs.getEnumValue(KEY_READING_MODE, NovelReadingMode.CONTINUOUS_SCROLL),
-				fullscreen = prefs.getBoolean(KEY_FULLSCREEN, false),
 				autoScrollSpeed = prefs.getFloat(KEY_AUTO_SCROLL_SPEED, 0f),
 			)
 		}
@@ -110,7 +107,6 @@ data class NovelReaderSettings(
 				putInt(KEY_PAGE_MARGIN, settings.pageMarginDp)
 				putEnumValue(KEY_TEXT_ALIGN, settings.textAlignment)
 				putEnumValue(KEY_READING_MODE, settings.readingMode)
-				putBoolean(KEY_FULLSCREEN, settings.fullscreen)
 				putFloat(KEY_AUTO_SCROLL_SPEED, settings.autoScrollSpeed)
 			}
 		}

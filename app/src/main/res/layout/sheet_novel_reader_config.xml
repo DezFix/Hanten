@@ -263,14 +263,6 @@
 			android:valueFrom="0.0"
 			android:valueTo="3.0" />
 
-		<!-- Fullscreen -->
-		<com.google.android.material.materialswitch.MaterialSwitch
-			android:id="@+id/switch_fullscreen"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:text="@string/novel_fullscreen" />
-
 	</LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

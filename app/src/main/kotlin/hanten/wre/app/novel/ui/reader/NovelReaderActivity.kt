@@ -575,7 +575,7 @@ class NovelReaderActivity :
 
 	private fun applySystemBarsVisibility() {
 		val controller = WindowCompat.getInsetsController(window, window.decorView)
-		if (readerSettings.fullscreen) {
+		if (!isUiVisible) {
 			controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 			controller.hide(WindowInsetsCompat.Type.systemBars())
 		} else {

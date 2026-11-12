@@ -130,6 +130,15 @@ object NovelHtmlTemplate {
 					break-after: avoid;
 					-webkit-column-break-after: avoid;
 				}
+				.chapter-heading::after {
+					content: "";
+					display: block;
+					width: 2.5em;
+					height: 1px;
+					margin: 0.55em auto 0;
+					background-color: currentColor;
+					opacity: 0.25;
+				}
 				.chapter-divider {
 					border-top: 1px dashed rgba(128, 128, 128, 0.4);
 					margin: 3em 0 1.5em 0;
