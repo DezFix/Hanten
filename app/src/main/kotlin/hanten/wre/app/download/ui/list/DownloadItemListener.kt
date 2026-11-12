@@ -22,6 +22,10 @@ interface DownloadItemListener : OnListItemClickListener<DownloadItemModel> {
 
 	fun onCancelNovelClick(item: NovelDownloadItemModel)
 
+	fun onPauseNovelClick(item: NovelDownloadItemModel)
+
+	fun onShareNovelClick(item: NovelDownloadItemModel)
+
 	fun onExpandNovelClick(item: NovelDownloadItemModel)
 
 	fun onDeleteNovelClick(item: NovelDownloadItemModel)

@@ -122,6 +122,28 @@
 			app:layout_constraintTop_toBottomOf="@id/textView_details">
 
 			<ImageButton
+				android:id="@+id/button_share"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="?selectableItemBackgroundBorderless"
+				android:contentDescription="@string/share"
+				android:scaleType="center"
+				android:src="?actionModeShareDrawable"
+				app:tint="?colorControlNormal" />
+
+			<ImageButton
+				android:id="@+id/button_pause"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="?selectableItemBackgroundBorderless"
+				android:contentDescription="@string/pause"
+				android:scaleType="center"
+				android:src="@drawable/ic_action_pause"
+				android:visibility="gone"
+				app:tint="?colorControlNormal"
+				tools:visibility="visible" />
+
+			<ImageButton
 				android:id="@+id/button_cancel"
 				android:layout_width="48dp"
 				android:layout_height="48dp"

@@ -280,6 +280,7 @@ class NovelReaderViewModel @Inject constructor(
 		val list = _chapters.value
 		if (index !in list.indices) return
 		val target = list[index]
+		val previous = _currentChapter.value
 		_currentChapterIndex.value = index
 		_currentChapter.value = target
 		appendedChapterIndex = index
@@ -296,6 +297,10 @@ class NovelReaderViewModel @Inject constructor(
 					setChapterContent(content)
 					isChapterContentReady = true
 					prefetchNextChapter(index)
+					val manga = _manga.value
+					if (manga != null && previous != null && previous.id != target.id) {
+						deletePreviousIfRead(manga, previous)
+					}
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
@@ -351,6 +356,16 @@ class NovelReaderViewModel @Inject constructor(
 
 	private fun isIncognitoMode(manga: Manga): Boolean {
 		return isIncognito || settings.isIncognitoModeEnabled(manga.isNsfw())
+	}
+
+	private suspend fun deletePreviousIfRead(manga: Manga, chapter: MangaChapter) {
+		if (!settings.isAutoLocalChaptersCleanupEnabled || !manga.isNovel) return
+		if (!offlineRepository.isChapterDownloaded(manga.id, chapter.id)) return
+		val history = historyRepository.getOne(manga)
+		if (history?.chapterId == chapter.id && history.percent >= 0.9f) {
+			offlineRepository.deleteChapter(manga.id, chapter.id)
+			refreshDownloadedChapters()
+		}
 	}
 
 	private suspend fun restoreScrollProgress(chapter: MangaChapter) {

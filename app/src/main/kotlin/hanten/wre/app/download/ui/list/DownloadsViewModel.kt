@@ -55,6 +55,11 @@ import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.LinkedList
 import java.util.UUID
 import javax.inject.Inject
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import hanten.wre.app.core.util.ext.toFileNameSafe
+import hanten.wre.app.novel.data.offline.NovelEpubExporter
+import java.io.File
 
 data class DownloadSelection(
 	val works: List<DownloadItemModel> = emptyList(),
@@ -62,7 +67,8 @@ data class DownloadSelection(
 )
 
 @HiltViewModel
-class DownloadsViewModel @Inject constructor(	private val workScheduler: DownloadWorker.Scheduler,
+class DownloadsViewModel @Inject constructor(
+	private val workScheduler: DownloadWorker.Scheduler,
 	private val mangaDataRepository: MangaDataRepository,
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	@LocalStorageChanges private val localStorageChanges: MutableSharedFlow<LocalManga?>,
@@ -71,6 +77,8 @@ class DownloadsViewModel @Inject constructor(	private val workScheduler: Downloa
 	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
 	private val novelOfflineRepository: NovelOfflineRepository,
 	private val novelDownloadScheduler: NovelDownloadScheduler,
+	@ApplicationContext private val context: Context,
+	private val epubExporter: NovelEpubExporter,
 ) : BaseViewModel() {
 
 	val storageUsage = MutableStateFlow<EnforceStorageQuotaUseCase.StorageUsage?>(null)
@@ -124,6 +132,7 @@ class DownloadsViewModel @Inject constructor(	private val workScheduler: Downloa
 	}
 
 	val onActionDone = MutableEventFlow<ReversibleAction>()
+	val onNovelShareReady = MutableEventFlow<File>()
 
 	val items: StateFlow<List<ListModel>> = combine(works, novelItems) { manga, novels ->
 		if (manga == null) {
@@ -338,6 +347,25 @@ class DownloadsViewModel @Inject constructor(	private val workScheduler: Downloa
 		launchJob(Dispatchers.IO) {
 			novelOfflineRepository.hideNovel(item.mangaId)
 			refreshNovelCache()
+		}
+	}
+
+	fun pauseNovel(item: NovelDownloadItemModel) {
+		launchJob(Dispatchers.IO) {
+			val manga = mangaDataRepository.findMangaById(item.mangaId, withChapters = true)
+				?: return@launchJob
+			novelDownloadScheduler.pause(manga)
+			refreshNovelCache()
+		}
+	}
+
+	fun shareNovel(item: NovelDownloadItemModel) {
+		launchJob(Dispatchers.IO) {
+			val dir = File(context.cacheDir, "exports").apply { mkdirs() }
+			val file = File(dir, "${item.title.toFileNameSafe()}.epub")
+			if (epubExporter.export(item.mangaId, file)) {
+				onNovelShareReady.call(file)
+			}
 		}
 	}
 

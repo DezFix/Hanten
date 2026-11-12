@@ -15,10 +15,13 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import hanten.wre.app.core.parser.MangaDataRepository
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.awaitWorkInfosByTag
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.download.data.repository.DownloadQueueRepository
+import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
+import hanten.wre.app.novel.data.offline.NovelDownloadWorker
 import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
@@ -31,14 +34,17 @@ class DownloadSchedulerWorker @AssistedInject constructor(
     private val mangaDataRepository: MangaDataRepository,
     private val settings: AppSettings,
     private val workManager: WorkManager,
+    private val novelDownloadScheduler: NovelDownloadScheduler,
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
         Log.d("DownloadScheduler", "DownloadSchedulerWorker starting")
         val force = inputData.getBoolean(KEY_FORCE, false)
         return runCatchingCancellable {
-            val activeWorks = workManager.awaitWorkInfosByTag(DownloadWorker.TAG)
-                .filter { it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING || it.state == WorkInfo.State.BLOCKED }
+            val activeWorks = (
+                workManager.awaitWorkInfosByTag(DownloadWorker.TAG) +
+                    workManager.awaitWorkInfosByTag(NovelDownloadWorker.TAG)
+                ).filter { it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING || it.state == WorkInfo.State.BLOCKED }
             
             Log.d("DownloadScheduler", "Active works: ${activeWorks.map { it.id to it.state }}")
 
@@ -85,6 +91,17 @@ class DownloadSchedulerWorker @AssistedInject constructor(
             if (manga == null) {
                 downloadQueueRepository.removeFromQueue(nextItem.id)
                 return@runCatchingCancellable Result.retry()
+            }
+
+            if (manga.isNovel) {
+                novelDownloadScheduler.enqueue(
+                    manga = manga,
+                    chapterIds = nextItem.chaptersIds,
+                    allowMetered = force || !nextItem.wifiOnly,
+                )
+                downloadQueueRepository.removeFromQueue(nextItem.id)
+                scheduleNextCheck()
+                return@runCatchingCancellable Result.success()
             }
 
             val requiresCharging = if (force) false else (nextItem.charging_only || settings.isDownloadOnlyOnChargingEnabled)

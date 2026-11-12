@@ -24,7 +24,6 @@ import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.local.data.LocalStorageManager
-import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
 import hanten.wre.app.settings.storage.DirectoryModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -48,7 +47,6 @@ class DownloadDialogViewModel @Inject constructor(
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	private val historyRepository: HistoryRepository,
 	private val settings: AppSettings,
-	private val novelScheduler: NovelDownloadScheduler,
 ) : BaseViewModel() {
 
 	val manga = savedStateHandle.require<Array<ParcelableManga>>(AppRouter.KEY_MANGA).map {
@@ -110,7 +108,14 @@ class DownloadDialogViewModel @Inject constructor(
 
 			if (isNovel) {
 				tasks.forEach { (m, chaptersIds) ->
-					novelScheduler.enqueue(m, chaptersIds, allowMetered)
+					downloadQueueRepository.addToQueue(
+						manga = m,
+						chaptersIds = chaptersIds,
+						wifiOnly = !allowMetered,
+						chargingOnly = settings.isDownloadOnlyOnChargingEnabled,
+						offPeakOnly = settings.isDownloadOffPeakEnabled,
+						isPaused = false,
+					)
 				}
 				onScheduled.call(true)
 				return@launchLoadingJob

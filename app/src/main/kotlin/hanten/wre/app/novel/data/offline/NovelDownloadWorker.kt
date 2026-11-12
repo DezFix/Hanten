@@ -31,9 +31,13 @@ import kotlinx.coroutines.flow.Flow
 import hanten.wre.app.R
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.MangaRepository
+import hanten.wre.app.download.data.repository.DownloadQueueRepository
+import hanten.wre.app.core.util.ext.toFileNameSafe
+import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.runCatchingCancellable
+import java.io.File
 import java.io.IOException
 import java.net.URI
 import java.util.UUID
@@ -47,6 +51,8 @@ class NovelDownloadWorker @AssistedInject constructor(
 	private val mangaDataRepository: MangaDataRepository,
 	private val repositoryFactory: MangaRepository.Factory,
 	private val offlineRepository: NovelOfflineRepository,
+	private val epubExporter: NovelEpubExporter,
+	private val localMangaRepository: LocalMangaRepository,
 ) : CoroutineWorker(context, params) {
 
 	override suspend fun doWork(): Result {
@@ -75,6 +81,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 				done++
 				setProgress(progressData(manga, done, total))
 			}
+			exportEpub(manga)
 			Result.success()
 		} catch (e: CancellationException) {
 			throw e
@@ -119,6 +126,12 @@ class NovelDownloadWorker @AssistedInject constructor(
 		} else {
 			ForegroundInfo(id.hashCode(), notification)
 		}
+	}
+
+	private suspend fun exportEpub(manga: Manga) {
+		val root = localMangaRepository.getOutputDir(manga, fallback = null) ?: return
+		if (!root.exists() && !root.mkdirs()) return
+		epubExporter.export(manga.id, File(root, "${manga.title.toFileNameSafe()}.epub"))
 	}
 
 	private fun progressData(manga: Manga, done: Int, total: Int) = workDataOf(
@@ -179,6 +192,7 @@ class NovelDownloadScheduler @Inject constructor(
 	@ApplicationContext context: Context,
 	private val workManager: WorkManager,
 	private val mangaDataRepository: MangaDataRepository,
+	private val downloadQueueRepository: DownloadQueueRepository,
 ) {
 
 	suspend fun enqueue(manga: Manga, chapterIds: LongArray, allowMetered: Boolean) {
@@ -187,6 +201,18 @@ class NovelDownloadScheduler @Inject constructor(
 			NovelDownloadWorker.uniqueName(manga.id),
 			ExistingWorkPolicy.KEEP,
 			NovelDownloadWorker.createRequest(manga, chapterIds, allowMetered),
+		)
+	}
+
+	/** Stops the running work and puts the whole novel back into the queue as paused. */
+	suspend fun pause(manga: Manga) {
+		workManager.cancelUniqueWork(NovelDownloadWorker.uniqueName(manga.id))
+		val chapters = manga.chapters ?: return
+		if (chapters.isEmpty()) return
+		downloadQueueRepository.addToQueue(
+			manga = manga,
+			chaptersIds = chapters.map { it.id }.toLongArray(),
+			isPaused = true,
 		)
 	}
 

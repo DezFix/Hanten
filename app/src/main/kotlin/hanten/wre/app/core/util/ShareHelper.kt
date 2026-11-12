@@ -14,6 +14,7 @@ import java.io.File
 private const val TYPE_TEXT = "text/plain"
 private const val TYPE_IMAGE = "image/*"
 private const val TYPE_CBZ = "application/x-cbz"
+private const val TYPE_EPUB = "application/epub+zip"
 
 @Deprecated("")
 class ShareHelper(private val context: Context) {
@@ -57,6 +58,24 @@ class ShareHelper(private val context: Context) {
 		}
 		val intentBuilder = ShareCompat.IntentBuilder(context)
 			.setType(TYPE_CBZ)
+		for (file in files) {
+			val uri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.files", file)
+			intentBuilder.addStream(uri)
+		}
+		files.singleOrNull()?.let {
+			intentBuilder.setChooserTitle(context.getString(R.string.share_s, it.name))
+		} ?: run {
+			intentBuilder.setChooserTitle(R.string.share)
+		}
+		intentBuilder.startChooser()
+	}
+
+	fun shareEpub(files: Collection<File>) {
+		if (files.isEmpty()) {
+			return
+		}
+		val intentBuilder = ShareCompat.IntentBuilder(context)
+			.setType(TYPE_EPUB)
 		for (file in files) {
 			val uri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.files", file)
 			intentBuilder.addStream(uri)

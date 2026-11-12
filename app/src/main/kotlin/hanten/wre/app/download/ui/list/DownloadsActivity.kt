@@ -23,6 +23,7 @@ import hanten.wre.app.core.ui.dialog.setCheckbox
 import hanten.wre.app.core.ui.util.MenuInvalidator
 import hanten.wre.app.core.ui.util.ReversibleActionObserver
 import hanten.wre.app.core.util.FileSize
+import hanten.wre.app.core.util.ShareHelper
 import hanten.wre.app.download.ui.list.chapters.DownloadChapter
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
@@ -67,6 +68,9 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 		addMenuProvider(DownloadsMenuProvider(this, viewModel))
 		viewModel.items.observe(this, downloadsAdapter)
 		viewModel.onActionDone.observeEvent(this, ReversibleActionObserver(viewBinding.recyclerView))
+		viewModel.onNovelShareReady.observeEvent(this) { file ->
+			ShareHelper(this).shareEpub(listOf(file))
+		}
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.hasActiveWorks.observe(this, menuInvalidator)
 		viewModel.hasPausedWorks.observe(this, menuInvalidator)
@@ -258,6 +262,14 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 
 	override fun onCancelNovelClick(item: NovelDownloadItemModel) {
 		item.workId?.let(viewModel::cancelNovel)
+	}
+
+	override fun onPauseNovelClick(item: NovelDownloadItemModel) {
+		viewModel.pauseNovel(item)
+	}
+
+	override fun onShareNovelClick(item: NovelDownloadItemModel) {
+		viewModel.shareNovel(item)
 	}
 
 	override fun onExpandNovelClick(item: NovelDownloadItemModel) {

@@ -28,6 +28,8 @@ fun novelDownloadItemAD(
 	binding.recyclerViewChapters.adapter = chaptersAdapter
 
 	binding.buttonCancel.setOnClickListener { listener.onCancelNovelClick(item) }
+	binding.buttonPause.setOnClickListener { listener.onPauseNovelClick(item) }
+	binding.buttonShare.setOnClickListener { listener.onShareNovelClick(item) }
 	binding.buttonRemove.setOnClickListener { listener.onHideNovelClick(item) }
 	binding.buttonDelete.setOnClickListener { listener.onDeleteNovelClick(item) }
 	binding.buttonExpand.setOnClickListener { listener.onExpandNovelClick(item) }
@@ -54,6 +56,8 @@ fun novelDownloadItemAD(
 		binding.progressBar.isVisible = item.isActive
 		binding.textViewProgress.isVisible = item.isActive
 		binding.buttonCancel.isVisible = item.isActive
+		binding.buttonPause.isVisible = item.isActive
+		binding.buttonShare.isVisible = !item.isActive
 		binding.buttonRemove.isVisible = !item.isActive
 		binding.buttonDelete.isVisible = !item.isActive
 		if (item.isActive) {
