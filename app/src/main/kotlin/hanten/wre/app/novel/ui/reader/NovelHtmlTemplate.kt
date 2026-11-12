@@ -272,7 +272,7 @@ object NovelHtmlTemplate {
 						return {
 							index: idx,
 							chapter: block ? Number(block.dataset.chapter) : idx,
-							percent: Math.max(0, Math.min(1, (cur - start) / span)),
+							percent: Math.max(0, Math.min(1, (cur - start + 1) / span)),
 						};
 					}
 					const blocks = chapterBlocks();
@@ -285,11 +285,18 @@ object NovelHtmlTemplate {
 					}
 					const start = blockTop(blocks[idx]);
 					const size = blocks[idx].getBoundingClientRect().height;
-					const denom = Math.max(1, size - window.innerHeight * 0.5);
+					// Page-based progress: one screen height is one page, so the value
+					// grows evenly instead of jumping with the remaining scroll distance.
+					const pageHeight = Math.max(1, window.innerHeight);
+					const totalPages = Math.max(1, Math.ceil(size / pageHeight));
+					const currentPage = Math.max(
+						1,
+						Math.min(totalPages, Math.floor((pos - start) / pageHeight) + 1),
+					);
 					return {
 						index: idx,
 						chapter: Number(blocks[idx].dataset.chapter || idx),
-						percent: Math.max(0, Math.min(1, (pos - start) / denom)),
+						percent: currentPage / totalPages,
 					};
 				}
 
@@ -424,7 +431,7 @@ object NovelHtmlTemplate {
 						if (!block) return;
 						const start = blockTop(block);
 						const size = block.getBoundingClientRect().height;
-						const target = start + Math.max(0, size - window.innerHeight * 0.5) * p;
+						const target = start + Math.max(0, size - window.innerHeight) * p;
 						window.scrollTo(0, Math.max(0, target));
 					}
 				}

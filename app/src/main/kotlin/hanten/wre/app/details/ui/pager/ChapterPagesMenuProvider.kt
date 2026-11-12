@@ -12,6 +12,7 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.slider.TickVisibilityMode
 import hanten.wre.app.R
 import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.ui.sheet.BaseAdaptiveSheet
 import hanten.wre.app.core.util.ext.setValueRounded
 import hanten.wre.app.core.util.progress.IntPercentLabelFormatter
@@ -43,7 +44,8 @@ class ChapterPagesMenuProvider(
 				menu.findItem(R.id.action_reversed)?.isChecked = viewModel.isChaptersReversed.value == true
 				menu.findItem(R.id.action_grid_view)?.isChecked = viewModel.isChaptersInGridView.value == true
 				menu.findItem(R.id.action_downloaded)?.let { menuItem ->
-					menuItem.isVisible = viewModel.mangaDetails.value?.local != null
+					val details = viewModel.mangaDetails.value
+					menuItem.isVisible = details?.local != null || details?.toManga()?.isNovel == true
 					menuItem.isChecked = viewModel.isDownloadedOnly.value == true
 				}
 			}

@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.7.9
+
+### Исправлено
+- Прогресс чтения новелл считается по страницам (высота экрана), а не по
+  остатку прокрутки: несколько абзацев больше не дают 40–50 %.
+- В списке глав новеллы доступен фильтр «На устройстве», как у манги.
+
 ## 2.7.8
 
 ### Добавлено
