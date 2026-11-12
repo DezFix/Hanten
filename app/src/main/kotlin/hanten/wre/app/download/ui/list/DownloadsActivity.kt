@@ -271,6 +271,17 @@ class DownloadsActivity : BaseActivity<ActivityDownloadsBinding>(),
 		}.show()
 	}
 
+	override fun onHideNovelClick(item: NovelDownloadItemModel) {
+		buildAlertDialog(this) {
+			setTitle(R.string.novel_downloads_remove)
+			setMessage(getString(R.string.novel_downloads_remove_confirm, item.title))
+			setPositiveButton(R.string.remove) { _, _ ->
+				viewModel.hideNovel(item)
+			}
+			setNegativeButton(android.R.string.cancel, null)
+		}.show()
+	}
+
 	override fun onDeleteNovelChapterClick(item: NovelDownloadItemModel, chapter: NovelChapterItem) {
 		buildAlertDialog(this) {
 			setTitle(R.string.delete_chapter)

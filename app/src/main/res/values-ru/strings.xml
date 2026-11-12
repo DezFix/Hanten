@@ -1083,6 +1083,8 @@
     <string name="legal_notice_text">Hanten не хранит и не распространяет контент. Это клиент, который отображает страницы, опубликованные на сторонних сайтах, настроенных пользователем. Все права принадлежат их владельцам. Запросы на удаление по DMCA и аналогичные претензии следует направлять сайту, который размещает контент; разработчики приложения не связаны с этими сайтами и не обходят платный доступ, аккаунты или DRM. Пользователь отвечает за соблюдение закона и правил используемых источников.</string>
     <string name="novel_downloads_novel_details">%1$d глав · %2$s · %3$s</string>
     <string name="novel_downloads_delete_novel">Удалить новеллу</string>
+    <string name="novel_downloads_remove">Убрать из списка</string>
+    <string name="novel_downloads_remove_confirm">Убрать «%1$s» из списка? Скачанные файлы останутся на устройстве.</string>
     <string name="novel_downloads_delete_novel_confirm">Удалить все кэшированные главы «%1$s»?</string>
     <string name="novel_offline_title">Офлайн-чтение</string>
     <string name="novel_offline_cached_chapters">Кэшировано %1$d из %2$d глав</string>

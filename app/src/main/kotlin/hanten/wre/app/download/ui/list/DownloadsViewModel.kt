@@ -93,13 +93,16 @@ class DownloadsViewModel @Inject constructor(
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
 
+	private val novelManga = MutableStateFlow<Map<Long, Manga>>(emptyMap())
+
 	private val novelItems: StateFlow<List<NovelDownloadItemModel>> = combine(
 		novelWorks,
 		cachedNovels,
 		cachedNovelChapters,
 		novelExpanded,
-	) { activeWorks, novels, chapters, exp ->
-		activeWorks.toNovelItems(novels, chapters, exp)
+		novelManga,
+	) { activeWorks, novels, chapters, exp, mangaMap ->
+		activeWorks.toNovelItems(novels, chapters, exp, mangaMap)
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
 
 	init {
@@ -308,6 +311,13 @@ class DownloadsViewModel @Inject constructor(
 		}
 	}
 
+	fun hideNovel(item: NovelDownloadItemModel) {
+		launchJob(Dispatchers.IO) {
+			novelOfflineRepository.hideNovel(item.mangaId)
+			refreshNovelCache()
+		}
+	}
+
 	fun deleteNovel(item: NovelDownloadItemModel) {
 		launchJob(Dispatchers.IO) {
 			novelOfflineRepository.deleteNovel(item.mangaId)
@@ -325,12 +335,16 @@ class DownloadsViewModel @Inject constructor(
 	fun refreshNovelCache() {
 		launchJob(Dispatchers.IO) {
 			runCatchingCancellable {
-				val novels = novelOfflineRepository.listCachedNovels().filter { it.isDownloaded }
+				val novels = novelOfflineRepository.listCachedNovels()
+					.filter { novelOfflineRepository.isDownloaded(it.id) }
 				cachedNovels.value = novels
 				cachedNovelChapters.value = novels.associate { novel ->
 					novel.id to novelOfflineRepository.listCachedChapters(novel.id)
 						.filter { it.isDownloaded }
 				}
+				novelManga.value = novels.mapNotNull { novel ->
+					mangaDataRepository.findMangaById(novel.id, withChapters = false)?.let { novel.id to it }
+				}.toMap()
 			}.onFailure {
 				it.printStackTraceDebug("DownloadsViewModel::refreshNovelCache")
 			}
@@ -341,15 +355,19 @@ class DownloadsViewModel @Inject constructor(
 		novels: List<CachedNovel>,
 		chapters: Map<Long, List<CachedChapter>>,
 		expanded: Set<Long>,
+		mangaMap: Map<Long, Manga>,
 	): List<NovelDownloadItemModel> {
 		val result = LinkedHashMap<Long, NovelDownloadItemModel>(novels.size + size)
 		for (novel in novels) {
+			val manga = mangaMap[novel.id]
 			result[novel.id] = NovelDownloadItemModel(
 				mangaId = novel.id,
 				title = novel.title,
 				sourceName = novel.source,
 				chapterCount = novel.chapterCount,
 				sizeBytes = novel.sizeBytes,
+				coverUrl = manga?.coverUrl,
+				manga = manga,
 				workId = null,
 				done = 0,
 				total = 0,
@@ -372,6 +390,8 @@ class DownloadsViewModel @Inject constructor(
 				sourceName = "",
 				chapterCount = 0,
 				sizeBytes = 0L,
+				coverUrl = mangaMap[mangaId]?.coverUrl,
+				manga = mangaMap[mangaId],
 				workId = null,
 				done = 0,
 				total = 0,

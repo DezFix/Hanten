@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 2.7.6
+
+### Изменено
+- Экран «Загрузки»: строки новелл теперь как у манги — обложка, статус,
+  число глав и размер, одинаковый значок раскрытия и кнопки.
+- У скачанной новеллы появилась кнопка «Убрать из списка»: запись исчезает
+  из загрузок, файлы остаются на устройстве.
+
 ## 2.7.5
 
 ### Исправлено

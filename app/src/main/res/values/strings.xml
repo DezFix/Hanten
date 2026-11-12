@@ -1016,6 +1016,8 @@
     <string name="previous_chapter">Previous chapter</string>
     <string name="novel_downloads_novel_details">%1$d chapters · %2$s · %3$s</string>
     <string name="novel_downloads_delete_novel">Delete novel</string>
+    <string name="novel_downloads_remove">Remove from list</string>
+    <string name="novel_downloads_remove_confirm">Remove \"%1$s\" from the list? Downloaded files will remain on the device.</string>
     <string name="novel_downloads_delete_novel_confirm">Delete all cached chapters of \"%1$s\"?</string>
     <string name="novel_offline_title">Offline reading</string>
     <string name="novel_offline_cached_chapters">%1$d of %2$d chapters cached</string>

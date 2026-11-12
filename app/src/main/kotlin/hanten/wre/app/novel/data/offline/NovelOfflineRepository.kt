@@ -127,6 +127,11 @@ class NovelOfflineRepository @Inject constructor(
 		return downloadsDao.contains(mangaId)
 	}
 
+	/** Removes the novel from the downloads list but keeps its cached files. */
+	suspend fun hideNovel(mangaId: Long) {
+		downloadsDao.delete(mangaId)
+	}
+
 	@Volatile
 	private var indexBackfilled = false
 

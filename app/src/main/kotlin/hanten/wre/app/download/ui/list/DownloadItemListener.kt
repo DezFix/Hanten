@@ -25,5 +25,7 @@ interface DownloadItemListener : OnListItemClickListener<DownloadItemModel> {
 
 	fun onDeleteNovelClick(item: NovelDownloadItemModel)
 
+	fun onHideNovelClick(item: NovelDownloadItemModel)
+
 	fun onDeleteNovelChapterClick(item: NovelDownloadItemModel, chapter: NovelChapterItem)
 }

@@ -2,6 +2,7 @@ package hanten.wre.app.download.ui.list
 
 import hanten.wre.app.list.ui.ListModelDiffCallback
 import hanten.wre.app.list.ui.model.ListModel
+import hanten.wre.app.parsers.model.Manga
 import java.util.UUID
 
 data class NovelChapterItem(
@@ -21,6 +22,8 @@ data class NovelDownloadItemModel(
 	val sourceName: String,
 	val chapterCount: Int,
 	val sizeBytes: Long,
+	val coverUrl: String? = null,
+	val manga: Manga? = null,
 	val workId: UUID?,
 	val done: Int,
 	val total: Int,

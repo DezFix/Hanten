@@ -28,22 +28,32 @@ fun novelDownloadItemAD(
 	binding.recyclerViewChapters.adapter = chaptersAdapter
 
 	binding.buttonCancel.setOnClickListener { listener.onCancelNovelClick(item) }
+	binding.buttonRemove.setOnClickListener { listener.onHideNovelClick(item) }
 	binding.buttonDelete.setOnClickListener { listener.onDeleteNovelClick(item) }
 	binding.buttonExpand.setOnClickListener { listener.onExpandNovelClick(item) }
 	binding.root.setOnClickListener { listener.onExpandNovelClick(item) }
 
 	bind {
-		binding.textViewTitle.text = item.title.ifBlank { getString(R.string.unknown) }
-		binding.textViewDetails.isVisible = item.sourceName.isNotBlank()
-		binding.textViewDetails.text = getString(
+		val context = binding.root.context
+		binding.textViewTitle.text = item.title.ifBlank {
+			context.getString(R.string.unknown)
+		}
+		binding.imageViewCover.setImageAsync(item.coverUrl, item.manga)
+		binding.textViewStatus.setText(
+			if (item.isActive) R.string.manga_downloading_ else R.string.download_complete,
+		)
+		binding.textViewDetails.text = context.getString(
 			R.string.novel_downloads_novel_details,
 			item.chapterCount,
 			FileSize.BYTES.format(context, item.sizeBytes),
 			item.sourceName,
 		)
+
 		binding.progressBar.isVisible = item.isActive
 		binding.textViewProgress.isVisible = item.isActive
 		binding.buttonCancel.isVisible = item.isActive
+		binding.buttonRemove.isVisible = !item.isActive
+		binding.buttonDelete.isVisible = !item.isActive
 		if (item.isActive) {
 			binding.progressBar.isIndeterminate = item.total <= 0
 			if (item.total > 0) {
@@ -51,13 +61,14 @@ fun novelDownloadItemAD(
 				binding.progressBar.setProgressCompat(item.done, true)
 			}
 			binding.textViewProgress.text = if (item.total > 0) {
-				getString(R.string.novel_download_in_progress, item.done, item.total)
+				context.getString(R.string.novel_download_in_progress, item.done, item.total)
 			} else {
-				getString(R.string.novel_download_queued)
+				context.getString(R.string.novel_download_queued)
 			}
 		}
+
+		binding.buttonExpand.isChecked = item.isExpanded
 		binding.buttonExpand.isVisible = item.chapters.isNotEmpty()
-		binding.buttonExpand.rotation = if (item.isExpanded) 180f else 0f
 		binding.buttonExpand.setContentDescriptionAndTooltip(
 			if (item.isExpanded) R.string.collapse else R.string.expand,
 		)

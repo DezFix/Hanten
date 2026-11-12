@@ -1086,6 +1086,8 @@
     <string name="legal_notice_text">Hanten не зберігає та не розповсюджує контент. Це клієнт, який відображає сторінки, опубліковані на сторонніх сайтах, налаштованих користувачем. Усі права належать їхнім власникам. Запити на видалення за DMCA та аналогічні претензії слід надсилати сайту, який розміщує контент; розробники застосунку не пов’язані з цими сайтами й не обходять платний доступ, акаунти чи DRM. Користувач відповідає за дотримання закону та правил використовуваних джерел.</string>
     <string name="novel_downloads_novel_details">%1$d розділів · %2$s · %3$s</string>
     <string name="novel_downloads_delete_novel">Видалити новелу</string>
+    <string name="novel_downloads_remove">Прибрати зі списку</string>
+    <string name="novel_downloads_remove_confirm">Прибрати «%1$s» зі списку? Завантажені файли залишаться на пристрої.</string>
     <string name="novel_downloads_delete_novel_confirm">Видалити всі кешовані розділи «%1$s»?</string>
     <string name="save_novel">Зберегти новелу</string>
     <string name="novel_download_in_progress">Завантаження %1$d/%2$d</string>
