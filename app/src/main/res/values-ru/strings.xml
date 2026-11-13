@@ -1099,6 +1099,13 @@
     <string name="novel_download_started">Загрузка новеллы начата</string>
     <string name="novel_download_added">Новелла добавлена в загрузки</string>
     <string name="relations">Связанные произведения</string>
+    <string name="reading_order">Порядок чтения</string>
+    <string name="reading_order_add">Добавить в серию</string>
+    <string name="reading_order_current">Вы здесь</string>
+    <string name="reading_order_not_in_library">Нет в библиотеке</string>
+    <string name="reading_order_search">Найти по названию</string>
+    <string name="similar_manga">Похожие</string>
+    <string name="relation_add_title">Добавить «%1$s» как название</string>
     <string name="relation_add">Добавить связь</string>
     <string name="relation_added">Связь добавлена</string>
     <string name="relation_removed">Связь удалена</string>

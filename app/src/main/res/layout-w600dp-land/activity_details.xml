@@ -280,6 +280,63 @@
 					app:constraint_referenced_ids="recyclerView_scrobbling,textView_scrobbling_title,button_scrobbling_more"
 					tools:visibility="visible" />
 
+				<LinearLayout
+					android:id="@+id/layout_reading_order"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:visibility="gone"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling"
+					tools:visibility="visible">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:orientation="horizontal">
+
+						<TextView
+							android:id="@+id/textView_reading_order_title"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/margin_small"
+							android:layout_marginTop="@dimen/margin_normal"
+							android:layout_weight="1"
+							android:gravity="center_vertical|start"
+							android:padding="@dimen/grid_spacing"
+							android:singleLine="true"
+							android:text="@string/reading_order"
+							android:textAppearance="?textAppearanceTitleSmall" />
+
+						<androidx.appcompat.widget.AppCompatImageButton
+							android:id="@+id/button_reading_order_add"
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:layout_marginEnd="8dp"
+							android:background="?selectableItemBackgroundBorderless"
+							android:contentDescription="@string/reading_order_add"
+							android:scaleType="center"
+							android:src="@drawable/ic_add"
+							app:tint="?colorControlNormal" />
+
+					</LinearLayout>
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/recyclerView_reading_order"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="6dp"
+						android:nestedScrollingEnabled="false"
+						android:orientation="vertical"
+						android:overScrollMode="never"
+						android:scrollbars="none"
+						app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+						tools:listitem="@layout/item_reading_order" />
+
+				</LinearLayout>
+
 				<TextView
 					android:id="@+id/textView_related_title"
 					android:layout_width="0dp"
@@ -290,11 +347,11 @@
 					android:gravity="center_vertical|start"
 					android:padding="@dimen/grid_spacing"
 					android:singleLine="true"
-					android:text="@string/related_manga"
+					android:text="@string/similar_manga"
 					android:textAppearance="?textAppearanceTitleSmall"
 					app:layout_constraintEnd_toStartOf="@id/button_related_more"
 					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling" />
+					app:layout_constraintTop_toBottomOf="@id/layout_reading_order" />
 
 				<Button
 					android:id="@+id/button_related_more"

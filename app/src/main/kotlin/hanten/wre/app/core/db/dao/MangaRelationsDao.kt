@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MangaRelationsDao {
 
+	@Query("SELECT * FROM manga_relations")
+	fun observeAll(): Flow<List<MangaRelationEntity>>
+
 	@Query("SELECT * FROM manga_relations WHERE from_id = :mangaId OR to_id = :mangaId")
 	fun observeFor(mangaId: Long): Flow<List<MangaRelationEntity>>
 

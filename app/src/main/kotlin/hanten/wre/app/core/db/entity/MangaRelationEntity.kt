@@ -17,4 +17,15 @@ data class MangaRelationEntity(
 	val type: MangaRelationType,
 	val origin: MangaRelationOrigin,
 	@ColumnInfo(name = "created_at") val createdAt: Long,
-)
+	@ColumnInfo(name = "target_title") val targetTitle: String? = null,
+	@ColumnInfo(name = "target_source") val targetSource: String? = null,
+	@ColumnInfo(name = "target_url") val targetUrl: String? = null,
+) {
+
+	/**
+	 * A relation added by title only has no source snapshot. Linked works always get
+	 * [targetSource] from [Manga.source], so this also distinguishes legacy rows.
+	 */
+	val isUnlinked: Boolean
+		get() = targetTitle != null && targetSource == null
+}

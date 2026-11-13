@@ -1032,6 +1032,13 @@
     <string name="novel_download_started">Novel download started</string>
     <string name="novel_download_added">Novel download added</string>
     <string name="relations">Related works</string>
+    <string name="reading_order">Reading order</string>
+    <string name="reading_order_add">Add to reading order</string>
+    <string name="reading_order_current">You are here</string>
+    <string name="reading_order_not_in_library">Not in library</string>
+    <string name="reading_order_search">Search by title</string>
+    <string name="similar_manga">Similar</string>
+    <string name="relation_add_title">Add \"%1$s\" as a title</string>
     <string name="relation_add">Add relation</string>
     <string name="relation_added">Relation added</string>
     <string name="relation_removed">Relation removed</string>

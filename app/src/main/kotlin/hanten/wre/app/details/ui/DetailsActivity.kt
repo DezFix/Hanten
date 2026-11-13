@@ -87,7 +87,9 @@ import hanten.wre.app.databinding.ActivityDetailsBinding
 import hanten.wre.app.databinding.LayoutDetailsTableBinding
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
+import hanten.wre.app.details.domain.ReadingOrderItem
 import hanten.wre.app.details.service.MangaPrefetchService
+import hanten.wre.app.details.ui.related.ReadingOrderAdapter
 import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.scrobbling.ScrobblingItemDecoration
@@ -153,6 +155,7 @@ class DetailsActivity :
 		viewBinding.buttonDescriptionMore.setOnClickListener(this)
 		viewBinding.buttonScrobblingMore.setOnClickListener(this)
 		viewBinding.buttonRelatedMore.setOnClickListener(this)
+		viewBinding.buttonReadingOrderAdd.setOnClickListener(this)
 		viewBinding.textViewDescription.addOnLayoutChangeListener(this)
 		viewBinding.swipeRefreshLayout.setOnRefreshListener(this)
 		viewBinding.textViewDescription.viewTreeObserver.addOnDrawListener(this)
@@ -188,7 +191,8 @@ class DetailsActivity :
 		viewModel.isLoading.observe(this, ::onLoadingStateChanged)
 		viewModel.scrobblingInfo.observe(this, ::onScrobblingInfoChanged)
 		viewModel.localSize.observe(this, ::onLocalSizeChanged)
-		viewModel.relatedManga.observe(this, ::onRelatedMangaChanged)
+		viewModel.similarManga.observe(this, ::onSimilarMangaChanged)
+		viewModel.readingOrder.observe(this, ::onReadingOrderChanged)
 		viewModel.favouriteCategories.observe(this, ::onFavoritesChanged)
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.isStatsAvailable.observe(this, menuInvalidator)
@@ -274,6 +278,10 @@ class DetailsActivity :
 			R.id.button_related_more -> {
 				val manga = viewModel.getMangaOrNull() ?: return
 				router.openRelated(manga)
+			}
+
+			R.id.button_reading_order_add -> {
+				menuProvider.showAddRelationDialog()
 			}
 
 			R.id.textView_title -> {
@@ -382,7 +390,28 @@ class DetailsActivity :
 		}
 	}
 
-	private fun onRelatedMangaChanged(related: List<MangaListModel>) {
+	private fun onReadingOrderChanged(items: List<ReadingOrderItem>) {
+		val rv = viewBinding.recyclerViewReadingOrder
+		val adapter = (rv.adapter as? ReadingOrderAdapter) ?: ReadingOrderAdapter(
+			onClick = { item ->
+				val manga = item.manga
+				if (manga != null) {
+					router.openDetails(manga)
+				} else if (item.title.isNotBlank()) {
+					router.openSearch(item.title)
+				}
+			},
+			onSearch = { item ->
+				if (item.title.isNotBlank()) {
+					router.openSearch(item.title)
+				}
+			},
+		).also { rv.adapter = it }
+		adapter.submitList(items)
+		viewBinding.layoutReadingOrder.isVisible = items.isNotEmpty()
+	}
+
+	private fun onSimilarMangaChanged(related: List<MangaListModel>) {
 		if (related.isEmpty()) {
 			viewBinding.groupRelated.isVisible = false
 			return

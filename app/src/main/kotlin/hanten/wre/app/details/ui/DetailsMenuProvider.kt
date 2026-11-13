@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -146,6 +147,8 @@ class DetailsMenuProvider(
 		}
 	}
 
+	fun showAddRelationDialog() = showRelationPicker()
+
 	private fun showRelationsDialog() {
 		val relations = viewModel.manualRelations.value
 		buildAlertDialog(activity) {
@@ -154,7 +157,7 @@ class DetailsMenuProvider(
 				setMessage(R.string.relation_none)
 			} else {
 				val items = relations.map {
-					"${it.manga.title} — ${activity.getString(it.type.titleResId)}"
+					"${it.title} — ${activity.getString(it.type.titleResId)}"
 				}
 				setItems(items.toTypedArray()) { _, which ->
 					confirmRemoveRelation(relations[which])
@@ -167,9 +170,9 @@ class DetailsMenuProvider(
 
 	private fun confirmRemoveRelation(relation: RelatedEntry) {
 		buildAlertDialog(activity) {
-			setMessage(activity.getString(R.string.relation_remove_confirm, relation.manga.title))
+			setMessage(activity.getString(R.string.relation_remove_confirm, relation.title))
 			setPositiveButton(android.R.string.ok) { _, _ ->
-				viewModel.removeRelation(relation.manga)
+				viewModel.removeRelation(relation.targetId)
 				Snackbar.make(snackbarHost, R.string.relation_removed, Snackbar.LENGTH_SHORT).show()
 			}
 			setNegativeButton(android.R.string.cancel, null)
@@ -188,8 +191,12 @@ class DetailsMenuProvider(
 			showRelationTypeDialog(manga)
 		}
 		binding.recyclerView.adapter = adapter
+		var currentQuery = ""
 		var searchJob: Job? = null
 		fun search(query: String) {
+			currentQuery = query
+			binding.buttonAddTitle.isVisible = query.isNotBlank()
+			binding.buttonAddTitle.text = activity.getString(R.string.relation_add_title, query)
 			searchJob?.cancel()
 			searchJob = activity.lifecycleScope.launch {
 				delay(300)
@@ -198,6 +205,12 @@ class DetailsMenuProvider(
 				}.getOrDefault(emptyList())
 				adapter.submitList(result)
 			}
+		}
+		binding.buttonAddTitle.setOnClickListener {
+			val title = currentQuery.trim()
+			if (title.isEmpty()) return@setOnClickListener
+			dialog.dismiss()
+			showRelationTypeDialog(title)
 		}
 		binding.editTextQuery.doOnTextChanged { text, _, _, _ ->
 			search(text?.toString()?.trim().orEmpty())
@@ -213,6 +226,18 @@ class DetailsMenuProvider(
 			setTitle(R.string.relation_type)
 			setItems(types.map { activity.getString(it.titleResId) }.toTypedArray()) { _, which ->
 				viewModel.addRelation(manga, types[which])
+				Snackbar.make(snackbarHost, R.string.relation_added, Snackbar.LENGTH_SHORT).show()
+			}
+			setNegativeButton(android.R.string.cancel, null)
+		}.show()
+	}
+
+	private fun showRelationTypeDialog(title: String) {
+		val types = MangaRelationType.entries
+		buildAlertDialog(activity) {
+			setTitle(R.string.relation_type)
+			setItems(types.map { activity.getString(it.titleResId) }.toTypedArray()) { _, which ->
+				viewModel.addUntitledRelation(title, types[which])
 				Snackbar.make(snackbarHost, R.string.relation_added, Snackbar.LENGTH_SHORT).show()
 			}
 			setNegativeButton(android.R.string.cancel, null)

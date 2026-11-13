@@ -23,6 +23,8 @@ import hanten.wre.app.details.domain.BranchComparator
 import hanten.wre.app.details.domain.DetailsInteractor
 import hanten.wre.app.details.domain.DetailsLoadUseCase
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
+import hanten.wre.app.details.domain.ReadingOrderBuilder
+import hanten.wre.app.details.domain.ReadingOrderItem
 import hanten.wre.app.details.domain.ReadingTimeUseCase
 import hanten.wre.app.details.domain.RelatedMangaUseCase
 import hanten.wre.app.details.ui.model.HistoryInfo
@@ -54,6 +56,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
@@ -177,28 +180,31 @@ class DetailsViewModel @Inject constructor(
 	val manualRelations: StateFlow<List<RelatedEntry>> = resolvedMangaId
 		.flatMapLatest { relationsRepository.observeFor(it) }
 		.withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
+
+	val readingOrder: StateFlow<List<ReadingOrderItem>> = combine(
+		manga,
+		relationsRepository.observeAll(),
+	) { m, relations ->
+		if (m == null || relations.none { it.fromId == m.id || it.toId == m.id }) {
+			return@combine emptyList()
+		}
+		ReadingOrderBuilder.build(
+			rootId = m.id,
+			current = m,
+			relations = relations,
+			resolveManga = relationsRepository::resolveManga,
+		)
+	}.flowOn(Dispatchers.IO).withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
-	val relatedManga: StateFlow<List<MangaListModel>> = combine(manga, manualRelations) { m, relations ->
-		m to relations
-	}.mapLatest { (m, relations) ->
-		if (m == null) {
+	/** Suggestions from the source; manual series connections live in [readingOrder]. */
+	val similarManga: StateFlow<List<MangaListModel>> = manga.mapLatest { m ->
+		if (m == null || !settings.isRelatedMangaEnabled) {
 			return@mapLatest emptyList()
 		}
-		val seen = HashSet<Long>(relations.size)
-		val result = ArrayList<Manga>(relations.size)
-		for (entry in relations) {
-			if (seen.add(entry.manga.id)) {
-				result += entry.manga
-			}
-		}
-		if (settings.isRelatedMangaEnabled) {
-			for (item in relatedMangaUseCase(m).orEmpty()) {
-				if (seen.add(item.id)) {
-					result += item
-				}
-			}
-		}
+		val result = relatedMangaUseCase(m).orEmpty()
+			.filterNot { it.id == m.id }
 		mangaListMapper.toListModelList(result, ListMode.GRID)
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
@@ -255,14 +261,35 @@ class DetailsViewModel @Inject constructor(
 	fun addRelation(manga: Manga, type: MangaRelationType) {
 		launchJob(Dispatchers.IO) {
 			val current = getMangaOrNull() ?: return@launchJob
-			relationsRepository.add(current.id, manga.id, type)
+			relationsRepository.add(
+				fromId = current.id,
+				toId = manga.id,
+				type = type,
+				title = manga.title,
+				sourceName = manga.source.name,
+				publicUrl = manga.publicUrl,
+			)
 		}
 	}
 
-	fun removeRelation(manga: Manga) {
+	fun addUntitledRelation(title: String, type: MangaRelationType) {
+		val trimmed = title.trim()
+		if (trimmed.isEmpty()) return
 		launchJob(Dispatchers.IO) {
 			val current = getMangaOrNull() ?: return@launchJob
-			relationsRepository.removeBetween(current.id, manga.id)
+			relationsRepository.add(
+				fromId = current.id,
+				toId = MangaRelationsRepository.unlinkedId(trimmed),
+				type = type,
+				title = trimmed,
+			)
+		}
+	}
+
+	fun removeRelation(targetId: Long) {
+		launchJob(Dispatchers.IO) {
+			val current = getMangaOrNull() ?: return@launchJob
+			relationsRepository.removeBetween(current.id, targetId)
 		}
 	}
 

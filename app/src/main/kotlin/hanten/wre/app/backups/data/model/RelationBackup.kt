@@ -13,6 +13,9 @@ class RelationBackup(
 	@SerialName("type") val type: MangaRelationType,
 	@SerialName("origin") val origin: MangaRelationOrigin = MangaRelationOrigin.MANUAL,
 	@SerialName("created_at") val createdAt: Long,
+	@SerialName("target_title") val targetTitle: String? = null,
+	@SerialName("target_source") val targetSource: String? = null,
+	@SerialName("target_url") val targetUrl: String? = null,
 ) {
 
 	constructor(entity: MangaRelationEntity) : this(
@@ -21,6 +24,9 @@ class RelationBackup(
 		type = entity.type,
 		origin = entity.origin,
 		createdAt = entity.createdAt,
+		targetTitle = entity.targetTitle,
+		targetSource = entity.targetSource,
+		targetUrl = entity.targetUrl,
 	)
 
 	fun toEntity() = MangaRelationEntity(
@@ -29,5 +35,8 @@ class RelationBackup(
 		type = type,
 		origin = origin,
 		createdAt = createdAt,
+		targetTitle = targetTitle,
+		targetSource = targetSource,
+		targetUrl = targetUrl,
 	)
 }
