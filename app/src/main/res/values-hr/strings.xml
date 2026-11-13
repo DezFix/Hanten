@@ -518,7 +518,6 @@
     <string name="suggestions_enable">Omogući prijedloge</string>
     <string name="suggestions_summary">Predložiti mangu na temelju vaših preferencija</string>
     <string name="theme_name_kanade">Kanade</string>
-    <string name="find_similar">Pronađite slično</string>
     <string name="scrobbling_empty_hint">Za praćenje napretka čitanja odaberite Meni → Prati na zaslonu s detaljima mange.</string>
     <string name="sources_reorder_tip">Dodirnite i držite stavku da biste im promijenili redoslijed</string>
     <string name="settings_apply_restart_required">Ponovno pokrenite aplikaciju kako biste primijenili ove promjene</string>

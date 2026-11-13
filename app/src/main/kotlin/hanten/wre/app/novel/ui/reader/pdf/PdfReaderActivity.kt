@@ -18,10 +18,12 @@ import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.databinding.ActivityPdfReaderBinding
+import hanten.wre.app.novel.ui.reader.NovelChaptersSheet
 
 @AndroidEntryPoint
 class PdfReaderActivity :
 	BaseFullscreenActivity<ActivityPdfReaderBinding>(),
+	NovelChaptersSheet.Callback,
 	Slider.OnSliderTouchListener,
 	Slider.OnChangeListener {
 
@@ -29,10 +31,12 @@ class PdfReaderActivity :
 	private lateinit var adapter: PdfPageAdapter
 	private var isUiVisible = true
 	private var isSliderTracking = false
+	private var isNightMode = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityPdfReaderBinding.inflate(layoutInflater))
+		isNightMode = getSharedPreferences(PDF_PREFS, MODE_PRIVATE).getBoolean(KEY_NIGHT_MODE, false)
 
 		setupToolbar()
 		setupRecyclerView()
@@ -65,6 +69,7 @@ class PdfReaderActivity :
 		adapter = PdfPageAdapter(
 			scope = lifecycleScope,
 			getPdfHelper = { viewModel.getPdfHelper() },
+			isNightMode = { isNightMode },
 			onPageClick = { toggleUiVisibility() },
 		)
 		viewBinding.recyclerView.adapter = adapter
@@ -99,8 +104,32 @@ class PdfReaderActivity :
 	private fun setupControls() {
 		viewBinding.buttonPrev.setOnClickListener { viewModel.switchPage(-1) }
 		viewBinding.buttonNext.setOnClickListener { viewModel.switchPage(1) }
+		viewBinding.buttonToc.setOnClickListener { showTableOfContents() }
+		viewBinding.buttonNight.setOnClickListener { toggleNightMode() }
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)
+	}
+
+	private fun showTableOfContents() {
+		val count = viewModel.pageCount.value
+		if (count <= 0) return
+		val titles = ArrayList<String>(count)
+		for (index in 0 until count) {
+			titles.add(getString(R.string.pdf_page_title, index + 1))
+		}
+		NovelChaptersSheet.newInstance(
+			titles = titles,
+			currentIndex = viewModel.currentPage.value,
+			downloaded = BooleanArray(count),
+		).show(supportFragmentManager, NovelChaptersSheet.TAG)
+	}
+
+	private fun toggleNightMode() {
+		isNightMode = !isNightMode
+		getSharedPreferences(PDF_PREFS, MODE_PRIVATE).edit()
+			.putBoolean(KEY_NIGHT_MODE, isNightMode)
+			.apply()
+		adapter.notifyDataSetChanged()
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -172,5 +201,14 @@ class PdfReaderActivity :
 			val total = viewModel.pageCount.value
 			updatePageIndicator(value.toInt() - 1, total)
 		}
+	}
+
+	override fun onChapterSelected(index: Int) {
+		viewModel.jumpToPage(index)
+	}
+
+	private companion object {
+		const val PDF_PREFS = "pdf_reader"
+		const val KEY_NIGHT_MODE = "night_mode"
 	}
 }

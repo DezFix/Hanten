@@ -395,7 +395,6 @@
     <string name="sync_auth_hint">Du kan logga in i ett existerande konto eller skapa ett nytt</string>
     <string name="speed">Hastighet</string>
     <string name="show_on_shelf">Visa på Bokhyllan</string>
-    <string name="find_similar">Hitta liknande</string>
     <string name="sync_settings">Synkroniseringsinställningar</string>
     <string name="mirror_switching_summary">Byt automatiskt mangakällors domän om spegelservrar finns tillgängliga</string>
     <string name="cancel_all">Avbryt alla</string>

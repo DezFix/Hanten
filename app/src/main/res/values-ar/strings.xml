@@ -100,7 +100,6 @@
     <string name="server_address">عنوان السيرفر</string>
     <string name="text_feed_holder">فصول جديدة من ما تقرأه تظهر هنا</string>
     <string name="text_suggestion_holder">ابدأ بقراءة المانجا وستحصل على اقتراحات مخصصة</string>
-    <string name="find_similar">ابحث عن متشابه</string>
     <string name="data_restored">تم الاستعادة</string>
     <string name="protect_application_subtitle">أدخل كلمة السر لبدء التطبيق</string>
     <string name="suggestions">الاقتراحات</string>

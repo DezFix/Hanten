@@ -361,7 +361,6 @@
     <string name="speed">Kelajuan</string>
     <string name="show_on_shelf">Tunjukkan di rak</string>
     <string name="sync_auth_hint">Anda boleh masuk ke akaun yang ada atau membuat yang baru</string>
-    <string name="find_similar">Cari serupa</string>
     <string name="sync_settings">Tetapan Penyegerakan</string>
     <string name="server_address">Alamat pelayan</string>
     <string name="sync_host_description">Anda boleh menggunakan pelayan penyegerakan sendiri atau lalai. Jangan ubah ini jika anda tidak pasti apa yang anda lakukan.</string>

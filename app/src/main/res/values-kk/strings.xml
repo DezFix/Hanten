@@ -309,7 +309,6 @@
     <string name="server_address">Сербір адресі</string>
     <string name="moved_to_top">Үстіге жылжыды</string>
     <string name="explore">Қарау</string>
-    <string name="find_similar">Ұқсасын табу</string>
     <string name="storage_usage">Жадты қолдану</string>
     <string name="data_not_restored_text">Дұрыс сақтық көшірме файылын таңдағаныңызды тексеріңіз</string>
     <string name="theme_name_sakura">Сакура</string>

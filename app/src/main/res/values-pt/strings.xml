@@ -359,7 +359,6 @@
     <string name="reader_info_bar_summary">Mostrar a hora atual e o progresso da leitura na parte superior da tela</string>
     <string name="show_on_shelf">Mostrar na prateleira</string>
     <string name="sync_auth_hint">Você pode entrar em uma conta existente ou criar uma nova</string>
-    <string name="find_similar">Encontrar semelhante</string>
     <string name="sync_settings">Configurações de sincronização</string>
     <string name="server_address">Endereço do servidor</string>
     <string name="ignore_ssl_errors">Ignorar erros de SSL</string>

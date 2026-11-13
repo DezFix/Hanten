@@ -193,7 +193,6 @@
     <string name="show_on_shelf">在書架上顯示</string>
     <string name="comics_archive_import_description">您可以選擇一個或多個 .cbz 或 .zip 檔案，每個檔案將被認定為個別的漫畫。</string>
     <string name="folder_with_images_import_description">您可以選擇一個圖片資料夾或壓縮檔。每個壓縮檔 (或子目錄) 將被認定為個別的章節。</string>
-    <string name="find_similar">尋找相似</string>
     <string name="server_address">伺服器位址</string>
     <string name="ignore_ssl_errors">忽略 SSL 錯誤</string>
     <string name="mirror_switching">自動選擇鏡像</string>

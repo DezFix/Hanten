@@ -73,7 +73,6 @@
     <string name="text_feed_holder">Uued loetavad mangast peatükid näidatakse siin</string>
     <string name="text_suggestion_holder">Hakka lugema mangat ja sa saad isikupärastatud soovitusi</string>
     <string name="explore">Seikle</string>
-    <string name="find_similar">Leija samasuguseid</string>
     <string name="show_notification_new_chapters_off">Sa ei saa teateid uuenduste kohta, aga uued peatükkid on esiletoodud nimekirjas</string>
     <string name="storage_usage">Ruumi kasutatud</string>
     <string name="data_restored">Taastatud</string>

@@ -287,7 +287,6 @@
     <string name="comics_archive_import_description">Můžete vybrat jeden či více .cbz nebo .zip souborů, každý soubor bude brán jako samostatná manga.</string>
     <string name="show_on_shelf">Zobrazovat na poličce</string>
     <string name="sync_auth_hint">Můžete se přihlásit do již existujícího účtu nebo vytvořit nový</string>
-    <string name="find_similar">Najít podobné</string>
     <string name="sync_settings">Nastavení synchronizace</string>
     <string name="server_address">Adresa serveru</string>
     <string name="ignore_ssl_errors">Ignorovat SSL chyby</string>

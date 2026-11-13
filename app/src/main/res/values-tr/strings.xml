@@ -346,7 +346,6 @@
     <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="settings_apply_restart_required">Bu değişiklikleri uygulamak için lütfen uygulamayı yeniden başlatın</string>
-    <string name="find_similar">Benzerini bul</string>
     <string name="web_view_unavailable">WebView kullanılamıyor: WebView sağlayıcısının kurulu olup olmadığını kontrol edin</string>
     <string name="enable">Etkinleştir</string>
     <string name="no_thanks">Hayır teşekkürler</string>

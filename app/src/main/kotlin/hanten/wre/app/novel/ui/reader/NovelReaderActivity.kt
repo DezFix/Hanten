@@ -12,13 +12,17 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
@@ -34,6 +38,7 @@ import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.databinding.ActivityNovelReaderBinding
+import hanten.wre.app.databinding.DialogNovelSearchBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.Manga
@@ -44,6 +49,7 @@ import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -104,6 +110,11 @@ class NovelReaderActivity :
 	private var tts: TextToSpeech? = null
 	private var isTtsSpeaking = false
 	private var isTtsReady = false
+	private var searchDialog: AlertDialog? = null
+	private var searchStatusView: TextView? = null
+	private var searchJob: Job? = null
+	private var lastSearchQuery = ""
+	private var searchMatchCount = 0
 	@Volatile
 	private var defaultUserAgent: String? = null
 
@@ -240,6 +251,18 @@ class NovelReaderActivity :
 						}
 						return null
 					}
+					if (url.host == "hanten.local" && path == "/novel-font") {
+						val fontFile = readerSettings.customFontPath?.let(::File)
+						if (fontFile != null && fontFile.isFile) {
+							val mime = if (fontFile.extension.equals("otf", ignoreCase = true)) {
+								"font/otf"
+							} else {
+								"font/ttf"
+							}
+							return WebResourceResponse(mime, null, fontFile.inputStream())
+						}
+						return null
+					}
 					val epubParser = viewModel.getEpubParser()
 					if (epubParser != null && (url.scheme == "epub" || url.host == "futon.reader")) {
 						val cleanPath = path.removePrefix("/")
@@ -271,6 +294,9 @@ class NovelReaderActivity :
 				isWebViewReady = true
 				applyPendingBookmarkRestore()
 				applyAutoScrollState()
+				if (searchDialog?.isShowing == true && lastSearchQuery.isNotEmpty()) {
+					runSearch(lastSearchQuery)
+				}
 			}
 		}
 	}
@@ -366,6 +392,82 @@ class NovelReaderActivity :
 		)
 	}
 
+	private fun showSearchDialog() {
+		if (searchDialog?.isShowing == true) return
+		val dialogBinding = DialogNovelSearchBinding.inflate(layoutInflater)
+		val dialog = MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.novel_search)
+			.setView(dialogBinding.root)
+			.setNegativeButton(R.string.novel_search_previous, null)
+			.setPositiveButton(R.string.novel_search_next, null)
+			.setOnDismissListener {
+				searchJob?.cancel()
+				searchStatusView = null
+				searchDialog = null
+				lastSearchQuery = ""
+				searchMatchCount = 0
+				if (isWebViewReady) {
+					viewBinding.webView.evaluateJavascript("window.clearSearch();", null)
+				}
+			}
+			.create()
+		searchStatusView = dialogBinding.textSearchStatus
+		dialogBinding.editSearch.doAfterTextChanged { editable ->
+			val query = editable?.toString().orEmpty().trim()
+			lastSearchQuery = query
+			searchJob?.cancel()
+			if (query.isEmpty()) {
+				dialogBinding.textSearchStatus.text = ""
+				searchMatchCount = 0
+				if (isWebViewReady) {
+					viewBinding.webView.evaluateJavascript("window.clearSearch();", null)
+				}
+				return@doAfterTextChanged
+			}
+			searchJob = lifecycleScope.launch {
+				delay(SEARCH_DEBOUNCE_MS)
+				runSearch(query)
+			}
+		}
+		dialog.setOnShowListener {
+			dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener { findNext(false) }
+			dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener { findNext(true) }
+			dialogBinding.editSearch.requestFocus()
+		}
+		dialog.show()
+		searchDialog = dialog
+	}
+
+	private fun runSearch(query: String) {
+		if (!isWebViewReady) return
+		val quoted = org.json.JSONObject.quote(query)
+		viewBinding.webView.evaluateJavascript("window.searchText($quoted);") { result ->
+			if (lastSearchQuery != query) return@evaluateJavascript
+			val count = result?.trim()?.toIntOrNull() ?: 0
+			searchMatchCount = count
+			searchStatusView?.text = if (count > 0) {
+				getString(R.string.novel_search_results, 1, count)
+			} else {
+				getString(R.string.novel_search_no_results)
+			}
+		}
+	}
+
+	private fun findNext(forward: Boolean) {
+		if (lastSearchQuery.isEmpty() || searchMatchCount <= 0 || !isWebViewReady) return
+		val direction = if (forward) 1 else -1
+		viewBinding.webView.evaluateJavascript("window.searchNext($direction);") { result ->
+			val index = result?.trim()?.toIntOrNull() ?: -1
+			if (index >= 0) {
+				searchStatusView?.text = getString(
+					R.string.novel_search_results,
+					index + 1,
+					searchMatchCount,
+				)
+			}
+		}
+	}
+
 	private fun applyReaderColors() {
 		val background = readerSettings.effectiveBackgroundColor
 		val text = readerSettings.effectiveTextColor
@@ -387,6 +489,7 @@ class NovelReaderActivity :
 		viewBinding.buttonFontSettings.setOnClickListener {
 			NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
 		}
+		viewBinding.buttonSearch.setOnClickListener { showSearchDialog() }
 		viewBinding.buttonBookmark.setOnClickListener { toggleBookmark() }
 		viewBinding.buttonAutoScroll.setOnClickListener { toggleAutoScroll() }
 		viewBinding.buttonTts.setOnClickListener { toggleTts() }
@@ -429,7 +532,11 @@ class NovelReaderActivity :
 		viewModel.onChapterAppended.observeEvent(this) { (title, html, index) ->
 			val quotedTitle = org.json.JSONObject.quote(title)
 			val quotedHtml = org.json.JSONObject.quote(html)
-			viewBinding.webView.evaluateJavascript("appendChapter($quotedTitle, $quotedHtml, $index);", null)
+			viewBinding.webView.evaluateJavascript("appendChapter($quotedTitle, $quotedHtml, $index);") {
+				if (searchDialog?.isShowing == true && lastSearchQuery.isNotEmpty()) {
+					runSearch(lastSearchQuery)
+				}
+			}
 		}
 
 		viewModel.scrollProgress.observe(this) { percent ->
@@ -824,6 +931,7 @@ class NovelReaderActivity :
 
 	private companion object {
 		const val STATE_AUTO_SCROLL_ACTIVE = "novel_auto_scroll_active"
+		const val SEARCH_DEBOUNCE_MS = 250L
 		const val DEFAULT_USER_AGENT =
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 		val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".bmp")

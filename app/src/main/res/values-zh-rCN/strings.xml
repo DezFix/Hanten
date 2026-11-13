@@ -352,7 +352,6 @@
     <string name="show_on_shelf">在收藏中显示</string>
     <string name="comics_archive_import_description">可选择一个或多个 CBZ 或 ZIP 文件，每个文件都将识别为一个单独的漫画。</string>
     <string name="folder_with_images_import_description">可选择一个包含压缩包或图片的文件夹，每个压缩包 (或子文件夹) 都会被识别为一个章节。</string>
-    <string name="find_similar">搜索相似漫画</string>
     <string name="web_view_unavailable">WebView不可用：检查是否已安装WebView</string>
     <string name="sync_host_description">可使用自建同步服务器或默认同步服务器，若不知道有何用处请不要自行修改。</string>
     <string name="mirror_switching">自动选择镜像网址</string>

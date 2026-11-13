@@ -352,7 +352,6 @@
     <string name="speed">Bilis</string>
     <string name="comics_archive_import_description">Maaari kang pumili ng isa o higit pang .cbz o .zip file, ang bawat file ay makikilala bilang isang hiwalay na manga.</string>
     <string name="folder_with_images_import_description">Maaari kang pumili ng isang directory na may mga archive o mga larawan. Ang bawat archive (o subdirectory) ay makikilala bilang isang kabanata.</string>
-    <string name="find_similar">Maghanap ng katulad</string>
     <string name="sync_auth_hint">Maaari kang mag-sign in sa isang umiiral na account o lumikha ng bago</string>
     <string name="web_view_unavailable">Hindi available ang WebView: tingnan kung naka-install ang WebView provider</string>
     <string name="enable">Paganahin</string>

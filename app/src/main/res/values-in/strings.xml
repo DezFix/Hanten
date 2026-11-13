@@ -353,7 +353,6 @@
     <string name="speed">Kecepatan</string>
     <string name="show_on_shelf">Tampilkan di Rak</string>
     <string name="sync_auth_hint">Anda dapat masuk ke akun yang sudah ada atau membuat akun baru</string>
-    <string name="find_similar">Temukan serupa</string>
     <string name="server_address">Alamat server</string>
     <string name="downloads_wifi_only">Unduh hanya melalui Wi-Fi</string>
     <string name="downloads_cancelled">Unduhan telah dibatalkan</string>

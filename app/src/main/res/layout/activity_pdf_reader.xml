@@ -13,6 +13,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:clipToPadding="false"
+		android:paddingHorizontal="8dp"
 		android:scrollbars="vertical" />
 
 	<!-- Loading Spinner -->
@@ -105,6 +106,22 @@
 					android:textAppearance="?textAppearanceLabelMedium"
 					android:textColor="?colorOnSurfaceVariant"
 					tools:text="Page 1 / 45" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_toc"
+					style="?materialIconButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/novel_chapters_title"
+					app:icon="@drawable/ic_list" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_night"
+					style="?materialIconButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/pdf_night_mode"
+					app:icon="@drawable/ic_night" />
 
 			</LinearLayout>
 

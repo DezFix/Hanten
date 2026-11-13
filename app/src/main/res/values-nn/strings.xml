@@ -334,7 +334,6 @@
     <string name="text_history_holder_secondary">Finn lesnadar i sidemenyen.</string>
     <string name="screenshots_allow">Tillat</string>
     <string name="downloads_wifi_only">Hent berre på WiFi</string>
-    <string name="find_similar">Finn liknande</string>
     <string name="sort_order">Skiljingsrekkjefølgd</string>
     <string name="auth_not_supported_by">Innlogging på %s er ikkje stødd</string>
     <string name="sync_host_description">Du kan nytte ein sjølvhusa synkroniseringstenar, eller den vanlege. Om du er uviss, ikkje rør.</string>

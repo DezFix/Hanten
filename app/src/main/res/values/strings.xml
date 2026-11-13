@@ -993,6 +993,8 @@
     <string name="novel_line_spacing">Line Spacing</string>
     <string name="novel_paragraph_margin">Paragraph Spacing</string>
     <string name="novel_page_margin">Page Margins</string>
+    <string name="novel_hyphens">Hyphenation</string>
+    <string name="novel_settings_title">Text books</string>
     <string name="novel_text_color">Text Color</string>
     <string name="novel_background_color">Background Color</string>
     <string name="novel_alignment">Text Alignment</string>
@@ -1040,9 +1042,16 @@
     <string name="novel_error_loading_chapter">Unable to load chapter content. Check your network connection and try again.</string>
     <string name="pdf_page_title">Page %1$d</string>
     <string name="pdf_document_pages">PDF document, %1$d pages</string>
+    <string name="pdf_night_mode">Night mode for PDF</string>
     <string name="novel_tts">Read aloud</string>
     <string name="novel_tts_stop">Stop reading aloud</string>
     <string name="novel_tts_unavailable">Text-to-speech is not available for this language</string>
+    <string name="novel_search">Search in book</string>
+    <string name="novel_search_hint">Search text</string>
+    <string name="novel_search_no_results">No matches</string>
+    <string name="novel_search_results">%1$d of %2$d</string>
+    <string name="novel_search_previous">Previous</string>
+    <string name="novel_search_next">Next</string>
     <string name="novel_auto_scroll">Auto-scroll speed</string>
     <string name="novel_auto_scroll_off">Off</string>
     <string name="novel_auto_scroll_speed">%1$.1f screens/min</string>

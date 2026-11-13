@@ -216,4 +216,53 @@
 		android:title="@string/preload_pages"
 		app:useSimpleSummaryProvider="true" />
 
+	<PreferenceCategory
+		android:title="@string/novel_settings_title"
+		app:allowDividerAbove="true">
+
+		<ListPreference
+			android:defaultValue="CONTINUOUS_SCROLL"
+			android:entries="@array/novel_reading_modes"
+			android:entryValues="@array/values_novel_reading_modes"
+			android:key="novel_reading_mode"
+			android:title="@string/novel_reading_mode"
+			app:useSimpleSummaryProvider="true" />
+
+		<ListPreference
+			android:defaultValue="DARK"
+			android:entries="@array/novel_themes"
+			android:entryValues="@array/values_novel_themes"
+			android:key="novel_theme"
+			android:title="@string/theme"
+			app:useSimpleSummaryProvider="true" />
+
+		<ListPreference
+			android:defaultValue="serif"
+			android:entries="@array/novel_font_families"
+			android:entryValues="@array/values_novel_font_families"
+			android:key="novel_font_family"
+			android:title="@string/novel_font_family"
+			app:useSimpleSummaryProvider="true" />
+
+		<SeekBarPreference
+			android:defaultValue="18"
+			android:key="novel_font_size"
+			android:max="36"
+			android:title="@string/novel_font_size"
+			app:showSeekBarValue="true" />
+
+		<SeekBarPreference
+			android:defaultValue="18"
+			android:key="novel_page_margin"
+			android:max="48"
+			android:title="@string/novel_page_margin"
+			app:showSeekBarValue="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="novel_hyphens"
+			android:title="@string/novel_hyphens" />
+
+	</PreferenceCategory>
+
 </PreferenceScreen>

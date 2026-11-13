@@ -9,6 +9,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
+import androidx.preference.SeekBarPreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
@@ -71,6 +72,8 @@ class ReaderSettingsFragment :
 			summaryProvider = MultiSummaryProvider(R.string.disabled)
 		}
 		findPreference<SliderPreference>(AppSettings.KEY_WEBTOON_ZOOM_OUT)?.summaryProvider = PercentSummaryProvider()
+		findPreference<SeekBarPreference>("novel_font_size")?.min = 12
+		findPreference<SeekBarPreference>("novel_page_margin")?.min = 0
 		updateReaderModeDependency()
 		findPreference<EditTextPreference>(AppSettings.KEY_SMART_RESUME_PERCENTAGE)?.summaryProvider =
 			Preference.SummaryProvider<EditTextPreference> {

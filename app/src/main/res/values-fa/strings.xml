@@ -364,7 +364,6 @@
     <string name="speed">سرعت</string>
     <string name="show_on_shelf">نمایش در ققسه</string>
     <string name="sync_auth_hint">میتونی وارد یک اکانت بشی یا یک اکانت جدید بسازی</string>
-    <string name="find_similar">پیدا کردن مشابه</string>
     <string name="sync_settings">تنظیمات همگام سازی</string>
     <string name="server_address">آدرس سرور</string>
     <string name="sync_host_description">می‌توانید از یک سرور همگام‌سازی خود-میزبان یا یک سرور پیش‌فرض استفاده کنید. اگر مطمئن نیستید که چه کاری انجام می‌دهید، این را تغییر ندهید.</string>

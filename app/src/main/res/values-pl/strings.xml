@@ -331,7 +331,6 @@
     <string name="services">Usługi</string>
     <string name="nothing_here">Tutaj nic nie ma</string>
     <string name="scrobbling_empty_hint">By śledzić postęp w czytaniu, wybierz Menu → Śledź na ekranie detali mangi.</string>
-    <string name="find_similar">Znajdź podobne</string>
     <string name="user_agent">Nagłówek UserAgent</string>
     <string name="got_it">Rozumiem</string>
     <string name="settings_apply_restart_required">Uruchom ponownie aplikację by wprowadzić te zmiany</string>

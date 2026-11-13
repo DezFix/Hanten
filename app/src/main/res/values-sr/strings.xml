@@ -200,7 +200,6 @@
     <string name="moved_to_top">Премештено је на врх</string>
     <string name="text_feed_holder">Нова поглавља онога што читаш су приказана овде</string>
     <string name="text_suggestion_holder">Почните да читате мангу и добићете персонализоване предлоге</string>
-    <string name="find_similar">Пронађи сличне</string>
     <string name="show_notification_new_chapters_off">Нећеш добијати обавештења, али ће нова поглавља бити истакнута на листама</string>
     <string name="storage_usage">Коришћење складиштења</string>
     <string name="data_not_restored_text">Увери се да си изабрао исправну датотеку резервне копије</string>

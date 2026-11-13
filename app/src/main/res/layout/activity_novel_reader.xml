@@ -105,6 +105,14 @@
 					tools:text="Chapter 1 (45%)" />
 
 				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_search"
+					style="?materialIconButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/novel_search"
+					app:icon="@drawable/ic_search" />
+
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_chapters"
 					style="?materialIconButtonStyle"
 					android:layout_width="wrap_content"

@@ -164,4 +164,34 @@
 	<string-array name="values_github_mirrors" translatable="false">
         <item>KEIYOUSHI</item>
 	</string-array>
+	<string-array name="novel_themes" translatable="false">
+		<item>@string/novel_theme_dark</item>
+		<item>@string/novel_theme_light</item>
+		<item>@string/novel_theme_oled</item>
+		<item>@string/novel_theme_sepia</item>
+	</string-array>
+	<string-array name="values_novel_themes" translatable="false">
+		<item>DARK</item>
+		<item>LIGHT</item>
+		<item>OLED</item>
+		<item>SEPIA</item>
+	</string-array>
+	<string-array name="novel_reading_modes" translatable="false">
+		<item>@string/novel_scroll_continuous</item>
+		<item>@string/novel_scroll_paged</item>
+	</string-array>
+	<string-array name="values_novel_reading_modes" translatable="false">
+		<item>CONTINUOUS_SCROLL</item>
+		<item>PAGED</item>
+	</string-array>
+	<string-array name="novel_font_families" translatable="false">
+		<item>@string/novel_font_serif</item>
+		<item>@string/novel_font_sans_serif</item>
+		<item>@string/novel_font_monospace</item>
+	</string-array>
+	<string-array name="values_novel_font_families" translatable="false">
+		<item>serif</item>
+		<item>sans-serif</item>
+		<item>monospace</item>
+	</string-array>
 </resources>

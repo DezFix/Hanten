@@ -150,6 +150,11 @@ object NovelHtmlTemplate {
 					font-size: 1.3em;
 					opacity: 0.9;
 				}
+				mark.reader-search-hit {
+					background-color: #ffd54f;
+					color: #111111;
+					border-radius: 2px;
+				}
 			</style>
 		</head>
 		<body>
@@ -231,11 +236,23 @@ object NovelHtmlTemplate {
 					}
 					if (isPagedMode) {
 						const total = pageCount();
-						const cur = Math.min(total, currentPageIndex() + 1);
+						const pageIndex = currentPageIndex();
+						const cur = Math.min(total, pageIndex + 1);
 						if (window.AndroidNovelBridge) {
 							window.AndroidNovelBridge.onPageChanged(cur, total);
 						}
 						notifyProgress(info.percent);
+						// Preload the next chapter one spread before the end.
+						if (pageIndex >= total - 2) {
+							if (!isNearBottomNotified) {
+								isNearBottomNotified = true;
+								if (window.AndroidNovelBridge) {
+									window.AndroidNovelBridge.onNearBottom();
+								}
+							}
+						} else {
+							isNearBottomNotified = false;
+						}
 					} else {
 						notifyProgress(info.percent);
 						// Check near bottom (within 800px)
@@ -624,6 +641,101 @@ object NovelHtmlTemplate {
 					window.addEventListener('mousedown', pauseAutoScroll, { passive: true });
 				}
 
+				// In-book search: wrap matches in <mark> so both continuous and
+				// paged modes can scroll to them.
+				let searchHits = [];
+				let searchIndex = -1;
+
+				function clearSearch() {
+					const marks = document.querySelectorAll('mark.reader-search-hit');
+					for (let i = marks.length - 1; i >= 0; i--) {
+						const mark = marks[i];
+						const parent = mark.parentNode;
+						if (!parent) continue;
+						while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+						parent.removeChild(mark);
+						parent.normalize();
+					}
+					searchHits = [];
+					searchIndex = -1;
+				}
+
+				function searchTextNodes(root) {
+					const nodes = [];
+					const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+						acceptNode: function(node) {
+							if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+							const parent = node.parentNode;
+							if (!parent) return NodeFilter.FILTER_REJECT;
+							if (/^(SCRIPT|STYLE|MARK)$/.test(parent.nodeName)) return NodeFilter.FILTER_REJECT;
+							return NodeFilter.FILTER_ACCEPT;
+						}
+					});
+					while (walker.nextNode()) nodes.push(walker.currentNode);
+					return nodes;
+				}
+
+				function scrollToSearchHit() {
+					const hit = searchHits[searchIndex];
+					if (!hit) return -1;
+					if (isPagedMode) {
+						const container = document.getElementById('reader-container');
+						if (!container) return searchIndex;
+						const rect = hit.getBoundingClientRect();
+						const containerRect = container.getBoundingClientRect();
+						const offset = rect.left - containerRect.left + container.scrollLeft;
+						container.scrollLeft = Math.max(0, Math.floor(offset / pageStep) * pageStep);
+					} else {
+						hit.scrollIntoView({ block: 'center' });
+					}
+					return searchIndex;
+				}
+
+				function searchText(query) {
+					clearSearch();
+					const needle = String(query || '').trim().toLowerCase();
+					if (!needle) return 0;
+					const root = document.getElementById('content') || document.body;
+					const nodes = searchTextNodes(root);
+					for (let i = 0; i < nodes.length; i++) {
+						const node = nodes[i];
+						const text = node.nodeValue;
+						const lower = text.toLowerCase();
+						let index = lower.indexOf(needle);
+						if (index < 0) continue;
+						const fragment = document.createDocumentFragment();
+						let cursor = 0;
+						while (index >= 0) {
+							if (index > cursor) {
+								fragment.appendChild(document.createTextNode(text.slice(cursor, index)));
+							}
+							const mark = document.createElement('mark');
+							mark.className = 'reader-search-hit';
+							mark.textContent = text.slice(index, index + needle.length);
+							fragment.appendChild(mark);
+							searchHits.push(mark);
+							cursor = index + needle.length;
+							index = lower.indexOf(needle, cursor);
+						}
+						if (cursor < text.length) {
+							fragment.appendChild(document.createTextNode(text.slice(cursor)));
+						}
+						node.parentNode.replaceChild(fragment, node);
+					}
+					if (searchHits.length) {
+						searchIndex = 0;
+						scrollToSearchHit();
+					}
+					return searchHits.length;
+				}
+
+				function searchNext(direction) {
+					if (!searchHits.length) return -1;
+					const step = direction < 0 ? -1 : 1;
+					searchIndex = (searchIndex + step + searchHits.length) % searchHits.length;
+					return scrollToSearchHit();
+				}
+
 				window.restoreProgress = restoreProgress;
 				window.applySettings = updateStyles;
 				window.setSafeArea = setSafeArea;
@@ -636,6 +748,12 @@ object NovelHtmlTemplate {
 				window.startAutoScroll = startAutoScroll;
 				window.stopAutoScroll = stopAutoScroll;
 				window.turnPage = turnPage;
+				window.searchText = searchText;
+				window.searchNext = searchNext;
+				window.clearSearch = clearSearch;
+
+				// Restore the current search after an appended chapter or re-render
+				// is handled by the Android side, which re-runs the query.
 
 				assignParagraphIds();
 				relayoutPaged();

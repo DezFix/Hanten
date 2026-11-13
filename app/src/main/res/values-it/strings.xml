@@ -380,7 +380,6 @@
     <string name="server_address">Indirizzo server</string>
     <string name="content_type_comics">Fumetti</string>
     <string name="moved_to_top">Spostato in cima</string>
-    <string name="find_similar">Trova simili</string>
     <string name="data_not_restored_text">Assicurati di aver selezionato il file di backup corretto</string>
     <string name="catalog">Catalogo</string>
     <string name="welcome_text">Selezionare le fonti di contenuti da abilitare. Si può configurare anche successivamente nelle impostazioni</string>

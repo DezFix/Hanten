@@ -352,7 +352,6 @@
     <string name="comics_archive_import_description">Vous pouvez sélectionner un ou plusieurs fichiers .cbz ou .zip, chaque fichier sera reconnu comme un manga séparé.</string>
     <string name="show_on_shelf">Afficher sur l\'étagère</string>
     <string name="sources_reorder_tip">Appuyez sur un élément et maintenez-le enfoncé pour le réorganiser</string>
-    <string name="find_similar">Trouver des similaires</string>
     <string name="sync_auth_hint">Vous pouvez vous connecter à un compte existant ou en créer un nouveau</string>
     <string name="server_address">Adresse du serveur</string>
     <string name="sync_host_description">Vous pouvez utiliser un serveur de synchronisation autohébergé ou un serveur par défaut. Ne modifiez pas ce paramètre si vous n\'êtes pas sûr(e) de ce que vous faites.</string>

@@ -1,16 +1,20 @@
 package hanten.wre.app.novel.ui.reader
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import hanten.wre.app.R
 import hanten.wre.app.databinding.SheetNovelReaderConfigBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
+import java.io.File
 import java.util.Locale
 
 class NovelReaderConfigSheet : BottomSheetDialogFragment() {
@@ -24,6 +28,14 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 	private lateinit var currentSettings: NovelReaderSettings
 	private var callback: Callback? = null
+
+	private val pickFontLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+		if (_binding == null) return@registerForActivityResult
+		if (uri != null) {
+			importFont(uri)
+		}
+		bindCurrentSettings()
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -75,6 +87,7 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 			"serif" -> binding.chipFontSerif.isChecked = true
 			"sans-serif" -> binding.chipFontSans.isChecked = true
 			"monospace" -> binding.chipFontMono.isChecked = true
+			NovelReaderSettings.CUSTOM_FONT_FAMILY -> binding.chipFontCustom.isChecked = true
 			else -> binding.chipFontSerif.isChecked = true
 		}
 
@@ -133,6 +146,22 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 
 		binding.chipGroupFontFamily.setOnCheckedStateChangeListener { _, checkedIds ->
 			val newFont = when {
+				checkedIds.contains(R.id.chip_font_custom) -> {
+					if (currentSettings.customFontPath.isNullOrBlank()) {
+						pickFontLauncher.launch(
+							arrayOf(
+								"font/ttf",
+								"font/otf",
+								"application/x-font-ttf",
+								"application/x-font-opentype",
+								"application/octet-stream",
+							),
+						)
+						return@setOnCheckedStateChangeListener
+					}
+					NovelReaderSettings.CUSTOM_FONT_FAMILY
+				}
+
 				checkedIds.contains(R.id.chip_font_sans) -> "sans-serif"
 				checkedIds.contains(R.id.chip_font_mono) -> "monospace"
 				else -> "serif"
@@ -161,6 +190,34 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 			if (fromUser) {
 				binding.textAutoScrollValue.text = formatAutoScrollSpeed(value)
 				updateSettings { copy(autoScrollSpeed = value) }
+			}
+		}
+	}
+
+	private fun importFont(uri: Uri) {
+		val resolver = requireContext().contentResolver
+		val displayName = runCatching {
+			resolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+				if (cursor.moveToFirst()) cursor.getString(0) else null
+			}
+		}.getOrNull()
+		val extension = displayName
+			?.substringAfterLast('.', "")
+			?.lowercase(Locale.ROOT)
+			?.takeIf { it == "ttf" || it == "otf" }
+			?: "ttf"
+		val target = File(requireContext().filesDir, "novel_reader_font.$extension")
+		val copied = runCatching {
+			resolver.openInputStream(uri)?.use { input ->
+				target.outputStream().use { output -> input.copyTo(output) }
+			}
+		}.isSuccess && target.length() > 0
+		if (copied) {
+			updateSettings {
+				copy(
+					fontFamily = NovelReaderSettings.CUSTOM_FONT_FAMILY,
+					customFontPath = target.absolutePath,
+				)
 			}
 		}
 	}

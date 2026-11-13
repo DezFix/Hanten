@@ -1029,6 +1029,8 @@
     <string name="novel_line_spacing">Міжрядковий інтервал</string>
     <string name="novel_paragraph_margin">Відступ між абзацами</string>
     <string name="novel_page_margin">Поля сторінки</string>
+    <string name="novel_hyphens">Переноси слів</string>
+    <string name="novel_settings_title">Текстові книги</string>
     <string name="novel_text_color">Колір тексту</string>
     <string name="novel_background_color">Колір фону</string>
     <string name="novel_alignment">Вирівнювання тексту</string>
@@ -1104,9 +1106,16 @@
     <string name="novel_error_loading_chapter">Не вдалося завантажити розділ. Перевірте зʼєднання та повторіть.</string>
     <string name="pdf_page_title">Сторінка %1$d</string>
     <string name="pdf_document_pages">PDF-документ, сторінок: %1$d</string>
+    <string name="pdf_night_mode">Нічний режим PDF</string>
     <string name="novel_tts">Озвучити</string>
     <string name="novel_tts_stop">Зупинити озвучення</string>
     <string name="novel_tts_unavailable">Озвучення для цієї мови недоступне</string>
+    <string name="novel_search">Пошук по книзі</string>
+    <string name="novel_search_hint">Текст для пошуку</string>
+    <string name="novel_search_no_results">Збігів немає</string>
+    <string name="novel_search_results">%1$d з %2$d</string>
+    <string name="novel_search_previous">Назад</string>
+    <string name="novel_search_next">Далі</string>
     <string name="novel_offline_title">Офлайн-читання</string>
     <string name="novel_offline_cached_chapters">Кешовано %1$d з %2$d розділів</string>
     <string name="novel_offline_no_chapters">У цієї новели поки немає розділів.</string>

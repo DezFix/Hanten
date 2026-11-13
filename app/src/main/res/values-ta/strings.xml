@@ -158,7 +158,6 @@
     <string name="settings_apply_restart_required">இந்த மாற்றங்களைப் பயன்படுத்த விண்ணப்பத்தை மறுதொடக்கம் செய்யுங்கள்</string>
     <string name="show_on_shelf">அலமாரியில் காட்டு</string>
     <string name="sync_auth_hint">நீங்கள் ஏற்கனவே இருக்கும் கணக்கில் உள்நுழையலாம் அல்லது புதிய ஒன்றை உருவாக்கலாம்</string>
-    <string name="find_similar">ஒத்ததைக் கண்டறியவும்</string>
     <string name="error_occurred">பிழை ஏற்பட்டது</string>
     <string name="network_error">பிணைய பிழை</string>
     <string name="details">விவரங்கள்</string>

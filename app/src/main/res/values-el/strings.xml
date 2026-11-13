@@ -277,7 +277,6 @@
     <string name="comics_archive_import_description">Μπορείς να επιλέξεις ένα ή περισσότερα .cbz ή .zip αρχεία, κάθε ένα θα αναγνωρίζεται ως ξεχωριστό manga.</string>
     <string name="speed">Ταχύτητα</string>
     <string name="show_on_shelf">Εμφάνιση στο Ράφι</string>
-    <string name="find_similar">Βρες παρόμοια</string>
     <string name="ignore_ssl_errors">Αγνόησε σφάλματα SSL</string>
     <string name="no_thanks">Όχι ευχαριστώ</string>
     <string name="cancel_all_downloads_confirm">Όλες οι τρέχουσες λήψεις θα ακυρωθούν, και δεδομένα που έχουν ληφθεί μερικώς θα χαθούν</string>

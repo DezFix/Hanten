@@ -1,9 +1,12 @@
 package hanten.wre.app.novel.ui.reader.pdf
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.davemorrissey.labs.subscaleview.ImageSource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +21,7 @@ import hanten.wre.app.novel.data.pdf.PdfRendererHelper
 class PdfPageAdapter(
 	private val scope: CoroutineScope,
 	private val getPdfHelper: () -> PdfRendererHelper?,
+	private val isNightMode: () -> Boolean = { false },
 	private val onPageClick: (() -> Unit)? = null,
 ) : RecyclerView.Adapter<PdfPageAdapter.PageViewHolder>() {
 
@@ -38,8 +42,12 @@ class PdfPageAdapter(
 	}
 
 	override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
-		val targetWidth = holder.itemView.resources.displayMetrics.widthPixels.takeIf { it > 0 } ?: 1080
-		holder.bind(position, getPdfHelper(), targetWidth)
+		val metrics = holder.itemView.resources.displayMetrics
+		val recycler = holder.itemView.parent as? RecyclerView
+		val availableWidth = (recycler?.width ?: metrics.widthPixels) -
+			(recycler?.paddingLeft ?: 0) - (recycler?.paddingRight ?: 0)
+		val targetWidth = availableWidth.takeIf { it > 0 } ?: metrics.widthPixels
+		holder.bind(position, getPdfHelper(), targetWidth, isNightMode())
 	}
 
 	override fun onViewRecycled(holder: PageViewHolder) {
@@ -56,11 +64,11 @@ class PdfPageAdapter(
 			}
 		}
 
-		fun bind(position: Int, helper: PdfRendererHelper?, targetWidth: Int) {
+		fun bind(position: Int, helper: PdfRendererHelper?, targetWidth: Int, nightMode: Boolean) {
 			loadJob?.cancel()
-			binding.imageViewPage.setImageBitmap(null)
-			val estimatedHeight = (targetWidth * 1.4f).toInt()
-			binding.root.minimumHeight = estimatedHeight
+			binding.imageViewPage.recycle()
+			binding.imageViewPage.colorFilter = if (nightMode) NIGHT_FILTER else null
+			binding.imageViewPage.minimumHeight = (targetWidth * 1.4f).toInt()
 
 			if (helper == null) {
 				binding.progressBarPage.isVisible = false
@@ -82,8 +90,12 @@ class PdfPageAdapter(
 				if (isActive) {
 					binding.progressBarPage.isVisible = false
 					if (bitmap != null) {
-						binding.root.minimumHeight = 0
-						binding.imageViewPage.setImageBitmap(bitmap)
+						binding.imageViewPage.minimumHeight = 0
+						val height = (targetWidth.toFloat() * bitmap.height / bitmap.width)
+							.toInt()
+							.coerceAtLeast(1)
+						binding.imageViewPage.updateHeight(height)
+						binding.imageViewPage.setImage(ImageSource.bitmap(bitmap))
 					}
 				}
 			}
@@ -92,8 +104,29 @@ class PdfPageAdapter(
 		fun recycle() {
 			loadJob?.cancel()
 			loadJob = null
-			binding.imageViewPage.setImageBitmap(null)
+			binding.imageViewPage.recycle()
 			binding.progressBarPage.isVisible = false
 		}
+	}
+
+	private fun android.view.View.updateHeight(height: Int) {
+		val params = layoutParams ?: return
+		if (params.height != height) {
+			params.height = height
+			layoutParams = params
+		}
+	}
+
+	private companion object {
+		val NIGHT_FILTER = ColorMatrixColorFilter(
+			ColorMatrix(
+				floatArrayOf(
+					-1f, 0f, 0f, 0f, 255f,
+					0f, -1f, 0f, 0f, 255f,
+					0f, 0f, -1f, 0f, 255f,
+					0f, 0f, 0f, 1f, 0f,
+				),
+			),
+		)
 	}
 }

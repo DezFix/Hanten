@@ -1057,6 +1057,8 @@
     <string name="novel_line_spacing">Межстрочный интервал</string>
     <string name="novel_paragraph_margin">Отступ между абзацами</string>
     <string name="novel_page_margin">Поля страницы</string>
+    <string name="novel_hyphens">Переносы слов</string>
+    <string name="novel_settings_title">Текстовые книги</string>
     <string name="novel_text_color">Цвет текста</string>
     <string name="novel_background_color">Цвет фона</string>
     <string name="novel_alignment">Выравнивание текста</string>
@@ -1107,9 +1109,16 @@
     <string name="novel_error_loading_chapter">Не удалось загрузить главу. Проверьте соединение и повторите.</string>
     <string name="pdf_page_title">Страница %1$d</string>
     <string name="pdf_document_pages">PDF-документ, страниц: %1$d</string>
+    <string name="pdf_night_mode">Ночной режим PDF</string>
     <string name="novel_tts">Озвучить</string>
     <string name="novel_tts_stop">Остановить озвучку</string>
     <string name="novel_tts_unavailable">Озвучка для этого языка недоступна</string>
+    <string name="novel_search">Поиск по книге</string>
+    <string name="novel_search_hint">Текст для поиска</string>
+    <string name="novel_search_no_results">Совпадений нет</string>
+    <string name="novel_search_results">%1$d из %2$d</string>
+    <string name="novel_search_previous">Назад</string>
+    <string name="novel_search_next">Далее</string>
     <string name="novel_auto_scroll">Скорость автопрокрутки</string>
     <string name="novel_auto_scroll_off">Выкл.</string>
     <string name="novel_auto_scroll_speed">%1$.1f экр./мин</string>

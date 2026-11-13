@@ -377,7 +377,6 @@
     <string name="comics_archive_import_description">Választhatsz egy vagy több .cbz vagy .zip fájlt, minden egyes fájlt külön manga-ként fog felismerni.</string>
     <string name="speed">Sebesség</string>
     <string name="sync_auth_hint">Bejelentkezhetsz egy meglévő fiókba vagy létrehozhatsz egy újat</string>
-    <string name="find_similar">Hasonló keresése</string>
     <string name="sync_settings">Szinkronizációs beállítások</string>
     <string name="server_address">Szerver cím</string>
     <string name="folder_with_images_import_description">Választhatsz egy mappát archívumokkal vagy képekkel. Minden egyes archívum (vagy almappa) egy-egy fejezetként lesz felismerve.</string>
