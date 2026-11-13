@@ -2,6 +2,8 @@ package hanten.wre.app.novel.ui.reader
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -99,6 +101,9 @@ class NovelReaderActivity :
 	private var safeBottomPx = 0
 	private var systemTopInset = 0
 	private var systemBottomInset = 0
+	private var tts: TextToSpeech? = null
+	private var isTtsSpeaking = false
+	private var isTtsReady = false
 	@Volatile
 	private var defaultUserAgent: String? = null
 
@@ -117,6 +122,7 @@ class NovelReaderActivity :
 
 		setupWebView()
 		setupControls()
+		setupTts()
 		applyReaderColors()
 		observeViewModel()
 		screenOrientationHelper.applySettings()
@@ -133,6 +139,10 @@ class NovelReaderActivity :
 	}
 
 	override fun onPause() {
+		if (isTtsSpeaking) {
+			tts?.stop()
+			setTtsSpeaking(false)
+		}
 		viewModel.onPause()
 		super.onPause()
 	}
@@ -151,6 +161,9 @@ class NovelReaderActivity :
 
 	override fun onDestroy() {
 		bookmarkJob?.cancel()
+		tts?.stop()
+		tts?.shutdown()
+		tts = null
 		viewBinding.webView.destroy()
 		super.onDestroy()
 	}
@@ -286,6 +299,73 @@ class NovelReaderActivity :
 		}
 	}
 
+	private fun setupTts() {
+		tts = TextToSpeech(this) { status ->
+			isTtsReady = status == TextToSpeech.SUCCESS
+			if (isTtsReady) {
+				tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+					override fun onStart(utteranceId: String?) = Unit
+
+					override fun onDone(utteranceId: String?) {
+						if (utteranceId == "novel-last") {
+							runOnUiThread { setTtsSpeaking(false) }
+						}
+					}
+
+					@Deprecated("Deprecated in Java")
+					override fun onError(utteranceId: String?) {
+						runOnUiThread { setTtsSpeaking(false) }
+					}
+				})
+			}
+		}
+	}
+
+	private fun toggleTts() {
+		val engine = tts
+		if (engine == null || !isTtsReady) {
+			Toast.makeText(this, R.string.novel_tts_unavailable, Toast.LENGTH_SHORT).show()
+			return
+		}
+		if (isTtsSpeaking) {
+			engine.stop()
+			setTtsSpeaking(false)
+			return
+		}
+		val language = Locale.forLanguageTag(contentLanguage())
+		val availability = engine.isLanguageAvailable(language)
+		if (availability == TextToSpeech.LANG_MISSING_DATA || availability == TextToSpeech.LANG_NOT_SUPPORTED) {
+			Toast.makeText(this, R.string.novel_tts_unavailable, Toast.LENGTH_SHORT).show()
+			return
+		}
+		engine.language = language
+		viewBinding.webView.evaluateJavascript(
+			"(function(){var e=document.getElementById('content')||document.body;return e?e.innerText:'';})()",
+		) { result ->
+			val text = runCatching {
+				org.json.JSONTokener(result).nextValue() as? String
+			}.getOrNull().orEmpty().trim()
+			if (text.isEmpty()) {
+				Toast.makeText(this, R.string.novel_error_loading_chapter, Toast.LENGTH_SHORT).show()
+				return@evaluateJavascript
+			}
+			val chunks = text.chunked(3000)
+			chunks.forEachIndexed { index, chunk ->
+				val id = if (index == chunks.lastIndex) "novel-last" else "novel-$index"
+				engine.speak(chunk, if (index == 0) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD, null, id)
+			}
+			setTtsSpeaking(true)
+		}
+	}
+
+	private fun setTtsSpeaking(value: Boolean) {
+		isTtsSpeaking = value
+		viewBinding.buttonTts.setIconResource(if (value) R.drawable.ic_action_pause else R.drawable.ic_play)
+		viewBinding.buttonTts.setContentDescriptionAndTooltip(
+			if (value) R.string.novel_tts_stop else R.string.novel_tts,
+		)
+	}
+
 	private fun applyReaderColors() {
 		val background = readerSettings.effectiveBackgroundColor
 		val text = readerSettings.effectiveTextColor
@@ -309,6 +389,7 @@ class NovelReaderActivity :
 		}
 		viewBinding.buttonBookmark.setOnClickListener { toggleBookmark() }
 		viewBinding.buttonAutoScroll.setOnClickListener { toggleAutoScroll() }
+		viewBinding.buttonTts.setOnClickListener { toggleTts() }
 
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)

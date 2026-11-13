@@ -9,7 +9,6 @@ import hanten.wre.app.backups.data.model.CategoryBackup
 import hanten.wre.app.backups.data.model.FavouriteBackup
 import hanten.wre.app.backups.data.model.HistoryBackup
 import hanten.wre.app.backups.data.model.MangaBackup
-import hanten.wre.app.backups.data.model.RelationBackup
 import hanten.wre.app.backups.data.model.ScrobblingBackup
 import hanten.wre.app.backups.data.model.SourceBackup
 import hanten.wre.app.backups.data.model.StatisticBackup
@@ -142,11 +141,6 @@ class BackupRepository @Inject constructor(
                     )
                 }
 
-                BackupSection.RELATIONS -> output.writeJsonArray(
-                    section = BackupSection.RELATIONS,
-                    data = database.getMangaRelationsDao().findAll().asFlow().map { RelationBackup(it) },
-                    serializer = serializer(),
-                )
             }
             progress?.emit(commonProgress)
             commonProgress++
@@ -214,10 +208,6 @@ class BackupRepository @Inject constructor(
                         .restoreWithoutTransaction {
                             savedFiltersRepository.save(it)
                         }
-
-                    BackupSection.RELATIONS -> input.readJsonArray<RelationBackup>(serializer()).restoreToDb {
-                        getMangaRelationsDao().insert(it.toEntity())
-                    }
 
                     null -> CompositeResult.EMPTY // skip unknown entries
                 }
