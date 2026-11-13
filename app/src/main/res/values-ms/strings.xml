@@ -428,7 +428,6 @@
     <string name="description">Penerangan</string>
     <string name="this_month">Bulan ini</string>
     <string name="voice_search">Carian suara</string>
-    <string name="related_manga">Manga yang berkaitan</string>
     <string name="color_light">Cahaya</string>
     <string name="color_dark">Gelap</string>
     <string name="color_white">Putih</string>
@@ -450,7 +449,6 @@
     <string name="disable_nsfw">Lumpuhkan NSFW</string>
     <string name="too_many_requests_message">Terlalu banyak permintaan. Cuba lagi kemudian</string>
     <string name="too_many_requests_message_retry">Terlalu banyak permintaan. Cuba lagi selepas %s</string>
-    <string name="related_manga_summary">Tunjukkan senarai manga yang berkaitan. Dalam beberapa kes, ia mungkin tidak tepat atau hilang</string>
     <string name="main_screen_sections">Bahagian skrin utama</string>
     <string name="items_limit_exceeded">Tidak ada lagi item yang boleh ditambah</string>
     <string name="to_top">Ke atas</string>

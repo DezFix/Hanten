@@ -426,7 +426,6 @@
     <string name="languages">Sprachen</string>
     <string name="unknown">Unbekannt</string>
     <string name="in_progress">In Arbeit</string>
-    <string name="related_manga">Verwandte Manga</string>
     <string name="clear_source_cookies_summary">Cookies nur für bestimmte Domain löschen. In den meisten Fällen wird die Genehmigung ungültig</string>
     <string name="catalog">Katalog</string>
     <string name="manage_sources">Quellen verwalten</string>
@@ -491,7 +490,6 @@
     <string name="online_variant">Online-Variante</string>
     <string name="keep_screen_on_summary">Bildschirm nicht ausschalten, während du Manga liest</string>
     <string name="default_tab">Standard-Reiter</string>
-    <string name="related_manga_summary">Zeige eine Liste ähnlicher Manga. Diese kann in einigen Fällen ungenau sein oder fehlen</string>
     <string name="grayscale">Graustufen</string>
     <string name="globally">Global</string>
     <string name="this_manga">Dieses Manga</string>

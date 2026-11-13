@@ -405,7 +405,6 @@
     <string name="progress">İlerleme</string>
     <string name="error_corrupted_file">Geçersiz veri alındı veya dosya bozuk</string>
     <string name="pick_custom_directory">Özel konum seçin</string>
-    <string name="related_manga_summary">İlgili mangaların bir listesini göster. Bazı durumlarda yanlış veya eksik olabilir</string>
     <string name="reader_zoom_buttons_summary">Sağ alt köşede yakınlaştırma kontrol düğmelerini gösterir</string>
     <string name="tracker_wifi_only_summary">Tarifeli ağ bağlantılarını kullanarak yeni bölümleri kontrol etmeyin</string>
     <string name="order_added">Eklendi</string>
@@ -430,7 +429,6 @@
     <string name="advanced">Gelişmiş</string>
     <string name="color_dark">Koyu</string>
     <string name="too_many_requests_message">Çok fazla istek. Daha sonra tekrar deneyin</string>
-    <string name="related_manga">İlgili manga</string>
     <string name="state_abandoned">Bırakıldı</string>
     <string name="download_option_first_n_chapters">Önce %s</string>
     <string name="keep_screen_on">Ekranı açık tut</string>

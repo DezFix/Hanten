@@ -414,7 +414,6 @@
     <string name="description">Description</string>
     <string name="this_month">Ce mois-ci</string>
     <string name="voice_search">Recherche vocale</string>
-    <string name="related_manga">Mangas connexes</string>
     <string name="color_light">Clair</string>
     <string name="color_dark">Sombre</string>
     <string name="color_white">Blanc</string>
@@ -431,7 +430,6 @@
     <string name="in_progress">En cours</string>
     <string name="disable_nsfw">Désactiver le contenu explicite</string>
     <string name="too_many_requests_message">Trop de requêtes. Réessayez plus tard</string>
-    <string name="related_manga_summary">Afficher une liste de mangas connexes. Dans certains cas, elle peut être inexacte ou manquante</string>
     <string name="zoom_in">Agrandir</string>
     <string name="error_corrupted_file">Les données invalides sont retournées ou le fichier est corrompu</string>
     <string name="reader_zoom_buttons_summary">Pour afficher ou pas les boutons de commande de zoom dans le coin inférieur droit</string>

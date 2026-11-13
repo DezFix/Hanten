@@ -434,7 +434,6 @@
     <string name="description">Leírás</string>
     <string name="this_month">E hónap</string>
     <string name="voice_search">Hangkeresés</string>
-    <string name="related_manga">Hasonló manga</string>
     <string name="color_light">Világos</string>
     <string name="manage_categories">Kategóriák kezelése</string>
     <string name="progress">Haladás</string>
@@ -455,7 +454,6 @@
     <string name="suggestions_wifi_only_summary">Ne frissítsd a javaslatokat mérőhálózati kapcsolatokon keresztül</string>
     <string name="tracker_wifi_only_summary">Ne keress új fejezeteket mérőhálózati kapcsolatokon keresztü</string>
     <string name="search_hint">Írd be a manga címét, műfaját vagy forrásának nevét</string>
-    <string name="related_manga_summary">Mutasd a hasonló mangák listáját. Néhány esetben ez pontatlan vagy hiányos lehet</string>
     <string name="error_corrupted_file">Érvénytelen adatok érkeztek vissza, vagy a fájl sérült</string>
     <string name="to_top">Tetejére</string>
     <string name="moved_to_top">Átlépve a tetejére</string>

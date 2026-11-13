@@ -418,7 +418,6 @@
     <string name="progress">進捗状況</string>
     <string name="order_added">追加</string>
     <string name="show">見せる</string>
-    <string name="related_manga">関連漫画</string>
     <string name="color_light">ライト</string>
     <string name="color_dark">ダーク</string>
     <string name="color_white">ホワイト</string>
@@ -430,7 +429,6 @@
     <string name="unknown">不明</string>
     <string name="in_progress">進行状況</string>
     <string name="error_corrupted_file">無効なデータが返されたか、ファイルが破損しています</string>
-    <string name="related_manga_summary">関連漫画のリストを表示します。場合によっては不正確または欠落している可能性があります</string>
     <string name="advanced">高度</string>
     <string name="too_many_requests_message">リクエストが多すぎます。 後でもう一度お試しください</string>
     <string name="manga_list">漫画一覧</string>

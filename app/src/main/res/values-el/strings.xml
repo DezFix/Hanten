@@ -357,7 +357,6 @@
     <string name="description">Περιγραφή</string>
     <string name="this_month">Αυτόν τον μήνα</string>
     <string name="voice_search">Φωνητική αναζήτηση</string>
-    <string name="related_manga">Σχετικά manga</string>
     <string name="color_light">Φωτεινό</string>
     <string name="color_white">Άσπρο</string>
     <string name="color_black">Μαύρο</string>
@@ -453,7 +452,6 @@
     <string name="data_not_restored_text">Βεβαιώσου πως έχεις επιλέξει το σωστό αντίγραφο ασφαλείας</string>
     <string name="tracker_wifi_only_summary">Να μην γίνεται έλεγχος για νέα κεφάλαια κατά την χρήση μετρημένων συνδέσεων δικτύου</string>
     <string name="unknown">Άγνωστο</string>
-    <string name="related_manga_summary">Εμφάνιση λίστας σχετικών manga. Υπάρχει το ενδεχόμενο ανακρίβειας ή πλήρους απώλειας</string>
     <string name="items_limit_exceeded">Δεν μπορούν να προστεθούν περαιτέρω στοιχεία</string>
     <string name="reader_optimize_summary">Μείωση της ποιότητας των άφαντων σελίδων για την μείωση της χρησιμοποιούμενης μνήμης</string>
     <string name="state">Κατάσταση</string>

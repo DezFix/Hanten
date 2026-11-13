@@ -412,7 +412,6 @@
     <string name="captcha_required_summary">%s requer que o captcha seja resolvido para funcionar corretamente</string>
     <string name="progress">Progresso</string>
     <string name="error_corrupted_file">Dados inválidos ou o arquivo está corrompido</string>
-    <string name="related_manga_summary">Mostra uma lista de mangás relacionados. Em alguns casos, ela pode estar incorreta ou ausente</string>
     <string name="reader_zoom_buttons_summary">Se deseja mostrar os botões de controle de zoom no canto inferior direito</string>
     <string name="tracker_wifi_only_summary">Não procurar por novos capítulos usando dados móveis</string>
     <string name="order_added">Adicionada</string>
@@ -433,7 +432,6 @@
     <string name="advanced">Avançado</string>
     <string name="color_dark">Escuro</string>
     <string name="too_many_requests_message">Muitas tentativas. Tente novamente mais tarde</string>
-    <string name="related_manga">Obra(s) relacionada(s)</string>
     <string name="suggestions_wifi_only_summary">Não atualizar as sugestões usando dados móveis</string>
     <string name="background">Fundo</string>
     <string name="zoom_out">Diminuir o zoom</string>

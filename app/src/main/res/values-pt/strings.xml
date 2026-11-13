@@ -409,7 +409,6 @@
     <string name="progress">Progresso</string>
     <string name="error_corrupted_file">São devolvidos dados inválidos ou o ficheiro está corrompido</string>
     <string name="pick_custom_directory">Escolher diretório personalizado</string>
-    <string name="related_manga_summary">Mostrar uma lista de mangas relacionadas. Em alguns casos, pode estar incorrecta ou em falta</string>
     <string name="reader_zoom_buttons_summary">Mostrar ou não os botões de controlo do zoom no canto inferior direito</string>
     <string name="tracker_wifi_only_summary">Não verificar a existência de novos capítulos utilizando ligações de rede com contador</string>
     <string name="order_added">Adicionado</string>
@@ -432,7 +431,6 @@
     <string name="advanced">Avançado</string>
     <string name="color_dark">Escuro</string>
     <string name="too_many_requests_message">Demasiados pedidos. Tentar novamente mais tarde</string>
-    <string name="related_manga">Mangá relacionado</string>
     <string name="suggestions_wifi_only_summary">Não atualizar sugestões utilizando ligações de rede com contador</string>
     <string name="background">Fundo</string>
     <string name="no_access_to_file">Não tem acesso a este ficheiro ou diretório</string>

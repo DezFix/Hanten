@@ -418,7 +418,6 @@
     <string name="description">توضیحات</string>
     <string name="this_month">این ماه</string>
     <string name="voice_search">جستجوی صوتی</string>
-    <string name="related_manga">مانگا های مرتبط</string>
     <string name="color_light">حالت روز</string>
     <string name="color_dark">حالت شب</string>
     <string name="color_white">سفید</string>
@@ -440,7 +439,6 @@
     <string name="disable_nsfw">غیر فعال سازی NSFW</string>
     <string name="too_many_requests_message">درخواست‌ها خیلی زیاد است. بعداً دوباره امتحان کنید</string>
     <string name="too_many_requests_message_retry">درخواست‌ها خیلی زیاد است. بعدا از %s دوباره تلاش کنید</string>
-    <string name="related_manga_summary">نمایش یک فهرست از مانگا های مرتبط. در برخی موارد ممکن است اشتباه یا ناقص باشد</string>
     <string name="advanced">پیشرفته</string>
     <string name="manga_list">مدیریت فهرست</string>
     <string name="error_corrupted_file">داده نامعتبر است یا پرونده خراب است</string>

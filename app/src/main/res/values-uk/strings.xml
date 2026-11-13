@@ -423,7 +423,6 @@
     <string name="order_added">Додано</string>
     <string name="show">Показати</string>
     <string name="voice_search">Голосовий пошук</string>
-    <string name="related_manga">Автоматичні зв\'язки</string>
     <string name="color_light">Світлий</string>
     <string name="color_white">Білий</string>
     <string name="manage_categories">Керування категоріями</string>
@@ -432,7 +431,6 @@
     <string name="unknown">Невідомий</string>
     <string name="in_progress">В процесі</string>
     <string name="disable_nsfw">Вимкнути NSFW</string>
-    <string name="related_manga_summary">Показувати продовження, пов\'язані твори та інші роботи автора на сторінці твору</string>
     <string name="too_many_requests_message">Занадто багато запитів. Спробуйте пізніше</string>
     <string name="advanced">Просунута</string>
     <string name="manga_list">Список манґи</string>
@@ -1096,11 +1094,6 @@
     <string name="novel_download_cancel">Скасувати завантаження</string>
     <string name="novel_download_started">Завантаження новели розпочато</string>
     <string name="novel_download_added">Новелу додано до завантажень</string>
-    <string name="series_prequel">Це продовження. Початок</string>
-    <string name="series_continuation">Продовження</string>
-    <string name="series_related">Пов\'язані</string>
-    <string name="series_same_author">Інші роботи автора</string>
-    <string name="series_part">частина %1$d</string>
     <string name="novel_no_chapters_found">У цієї новели немає розділів.</string>
     <string name="novel_error_loading_details">Не вдалося завантажити дані новели.</string>
     <string name="novel_error_loading_chapter">Не вдалося завантажити розділ. Перевірте зʼєднання та повторіть.</string>

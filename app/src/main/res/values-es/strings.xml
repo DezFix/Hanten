@@ -410,7 +410,6 @@
     <string name="description">Descripción</string>
     <string name="this_month">Este mes</string>
     <string name="voice_search">Buscar por voz</string>
-    <string name="related_manga">Manga relacionado</string>
     <string name="color_light">Claro</string>
     <string name="color_dark">Oscuro</string>
     <string name="color_white">Blanco</string>
@@ -431,7 +430,6 @@
     <string name="in_progress">En proceso</string>
     <string name="disable_nsfw">Desactivar NSFW</string>
     <string name="too_many_requests_message">Demasiadas solicitudes. Vuelve a intentarlo más tarde</string>
-    <string name="related_manga_summary">Muestra una lista de mangas relacionados. En algunos casos puede ser inexacta o faltar</string>
     <string name="advanced">Avanzado</string>
     <string name="manga_list">Lista de mangas</string>
     <string name="error_corrupted_file">Los datos que devuelve el archivo no son válidos o el archivo está dañado</string>

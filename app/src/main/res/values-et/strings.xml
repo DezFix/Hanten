@@ -17,7 +17,6 @@
     <string name="save">Salvesta</string>
     <string name="light_indicator">LED indikaator</string>
     <string name="no_chapters">Pole peatükke</string>
-    <string name="related_manga_summary">Näita seotud mangade nimekirja. Mõnel juhul võib see olla ebatäpne või puududa</string>
     <string name="theme_name_dynamic">Dünaamiline</string>
     <string name="text_clear_cookies_prompt">Teid logitakse välja kõikidest allikatest</string>
     <string name="clear_cookies">Tühjenda küpsisesd</string>
@@ -437,7 +436,6 @@
     <string name="download_option_all_chapters">Kõik peatükid %s tõlkega</string>
     <string name="no_access_to_file">Sul puudub ligipääs sellele failile või kaustale</string>
     <string name="voice_search">Häälotsing</string>
-    <string name="related_manga">Sarnane manga</string>
     <string name="pick_custom_directory">Vali enda eelistatud kaust</string>
     <string name="in_progress">Töös</string>
     <string name="suggestions_wifi_only_summary">Ära uuenda soovitusi mahupõhiste võrguühenduste puhul</string>

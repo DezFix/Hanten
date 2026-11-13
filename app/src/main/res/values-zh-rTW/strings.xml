@@ -412,7 +412,6 @@
     <string name="captcha_required_summary">%s 需要通過驗證碼才能正常工作</string>
     <string name="progress">進度</string>
     <string name="error_corrupted_file">無效的資料回傳或是檔案損毀</string>
-    <string name="related_manga_summary">顯示相關漫畫的清單。在某些情況下它也許不準確或缺失</string>
     <string name="reader_zoom_buttons_summary">是否在右下角顯示縮放控制按鈕</string>
     <string name="tracker_wifi_only_summary">使用計量付費網路連線時不檢查新章節</string>
     <string name="order_added">加入日期</string>
@@ -433,7 +432,6 @@
     <string name="advanced">進階</string>
     <string name="color_dark">深色</string>
     <string name="too_many_requests_message">請求次數太多。請稍後再試</string>
-    <string name="related_manga">相關的漫畫</string>
     <string name="keep_screen_on">維持螢幕開啟</string>
     <string name="suggestions_wifi_only_summary">使用計量付費網路連線時不更新推薦</string>
     <string name="enhanced_colors">32 位元色彩模式</string>

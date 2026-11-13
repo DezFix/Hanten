@@ -326,7 +326,6 @@
     <string name="download_option_next_unread_n_chapters">अगला अपठित %s</string>
     <string name="no_access_to_file">आपके पास इस फाइल या निर्देशिका तक कोई पहुंच नहीं है</string>
     <string name="voice_search">ध्वनि खोज</string>
-    <string name="related_manga">संबंधित मंगा</string>
     <string name="description">विवरण</string>
     <string name="this_month">इस महीने</string>
     <string name="background">पृष्ठभूमि</string>
@@ -417,7 +416,6 @@
     <string name="manage_categories">श्रेणी व्यवस्थित करें</string>
     <string name="downloaded">डाउनलोड किया गया</string>
     <string name="too_many_requests_message">बहुत सारे अनुरोध। बाद में पुन: प्रयास</string>
-    <string name="related_manga_summary">संबंधित मंगा की एक सूची दिखाएं। कुछ मामलों में यह गलत या गायब हो सकता है</string>
     <string name="pick_custom_directory">तदनुकूल डायरेक्टरी चुनें</string>
     <string name="default_webtoon_zoom_out">तयशुदा वेबटून जूम आउट</string>
     <string name="captcha_required_summary">%s को ठीक से काम करने के लिए कैप्चा को हल करने की आवश्यकता है</string>

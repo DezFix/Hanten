@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## Unreleased
+
+### Удалено
+- Автоматические подсказки о связях произведений: подбор по похожему
+  названию выдавал ложные совпадения. Удалены детектор, классификатор,
+  блок на странице произведения, настройка и строки. Ручные связи и их
+  хранение удалены ещё в 2.8.0.
+
 ## 2.8.0
 
 ### Добавлено

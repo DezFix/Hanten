@@ -284,7 +284,6 @@
     <string name="pick_custom_directory">Жеке каталогты таңдау</string>
     <string name="no_chapters">Тарау жоқ</string>
     <string name="list_options">Тізімді реттеу</string>
-    <string name="related_manga_summary">Байланыс маңга тізімін көрсету. Кейде тізім қате я мүлде болмауы мүмкін</string>
     <string name="remove_completed_downloads_confirm">Жүктеу тарихыңыз тазарады</string>
     <string name="theme_name_dynamic">Динамикалық</string>
     <string name="reader_zoom_buttons_summary">Ұлғайту батырмасын астыңғы оң жақта көрсету я көрсетпеу</string>
@@ -368,7 +367,6 @@
     <string name="downloads_wifi_only">Wi-Fi арқылы ғана жүктеу</string>
     <string name="cancel_all_downloads_confirm">Жүктеліп жатқанның бәрі жойылып, жартылай жүктелгендер жоғалып кетеді</string>
     <string name="by_relevance">Өзектілігі</string>
-    <string name="related_manga">Ұқсас маңга</string>
     <string name="discard">Сақтамау</string>
     <string name="saved_manga">Сақталған маңга</string>
     <string name="manga_error_description_pattern">Қате мәліметі:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1. Дереккөзде бар ма екенін тексеру үшін &lt;a href=%2$s&gt;маңганы уеб браузер арқылы&lt;/a&gt; ашып көріңіз&lt;br&gt;2. &lt;a href=hanten://about&gt;Hanten-ның ең соңғы нұсқасын&lt;/a&gt;&lt;br&gt;3 қолданып отырсыз ба, тексеріп көріңіз. Мүмкін болса: әзірлеушіге қате туралы шағып жіберіңіз.</string>

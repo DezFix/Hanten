@@ -422,7 +422,6 @@
     <string name="unknown">Nieznane</string>
     <string name="captcha_required_summary">Do poprawnego działania %s wymagana jest weryfikacja Captcha</string>
     <string name="error_corrupted_file">Zwracane są nieprawidłowe dane lub plik jest uszkodzony</string>
-    <string name="related_manga_summary">Pokaż listę podobnych mang. W niektórych przypadkach może być niedokładny lub brakować</string>
     <string name="tracker_wifi_only_summary">Nie sprawdzaj dostępności nowych partycji, jeśli korzystasz z ograniczonego połączenia internetowego</string>
     <string name="on_device">Na urządzeniu</string>
     <string name="data_not_restored_text">Upewnij się, że wybrałeś właściwy plik kopii zapasowej</string>
@@ -433,7 +432,6 @@
     <string name="search_hint">Wpisz tytuł mangi, gatunek lub nazwę źródła</string>
     <string name="main_screen_sections">Sekcje ekranu głównego</string>
     <string name="too_many_requests_message">Zbyt dużo próśb. Spróbuj ponownie później</string>
-    <string name="related_manga">Podobna manga</string>
     <string name="suggestions_wifi_only_summary">Nie aktualizuj rekomendacji, jeśli korzystasz z ograniczonego połączenia internetowego</string>
     <string name="manga_list">Lista mang</string>
     <string name="disable_nsfw">Wyłącz NSFW</string>

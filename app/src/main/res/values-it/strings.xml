@@ -357,7 +357,6 @@
     <string name="error_corrupted_file">Dati non validi in ritorno o file corrotto</string>
     <string name="pick_custom_directory">Seleziona cartella personalizzata</string>
     <string name="list_options">Mostra lista opzioni</string>
-    <string name="related_manga_summary">Mostra una lista di manga correlati. In alcuni casi potrebbe essere imprecisa o mancante</string>
     <string name="remove_completed_downloads_confirm">La tua cronologia dei download sarà permanentemente cancellata. I file scaricati non saranno cancellati</string>
     <string name="reader_zoom_buttons_summary">Se mostrare o no i tasti di controllo dello zoom in basso a destra</string>
     <string name="content_type_manga">Manga</string>
@@ -435,7 +434,6 @@
     <string name="lock_screen_rotation">Blocca rotazione schermo</string>
     <string name="cancel_all_downloads_confirm">Tutti i download attivi saranno annullati, i dati scaricati parzialmente saranno persi</string>
     <string name="by_relevance">Rilevanza</string>
-    <string name="related_manga">Manga correlati</string>
     <string name="state_abandoned">Abbandonato</string>
     <string name="download_option_first_n_chapters">Primo %s</string>
     <string name="keep_screen_on">Tieni schermo acceso</string>

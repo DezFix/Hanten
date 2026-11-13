@@ -479,7 +479,6 @@
     <string name="description">விவரம்</string>
     <string name="this_month">இந்த மாதம்</string>
     <string name="voice_search">குரல் தேடல்</string>
-    <string name="related_manga">தொடர்புடைய மங்கா</string>
     <string name="color_light">ஒளி</string>
     <string name="color_dark">இருண்ட</string>
     <string name="color_white">வெள்ளை</string>
@@ -501,7 +500,6 @@
     <string name="disable_nsfw">NSFW ஐ முடக்கு</string>
     <string name="too_many_requests_message">பல கோரிக்கைகள். பின்னர் மீண்டும் முயற்சிக்கவும்</string>
     <string name="too_many_requests_message_retry">பல கோரிக்கைகள். %s க்குப் பிறகு மீண்டும் முயற்சிக்கவும்</string>
-    <string name="related_manga_summary">தொடர்புடைய மங்காவின் பட்டியலைக் காட்டு. சில சந்தர்ப்பங்களில் இது துல்லியமாக அல்லது காணாமல் போகலாம்</string>
     <string name="advanced">மேம்பட்ட</string>
     <string name="manga_list">மங்கா பட்டியல்</string>
     <string name="error_corrupted_file">தவறான தரவு திரும்பப் பெறப்படுகிறது அல்லது கோப்பு சிதைந்துள்ளது</string>

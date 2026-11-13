@@ -394,7 +394,6 @@
     <string name="description">وصف</string>
     <string name="this_month">هذا الشهر</string>
     <string name="voice_search">البحث الصوتي</string>
-    <string name="related_manga">المانجا ذات الصلة</string>
     <string name="color_light">فاتح</string>
     <string name="color_dark">غامق</string>
     <string name="color_white">ابيض</string>
@@ -410,7 +409,6 @@
     <string name="order_added">تمت الإضافة</string>
     <string name="show">أعرض</string>
     <string name="unknown">مجهول</string>
-    <string name="related_manga_summary">عرض قائمة المانغا ذات الصلة. وفي بعض الحالات قد تكون غير دقيقة أو مفقودة</string>
     <string name="invert_colors">عكس الألوان</string>
     <string name="images_procy_description">استخدم خدمة wsrv.nl لتقليل استهلاك الانترنت وتسريع تحميل الصور إن أمكن</string>
     <string name="type">أكتب</string>

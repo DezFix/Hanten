@@ -422,7 +422,6 @@
     <string name="order_added">Idinagdag na</string>
     <string name="languages">Mga wika</string>
     <string name="voice_search">Paghahanap gamit ang boses</string>
-    <string name="related_manga">Kaugnay na manga</string>
     <string name="captcha_required_summary">Ang %s ay nangangailangan ng isang captcha upang malutas upang gumana nang maayos</string>
     <string name="manage_categories">Ayusin ang mga kategorya</string>
     <string name="suggestions_wifi_only_summary">Huwag i-update ang mga mungkahi gamit ang mga naka-metrong network na koneksyon</string>
@@ -431,7 +430,6 @@
     <string name="in_progress">Isinasagawa</string>
     <string name="disable_nsfw">Di paganahin ang NSFW</string>
     <string name="error_corrupted_file">Nabalik ang di-wastong data o na-corrupt ang file</string>
-    <string name="related_manga_summary">Magpakita ng listahan ng mga kaugnay na manga. Sa ilang mga kaso, ito ay maaaring may mali o nawawala</string>
     <string name="advanced">Advanced</string>
     <string name="too_many_requests_message">Masyadong maraming request. Subukang ulit mamaya</string>
     <string name="manga_list">Listahan ng Manga</string>

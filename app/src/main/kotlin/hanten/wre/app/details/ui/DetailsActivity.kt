@@ -4,11 +4,8 @@ import android.app.assist.AssistContent
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.SpannedString
-import android.text.TextPaint
-import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -76,7 +73,6 @@ import hanten.wre.app.core.util.ext.drawableStart
 import hanten.wre.app.core.util.ext.end
 import hanten.wre.app.core.util.ext.enqueueWith
 import hanten.wre.app.core.util.ext.getQuantityStringSafe
-import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.isTextTruncated
 import hanten.wre.app.core.util.ext.joinToStringWithLimit
@@ -92,8 +88,6 @@ import hanten.wre.app.databinding.ActivityDetailsBinding
 import hanten.wre.app.databinding.LayoutDetailsTableBinding
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
-import hanten.wre.app.details.domain.SeriesInfo
-import hanten.wre.app.details.domain.SeriesLink
 import hanten.wre.app.details.service.MangaPrefetchService
 import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.details.ui.model.HistoryInfo
@@ -189,7 +183,6 @@ class DetailsActivity :
 		viewModel.isLoading.observe(this, ::onLoadingStateChanged)
 		viewModel.scrobblingInfo.observe(this, ::onScrobblingInfoChanged)
 		viewModel.localSize.observe(this, ::onLocalSizeChanged)
-		viewModel.seriesInfo.observe(this, ::onSeriesInfoChanged)
 		viewModel.favouriteCategories.observe(this, ::onFavoritesChanged)
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.isStatsAvailable.observe(this, menuInvalidator)
@@ -375,58 +368,6 @@ class DetailsActivity :
 			infoBinding.textViewLocal.isVisible = true
 			infoBinding.textViewLocalLabel.isVisible = true
 		}
-	}
-
-	private fun onSeriesInfoChanged(info: SeriesInfo?) {
-		val textView = viewBinding.textViewSeriesInfo
-		if (info == null || info.isEmpty) {
-			textView.isGone = true
-			return
-		}
-		val text = SpannableStringBuilder()
-		fun appendLinks(labelRes: Int, links: List<SeriesLink>) {
-			if (links.isEmpty()) return
-			if (text.isNotEmpty()) text.append('\n')
-			text.append(getString(labelRes)).append(": ")
-			links.forEachIndexed { index, link ->
-				if (index > 0) text.append(", ")
-				val start = text.length
-				text.append('«').append(link.manga.title).append('»')
-				val part = link.part
-				if (part != null) {
-					text.append(" (").append(getString(R.string.series_part, part)).append(')')
-				}
-				text.setSpan(
-					object : ClickableSpan() {
-						override fun onClick(widget: View) {
-							router.openDetails(link.manga)
-						}
-
-						override fun updateDrawState(ds: TextPaint) {
-							ds.color = this@DetailsActivity.getThemeColor(
-								androidx.appcompat.R.attr.colorPrimary,
-								Color.LTGRAY,
-							)
-							ds.isUnderlineText = false
-						}
-					},
-					start,
-					text.length,
-					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
-				)
-			}
-		}
-		appendLinks(R.string.series_prequel, info.prequels)
-		appendLinks(R.string.series_continuation, info.continuations)
-		appendLinks(R.string.series_related, info.related)
-		appendLinks(R.string.series_same_author, info.sameAuthor)
-		if (text.isEmpty()) {
-			textView.isGone = true
-			return
-		}
-		textView.text = text
-		textView.movementMethod = LinkMovementMethodCompat.getInstance()
-		textView.isVisible = true
 	}
 
 	private fun onLoadingStateChanged(isLoading: Boolean) {

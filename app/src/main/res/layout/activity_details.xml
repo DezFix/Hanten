@@ -278,23 +278,6 @@
 					app:constraint_referenced_ids="recyclerView_scrobbling,textView_scrobbling_title,button_scrobbling_more"
 					tools:visibility="visible" />
 
-				<TextView
-					android:id="@+id/textView_series_info"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/margin_normal"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:autoLink="none"
-					android:lineSpacingMultiplier="1.2"
-					android:textAppearance="?attr/textAppearanceBodyMedium"
-					android:textColor="?colorOnSurfaceVariant"
-					android:visibility="gone"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling"
-					tools:text="Это продолжение. Начало: «Полярная ночь» (часть 1)"
-					tools:visibility="visible" />
-
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
 		</androidx.core.widget.NestedScrollView>

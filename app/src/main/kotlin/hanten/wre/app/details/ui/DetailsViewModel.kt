@@ -20,8 +20,6 @@ import hanten.wre.app.details.domain.DetailsInteractor
 import hanten.wre.app.details.domain.DetailsLoadUseCase
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.details.domain.ReadingTimeUseCase
-import hanten.wre.app.details.domain.SeriesDetector
-import hanten.wre.app.details.domain.SeriesInfo
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.model.MangaBranch
 import hanten.wre.app.details.ui.pager.ChaptersPagesViewModel
@@ -83,7 +81,6 @@ class DetailsViewModel @Inject constructor(
 	private val progressUpdateUseCase: ProgressUpdateUseCase,
 	private val readingTimeUseCase: ReadingTimeUseCase,
 	statsRepository: StatsRepository,
-	private val seriesDetector: SeriesDetector,
 	novelOfflineRepository: NovelOfflineRepository,
 	novelDownloadScheduler: NovelDownloadScheduler,
 ) : ChaptersPagesViewModel(
@@ -170,15 +167,6 @@ class DetailsViewModel @Inject constructor(
 	val scrobblingInfo: StateFlow<List<ScrobblingInfo>> = interactor.observeScrobblingInfo(mangaId)
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
-
-	val seriesInfo: StateFlow<SeriesInfo?> = manga.mapLatest { m ->
-		if (m == null || !settings.isRelatedMangaEnabled) {
-			null
-		} else {
-			seriesDetector.detect(m)
-		}
-	}.flowOn(Dispatchers.IO).withErrorHandling()
-		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, null)
 
 	val tags = manga.mapLatest {
 		mangaListMapper.mapTags(it?.tags.orEmpty())

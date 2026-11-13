@@ -447,7 +447,6 @@
     <string name="description">Description</string>
     <string name="this_month">This month</string>
     <string name="voice_search">Voice search</string>
-    <string name="related_manga">Automatic series hints</string>
     <string name="color_light">Light</string>
     <string name="color_dark">Dark</string>
     <string name="color_white">White</string>
@@ -469,7 +468,6 @@
     <string name="disable_nsfw">Disable NSFW</string>
     <string name="too_many_requests_message">Too many requests. Try again later</string>
     <string name="too_many_requests_message_retry">Too many requests. Try again after %s</string>
-    <string name="related_manga_summary">Show continuations, related works and other works by the author on the details screen</string>
     <string name="advanced">Advanced</string>
     <string name="manga_list">Manga list</string>
     <string name="error_corrupted_file">Invalid data is returned or file is corrupted</string>
@@ -1032,11 +1030,6 @@
     <string name="novel_download_cancel">Cancel download</string>
     <string name="novel_download_started">Novel download started</string>
     <string name="novel_download_added">Novel download added</string>
-    <string name="series_prequel">This is a sequel. Start with</string>
-    <string name="series_continuation">Continuation</string>
-    <string name="series_related">Related</string>
-    <string name="series_same_author">Other works by the author</string>
-    <string name="series_part">part %1$d</string>
     <string name="novel_no_chapters_found">No chapters found for this novel.</string>
     <string name="novel_error_loading_details">Error loading novel details.</string>
     <string name="novel_error_loading_chapter">Unable to load chapter content. Check your network connection and try again.</string>

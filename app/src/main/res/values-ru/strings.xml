@@ -409,7 +409,6 @@
     <string name="pick_custom_directory">Выбрать пользовательский каталог</string>
     <string name="this_month">Этот месяц</string>
     <string name="voice_search">Голосовой поиск</string>
-    <string name="related_manga">Автоматические связи</string>
     <string name="color_light">Светлый</string>
     <string name="color_dark">Тёмный</string>
     <string name="color_white">Белый</string>
@@ -431,7 +430,6 @@
     <string name="in_progress">В процессе</string>
     <string name="disable_nsfw">Отключить NSFW</string>
     <string name="too_many_requests_message">Слишком много запросов. Попробуйте повторить позже</string>
-    <string name="related_manga_summary">Показывать продолжения, связанные произведения и другие работы автора на странице произведения</string>
     <string name="advanced">Продвинутая</string>
     <string name="manga_list">Список манги</string>
     <string name="error_corrupted_file">Возвращаются неверные данные или файл поврежден</string>
@@ -1099,11 +1097,6 @@
     <string name="novel_download_cancel">Отменить загрузку</string>
     <string name="novel_download_started">Загрузка новеллы начата</string>
     <string name="novel_download_added">Новелла добавлена в загрузки</string>
-    <string name="series_prequel">Это продолжение. Начало</string>
-    <string name="series_continuation">Продолжение</string>
-    <string name="series_related">Связанные</string>
-    <string name="series_same_author">Другие работы автора</string>
-    <string name="series_part">часть %1$d</string>
     <string name="novel_no_chapters_found">У этой новеллы нет глав.</string>
     <string name="novel_error_loading_details">Не удалось загрузить данные новеллы.</string>
     <string name="novel_error_loading_chapter">Не удалось загрузить главу. Проверьте соединение и повторите.</string>

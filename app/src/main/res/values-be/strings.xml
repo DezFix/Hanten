@@ -410,7 +410,6 @@
     <string name="description">Апісанне</string>
     <string name="this_month">Гэты месяц</string>
     <string name="voice_search">Галасавы пошук</string>
-    <string name="related_manga">Падобная манга</string>
     <string name="color_light">Светлы</string>
     <string name="color_dark">Цёмны</string>
     <string name="color_white">Белы</string>
@@ -431,7 +430,6 @@
     <string name="in_progress">У працэсе</string>
     <string name="disable_nsfw">Адключыць NSFW</string>
     <string name="too_many_requests_message">Занадта шмат запытаў. Паўтарыце спробу пазней</string>
-    <string name="related_manga_summary">Паказаць спіс звязанай мангі. У некаторых выпадках ён можа быць недакладным або адсутнічаць</string>
     <string name="advanced">Прасунутая</string>
     <string name="manga_list">Спіс мангі</string>
     <string name="error_corrupted_file">Вяртаюцца няправільныя дадзеныя ці файл пашкоджаны</string>

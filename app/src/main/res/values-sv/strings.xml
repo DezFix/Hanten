@@ -417,9 +417,7 @@
     <string name="show_pages_numbers_summary">Visa sidnummer i skärmens nedre hörn</string>
     <string name="download_option_all_chapters">Alla kapitel med översättning %s</string>
     <string name="voice_search">Röstsökning</string>
-    <string name="related_manga">Relaterad manga</string>
     <string name="color_black">Svart</string>
-    <string name="related_manga_summary">Visa en lista över relaterade manga. I vissa fall kan den vara felaktig eller saknas</string>
     <string name="disable_nsfw">Inaktivera vuxeninnehåll</string>
     <string name="on_device">På enheten</string>
     <string name="directories">Mappar</string>

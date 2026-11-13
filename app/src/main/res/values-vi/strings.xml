@@ -403,7 +403,6 @@
     <string name="scrobbling_empty_hint">Để theo dõi tiến trình đọc, chọn Danh sách → Theo dõi trên màn hình chi tiết manga.</string>
     <string name="color_light">Sáng</string>
     <string name="color_dark">Tối</string>
-    <string name="related_manga">Truyện tranh liên quan</string>
     <string name="suggestions_wifi_only_summary">Không cập nhật đề xuất bằng kết nối mạng có đo lường</string>
     <string name="comics_archive">Từ tệp đã nén dữ liệu truyện</string>
     <string name="folder_with_images_import_description">Bạn có thể chọn một thư mục để làm kho lưu trữ / hình ảnh. Mỗi kho lưu trữ (hoặc thư mục con) sẽ được coi là một chương.</string>
@@ -483,7 +482,6 @@
     <string name="disable_nsfw">Vô hiệu hóa đối với NSFW</string>
     <string name="advanced">Nâng cao</string>
     <string name="error_corrupted_file">Dữ liệu trả lại không hợp lệ hoặc file đã bị hỏng</string>
-    <string name="related_manga_summary">Hiển thị danh sách manga có liên quan. Đôi khi có thể không có hoặc không liên quan</string>
     <string name="too_many_requests_message">Yêu cầu quá nhiều. Hãy thoát ra và vào lại ¯\\_(ツ)_/¯</string>
     <string name="on_device">Trên máy</string>
     <string name="main_screen_sections">Phần màn hình chính</string>

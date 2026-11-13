@@ -420,7 +420,6 @@
     <string name="disable_nsfw">Vypnout NSFW</string>
     <string name="this_month">Tento měsíc</string>
     <string name="voice_search">Hlasové vyhledávání</string>
-    <string name="related_manga">Související manga</string>
     <string name="color_light">Světlý</string>
     <string name="color_dark">Tmavý</string>
     <string name="color_white">Bílá</string>
@@ -432,7 +431,6 @@
     <string name="languages">Jazyky</string>
     <string name="unknown">Neznámé</string>
     <string name="too_many_requests_message">Příliš mnoho dotazů. Zkuste to později</string>
-    <string name="related_manga_summary">Zobrazí seznam souvisejících mang. V některých případech může být nepřesný nebo chybět</string>
     <string name="advanced">Pokročilý</string>
     <string name="manga_list">Seznam mang</string>
     <string name="main_screen_sections">Oddíly hlavní obrazovky</string>

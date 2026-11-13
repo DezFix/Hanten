@@ -411,14 +411,12 @@
     <string name="description">Deskripsi</string>
     <string name="manage_categories">Atur kategori</string>
     <string name="show">Tampilkan</string>
-    <string name="related_manga_summary">Tampilkan daftar manga terkait. Bisa jadi tidak akurat atau hilang</string>
     <string name="suggestions_wifi_only_summary">Jangan perbarui saran dengan koneksi jaringan internet terbatas</string>
     <string name="tracker_wifi_only_summary">Jangan perbarui bab baru dengan koneksi jaringan internet terbatas</string>
     <string name="search_hint">Masukkan judul, genre, atau nama sumber manga</string>
     <string name="progress">Progres</string>
     <string name="order_added">Ditambahkan</string>
     <string name="too_many_requests_message">Terlalu banyak permintaan. Coba lain kali</string>
-    <string name="related_manga">Manga terkait</string>
     <string name="this_month">Bulan ini</string>
     <string name="voice_search">Pencarian suara</string>
     <string name="color_dark">Gelap</string>

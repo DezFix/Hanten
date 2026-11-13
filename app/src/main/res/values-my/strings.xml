@@ -870,8 +870,6 @@
     
 <string name="voice_search">Voice search</string>
     
-<string name="related_manga">Related manga</string>
-    
 <string name="color_light">Light</string>
     
 <string name="color_dark">Dark</string>
@@ -913,8 +911,6 @@
 <string name="too_many_requests_message">Too many requests. Try again later</string>
     
 <string name="too_many_requests_message_retry">Too many requests. Try again after %s</string>
-    
-<string name="related_manga_summary">Show a list of related manga. In some cases it may be inaccurate or missing</string>
     
 <string name="advanced">Advanced</string>
     

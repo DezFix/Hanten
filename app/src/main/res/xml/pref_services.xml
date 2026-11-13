@@ -23,12 +23,6 @@
 		android:title="@string/suggestions"
 		app:allowDividerAbove="true" />
 
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="related_manga"
-		android:summary="@string/related_manga_summary"
-		android:title="@string/related_manga" />
-
 	<hanten.wre.app.settings.utils.SplitSwitchPreference
 		android:defaultValue="false"
 		android:key="stats_on"

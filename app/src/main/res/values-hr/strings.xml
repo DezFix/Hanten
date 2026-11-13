@@ -570,7 +570,6 @@
     <string name="no_access_to_file">Nemate pristup ovoj datoteci ili direktoriju</string>
     <string name="local_manga_directories">Lokalni direktoriji mange</string>
     <string name="voice_search">Glasovno pretraživanje</string>
-    <string name="related_manga">Povezana manga</string>
     <string name="color_dark">Tamna</string>
     <string name="color_black">Crna</string>
     <string name="data_not_restored">Podaci nisu vraćeni</string>
@@ -608,7 +607,6 @@
     <string name="migration_completed">Migracija dovršena</string>
     <string name="in_progress">U toku</string>
     <string name="disable_nsfw">Onemogući NSFW</string>
-    <string name="related_manga_summary">Prikaži popis povezanih mangi. U nekim slučajevima može biti netočan ili nedostajati</string>
     <string name="advanced">Napredno</string>
     <string name="backups_output_directory">Izlazni direktorij sigurnosne kopije</string>
     <string name="three_months">Tri mjeseca</string>
