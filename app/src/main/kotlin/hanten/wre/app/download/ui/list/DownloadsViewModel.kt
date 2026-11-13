@@ -19,6 +19,7 @@ import hanten.wre.app.core.util.ext.calculateTimeAgo
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.core.util.ext.isEmpty
 import hanten.wre.app.core.util.ext.printStackTraceDebug
+import hanten.wre.app.download.data.repository.DownloadQueueRepository
 import hanten.wre.app.download.domain.DownloadState
 import hanten.wre.app.download.ui.list.chapters.DownloadChapter
 import hanten.wre.app.download.ui.worker.DownloadWorker
@@ -77,6 +78,7 @@ class DownloadsViewModel @Inject constructor(
 	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
 	private val novelOfflineRepository: NovelOfflineRepository,
 	private val novelDownloadScheduler: NovelDownloadScheduler,
+	private val downloadQueueRepository: DownloadQueueRepository,
 	@ApplicationContext private val context: Context,
 	private val epubExporter: NovelEpubExporter,
 ) : BaseViewModel() {
@@ -146,12 +148,12 @@ class DownloadsViewModel @Inject constructor(
 		}
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, listOf(LoadingState))
 
-	val hasPausedWorks = works.map {
-		it?.any { x -> x.canResume } == true
+	val hasPausedWorks = combine(works, downloadQueueRepository.observeQueue()) { list, queue ->
+		list?.any { x -> x.canResume } == true || queue.any { it.isPaused }
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.WhileSubscribed(5000), false)
 
-	val hasActiveWorks = works.map {
-		it?.any { x -> x.canPause } == true
+	val hasActiveWorks = combine(works, novelWorks) { list, novels ->
+		list?.any { x -> x.canPause } == true || novels.isNotEmpty()
 	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.WhileSubscribed(5000), false)
 
 	val hasCancellableWorks = combine(works, novelWorks) { manga, novels ->
@@ -175,6 +177,7 @@ class DownloadsViewModel @Inject constructor(
 			for (item in novelItems.value) {
 				if (item.selectionId in ids) {
 					item.workId?.let(novelDownloadScheduler::cancel)
+					downloadQueueRepository.removeFromQueueByManga(item.mangaId)
 				}
 			}
 			onActionDone.call(ReversibleAction(R.string.downloads_cancelled, null))
@@ -190,51 +193,85 @@ class DownloadsViewModel @Inject constructor(
 	}
 
 	fun pause(ids: Set<Long>) {
-		val snapshot = works.value ?: return
-		for (work in snapshot) {
-			if (work.id.mostSignificantBits in ids) {
-				workScheduler.pause(work.id)
+		launchJob(Dispatchers.IO) {
+			val snapshot = works.value.orEmpty()
+			for (work in snapshot) {
+				if (work.id.mostSignificantBits in ids) {
+					workScheduler.pause(work.id)
+				}
 			}
-		}
-		onActionDone.call(ReversibleAction(R.string.downloads_paused, null))
-	}
-
-	fun pauseAll() {
-		val snapshot = works.value ?: return
-		var isPaused = false
-		for (work in snapshot) {
-			if (work.canPause) {
-				workScheduler.pause(work.id)
-				isPaused = true
+			for (item in novelItems.value) {
+				if (item.selectionId in ids && item.isActive) {
+					pauseNovelNow(item)
+				}
 			}
-		}
-		if (isPaused) {
 			onActionDone.call(ReversibleAction(R.string.downloads_paused, null))
 		}
 	}
 
-	fun resumeAll() {
-		val snapshot = works.value ?: return
-		var isResumed = false
-		for (work in snapshot) {
-			if (work.workState == WorkInfo.State.RUNNING && work.isPaused) {
-				workScheduler.resume(work.id)
-				isResumed = true
+	fun pauseAll() {
+		launchJob(Dispatchers.IO) {
+			var isPaused = false
+			for (work in works.value.orEmpty()) {
+				if (work.canPause) {
+					workScheduler.pause(work.id)
+					isPaused = true
+				}
+			}
+			for (item in novelItems.value) {
+				if (!item.isActive) continue
+				pauseNovelNow(item)
+				isPaused = true
+			}
+			if (isPaused) {
+				onActionDone.call(ReversibleAction(R.string.downloads_paused, null))
 			}
 		}
-		if (isResumed) {
-			onActionDone.call(ReversibleAction(R.string.downloads_resumed, null))
+	}
+
+	fun resumeAll() {
+		launchJob(Dispatchers.IO) {
+			var isResumed = false
+			for (work in works.value.orEmpty()) {
+				if (work.workState == WorkInfo.State.RUNNING && work.isPaused) {
+					workScheduler.resume(work.id)
+					isResumed = true
+				}
+			}
+			for (row in downloadQueueRepository.getQueue().filter { it.isPaused }) {
+				downloadQueueRepository.updatePaused(row.id, false)
+				isResumed = true
+			}
+			if (isResumed) {
+				onActionDone.call(ReversibleAction(R.string.downloads_resumed, null))
+			}
 		}
 	}
 
 	fun resume(ids: Set<Long>) {
-		val snapshot = works.value ?: return
-		for (work in snapshot) {
-			if (work.id.mostSignificantBits in ids) {
-				workScheduler.resume(work.id)
+		launchJob(Dispatchers.IO) {
+			for (work in works.value.orEmpty()) {
+				if (work.id.mostSignificantBits in ids) {
+					workScheduler.resume(work.id)
+				}
 			}
+			val selectedNovelIds = novelItems.value
+				.filter { it.selectionId in ids }
+				.mapTo(HashSet()) { it.mangaId }
+			for (row in downloadQueueRepository.getQueue()) {
+				if (row.mangaId in selectedNovelIds) {
+					downloadQueueRepository.updatePaused(row.id, false)
+				}
+			}
+			onActionDone.call(ReversibleAction(R.string.downloads_resumed, null))
 		}
-		onActionDone.call(ReversibleAction(R.string.downloads_resumed, null))
+	}
+
+	private suspend fun pauseNovelNow(item: NovelDownloadItemModel) {
+		val manga = item.manga
+			?: mangaDataRepository.findMangaById(item.mangaId, withChapters = true)
+			?: return
+		novelDownloadScheduler.pause(manga)
 	}
 
 	fun remove(ids: Set<Long>, deleteFiles: Boolean) {
