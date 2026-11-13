@@ -1,6 +1,8 @@
 package hanten.wre.app.novel.data.epub
 
 import android.util.Xml
+import org.jsoup.Jsoup
+import org.jsoup.parser.Parser
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import okio.FileSystem
 import okio.Path
@@ -39,6 +41,7 @@ class EpubParser(private val file: File) {
 			val manifest = mutableMapOf<String, ManifestItem>()
 			val spine = mutableListOf<String>()
 			var tocHref: String? = null
+			var navHref: String? = null
 
 			zipFs.read(opfPath) {
 				val parser = Xml.newPullParser().apply {
@@ -60,6 +63,9 @@ class EpubParser(private val file: File) {
 									manifest[id] = ManifestItem(id, href, mediaType, properties)
 									if (properties.contains("cover-image") || id.contains("cover", ignoreCase = true)) {
 										coverHref = resolveHref(opfDir, href)
+									}
+									if (properties.split(' ').contains("nav")) {
+										navHref = resolveHref(opfDir, href)
 									}
 								}
 								"itemref" -> {
@@ -96,6 +102,14 @@ class EpubParser(private val file: File) {
 				if (tocPath != null && zipFs.exists(tocPath)) {
 					zipFs.read(tocPath) {
 						parseTocNcx(inputStream(), tocTitles)
+					}
+				}
+			}
+			// EPUB 3 may ship only nav.xhtml and no NCX.
+			navHref?.toPath()?.let { navPath ->
+				if (tocTitles.isEmpty() && zipFs.exists(navPath)) {
+					zipFs.read(navPath) {
+						parseTocNav(readUtf8(), navPath.parent?.toString().orEmpty(), tocTitles)
 					}
 				}
 			}
@@ -177,6 +191,21 @@ class EpubParser(private val file: File) {
 				eventType = parser.next()
 			}
 			opfPath
+		}
+	}
+
+	private fun parseTocNav(html: String, dir: String, result: MutableMap<String, String>) {
+		try {
+			val document = Jsoup.parse(html, "", Parser.xmlParser())
+			for (link in document.select("nav a[href]")) {
+				val href = link.attr("href").substringBefore('#')
+				val title = link.text().trim()
+				if (href.isNotBlank() && title.isNotBlank()) {
+					result.putIfAbsent(resolveHref(dir.removePrefix("/"), href), title)
+				}
+			}
+		} catch (e: Exception) {
+			e.printStackTraceDebug()
 		}
 	}
 

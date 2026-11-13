@@ -132,7 +132,7 @@ class NovelReaderActivity :
 	}
 
 	override fun onPause() {
-		viewModel.saveReadingProgressNow()
+		viewModel.onPause()
 		super.onPause()
 	}
 
@@ -162,7 +162,8 @@ class NovelReaderActivity :
 			allowFileAccess = true
 			loadWithOverviewMode = false
 			useWideViewPort = false
-			textZoom = 100
+			// Respect the system font scale (accessibility) without breaking the reader zoom.
+			textZoom = (resources.configuration.fontScale * 100f).roundToInt()
 			displayZoomControls = false
 			builtInZoomControls = false
 			defaultUserAgent = userAgentString
@@ -200,6 +201,7 @@ class NovelReaderActivity :
 			onActiveChapter = { index ->
 				viewModel.onActiveChapter(index)
 			},
+			onAnchor = viewModel::onParagraphChanged,
 		)
 		viewBinding.webView.addJavascriptInterface(bridge, "AndroidNovelBridge")
 
@@ -463,6 +465,7 @@ class NovelReaderActivity :
 		} else {
 			viewModel.scrollProgress.value.coerceIn(0f, 1f)
 		}
+		val initialParagraph = if (bookmarkState != null) null else viewModel.consumeRestoredParagraph()
 		val fullDoc = NovelHtmlTemplate.buildDocument(
 			title = title,
 			initialChapterHtml = content,
@@ -473,6 +476,7 @@ class NovelReaderActivity :
 			density = resources.displayMetrics.density,
 			language = contentLanguage(),
 			chapterIndex = viewModel.currentChapterIndex.value,
+			initialParagraph = initialParagraph,
 		)
 		val chapterUrl = viewModel.currentChapter.value?.url?.substringBefore('#')
 		val isOnline = !chapterUrl.isNullOrEmpty() && (chapterUrl.startsWith("http://") || chapterUrl.startsWith("https://"))

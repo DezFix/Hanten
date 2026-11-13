@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaParserSource
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -33,6 +34,7 @@ class NovelEpubExporter @Inject constructor(
 		val chapters = manga.chapters.orEmpty()
 			.filter { offlineRepository.isChapterDownloaded(mangaId, it.id) }
 		if (chapters.isEmpty()) return@withContext false
+		val language = languageOf(manga)
 
 		val documents = ArrayList<Pair<String, String>>(chapters.size)
 		val images = LinkedHashMap<File, String>()
@@ -48,10 +50,10 @@ class NovelEpubExporter @Inject constructor(
 			ZipOutputStream(BufferedOutputStream(FileOutputStream(temp))).use { zip ->
 				writeMimetype(zip)
 				zip.putText("META-INF/container.xml", CONTAINER)
-				zip.putText("OEBPS/content.opf", buildOpf(manga, documents.size, images.values))
-				zip.putText("OEBPS/nav.xhtml", buildNav(documents))
+				zip.putText("OEBPS/content.opf", buildOpf(manga, documents.size, images.values, language))
+				zip.putText("OEBPS/nav.xhtml", buildNav(documents, language))
 				documents.forEachIndexed { index, (title, body) ->
-					zip.putText("OEBPS/ch$index.xhtml", buildChapter(title, body))
+					zip.putText("OEBPS/ch$index.xhtml", buildChapter(title, body, language))
 				}
 				images.forEach { (file, name) ->
 					zip.putNextEntry(ZipEntry("OEBPS/images/$name"))
@@ -110,9 +112,9 @@ class NovelEpubExporter @Inject constructor(
 		closeEntry()
 	}
 
-	private fun buildChapter(title: String, body: String): String = """
+	private fun buildChapter(title: String, body: String, language: String): String = """
 		<?xml version="1.0" encoding="utf-8"?>
-		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$LANGUAGE">
+		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$language">
 		<head><title>${escapeXml(title)}</title>
 		<style>
 			body { font-family: serif; line-height: 1.6; margin: 1em; }
@@ -128,13 +130,13 @@ class NovelEpubExporter @Inject constructor(
 		</html>
 	""".trimIndent()
 
-	private fun buildNav(documents: List<Pair<String, String>>): String {
+	private fun buildNav(documents: List<Pair<String, String>>, language: String): String {
 		val items = documents.mapIndexed { index, (title, _) ->
 			"<li><a href=\"ch$index.xhtml\">${escapeXml(title)}</a></li>"
 		}.joinToString("\n")
 		return """
 			<?xml version="1.0" encoding="utf-8"?>
-			<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="$LANGUAGE">
+			<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="$language">
 			<head><title>Contents</title></head>
 			<body><nav epub:type="toc" id="toc"><h1>Contents</h1><ol>
 			$items
@@ -143,7 +145,12 @@ class NovelEpubExporter @Inject constructor(
 		""".trimIndent()
 	}
 
-	private fun buildOpf(manga: Manga, chapterCount: Int, imageNames: Collection<String>): String {
+	private fun buildOpf(
+		manga: Manga,
+		chapterCount: Int,
+		imageNames: Collection<String>,
+		language: String,
+	): String {
 		val chapterItems = (0 until chapterCount).joinToString("\n") {
 			"<item id=\"ch$it\" href=\"ch$it.xhtml\" media-type=\"application/xhtml+xml\"/>"
 		}
@@ -159,7 +166,7 @@ class NovelEpubExporter @Inject constructor(
 			<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
 			<dc:identifier id="bookid">urn:uuid:${manga.id}-${System.currentTimeMillis()}</dc:identifier>
 			<dc:title>${escapeXml(manga.title)}</dc:title>
-			<dc:language>$LANGUAGE</dc:language>
+			<dc:language>$language</dc:language>
 			<meta property="dcterms:modified">${java.time.Instant.now()}</meta>
 			</metadata>
 			<manifest>
@@ -196,8 +203,12 @@ class NovelEpubExporter @Inject constructor(
 		}
 	}
 
+	private fun languageOf(manga: Manga): String {
+		val locale = (manga.source as? MangaParserSource)?.locale
+		return locale?.takeIf { it.isNotBlank() } ?: "ru"
+	}
+
 	private companion object {
-		const val LANGUAGE = "ru"
 		val CONTAINER = """
 			<?xml version="1.0" encoding="utf-8"?>
 			<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">

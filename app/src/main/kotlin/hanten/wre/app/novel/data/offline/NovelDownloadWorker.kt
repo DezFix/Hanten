@@ -76,7 +76,11 @@ class NovelDownloadWorker @AssistedInject constructor(
 				}
 				coroutineContext.ensureActive()
 				if (!offlineRepository.isChapterDownloaded(manga.id, chapter.id)) {
-					val html = repository.getPages(chapter).joinToString(separator = "") { it.url }
+					val html = when (val content = repository.getChapterContent(chapter)) {
+						is hanten.wre.app.core.model.ChapterContent.Document -> content.html
+						is hanten.wre.app.core.model.ChapterContent.Images ->
+							content.pages.joinToString(separator = "") { it.url }
+					}
 					offlineRepository.cacheChapter(manga, chapter, html, explicit = true)
 				}
 				done++

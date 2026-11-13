@@ -14,12 +14,20 @@ class NovelReaderBridge(
 	private val onNextChapter: () -> Unit,
 	private val onPageChange: (currentPage: Int, totalPages: Int) -> Unit,
 	private val onActiveChapter: (index: Int) -> Unit,
+	private val onAnchor: (paragraph: Int) -> Unit,
 ) {
 
 	@JavascriptInterface
 	fun onScrollProgress(percent: Float) {
 		scope.launch(Dispatchers.Main) {
 			onScroll(percent)
+		}
+	}
+
+	@JavascriptInterface
+	fun onScrollAnchor(paragraph: Int) {
+		scope.launch(Dispatchers.Main) {
+			onAnchor(paragraph)
 		}
 	}
 

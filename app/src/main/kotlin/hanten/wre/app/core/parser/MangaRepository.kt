@@ -5,8 +5,10 @@ import androidx.annotation.AnyThread
 import androidx.collection.ArrayMap
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.core.cache.MemoryContentCache
+import hanten.wre.app.core.model.ChapterContent
 import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.model.MangaSourceInfo
+import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.model.TestMangaSource
 import hanten.wre.app.core.model.UnknownMangaSource
 import hanten.wre.app.core.parser.external.ExternalMangaRepository
@@ -45,6 +47,22 @@ interface MangaRepository {
 	suspend fun getDetails(manga: Manga): Manga
 
 	suspend fun getPages(chapter: MangaChapter): List<MangaPage>
+
+	/**
+	 * Text sources return the whole chapter as HTML; image sources keep their page list.
+	 * Readers and downloads should use this instead of guessing by source type.
+	 */
+	suspend fun getChapterContent(chapter: MangaChapter): ChapterContent {
+		val pages = getPages(chapter)
+		return if (source.isNovelSource) {
+			ChapterContent.Document(
+				html = pages.joinToString(separator = "") { it.url },
+				baseUrl = chapter.url,
+			)
+		} else {
+			ChapterContent.Images(pages)
+		}
+	}
 
 	suspend fun getPageUrl(page: MangaPage): String
 

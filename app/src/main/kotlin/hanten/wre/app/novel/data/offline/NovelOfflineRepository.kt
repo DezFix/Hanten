@@ -94,13 +94,8 @@ class NovelOfflineRepository @Inject constructor(
 	fun readChapter(mangaId: Long, chapterId: Long): String? {
 		val dir = findNovelDir(mangaId) ?: return null
 		val file = chapterFile(dir, chapterId).takeIf { it.isFile } ?: return null
-		val chapter = readMeta(dir)?.chapters?.firstOrNull { it.id == chapterId }
-		if (chapter != null && !chapter.isExplicit && chapter.cachedAt > 0 &&
-			System.currentTimeMillis() - chapter.cachedAt > CACHE_TTL_MS
-		) {
-			// Read-only cache expired; the reader will fetch a fresh copy.
-			return null
-		}
+		// Keep serving the cached copy even when it is old: returning null here broke
+		// offline reading after a week, although the file was still on disk.
 		return runCatchingCancellable {
 			file.readText(Charsets.UTF_8)
 		}.onFailure {
@@ -499,7 +494,6 @@ class NovelOfflineRepository @Inject constructor(
 		private const val HTML_EXTENSION = ".html"
 		private const val DEFAULT_IMAGE_EXTENSION = "jpg"
 		private const val MAX_IMAGE_BYTES = 32L * 1024L * 1024L
-		private const val CACHE_TTL_MS = 7L * 24L * 60L * 60L * 1000L
 		private const val MAX_NAME_LENGTH = 64
 		private const val USER_AGENT =
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"

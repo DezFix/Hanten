@@ -20,6 +20,7 @@ import hanten.wre.app.novel.data.pdf.PdfRendererHelper
 import hanten.wre.app.novel.domain.NovelSmartResume
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
+import hanten.wre.app.stats.domain.StatsCollector
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +48,7 @@ class NovelReaderViewModel @Inject constructor(
 	private val mangaRepositoryFactory: hanten.wre.app.core.parser.MangaRepository.Factory,
 	private val historyRepository: HistoryRepository,
 	private val offlineRepository: NovelOfflineRepository,
+	private val statsCollector: StatsCollector,
 	val settings: AppSettings,
 ) : BaseViewModel() {
 
@@ -95,6 +97,11 @@ class NovelReaderViewModel @Inject constructor(
 
 	@Volatile
 	private var lastProgressSaveAt = 0L
+
+	@Volatile
+	private var currentParagraph = -1
+
+	val restoredParagraph = MutableStateFlow<Int?>(null)
 
 	// Index of the last chapter appended to the WebView document; `_currentChapterIndex`
 	// follows the viewport and may move backwards when the user scrolls up.
@@ -302,6 +309,7 @@ class NovelReaderViewModel @Inject constructor(
 				} else {
 					setChapterContent(content)
 					isChapterContentReady = true
+					reportStats()
 					prefetchNextChapter(index)
 					val manga = _manga.value
 					if (manga != null && previous != null && previous.id != target.id) {
@@ -353,6 +361,27 @@ class NovelReaderViewModel @Inject constructor(
 		if (index == _currentChapterIndex.value) return
 		_currentChapterIndex.value = index
 		_currentChapter.value = list[index]
+		reportStats()
+	}
+
+	private fun reportStats() {
+		if (!isChapterContentReady) return
+		val manga = _manga.value ?: return
+		val chapter = _currentChapter.value ?: return
+		if (isIncognitoMode(manga)) return
+		statsCollector.onStateChanged(
+			mangaId = manga.id,
+			state = ReaderState(
+				chapterId = chapter.id,
+				page = _currentChapterIndex.value,
+				scroll = (_scrollProgress.value * 100).toInt(),
+			),
+		)
+	}
+
+	fun onPause() {
+		saveReadingProgressNow()
+		_manga.value?.let { statsCollector.onPause(it.id) }
 	}
 
 	/** The activity rebuilt the document (settings/mode change): only one chapter is present. */
@@ -391,6 +420,22 @@ class NovelReaderViewModel @Inject constructor(
 		// Only reuse history progress when it points at the chapter being opened, otherwise start from the top
 		val percent = if (history?.chapterId == chapter.id) history.percent else 0f
 		_scrollProgress.value = percent.coerceIn(0f, 1f)
+		// Negative values distinguish a paragraph anchor from the old percent fallback.
+		val paragraph = history?.scroll?.takeIf { it < 0 }?.let { -it - 1 }
+		restoredParagraph.value = paragraph
+		currentParagraph = paragraph ?: -1
+	}
+
+	fun onParagraphChanged(index: Int) {
+		if (index >= 0) {
+			currentParagraph = index
+		}
+	}
+
+	fun consumeRestoredParagraph(): Int? {
+		val value = restoredParagraph.value
+		restoredParagraph.value = null
+		return value
 	}
 
 	private fun prefetchNextChapter(currentIndex: Int) {
@@ -432,11 +477,13 @@ class NovelReaderViewModel @Inject constructor(
 				return@withContext it
 			}
 
-			// Online novel source: fetch pages / chapter content
+			// Online novel source: fetch the unified chapter payload
 			val repo = mangaRepositoryFactory.create(curManga.source)
-			val pages = repo.getPages(chapter)
-			// Novel parsers return HTML pages; join them into a single chapter document.
-			val html = pages.joinToString(separator = "") { it.url }
+			val html = when (val content = repo.getChapterContent(chapter)) {
+				is hanten.wre.app.core.model.ChapterContent.Document -> content.html
+				is hanten.wre.app.core.model.ChapterContent.Images ->
+					content.pages.joinToString(separator = "") { it.url }
+			}
 			if (html.isNotBlank() && !isIncognitoMode(curManga)) {
 				launchJob(Dispatchers.IO) {
 					offlineRepository.cacheChapter(curManga, chapter, html)
@@ -481,7 +528,7 @@ class NovelReaderViewModel @Inject constructor(
 				manga = cur.copy(chapters = chaps),
 				chapterId = chap.id,
 				page = _currentChapterIndex.value,
-				scroll = (percent * 100).toInt(),
+				scroll = if (currentParagraph >= 0) -currentParagraph - 1 else 0,
 				percent = percent,
 				force = false,
 			)

@@ -25,6 +25,7 @@ import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.parsers.util.longHashCode
 import java.io.File
 import java.io.FileOutputStream
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,6 +35,8 @@ class NovelStorageManager @Inject constructor(
 	private val mangaRepository: MangaDataRepository,
 	private val settings: AppSettings,
 ) {
+
+	private val parseCache = ConcurrentHashMap<String, CachedNovel>()
 
 	val novelsDir: File
 		get() {
@@ -120,12 +123,18 @@ class NovelStorageManager @Inject constructor(
 			val isPdf = file.extension.equals("pdf", ignoreCase = true)
 			if (!isEpub && !isPdf) return null
 
+			val stamp = file.lastModified() * 31L + file.length()
+			parseCache[file.absolutePath]?.takeIf { it.stamp == stamp }?.let {
+				return it.manga
+			}
+
 			val title = file.nameWithoutExtension
 			val mangaId = file.absolutePath.longHashCode()
 
 			val manga = if (isEpub) {
 				val epubParser = EpubParser(file)
 				val book = epubParser.parseBook()
+				val cover = extractCover(file, epubParser, book?.coverHref)
 				epubParser.close()
 				val chapters = book?.chapters?.map { ec ->
 					MangaChapter(
@@ -149,7 +158,7 @@ class NovelStorageManager @Inject constructor(
 					publicUrl = file.absolutePath,
 					rating = -1f,
 					isNsfw = false,
-					coverUrl = "",
+					coverUrl = cover.orEmpty(),
 					tags = emptySet<MangaTag>(),
 					state = null,
 					author = book?.author,
@@ -195,10 +204,30 @@ class NovelStorageManager @Inject constructor(
 				)
 			}
 
+			parseCache[file.absolutePath] = CachedNovel(stamp, manga)
 			mangaRepository.storeManga(manga, replaceExisting = true)
 			manga
 		} catch (e: CancellationException) {
 			throw e
+		} catch (e: Exception) {
+			e.printStackTraceDebug()
+			null
+		}
+	}
+
+	private fun extractCover(file: File, parser: EpubParser, href: String?): String? {
+		if (href.isNullOrBlank()) return null
+		return try {
+			val dir = File(context.cacheDir, "novel_covers").apply { mkdirs() }
+			val extension = href.substringAfterLast('.', "").takeIf { it.isNotBlank() } ?: "jpg"
+			val name = "${file.absolutePath.hashCode().toUInt().toString(16)}_${href.hashCode().toUInt().toString(16)}"
+			val output = File(dir, "$name.$extension")
+			if (!output.isFile) {
+				parser.readEntry(href)?.use { input ->
+					output.outputStream().use { out -> input.copyTo(out) }
+				} ?: return null
+			}
+			output.toURI().toString()
 		} catch (e: Exception) {
 			e.printStackTraceDebug()
 			null
@@ -260,6 +289,8 @@ class NovelStorageManager @Inject constructor(
 			null
 		}
 	}
+
+	private data class CachedNovel(val stamp: Long, val manga: Manga)
 
 	companion object {
 		private const val MAX_DUPLICATE_INDEX = 100

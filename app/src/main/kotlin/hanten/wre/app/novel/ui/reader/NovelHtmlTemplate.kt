@@ -14,6 +14,7 @@ object NovelHtmlTemplate {
 		density: Float = 1f,
 		language: String = "en",
 		chapterIndex: Int = 0,
+		initialParagraph: Int? = null,
 	): String {
 		val cssVars = settings.toCssVariables(safeTopPx, safeBottomPx, density)
 		val isPaged = settings.readingMode == NovelReadingMode.PAGED
@@ -161,6 +162,7 @@ object NovelHtmlTemplate {
 			<script>
 				const isPagedMode = $isPaged;
 				const initialProgress = $startProgress;
+				const initialParagraph = ${initialParagraph ?: -1};
 				const PARAGRAPH_SELECTOR = '#content p, #content blockquote, #content h1, #content h2, #content h3, ' +
 					'#content h4, #content h5, #content h6, #content figure';
 				const AUTO_SCROLL_PAUSE_MS = 1200;
@@ -185,6 +187,7 @@ object NovelHtmlTemplate {
 					lastProgressNotifyTs = now;
 					if (window.AndroidNovelBridge) {
 						window.AndroidNovelBridge.onScrollProgress(percent);
+						window.AndroidNovelBridge.onScrollAnchor(getCurrentParagraph());
 					}
 				}
 
@@ -638,11 +641,15 @@ object NovelHtmlTemplate {
 				relayoutPaged();
 				window.addEventListener('resize', relayoutPaged);
 
-				if (initialProgress > 0) {
+				if (initialProgress > 0 || initialParagraph >= 0) {
 					window.addEventListener('load', function() {
 						setTimeout(function() {
 							relayoutPaged();
-							restoreProgress(initialProgress);
+							if (initialParagraph >= 0) {
+								restoreBookmark(initialParagraph, initialProgress);
+							} else {
+								restoreProgress(initialProgress);
+							}
 						}, 60);
 					});
 				}
