@@ -118,7 +118,10 @@ class HistoryRepository @Inject constructor(
 		}
 		assert(manga.chapters != null)
 		db.withTransaction {
-			mangaRepository.storeManga(manga, replaceExisting = true)
+			// Progress updates happen once per page/second. Rewriting every chapter here
+			// was the main source of database churn during reading; metadata is stored
+			// by the details/reader load paths.
+			mangaRepository.storeManga(manga, replaceExisting = false)
 			val branch = manga.chapters?.findById(chapterId)?.branch
 			db.getHistoryDao().upsert(
 				HistoryEntity(

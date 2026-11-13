@@ -70,6 +70,10 @@ class DownloadQueueRepository @Inject constructor(
         downloadQueueDao.delete(id)
     }
 
+    suspend fun removeFromQueueByManga(mangaId: Long) {
+        downloadQueueDao.deleteByManga(mangaId)
+    }
+
     suspend fun updateQueueOrder(ids: List<Long>) {
         downloadQueueDao.reorder(ids)
     }

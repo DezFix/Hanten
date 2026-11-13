@@ -99,7 +99,8 @@ class DownloadSchedulerWorker @AssistedInject constructor(
                     chapterIds = nextItem.chaptersIds,
                     allowMetered = force || !nextItem.wifiOnly,
                 )
-                downloadQueueRepository.removeFromQueue(nextItem.id)
+                // Keep the queue row until NovelDownloadWorker completes; a failed or
+                // cancelled work must be retried instead of silently disappearing.
                 scheduleNextCheck()
                 return@runCatchingCancellable Result.success()
             }

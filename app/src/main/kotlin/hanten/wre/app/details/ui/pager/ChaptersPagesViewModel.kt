@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.toChipModel
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.observeAsStateFlow
@@ -64,6 +65,7 @@ abstract class ChaptersPagesViewModel(
 	private val deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
 	private val localStorageChanges: SharedFlow<LocalManga?>,
 	private val novelOfflineRepository: NovelOfflineRepository,
+	private val novelDownloadScheduler: hanten.wre.app.novel.data.offline.NovelDownloadScheduler,
 ) : BaseViewModel() {
 
 	val mangaDetails = MutableStateFlow<MangaDetails?>(null)
@@ -233,6 +235,13 @@ abstract class ChaptersPagesViewModel(
 	fun download(chaptersIds: Set<Long>?, allowMeteredNetwork: Boolean) {
 		launchJob(Dispatchers.IO) {
 			val manga = requireManga()
+			if (manga.isNovel) {
+				val ids = chaptersIds?.toLongArray()
+					?: manga.chapters.orEmpty().map { it.id }.toLongArray()
+				novelDownloadScheduler.enqueue(manga, ids, allowMeteredNetwork)
+				onDownloadStarted.call(Unit)
+				return@launchJob
+			}
 			android.util.Log.d("ChaptersPagesVM", "Manual download start for manga: ${manga.title}, chapters: ${chaptersIds?.size ?: "all"}")
 			val task = DownloadTask(
 				mangaId = manga.id,
@@ -275,6 +284,15 @@ abstract class ChaptersPagesViewModel(
 				)
 			}
 			onDownloadStarted.call(Unit)
+		}
+	}
+
+	fun deleteNovelChapters(chaptersIds: Set<Long>) {
+		launchJob(Dispatchers.IO) {
+			val manga = requireManga()
+			for (chapterId in chaptersIds) {
+				novelOfflineRepository.deleteChapter(manga.id, chapterId)
+			}
 		}
 	}
 

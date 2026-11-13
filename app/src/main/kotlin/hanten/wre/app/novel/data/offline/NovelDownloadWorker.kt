@@ -53,6 +53,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 	private val offlineRepository: NovelOfflineRepository,
 	private val epubExporter: NovelEpubExporter,
 	private val localMangaRepository: LocalMangaRepository,
+	private val downloadQueueRepository: DownloadQueueRepository,
 ) : CoroutineWorker(context, params) {
 
 	override suspend fun doWork(): Result {
@@ -82,6 +83,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 				setProgress(progressData(manga, done, total))
 			}
 			exportEpub(manga)
+			downloadQueueRepository.removeFromQueueByManga(manga.id)
 			Result.success()
 		} catch (e: CancellationException) {
 			throw e
@@ -207,6 +209,11 @@ class NovelDownloadScheduler @Inject constructor(
 	/** Stops the running work and puts the whole novel back into the queue as paused. */
 	suspend fun pause(manga: Manga) {
 		workManager.cancelUniqueWork(NovelDownloadWorker.uniqueName(manga.id))
+		val existing = downloadQueueRepository.getQueue().filter { it.mangaId == manga.id }
+		if (existing.isNotEmpty()) {
+			existing.forEach { downloadQueueRepository.updatePaused(it.id, true) }
+			return
+		}
 		val chapters = manga.chapters ?: return
 		if (chapters.isEmpty()) return
 		downloadQueueRepository.addToQueue(

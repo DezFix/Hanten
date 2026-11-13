@@ -2,8 +2,13 @@ package hanten.wre.app.details.ui
 
 import android.app.assist.AssistContent
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.SpannedString
+import android.text.TextPaint
+import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +59,6 @@ import hanten.wre.app.core.os.AppShortcutManager
 import hanten.wre.app.core.parser.favicon.faviconUri
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseActivity
-import hanten.wre.app.core.ui.BaseListAdapter
 import hanten.wre.app.core.ui.dialog.buildAlertDialog
 import hanten.wre.app.core.ui.image.FaviconDrawable
 import hanten.wre.app.core.ui.image.TextDrawable
@@ -72,6 +76,7 @@ import hanten.wre.app.core.util.ext.drawableStart
 import hanten.wre.app.core.util.ext.end
 import hanten.wre.app.core.util.ext.enqueueWith
 import hanten.wre.app.core.util.ext.getQuantityStringSafe
+import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.isTextTruncated
 import hanten.wre.app.core.util.ext.joinToStringWithLimit
@@ -87,20 +92,15 @@ import hanten.wre.app.databinding.ActivityDetailsBinding
 import hanten.wre.app.databinding.LayoutDetailsTableBinding
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
-import hanten.wre.app.details.domain.ReadingOrderItem
+import hanten.wre.app.details.domain.SeriesInfo
+import hanten.wre.app.details.domain.SeriesLink
 import hanten.wre.app.details.service.MangaPrefetchService
-import hanten.wre.app.details.ui.related.ReadingOrderAdapter
 import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.scrobbling.ScrobblingItemDecoration
 import hanten.wre.app.details.ui.scrobbling.ScrollingInfoAdapter
 import hanten.wre.app.download.ui.worker.DownloadStartedObserver
 import hanten.wre.app.list.domain.ReadingProgress
-import hanten.wre.app.list.ui.adapter.ListItemType
-import hanten.wre.app.list.ui.adapter.mangaGridItemAD
-import hanten.wre.app.list.ui.model.ListModel
-import hanten.wre.app.list.ui.model.MangaListModel
-import hanten.wre.app.list.ui.size.StaticItemSizeResolver
 import hanten.wre.app.main.ui.owners.BottomSheetOwner
 import hanten.wre.app.parsers.model.ContentRating
 import hanten.wre.app.parsers.model.Manga
@@ -154,8 +154,6 @@ class DetailsActivity :
 		viewBinding.textViewTitle.setOnClickListener(this)
 		viewBinding.buttonDescriptionMore.setOnClickListener(this)
 		viewBinding.buttonScrobblingMore.setOnClickListener(this)
-		viewBinding.buttonRelatedMore.setOnClickListener(this)
-		viewBinding.buttonReadingOrderAdd.setOnClickListener(this)
 		viewBinding.textViewDescription.addOnLayoutChangeListener(this)
 		viewBinding.swipeRefreshLayout.setOnRefreshListener(this)
 		viewBinding.textViewDescription.viewTreeObserver.addOnDrawListener(this)
@@ -191,8 +189,7 @@ class DetailsActivity :
 		viewModel.isLoading.observe(this, ::onLoadingStateChanged)
 		viewModel.scrobblingInfo.observe(this, ::onScrobblingInfoChanged)
 		viewModel.localSize.observe(this, ::onLocalSizeChanged)
-		viewModel.similarManga.observe(this, ::onSimilarMangaChanged)
-		viewModel.readingOrder.observe(this, ::onReadingOrderChanged)
+		viewModel.seriesInfo.observe(this, ::onSeriesInfoChanged)
 		viewModel.favouriteCategories.observe(this, ::onFavoritesChanged)
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.isStatsAvailable.observe(this, menuInvalidator)
@@ -273,15 +270,6 @@ class DetailsActivity :
 					manga = viewModel.getMangaOrNull() ?: return,
 					scrobblerService = viewModel.scrobblingInfo.value.firstOrNull()?.scrobbler,
 				)
-			}
-
-			R.id.button_related_more -> {
-				val manga = viewModel.getMangaOrNull() ?: return
-				router.openRelated(manga)
-			}
-
-			R.id.button_reading_order_add -> {
-				menuProvider.showAddRelationDialog()
 			}
 
 			R.id.textView_title -> {
@@ -390,47 +378,56 @@ class DetailsActivity :
 		}
 	}
 
-	private fun onReadingOrderChanged(items: List<ReadingOrderItem>) {
-		val rv = viewBinding.recyclerViewReadingOrder
-		val adapter = (rv.adapter as? ReadingOrderAdapter) ?: ReadingOrderAdapter(
-			onClick = { item ->
-				val manga = item.manga
-				if (manga != null) {
-					router.openDetails(manga)
-				} else if (item.title.isNotBlank()) {
-					router.openSearch(item.title)
-				}
-			},
-			onSearch = { item ->
-				if (item.title.isNotBlank()) {
-					router.openSearch(item.title)
-				}
-			},
-		).also { rv.adapter = it }
-		adapter.submitList(items)
-		viewBinding.layoutReadingOrder.isVisible = items.isNotEmpty()
-	}
-
-	private fun onSimilarMangaChanged(related: List<MangaListModel>) {
-		if (related.isEmpty()) {
-			viewBinding.groupRelated.isVisible = false
+	private fun onSeriesInfoChanged(info: SeriesInfo?) {
+		val textView = viewBinding.textViewSeriesInfo
+		if (info == null || info.isEmpty) {
+			textView.isGone = true
 			return
 		}
-		val rv = viewBinding.recyclerViewRelated
+		val text = SpannableStringBuilder()
+		fun appendLinks(labelRes: Int, links: List<SeriesLink>) {
+			if (links.isEmpty()) return
+			if (text.isNotEmpty()) text.append('\n')
+			text.append(getString(labelRes)).append(": ")
+			links.forEachIndexed { index, link ->
+				if (index > 0) text.append(", ")
+				val start = text.length
+				text.append('«').append(link.manga.title).append('»')
+				val part = link.part
+				if (part != null) {
+					text.append(" (").append(getString(R.string.series_part, part)).append(')')
+				}
+				text.setSpan(
+					object : ClickableSpan() {
+						override fun onClick(widget: View) {
+							router.openDetails(link.manga)
+						}
 
-		@Suppress("UNCHECKED_CAST")
-		val adapter = (rv.adapter as? BaseListAdapter<ListModel>) ?: BaseListAdapter<ListModel>()
-			.addDelegate(
-				ListItemType.MANGA_GRID,
-				mangaGridItemAD(
-					sizeResolver = StaticItemSizeResolver(resources.getDimensionPixelSize(R.dimen.smaller_grid_width)),
-				) { item, _ ->
-					router.openDetails(item.toMangaWithOverride())
-				},
-			).also { rv.adapter = it }
-		adapter.items = related.take(RELATED_PREVIEW_LIMIT)
-		viewBinding.buttonRelatedMore.isVisible = related.size > RELATED_PREVIEW_LIMIT
-		viewBinding.groupRelated.isVisible = true
+						override fun updateDrawState(ds: TextPaint) {
+							ds.color = this@DetailsActivity.getThemeColor(
+								androidx.appcompat.R.attr.colorPrimary,
+								Color.LTGRAY,
+							)
+							ds.isUnderlineText = false
+						}
+					},
+					start,
+					text.length,
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+				)
+			}
+		}
+		appendLinks(R.string.series_prequel, info.prequels)
+		appendLinks(R.string.series_continuation, info.continuations)
+		appendLinks(R.string.series_related, info.related)
+		appendLinks(R.string.series_same_author, info.sameAuthor)
+		if (text.isEmpty()) {
+			textView.isGone = true
+			return
+		}
+		textView.text = text
+		textView.movementMethod = LinkMovementMethodCompat.getInstance()
+		textView.isVisible = true
 	}
 
 	private fun onLoadingStateChanged(isLoading: Boolean) {
@@ -625,6 +622,5 @@ class DetailsActivity :
 	companion object {
 
 		private const val FAV_LABEL_LIMIT = 16
-		private const val RELATED_PREVIEW_LIMIT = 3
 	}
 }

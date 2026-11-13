@@ -131,6 +131,11 @@ class NovelReaderActivity :
 		viewModel.refreshDownloadedChapters()
 	}
 
+	override fun onPause() {
+		viewModel.saveReadingProgressNow()
+		super.onPause()
+	}
+
 	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
 		outState.putBoolean(STATE_AUTO_SCROLL_ACTIVE, isAutoScrollActive)

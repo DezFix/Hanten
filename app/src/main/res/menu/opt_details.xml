@@ -44,21 +44,9 @@
 		app:showAsAction="never" />
 
 	<item
-		android:id="@+id/action_related"
-		android:orderInCategory="50"
-		android:title="@string/find_similar"
-		app:showAsAction="never" />
-
-	<item
 		android:id="@+id/action_alternatives"
 		android:orderInCategory="50"
 		android:title="@string/alternatives"
-		app:showAsAction="never" />
-
-	<item
-		android:id="@+id/action_relations"
-		android:orderInCategory="50"
-		android:title="@string/relations"
 		app:showAsAction="never" />
 
 	<item

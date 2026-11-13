@@ -93,6 +93,9 @@ class NovelReaderViewModel @Inject constructor(
 	@Volatile
 	private var isChapterContentReady = false
 
+	@Volatile
+	private var lastProgressSaveAt = 0L
+
 	// Index of the last chapter appended to the WebView document; `_currentChapterIndex`
 	// follows the viewport and may move backwards when the user scrolls up.
 	@Volatile
@@ -281,6 +284,9 @@ class NovelReaderViewModel @Inject constructor(
 		if (index !in list.indices) return
 		val target = list[index]
 		val previous = _currentChapter.value
+		if (previous != null && previous.id != target.id && isChapterContentReady) {
+			saveReadingProgressNow()
+		}
 		_currentChapterIndex.value = index
 		_currentChapter.value = target
 		appendedChapterIndex = index
@@ -452,6 +458,20 @@ class NovelReaderViewModel @Inject constructor(
 	}
 
 	private fun saveReadingProgress(percent: Float) {
+		val now = System.currentTimeMillis()
+		if (now - lastProgressSaveAt < PROGRESS_SAVE_INTERVAL_MS) return
+		lastProgressSaveAt = now
+		persistProgress(percent)
+	}
+
+	/** Called from onPause/chapter switch: the throttled timer may have skipped the last value. */
+	fun saveReadingProgressNow() {
+		if (!isChapterContentReady) return
+		lastProgressSaveAt = System.currentTimeMillis()
+		persistProgress(_scrollProgress.value.coerceIn(0f, 1f))
+	}
+
+	private fun persistProgress(percent: Float) {
 		val cur = _manga.value ?: return
 		val chap = _currentChapter.value ?: return
 		if (isIncognitoMode(cur)) return
@@ -488,5 +508,6 @@ class NovelReaderViewModel @Inject constructor(
 	companion object {
 		private const val MAX_PREFETCHED_CHAPTERS = 4
 		private const val EPUB_BASE_URL = "https://futon.reader/"
+		private const val PROGRESS_SAVE_INTERVAL_MS = 5_000L
 	}
 }

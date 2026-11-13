@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import hanten.wre.app.R
 import hanten.wre.app.core.model.LocalMangaSource
+import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.ui.list.BaseListSelectionCallback
 import hanten.wre.app.core.ui.list.ListSelectionController
@@ -77,6 +78,14 @@ class ChaptersSelectionCallback(
 				val manga = viewModel.getMangaOrNull()
 				when {
 					ids.isEmpty() || manga == null -> Unit
+					manga.isNovel -> {
+						viewModel.deleteNovelChapters(ids.toSet())
+						Snackbar.make(
+							recyclerView,
+							R.string.chapters_will_removed_background,
+							Snackbar.LENGTH_LONG,
+						).show()
+					}
 					ids.size == manga.chapters?.size -> viewModel.deleteLocal()
 					else -> {
 						LocalChaptersRemoveService.start(recyclerView.context, manga, ids.toSet())

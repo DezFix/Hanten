@@ -33,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -42,6 +43,8 @@ import kotlinx.coroutines.withContext
 import hanten.wre.app.R
 import hanten.wre.app.core.exceptions.resolve.DialogErrorObserver
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
+import hanten.wre.app.core.model.isNovel
+import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
@@ -62,6 +65,8 @@ import hanten.wre.app.core.util.ext.toUriOrNull
 import hanten.wre.app.core.util.ext.zipWithPrevious
 import hanten.wre.app.databinding.ActivityReaderBinding
 import hanten.wre.app.details.ui.pager.pages.PagesSavedObserver
+import hanten.wre.app.novel.ui.reader.NovelReaderActivity
+import hanten.wre.app.novel.ui.reader.pdf.PdfReaderActivity
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.reader.data.TapGridSettings
 import hanten.wre.app.reader.domain.TapGridArea
@@ -132,6 +137,24 @@ class ReaderActivity :
         viewBinding.buttonTimer?.setOnClickListener(this)
         idlingDetector.bindToLifecycle(this)
         screenOrientationHelper.applySettings()
+        // Widgets and launcher shortcuts know only the manga id, so a text work may land here.
+        viewModel.mangaDetails.filterNotNull().observe(this) { details ->
+            val manga = details.toManga()
+            if (manga.isNovel) {
+                val isPdf = manga.url.endsWith(".pdf", ignoreCase = true) ||
+                    manga.url.startsWith("pdf://", ignoreCase = true)
+                startActivity(
+                    Intent(intent).apply {
+                        setClass(
+                            this@ReaderActivity,
+                            if (isPdf) PdfReaderActivity::class.java else NovelReaderActivity::class.java,
+                        )
+                        putExtra(AppRouter.KEY_MANGA, ParcelableManga(manga))
+                    },
+                )
+                finish()
+            }
+        }
         viewModel.isBookmarkAdded.observe(this) { viewBinding.actionsView.isBookmarkAdded = it }
         scrollTimer.isActive.observe(this) {
             updateScrollTimerButton()

@@ -18,6 +18,7 @@ import hanten.wre.app.core.db.entity.toEntities
 import hanten.wre.app.core.db.entity.toEntity
 import hanten.wre.app.core.db.entity.toManga
 import hanten.wre.app.core.db.entity.toMangaChapters
+import hanten.wre.app.core.db.entity.toMangaList
 import hanten.wre.app.core.db.entity.toMangaTags
 import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.model.LocalNovelSource
@@ -122,6 +123,14 @@ class MangaDataRepository @Inject constructor(
 
 	suspend fun findMangaByPublicUrl(publicUrl: String): Manga? {
 		return db.getMangaDao().findByPublicUrl(publicUrl)?.toManga()
+	}
+
+	suspend fun findSimilarByTitle(query: String, excludeId: Long, limit: Int): List<Manga> {
+		return db.getMangaDao().findByTitle(query, excludeId, limit).toMangaList()
+	}
+
+	suspend fun findByAuthor(query: String, excludeId: Long, limit: Int): List<Manga> {
+		return db.getMangaDao().findByAuthor(query, excludeId, limit).toMangaList()
 	}
 
 	suspend fun resolveIntent(intent: MangaIntent, withChapters: Boolean): Manga? = when {

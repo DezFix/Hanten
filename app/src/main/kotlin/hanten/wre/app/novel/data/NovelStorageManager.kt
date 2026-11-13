@@ -2,6 +2,8 @@ package hanten.wre.app.novel.data
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
@@ -54,19 +56,28 @@ class NovelStorageManager @Inject constructor(
 
 	suspend fun importNovel(uri: Uri): Manga? = withContext(Dispatchers.IO) {
 		try {
-			val resolvedFile = (if (uri.isFileUri()) uri.toFileOrNull() else uri.resolveFile(context))
-				?.takeIf { it.exists() && it.isReadable() }
-			if (resolvedFile != null) {
-				return@withContext parseFileToManga(resolvedFile)
+			val sourceFile = when {
+				uri.isFileUri() -> uri.toFileOrNull()
+				Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && DocumentsContract.isTreeUri(uri) ->
+					uri.resolveFile(context)
+				else -> null
+			}?.takeIf { it.exists() && it.isReadable() }
+
+			// An already managed file must not be copied again.
+			if (sourceFile != null && sourceFile.parentFile?.canonicalFile == novelsDir.canonicalFile) {
+				return@withContext parseFileToManga(sourceFile)
 			}
 
-			val destFile = novelDestinationFile(uri) ?: return@withContext null
-
-			context.contentResolver.openInputStream(uri)?.use { input ->
-				FileOutputStream(destFile).use { output ->
-					input.copyTo(output)
-				}
-			} ?: return@withContext null
+			val destFile = novelDestinationFile(uri, sourceFile?.name) ?: return@withContext null
+			if (sourceFile != null) {
+				sourceFile.copyTo(destFile, overwrite = false)
+			} else {
+				context.contentResolver.openInputStream(uri)?.use { input ->
+					FileOutputStream(destFile).use { output ->
+						input.copyTo(output)
+					}
+				} ?: return@withContext null
+			}
 
 			parseFileToManga(destFile)
 		} catch (e: CancellationException) {
@@ -194,7 +205,7 @@ class NovelStorageManager @Inject constructor(
 		}
 	}
 
-	private fun novelDestinationFile(uri: Uri): File? {
+	private fun novelDestinationFile(uri: Uri, fallbackName: String? = null): File? {
 		val dir = novelsDir
 		val type = try {
 			context.contentResolver.getType(uri)
@@ -207,7 +218,8 @@ class NovelStorageManager @Inject constructor(
 			else -> null
 		}
 		val fallback = "novel_${System.currentTimeMillis()}${ext.orEmpty()}"
-		val rawName = queryDisplayName(uri)?.let { File(it).name }
+		val rawName = (queryDisplayName(uri) ?: fallbackName)
+			?.let { File(it).name }
 			?.takeIf { it.isNotBlank() && it != "." && it != ".." }
 		val name = when {
 			rawName == null -> fallback

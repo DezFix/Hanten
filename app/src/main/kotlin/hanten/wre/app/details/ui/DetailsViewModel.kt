@@ -6,10 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
 import hanten.wre.app.core.model.getPreferredBranch
-import hanten.wre.app.core.model.MangaRelationType
 import hanten.wre.app.core.nav.MangaIntent
 import hanten.wre.app.core.prefs.AppSettings
-import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.prefs.TriStateOption
 import hanten.wre.app.core.ui.util.ReversibleAction
 import hanten.wre.app.core.util.ext.call
@@ -17,24 +15,21 @@ import hanten.wre.app.core.util.ext.computeSize
 import hanten.wre.app.core.util.ext.onEachWhile
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.details.data.MangaDetails
-import hanten.wre.app.details.data.MangaRelationsRepository
-import hanten.wre.app.details.data.RelatedEntry
 import hanten.wre.app.details.domain.BranchComparator
 import hanten.wre.app.details.domain.DetailsInteractor
 import hanten.wre.app.details.domain.DetailsLoadUseCase
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
-import hanten.wre.app.details.domain.ReadingOrderBuilder
-import hanten.wre.app.details.domain.ReadingOrderItem
 import hanten.wre.app.details.domain.ReadingTimeUseCase
-import hanten.wre.app.details.domain.RelatedMangaUseCase
+import hanten.wre.app.details.domain.SeriesDetector
+import hanten.wre.app.details.domain.SeriesInfo
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.model.MangaBranch
 import hanten.wre.app.details.ui.pager.ChaptersPagesViewModel
+import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
 import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.list.domain.MangaListMapper
-import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
@@ -42,7 +37,6 @@ import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
-import hanten.wre.app.search.domain.MangaSearchRepository
 import hanten.wre.app.stats.data.StatsRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -84,15 +78,14 @@ class DetailsViewModel @Inject constructor(
 	interactor: DetailsInteractor,
 	savedStateHandle: SavedStateHandle,
 	deleteLocalMangaUseCase: DeleteLocalMangaUseCase,
-	private val relatedMangaUseCase: RelatedMangaUseCase,
 	private val mangaListMapper: MangaListMapper,
 	private val detailsLoadUseCase: DetailsLoadUseCase,
 	private val progressUpdateUseCase: ProgressUpdateUseCase,
 	private val readingTimeUseCase: ReadingTimeUseCase,
 	statsRepository: StatsRepository,
-	private val relationsRepository: MangaRelationsRepository,
-	private val mangaSearchRepository: MangaSearchRepository,
+	private val seriesDetector: SeriesDetector,
 	novelOfflineRepository: NovelOfflineRepository,
+	novelDownloadScheduler: NovelDownloadScheduler,
 ) : ChaptersPagesViewModel(
 	settings = settings,
 	interactor = interactor,
@@ -105,6 +98,7 @@ class DetailsViewModel @Inject constructor(
 	deleteLocalMangaUseCase = deleteLocalMangaUseCase,
 	localStorageChanges = localStorageChanges,
 	novelOfflineRepository = novelOfflineRepository,
+	novelDownloadScheduler = novelDownloadScheduler,
 ) {
 
 	private val intent = MangaIntent(savedStateHandle)
@@ -177,36 +171,14 @@ class DetailsViewModel @Inject constructor(
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
 
-	val manualRelations: StateFlow<List<RelatedEntry>> = resolvedMangaId
-		.flatMapLatest { relationsRepository.observeFor(it) }
-		.withErrorHandling()
-		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
-
-	val readingOrder: StateFlow<List<ReadingOrderItem>> = combine(
-		manga,
-		relationsRepository.observeAll(),
-	) { m, relations ->
-		if (m == null || relations.none { it.fromId == m.id || it.toId == m.id }) {
-			return@combine emptyList()
-		}
-		ReadingOrderBuilder.build(
-			rootId = m.id,
-			current = m,
-			relations = relations,
-			resolveManga = relationsRepository::resolveManga,
-		)
-	}.flowOn(Dispatchers.IO).withErrorHandling()
-		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
-
-	/** Suggestions from the source; manual series connections live in [readingOrder]. */
-	val similarManga: StateFlow<List<MangaListModel>> = manga.mapLatest { m ->
+	val seriesInfo: StateFlow<SeriesInfo?> = manga.mapLatest { m ->
 		if (m == null || !settings.isRelatedMangaEnabled) {
-			return@mapLatest emptyList()
+			null
+		} else {
+			seriesDetector.detect(m)
 		}
-		val result = relatedMangaUseCase(m).orEmpty()
-			.filterNot { it.id == m.id }
-		mangaListMapper.toListModelList(result, ListMode.GRID)
-	}.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
+	}.flowOn(Dispatchers.IO).withErrorHandling()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, null)
 
 	val tags = manga.mapLatest {
 		mangaListMapper.mapTags(it?.tags.orEmpty())
@@ -253,44 +225,6 @@ class DetailsViewModel @Inject constructor(
 	fun reload() {
 		loadingJob.cancel()
 		loadingJob = doLoad(force = true)
-	}
-
-	suspend fun searchRelationsCandidates(query: String): List<Manga> =
-		mangaSearchRepository.getMangaSuggestion(query, limit = 30, source = null)
-
-	fun addRelation(manga: Manga, type: MangaRelationType) {
-		launchJob(Dispatchers.IO) {
-			val current = getMangaOrNull() ?: return@launchJob
-			relationsRepository.add(
-				fromId = current.id,
-				toId = manga.id,
-				type = type,
-				title = manga.title,
-				sourceName = manga.source.name,
-				publicUrl = manga.publicUrl,
-			)
-		}
-	}
-
-	fun addUntitledRelation(title: String, type: MangaRelationType) {
-		val trimmed = title.trim()
-		if (trimmed.isEmpty()) return
-		launchJob(Dispatchers.IO) {
-			val current = getMangaOrNull() ?: return@launchJob
-			relationsRepository.add(
-				fromId = current.id,
-				toId = MangaRelationsRepository.unlinkedId(trimmed),
-				type = type,
-				title = trimmed,
-			)
-		}
-	}
-
-	fun removeRelation(targetId: Long) {
-		launchJob(Dispatchers.IO) {
-			val current = getMangaOrNull() ?: return@launchJob
-			relationsRepository.removeBetween(current.id, targetId)
-		}
 	}
 
 	fun updateScrobbling(index: Int, rating: Float, status: ScrobblingStatus?) {

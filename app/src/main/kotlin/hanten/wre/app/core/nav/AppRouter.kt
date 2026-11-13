@@ -62,7 +62,6 @@ import hanten.wre.app.core.util.ext.toUriOrNull
 import hanten.wre.app.core.util.ext.withArgs
 import hanten.wre.app.details.ui.DetailsActivity
 import hanten.wre.app.details.ui.pager.ChaptersPagesSheet
-import hanten.wre.app.details.ui.related.RelatedMangaActivity
 import hanten.wre.app.details.ui.scrobbling.ScrobblingInfoSheet
 import hanten.wre.app.download.ui.dialog.DownloadDialogFragment
 import hanten.wre.app.download.ui.list.DownloadsActivity
@@ -182,13 +181,6 @@ class AppRouter private constructor(
     fun openAlternatives(manga: Manga) {
         startActivity(
             Intent(contextOrNull() ?: return, AlternativesActivity::class.java)
-                .putExtra(KEY_MANGA, ParcelableManga(manga)),
-        )
-    }
-
-    fun openRelated(manga: Manga) {
-        startActivity(
-            Intent(contextOrNull(), RelatedMangaActivity::class.java)
                 .putExtra(KEY_MANGA, ParcelableManga(manga)),
         )
     }

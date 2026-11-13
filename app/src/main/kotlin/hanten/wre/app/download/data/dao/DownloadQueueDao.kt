@@ -27,6 +27,9 @@ interface DownloadQueueDao {
     @Query("DELETE FROM download_queue WHERE id = :id")
     suspend fun delete(id: Long)
 
+    @Query("DELETE FROM download_queue WHERE manga_id = :mangaId")
+    suspend fun deleteByManga(mangaId: Long)
+
     @Query("DELETE FROM download_queue")
     suspend fun deleteAll()
 

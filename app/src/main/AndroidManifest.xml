@@ -178,9 +178,6 @@
 			android:name="hanten.wre.app.suggestions.ui.SuggestionsActivity"
 			android:label="@string/suggestions" />
 		<activity
-			android:name="hanten.wre.app.details.ui.related.RelatedMangaActivity"
-			android:label="@string/related_manga" />
-		<activity
 			android:name="hanten.wre.app.settings.SettingsActivity"
 			android:exported="true"
 			android:label="@string/settings">

@@ -107,6 +107,7 @@ class ReaderViewModel @Inject constructor(
     workManager: androidx.work.WorkManager,
     readerSettingsProducerFactory: ReaderSettings.Producer.Factory,
     novelOfflineRepository: NovelOfflineRepository,
+    novelDownloadScheduler: hanten.wre.app.novel.data.offline.NovelDownloadScheduler,
 ) : ChaptersPagesViewModel(
     settings = settings,
     interactor = interactor,
@@ -119,6 +120,7 @@ class ReaderViewModel @Inject constructor(
     deleteLocalMangaUseCase = deleteLocalMangaUseCase,
     localStorageChanges = localStorageChanges,
     novelOfflineRepository = novelOfflineRepository,
+    novelDownloadScheduler = novelDownloadScheduler,
 ) {
     private val intent = MangaIntent(savedStateHandle)
 

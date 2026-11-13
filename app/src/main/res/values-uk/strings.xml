@@ -424,7 +424,7 @@
     <string name="order_added">Додано</string>
     <string name="show">Показати</string>
     <string name="voice_search">Голосовий пошук</string>
-    <string name="related_manga">Схожа манґа</string>
+    <string name="related_manga">Автоматичні зв\'язки</string>
     <string name="color_light">Світлий</string>
     <string name="color_white">Білий</string>
     <string name="manage_categories">Керування категоріями</string>
@@ -433,7 +433,7 @@
     <string name="unknown">Невідомий</string>
     <string name="in_progress">В процесі</string>
     <string name="disable_nsfw">Вимкнути NSFW</string>
-    <string name="related_manga_summary">Показати список пов\'язаної манґи. У деяких випадках він може бути неточним або відсутнім</string>
+    <string name="related_manga_summary">Показувати продовження, пов\'язані твори та інші роботи автора на сторінці твору</string>
     <string name="too_many_requests_message">Занадто багато запитів. Спробуйте пізніше</string>
     <string name="advanced">Просунута</string>
     <string name="manga_list">Список манґи</string>
@@ -1095,14 +1095,12 @@
     <string name="novel_download_cancel">Скасувати завантаження</string>
     <string name="novel_download_started">Завантаження новели розпочато</string>
     <string name="novel_download_added">Новелу додано до завантажень</string>
+    <string name="series_prequel">Це продовження. Початок</string>
+    <string name="series_continuation">Продовження</string>
+    <string name="series_related">Пов\'язані</string>
+    <string name="series_same_author">Інші роботи автора</string>
+    <string name="series_part">частина %1$d</string>
     <string name="relations">Пов\'язані твори</string>
-    <string name="reading_order">Порядок читання</string>
-    <string name="reading_order_add">Додати до серії</string>
-    <string name="reading_order_current">Ви тут</string>
-    <string name="reading_order_not_in_library">Немає в бібліотеці</string>
-    <string name="reading_order_search">Знайти за назвою</string>
-    <string name="similar_manga">Схожі</string>
-    <string name="relation_add_title">Додати «%1$s» як назву</string>
     <string name="relation_add">Додати зв\'язок</string>
     <string name="relation_added">Зв\'язок додано</string>
     <string name="relation_removed">Зв\'язок видалено</string>
