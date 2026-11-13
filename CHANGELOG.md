@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
-## Unreleased
+## 2.7.10
 
 ### Добавлено
 - «Порядок чтения» на странице манги и новеллы: связанные произведения
