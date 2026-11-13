@@ -1100,6 +1100,11 @@
     <string name="series_related">Пов\'язані</string>
     <string name="series_same_author">Інші роботи автора</string>
     <string name="series_part">частина %1$d</string>
+    <string name="novel_no_chapters_found">У цієї новели немає розділів.</string>
+    <string name="novel_error_loading_details">Не вдалося завантажити дані новели.</string>
+    <string name="novel_error_loading_chapter">Не вдалося завантажити розділ. Перевірте зʼєднання та повторіть.</string>
+    <string name="pdf_page_title">Сторінка %1$d</string>
+    <string name="pdf_document_pages">PDF-документ, сторінок: %1$d</string>
     <string name="relations">Пов\'язані твори</string>
     <string name="relation_add">Додати зв\'язок</string>
     <string name="relation_added">Зв\'язок додано</string>

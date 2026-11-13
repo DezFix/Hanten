@@ -1,8 +1,11 @@
 package hanten.wre.app.novel.ui.reader
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import hanten.wre.app.R
 import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.model.parcelable.ParcelableManga
@@ -49,6 +52,7 @@ class NovelReaderViewModel @Inject constructor(
 	private val historyRepository: HistoryRepository,
 	private val offlineRepository: NovelOfflineRepository,
 	private val statsCollector: StatsCollector,
+	@ApplicationContext private val context: Context,
 	val settings: AppSettings,
 ) : BaseViewModel() {
 
@@ -211,7 +215,7 @@ class NovelReaderViewModel @Inject constructor(
 					(0 until count).map { pageIdx ->
 						MangaChapter(
 							id = pageIdx.toLong(),
-							title = "Page ${pageIdx + 1}",
+							title = context.getString(R.string.pdf_page_title, pageIdx + 1),
 							number = (pageIdx + 1).toFloat(),
 							volume = 0,
 							url = "pdf://page/$pageIdx",
@@ -275,11 +279,11 @@ class NovelReaderViewModel @Inject constructor(
 				if (chapterList.isNotEmpty()) {
 					loadChapterAtIndex(startIdx)
 				} else {
-					setChapterContent("<div style='padding: 32px; text-align: center;'><p>No chapters found for this novel.</p></div>")
+					setChapterContent(errorHtml(context.getString(R.string.novel_no_chapters_found)))
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
-				setChapterContent("<div style='padding: 32px; text-align: center;'><p>Error loading novel details.</p></div>")
+				setChapterContent(errorHtml(context.getString(R.string.novel_error_loading_details)))
 			} finally {
 				_isReadingLoading.value = false
 			}
@@ -305,7 +309,7 @@ class NovelReaderViewModel @Inject constructor(
 				restoreScrollProgress(target)
 				val content = prefetchedChapters.remove(target.id) ?: fetchChapterHtml(target)
 				if (content.isNullOrBlank()) {
-					setChapterContent("<div style='padding: 32px; text-align: center;'><p>Unable to load chapter content.</p><p style='opacity: 0.7; font-size: 0.9em;'>Please check your network connection and try again.</p></div>")
+					setChapterContent(errorHtml(context.getString(R.string.novel_error_loading_chapter)))
 				} else {
 					setChapterContent(content)
 					isChapterContentReady = true
@@ -318,7 +322,7 @@ class NovelReaderViewModel @Inject constructor(
 				}
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
-				setChapterContent("<div style='padding: 32px; text-align: center;'><p>Error loading chapter.</p></div>")
+				setChapterContent(errorHtml(context.getString(R.string.novel_error_loading_chapter)))
 			} finally {
 				_isReadingLoading.value = false
 			}
@@ -458,6 +462,10 @@ class NovelReaderViewModel @Inject constructor(
 				e.printStackTraceDebug()
 			}
 		}
+	}
+
+	private fun errorHtml(message: String): String {
+		return "<div style='padding: 32px; text-align: center;'><p>$message</p></div>"
 	}
 
 	private fun setChapterContent(html: String) {

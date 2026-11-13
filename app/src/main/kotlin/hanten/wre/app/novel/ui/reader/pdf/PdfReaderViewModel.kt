@@ -17,6 +17,7 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.model.MangaTag
 import hanten.wre.app.parsers.util.longHashCode
+import hanten.wre.app.R
 import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
@@ -125,7 +126,7 @@ class PdfReaderViewModel @Inject constructor(
 					val chapters = (0 until count).map { pageIdx ->
 						MangaChapter(
 							id = pageIdx.toLong(),
-							title = "Page ${pageIdx + 1}",
+							title = context.getString(R.string.pdf_page_title, pageIdx + 1),
 							number = (pageIdx + 1).toFloat(),
 							volume = 0,
 							url = "pdf://page/$pageIdx",
@@ -157,7 +158,7 @@ class PdfReaderViewModel @Inject constructor(
 					val chapters = (0 until count).map { pageIdx ->
 						MangaChapter(
 							id = pageIdx.toLong(),
-							title = "Page ${pageIdx + 1}",
+							title = context.getString(R.string.pdf_page_title, pageIdx + 1),
 							number = (pageIdx + 1).toFloat(),
 							volume = 0,
 							url = "pdf://page/$pageIdx",
@@ -231,7 +232,7 @@ class PdfReaderViewModel @Inject constructor(
 			val chaps = cur.chapters ?: (0 until count).map { pageIdx ->
 				MangaChapter(
 					id = pageIdx.toLong(),
-					title = "Page ${pageIdx + 1}",
+					title = context.getString(R.string.pdf_page_title, pageIdx + 1),
 					number = (pageIdx + 1).toFloat(),
 					volume = 0,
 					url = "pdf://page/$pageIdx",

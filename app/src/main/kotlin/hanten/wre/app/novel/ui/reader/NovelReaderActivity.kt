@@ -117,6 +117,7 @@ class NovelReaderActivity :
 
 		setupWebView()
 		setupControls()
+		applyReaderColors()
 		observeViewModel()
 		screenOrientationHelper.applySettings()
 		applyKeepScreenOn()
@@ -264,6 +265,7 @@ class NovelReaderActivity :
 	override fun onApplyWindowInsets(v: View, insets: androidx.core.view.WindowInsetsCompat): androidx.core.view.WindowInsetsCompat {
 		val systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars())
 		viewBinding.cardBottom.setPadding(0, 0, 0, systemBars.bottom)
+		viewBinding.appbarTop.setPadding(0, systemBars.top, 0, 0)
 		systemTopInset = systemBars.top
 		systemBottomInset = systemBars.bottom
 		viewBinding.coordinator.post { updateReaderSafeArea() }
@@ -271,7 +273,7 @@ class NovelReaderActivity :
 	}
 
 	private fun updateReaderSafeArea() {
-		val top = systemTopInset
+		val top = if (isUiVisible) viewBinding.appbarTop.height else systemTopInset
 		val bottom = if (isUiVisible) viewBinding.cardBottom.height else systemBottomInset
 		if (safeTopPx == top && safeBottomPx == bottom) return
 		safeTopPx = top
@@ -284,7 +286,19 @@ class NovelReaderActivity :
 		}
 	}
 
+	private fun applyReaderColors() {
+		val background = readerSettings.effectiveBackgroundColor
+		val text = readerSettings.effectiveTextColor
+		viewBinding.appbarTop.setBackgroundColor(background)
+		viewBinding.toolbar.setTitleTextColor(text)
+		viewBinding.toolbar.setSubtitleTextColor(text)
+		viewBinding.toolbar.navigationIcon?.setTint(text)
+	}
+
 	private fun setupControls() {
+		viewBinding.toolbar.setNavigationOnClickListener {
+			onBackPressedDispatcher.onBackPressed()
+		}
 		viewBinding.buttonPrev.setOnClickListener { viewModel.switchChapter(-1) }
 		viewBinding.buttonNext.setOnClickListener { viewModel.switchChapter(1) }
 		viewBinding.buttonChapters.setOnClickListener {
@@ -305,6 +319,7 @@ class NovelReaderActivity :
 		viewModel.manga.observe(this) { manga ->
 			if (manga != null) {
 				title = manga.title
+				viewBinding.toolbar.title = manga.title
 				observeBookmarks(manga)
 			}
 		}
@@ -314,6 +329,7 @@ class NovelReaderActivity :
 				val idx = viewModel.currentChapterIndex.value + 1
 				val total = viewModel.chapters.value.size
 				viewBinding.textProgress.text = if (total > 0) "$idx / $total" else chapter.title
+				viewBinding.toolbar.subtitle = chapter.title
 			}
 			updateBookmarkButton()
 		}
@@ -581,6 +597,7 @@ class NovelReaderActivity :
 	private fun toggleUiVisibility() {
 		isUiVisible = !isUiVisible
 		viewBinding.cardBottom.isVisible = isUiVisible
+		viewBinding.appbarTop.isVisible = isUiVisible
 		applySystemBarsVisibility()
 		viewBinding.coordinator.post { updateReaderSafeArea() }
 	}
@@ -633,6 +650,7 @@ class NovelReaderActivity :
 		val modeChanged = settings.readingMode != readerSettings.readingMode
 		readerSettings = settings
 		viewBinding.webView.setBackgroundColor(settings.effectiveBackgroundColor)
+		applyReaderColors()
 		applySystemBarsVisibility()
 		viewBinding.coordinator.post { updateReaderSafeArea() }
 

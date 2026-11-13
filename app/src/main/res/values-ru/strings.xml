@@ -1103,6 +1103,11 @@
     <string name="series_related">Связанные</string>
     <string name="series_same_author">Другие работы автора</string>
     <string name="series_part">часть %1$d</string>
+    <string name="novel_no_chapters_found">У этой новеллы нет глав.</string>
+    <string name="novel_error_loading_details">Не удалось загрузить данные новеллы.</string>
+    <string name="novel_error_loading_chapter">Не удалось загрузить главу. Проверьте соединение и повторите.</string>
+    <string name="pdf_page_title">Страница %1$d</string>
+    <string name="pdf_document_pages">PDF-документ, страниц: %1$d</string>
     <string name="relations">Связанные произведения</string>
     <string name="relation_add">Добавить связь</string>
     <string name="relation_added">Связь добавлена</string>

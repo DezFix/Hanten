@@ -1036,6 +1036,11 @@
     <string name="series_related">Related</string>
     <string name="series_same_author">Other works by the author</string>
     <string name="series_part">part %1$d</string>
+    <string name="novel_no_chapters_found">No chapters found for this novel.</string>
+    <string name="novel_error_loading_details">Error loading novel details.</string>
+    <string name="novel_error_loading_chapter">Unable to load chapter content. Check your network connection and try again.</string>
+    <string name="pdf_page_title">Page %1$d</string>
+    <string name="pdf_document_pages">PDF document, %1$d pages</string>
     <string name="relations">Related works</string>
     <string name="relation_add">Add relation</string>
     <string name="relation_added">Relation added</string>

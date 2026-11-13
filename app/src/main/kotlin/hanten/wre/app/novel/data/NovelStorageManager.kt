@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import hanten.wre.app.R
 import hanten.wre.app.core.model.LocalNovelSource
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.prefs.AppSettings
@@ -173,7 +174,7 @@ class NovelStorageManager @Inject constructor(
 				val chapters = (0 until count).map { pageIdx ->
 					MangaChapter(
 						id = pageIdx.toLong(),
-						title = "Page ${pageIdx + 1}",
+						title = context.getString(R.string.pdf_page_title, pageIdx + 1),
 						number = (pageIdx + 1).toFloat(),
 						volume = 0,
 						url = "pdf://page/$pageIdx",
@@ -198,7 +199,7 @@ class NovelStorageManager @Inject constructor(
 					state = null,
 					author = null,
 					largeCoverUrl = null,
-					description = "PDF Document ($count pages)",
+					description = context.getString(R.string.pdf_document_pages, count),
 					chapters = chapters,
 					source = LocalNovelSource,
 				)
