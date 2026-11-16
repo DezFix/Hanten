@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
-## Unreleased
+## 2.8.2
 
 ### Добавлено
 - Описание произведения сохраняется в библиотеке вместе с названием и
