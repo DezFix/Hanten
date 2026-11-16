@@ -76,11 +76,9 @@ interface NetworkModule {
             proxySelector(proxyProvider.selector)
             proxyAuthenticator(proxyProvider.authenticator)
             dns(DoHManager(cache, settings))
-            if (settings.isSSLBypassEnabled) {
-                disableCertificateVerification()
-            } else {
-                installExtraCertificates(contextProvider.get())
-            }
+            // The shared client is always strict: OAuth, sync and update
+            // traffic must never inherit the parser SSL bypass.
+            installExtraCertificates(contextProvider.get())
             cache(cache)
             //addInterceptor(GZipInterceptor())
             addInterceptor(BrotliInterceptor)
@@ -97,7 +95,12 @@ interface NetworkModule {
         fun provideMangaHttpClient(
             @BaseHttpClient baseClient: OkHttpClient,
             commonHeadersInterceptor: CommonHeadersInterceptor,
+            settings: AppSettings,
         ): OkHttpClient = baseClient.newBuilder().apply {
+            // Limit the bypass to the client used by manga/novel sources.
+            if (settings.isSSLBypassEnabled) {
+                disableCertificateVerification()
+            }
             addNetworkInterceptor(CacheLimitInterceptor())
             addInterceptor(commonHeadersInterceptor)
         }.build()

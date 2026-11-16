@@ -24,6 +24,7 @@ import hanten.wre.app.novel.domain.NovelSmartResume
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.stats.domain.StatsCollector
+import org.jsoup.Jsoup
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -347,7 +348,9 @@ class NovelReaderViewModel @Inject constructor(
 				val html = prefetchedChapters.remove(nextChapter.id) ?: fetchChapterHtml(nextChapter)
 				if (!html.isNullOrBlank()) {
 					appendedChapterIndex = nextIdx
-					onChapterAppended.call(Triple(nextChapter.title.orEmpty(), html, nextIdx))
+					onChapterAppended.call(
+						Triple(nextChapter.title.orEmpty(), sanitizeNovelHtml(html), nextIdx),
+					)
 					prefetchNextChapter(nextIdx)
 				}
 			} catch (e: Exception) {
@@ -470,7 +473,32 @@ class NovelReaderViewModel @Inject constructor(
 
 	private fun setChapterContent(html: String) {
 		// Version keeps state emissions unique even when the same chapter HTML is loaded again
-		_chapterContent.value = NovelChapterContent(html, chapterContentVersion.incrementAndGet())
+		_chapterContent.value = NovelChapterContent(
+			sanitizeNovelHtml(html),
+			chapterContentVersion.incrementAndGet(),
+		)
+	}
+
+	/**
+	 * Book HTML is untrusted. Keep layout and images, but remove scripts,
+	 * inline event handlers and javascript: links before it reaches the WebView.
+	 */
+	private fun sanitizeNovelHtml(html: String): String {
+		val doc = Jsoup.parseBodyFragment(html)
+		doc.select("script, iframe, object, embed").remove()
+		for (element in doc.select("*")) {
+			for (attribute in element.attributes().asList()) {
+				val key = attribute.key
+				val value = attribute.value
+				if (key.startsWith("on", ignoreCase = true) ||
+					key.equals("srcdoc", ignoreCase = true) ||
+					value.startsWith("javascript:", ignoreCase = true)
+				) {
+					element.removeAttr(key)
+				}
+			}
+		}
+		return doc.body().html()
 	}
 
 	private suspend fun fetchChapterHtml(chapter: MangaChapter): String? = withContext(Dispatchers.IO) {

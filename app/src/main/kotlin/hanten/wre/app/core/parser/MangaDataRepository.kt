@@ -164,11 +164,15 @@ class MangaDataRepository @Inject constructor(
 		}
 	}
 
-	suspend fun updateChapters(manga: Manga) {
-		val chapters = manga.chapters
-		if (!chapters.isNullOrEmpty() && manga.id in db.getMangaDao()) {
-			db.getChaptersDao().replaceAll(manga.id, chapters.withIndex().toEntities(manga.id))
+	/**
+	 * Refreshes stored metadata and chapters without creating a new database row.
+	 * Library entries are the persistent details cache; non-saved manga stay memory-only.
+	 */
+	suspend fun updateStoredManga(manga: Manga) {
+		if (manga.id !in db.getMangaDao()) {
+			return
 		}
+		storeManga(manga, replaceExisting = true)
 	}
 
 	suspend fun gcChaptersCache() {

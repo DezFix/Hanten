@@ -53,6 +53,7 @@ import hanten.wre.app.core.db.migrations.Migration32To33
 import hanten.wre.app.core.db.migrations.Migration33To34
 import hanten.wre.app.core.db.migrations.Migration34To35
 import hanten.wre.app.core.db.migrations.Migration35To36
+import hanten.wre.app.core.db.migrations.Migration36To37
 import hanten.wre.app.core.db.migrations.Migration2To3
 import hanten.wre.app.core.db.migrations.Migration3To4
 import hanten.wre.app.core.db.migrations.Migration4To5
@@ -90,7 +91,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-const val DATABASE_VERSION = 36
+const val DATABASE_VERSION = 37
 
 @Database(
 	entities = [
@@ -180,6 +181,7 @@ fun getDatabaseMigrations(context: Context): Array<Migration> = arrayOf(
     Migration33To34(),
     Migration34To35(),
     Migration35To36(),
+    Migration36To37(),
 )
 
 fun MangaDatabase(context: Context): MangaDatabase {

@@ -14,6 +14,7 @@ import hanten.wre.app.parsers.util.toArraySet
 import hanten.wre.app.parsers.util.toTitleCase
 
 private const val VALUES_DIVIDER = '\n'
+private const val MAX_DESCRIPTION_LENGTH = 100_000
 
 // Entity to model
 
@@ -41,6 +42,7 @@ fun MangaEntity.toManga(tags: Set<MangaTag>, chapters: List<ChapterEntity>?) = M
 	largeCoverUrl = this.largeCoverUrl,
 	authors = this.authors?.split(VALUES_DIVIDER)?.toArraySet().orEmpty(),
 	source = MangaSource(this.source),
+	description = this.description,
 	tags = tags,
 	chapters = chapters?.toMangaChapters(),
 )
@@ -79,6 +81,8 @@ fun Manga.toEntity() = MangaEntity(
 	state = state?.name,
 	title = title,
 	authors = authors.joinToString(VALUES_DIVIDER.toString()),
+	description = description?.take(MAX_DESCRIPTION_LENGTH),
+	detailsUpdatedAt = System.currentTimeMillis(),
 )
 
 fun MangaTag.toEntity() = TagEntity(

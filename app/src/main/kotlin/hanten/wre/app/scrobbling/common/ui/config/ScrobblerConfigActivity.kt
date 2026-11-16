@@ -26,9 +26,11 @@ import hanten.wre.app.databinding.ActivityScrobblerConfigBinding
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
+import hanten.wre.app.scrobbling.common.ui.ScrobblerAuthHelper
 import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriImportUseCase
 import hanten.wre.app.scrobbling.shikimori.domain.ShikimoriExportUseCase
 import hanten.wre.app.scrobbling.common.ui.config.adapter.ScrobblingMangaAdapter
+import javax.inject.Inject
 import androidx.appcompat.R as appcompatR
 
 @AndroidEntryPoint
@@ -36,6 +38,9 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 	OnListItemClickListener<ScrobblingInfo>, View.OnClickListener {
 
 	private val viewModel: ScrobblerConfigViewModel by viewModels()
+
+	@Inject
+	lateinit var authHelper: ScrobblerAuthHelper
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -103,7 +108,8 @@ class ScrobblerConfigActivity : BaseActivity<ActivityScrobblerConfigBinding>(),
 		if (intent.action == Intent.ACTION_VIEW) {
 			val uri = intent.data ?: return
 			val code = uri.getQueryParameter("code")
-			if (!code.isNullOrEmpty()) {
+			val state = uri.getQueryParameter("state")
+			if (!code.isNullOrEmpty() && authHelper.validateState(this, state)) {
 				viewModel.onAuthCodeReceived(code)
 			}
 		}

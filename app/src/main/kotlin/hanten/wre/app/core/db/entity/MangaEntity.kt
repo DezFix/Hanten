@@ -28,4 +28,6 @@ data class MangaEntity(
 	@ColumnInfo(name = "state") val state: String?,
 	@ColumnInfo(name = "author") val authors: String?,
 	@ColumnInfo(name = "source") val source: String,
+	@ColumnInfo(name = "description") val description: String? = null,
+	@ColumnInfo(name = "details_updated_at") val detailsUpdatedAt: Long = 0L,
 )

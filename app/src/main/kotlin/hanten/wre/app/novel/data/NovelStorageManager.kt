@@ -73,17 +73,31 @@ class NovelStorageManager @Inject constructor(
 			}
 
 			val destFile = novelDestinationFile(uri, sourceFile?.name) ?: return@withContext null
-			if (sourceFile != null) {
-				sourceFile.copyTo(destFile, overwrite = false)
-			} else {
-				context.contentResolver.openInputStream(uri)?.use { input ->
-					FileOutputStream(destFile).use { output ->
-						input.copyTo(output)
-					}
-				} ?: return@withContext null
+			// Copy to *.part first, so an interrupted import never leaves a broken
+			// novel in the managed directory.
+			val partFile = File(destFile.parentFile, destFile.name + ".part")
+			partFile.delete()
+			try {
+				if (sourceFile != null) {
+					sourceFile.copyTo(partFile, overwrite = true)
+				} else {
+					context.contentResolver.openInputStream(uri)?.use { input ->
+						FileOutputStream(partFile).use { output ->
+							input.copyTo(output)
+						}
+					} ?: return@withContext null
+				}
+				if (partFile.length() == 0L) {
+					return@withContext null
+				}
+				val target = destinationWithDetectedExtension(destFile, partFile)
+				if (!partFile.renameTo(target)) {
+					partFile.copyTo(target, overwrite = true)
+				}
+				parseFileToManga(target)
+			} finally {
+				partFile.delete()
 			}
-
-			parseFileToManga(destFile)
 		} catch (e: CancellationException) {
 			throw e
 		} catch (e: Exception) {
@@ -268,6 +282,42 @@ class NovelStorageManager @Inject constructor(
 			}
 		}
 		return null
+	}
+
+	private fun destinationWithDetectedExtension(destFile: File, partFile: File): File {
+		if (destFile.extension.isNotBlank()) {
+			return destFile
+		}
+		val extension = detectNovelExtension(partFile) ?: return destFile
+		var candidate = File(destFile.parentFile, destFile.name + extension)
+		var index = 1
+		while (candidate.exists()) {
+			candidate = File(destFile.parentFile, "${destFile.name} ($index)$extension")
+			index++
+		}
+		return candidate
+	}
+
+	private fun detectNovelExtension(file: File): String? = try {
+		file.inputStream().use { input ->
+			val header = ByteArray(8)
+			val read = input.read(header)
+			when {
+				read >= 4 &&
+					header[0] == '%'.code.toByte() &&
+					header[1] == 'P'.code.toByte() &&
+					header[2] == 'D'.code.toByte() &&
+					header[3] == 'F'.code.toByte() -> ".pdf"
+
+				read >= 2 &&
+					header[0] == 'P'.code.toByte() &&
+					header[1] == 'K'.code.toByte() -> ".epub"
+
+				else -> null
+			}
+		}
+	} catch (e: Exception) {
+		null
 	}
 
 	private fun isInside(dir: File, file: File): Boolean {

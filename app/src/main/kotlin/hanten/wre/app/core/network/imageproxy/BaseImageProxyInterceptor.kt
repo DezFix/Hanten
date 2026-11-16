@@ -16,7 +16,6 @@ import okhttp3.Response
 import org.jsoup.HttpStatusException
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.exceptions.CloudFlareBlockedException
-import hanten.wre.app.core.util.ext.ensureSuccess
 import hanten.wre.app.parsers.util.await
 import hanten.wre.app.parsers.util.isHttpOrHttps
 import hanten.wre.app.parsers.util.runCatchingCancellable
@@ -53,24 +52,36 @@ abstract class BaseImageProxyInterceptor : ImageProxyInterceptor {
 
 	final override suspend fun interceptPageRequest(request: Request, okHttp: OkHttpClient): Response {
 		val newRequest = onInterceptPageRequest(request)
-		return runCatchingCancellable {
-			okHttp.doCall(newRequest)
-		}.recover { error ->
+		val proxyResponse = runCatchingCancellable {
+			okHttp.newCall(newRequest).await()
+		}.getOrElse { error ->
 			logDebug(error, newRequest.url)
-			okHttp.doCall(request).also {
-				if (error.isBlockedByServer()) {
-					blacklist.add(request.url.host)
-				}
+			null
+		}
+		if (proxyResponse != null) {
+			if (proxyResponse.isSuccessful) {
+				return proxyResponse
 			}
-		}.getOrThrow()
+			proxyResponse.close()
+		}
+		// A proxy can return 404/5xx for an image the origin still serves.
+		// Fall back to the direct request and let the caller render a page error
+		// instead of turning every 404 into a noisy exception with a stack trace.
+		val direct = okHttp.newCall(request).await()
+		if (!direct.isSuccessful) {
+			logStatus(direct.code, request.url)
+		}
+		return direct
 	}
 
 	protected abstract suspend fun onInterceptImageRequest(request: ImageRequest, url: HttpUrl): ImageRequest
 
 	protected abstract suspend fun onInterceptPageRequest(request: Request): Request
 
-	private suspend fun OkHttpClient.doCall(request: Request): Response {
-		return newCall(request).await().ensureSuccess()
+	private fun logStatus(code: Int, url: Any) {
+		if (BuildConfig.DEBUG) {
+			Log.w("ImageProxy", "HTTP $code: $url")
+		}
 	}
 
 	private fun logDebug(e: Throwable, url: Any) {

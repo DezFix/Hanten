@@ -1,8 +1,6 @@
 package hanten.wre.app.browser
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.os.Looper
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -10,8 +8,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.AnyThread
 import androidx.annotation.WorkerThread
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import hanten.wre.app.core.network.webview.adblock.AdBlock
 import java.io.ByteArrayInputStream
 
@@ -23,17 +19,22 @@ open class BrowserClient(
 	@Volatile
 	var isAdBlockEnabled: Boolean = true
 
+	@Volatile
+	private var currentUrl: String? = null
+
 	/**
 	 * https://stackoverflow.com/questions/57414530/illegalstateexception-reasonphrase-cant-be-empty-with-android-webview
 	 */
 
 	override fun onPageFinished(webView: WebView, url: String) {
 		super.onPageFinished(webView, url)
+		currentUrl = url
 		callback.onLoadingStateChanged(isLoading = false)
 	}
 
 	override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
 		super.onPageStarted(view, url, favicon)
+		currentUrl = url
 		callback.onLoadingStateChanged(isLoading = true)
 	}
 
@@ -54,11 +55,13 @@ open class BrowserClient(
 
 	override fun onPageCommitVisible(view: WebView, url: String) {
 		super.onPageCommitVisible(view, url)
+		currentUrl = url
 		callback.onTitleChanged(view.title.orEmpty(), url)
 	}
 
 	override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
 		super.doUpdateVisitedHistory(view, url, isReload)
+		currentUrl = url
 		callback.onHistoryChanged()
 	}
 
@@ -87,13 +90,6 @@ open class BrowserClient(
 	private fun emptyResponse(): WebResourceResponse =
 		WebResourceResponse("text/plain", "utf-8", ByteArrayInputStream(byteArrayOf()))
 
-	@SuppressLint("WrongThread")
 	@AnyThread
-	private fun WebView.getUrlSafe(): String? = if (Looper.myLooper() == Looper.getMainLooper()) {
-		url
-	} else {
-		runBlocking(Dispatchers.Main.immediate) {
-			url
-		}
-	}
+	private fun WebView.getUrlSafe(): String? = currentUrl
 }

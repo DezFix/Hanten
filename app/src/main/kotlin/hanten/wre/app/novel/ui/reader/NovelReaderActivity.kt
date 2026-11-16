@@ -184,7 +184,10 @@ class NovelReaderActivity :
 		with(viewBinding.webView.settings) {
 			javaScriptEnabled = true
 			domStorageEnabled = true
-			allowFileAccess = true
+			// Book resources are served through shouldInterceptRequest; the
+			// WebView itself must not open arbitrary local or content URIs.
+			allowFileAccess = false
+			allowContentAccess = false
 			loadWithOverviewMode = false
 			useWideViewPort = false
 			// Respect the system font scale (accessibility) without breaking the reader zoom.
