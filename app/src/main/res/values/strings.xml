@@ -1052,4 +1052,12 @@
     <string name="novel_fullscreen">Fullscreen</string>
     <string name="novel_chapter_heading">Chapter %1$s</string>
     <string name="novel_chapter_heading_volume">Chapter %1$d.%2$s</string>
+    <string name="related_works_tracker">Related works (from tracker)</string>
+    <string name="tracker_charging_only">Only while charging</string>
+    <string name="tracker_charging_only_summary">Check for new chapters only when the device is charging</string>
+    <string name="preferred_branches">Preferred translation teams</string>
+    <string name="preferred_branches_summary">Comma-separated team names in priority order. Used to pick the default translation when a title has several</string>
+    <string name="novel_tts_sleep_timer">Sleep timer</string>
+    <string name="novel_tts_sleep_off">Off</string>
+    <string name="novel_tts_sleep_minutes">In %d min</string>
 </resources>

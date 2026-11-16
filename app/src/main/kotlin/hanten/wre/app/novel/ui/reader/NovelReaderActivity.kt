@@ -3,6 +3,7 @@ package hanten.wre.app.novel.ui.reader
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -152,10 +153,9 @@ class NovelReaderActivity :
 	}
 
 	override fun onPause() {
-		if (isTtsSpeaking) {
-			tts?.stop()
-			setTtsSpeaking(false)
-		}
+		// Keep reading aloud when the screen turns off or another app is on top:
+		// listening with the phone in a pocket is the main TTS use case.
+		// The engine is stopped in onDestroy when the reader really closes.
 		viewModel.onPause()
 		super.onPause()
 	}
@@ -173,6 +173,7 @@ class NovelReaderActivity :
 	}
 
 	override fun onDestroy() {
+		viewBinding.root.removeCallbacks(ttsSleepRunnable)
 		bookmarkJob?.cancel()
 		tts?.stop()
 		tts?.shutdown()
@@ -300,6 +301,28 @@ class NovelReaderActivity :
 				}
 			}
 
+			override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+				val uri = request?.url ?: return false
+				if (!request.isForMainFrame) return false
+				if (uri.host == "hanten.local" && uri.path == RETRY_PATH) {
+					viewModel.retryCurrentChapter()
+					return true
+				}
+				// Footnotes and in-book anchors stay inside the document.
+				if (uri.fragment != null && uri.buildUpon().fragment(null).build().toString()
+						.trimEnd('/') == view?.url?.substringBefore('#')?.trimEnd('/')
+				) {
+					return false
+				}
+				// Any other link would replace the chapter with a web page: open it outside.
+				if (uri.scheme == "http" || uri.scheme == "https") {
+					runCatching {
+						startActivity(Intent(Intent.ACTION_VIEW, uri))
+					}
+				}
+				return true
+			}
+
 			override fun onPageFinished(view: WebView?, url: String?) {
 				super.onPageFinished(view, url)
 				isWebViewReady = true
@@ -377,7 +400,8 @@ class NovelReaderActivity :
 		}
 		engine.language = language
 		viewBinding.webView.evaluateJavascript(
-			"(function(){var e=document.getElementById('content')||document.body;return e?e.innerText:'';})()",
+			"(function(){try{return window.getTextFromCurrentParagraph();}catch(x){" +
+				"var e=document.getElementById('content')||document.body;return e?e.innerText:'';}})()",
 		) { result ->
 			val text = runCatching {
 				org.json.JSONTokener(result).nextValue() as? String
@@ -427,6 +451,36 @@ class NovelReaderActivity :
 			}
 		}
 		return -1
+	}
+
+	private val ttsSleepRunnable = Runnable {
+		if (isTtsSpeaking) {
+			tts?.stop()
+			setTtsSpeaking(false)
+		}
+	}
+
+	/** Long press on the TTS button: stop reading aloud after N minutes. */
+	private fun showTtsSleepTimerDialog() {
+		val minutes = intArrayOf(0, 15, 30, 45, 60, 90)
+		val labels = minutes.map { value ->
+			if (value == 0) getString(R.string.novel_tts_sleep_off) else getString(R.string.novel_tts_sleep_minutes, value)
+		}.toTypedArray()
+		MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.novel_tts_sleep_timer)
+			.setItems(labels) { _, which ->
+				viewBinding.root.removeCallbacks(ttsSleepRunnable)
+				val value = minutes[which]
+				if (value > 0) {
+					viewBinding.root.postDelayed(ttsSleepRunnable, value * 60_000L)
+					Toast.makeText(this, getString(R.string.novel_tts_sleep_minutes, value), Toast.LENGTH_SHORT).show()
+					if (!isTtsSpeaking) {
+						toggleTts()
+					}
+				}
+			}
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
 	}
 
 	private fun setTtsSpeaking(value: Boolean) {
@@ -538,6 +592,10 @@ class NovelReaderActivity :
 		viewBinding.buttonBookmark.setOnClickListener { toggleBookmark() }
 		viewBinding.buttonAutoScroll.setOnClickListener { toggleAutoScroll() }
 		viewBinding.buttonTts.setOnClickListener { toggleTts() }
+		viewBinding.buttonTts.setOnLongClickListener {
+			showTtsSleepTimerDialog()
+			true
+		}
 
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)
@@ -984,6 +1042,7 @@ class NovelReaderActivity :
 		const val STATE_AUTO_SCROLL_ACTIVE = "novel_auto_scroll_active"
 		const val SEARCH_DEBOUNCE_MS = 250L
 		const val TTS_CHUNK_LENGTH = 3000
+		const val RETRY_PATH = "/novel-retry"
 		val LOCAL_FILE_PATH_PREFIX: String =
 			NovelReaderSettings.LOCAL_FILE_URL_PREFIX.substringAfter("hanten.local")
 		const val DEFAULT_USER_AGENT =

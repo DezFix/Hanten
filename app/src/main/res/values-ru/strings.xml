@@ -1119,4 +1119,12 @@
     <string name="novel_fullscreen">Полноэкранный режим</string>
     <string name="novel_chapter_heading">Глава %1$s</string>
     <string name="novel_chapter_heading_volume">Глава %1$d.%2$s</string>
+    <string name="related_works_tracker">Связанные произведения</string>
+    <string name="tracker_charging_only">Только во время зарядки</string>
+    <string name="tracker_charging_only_summary">Проверять новые главы только когда устройство заряжается</string>
+    <string name="preferred_branches">Любимые команды перевода</string>
+    <string name="preferred_branches_summary">Названия команд через запятую, по приоритету. Используются для выбора перевода по умолчанию, если у тайтла их несколько</string>
+    <string name="novel_tts_sleep_timer">Таймер сна</string>
+    <string name="novel_tts_sleep_off">Выключен</string>
+    <string name="novel_tts_sleep_minutes">Через %d мин</string>
 </resources>

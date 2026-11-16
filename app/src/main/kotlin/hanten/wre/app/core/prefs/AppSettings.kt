@@ -185,6 +185,12 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 	val isTrackerWifiOnly: Boolean
 		get() = prefs.getBoolean(KEY_TRACKER_WIFI_ONLY, false)
 
+	val preferredBranches: String?
+		get() = prefs.getString(KEY_PREFERRED_BRANCHES, null)
+
+	val isTrackerChargingOnly: Boolean
+		get() = prefs.getBoolean(KEY_TRACKER_CHARGING_ONLY, false)
+
 	val trackerFrequencyFactor: Float
 		get() = prefs.getString(KEY_TRACKER_FREQUENCY, null)?.toFloatOrNull() ?: 1f
 
@@ -779,6 +785,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_READER_ORIENTATION = "reader_orientation"
 		const val KEY_TRACKER_ENABLED = "tracker_enabled"
 		const val KEY_TRACKER_WIFI_ONLY = "tracker_wifi"
+		const val KEY_TRACKER_CHARGING_ONLY = "tracker_charging"
+		const val KEY_PREFERRED_BRANCHES = "preferred_branches"
 		const val KEY_TRACKER_FREQUENCY = "tracker_freq"
 		const val KEY_TRACK_SOURCES = "track_sources"
 		const val KEY_TRACK_CATEGORIES = "track_categories"

@@ -21,6 +21,7 @@ import hanten.wre.app.scrobbling.common.data.ScrobblerStorage
 import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerMangaInfo
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerRelated
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerType
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
@@ -234,6 +235,46 @@ class AniListRepository @Inject constructor(
 			""",
 		)
 		return ScrobblerMangaInfo(response.requireData().getJSONObject("Media"))
+	}
+
+	override suspend fun getRelated(id: Long): List<ScrobblerRelated> {
+		val response = doRequest(
+			REQUEST_QUERY,
+			"""
+			Media(id: $id) {
+				relations {
+					edges {
+						relationType
+						node {
+							type
+							title {
+								userPreferred
+							}
+							siteUrl
+						}
+					}
+				}
+			}
+			""",
+		)
+		val edges = response.requireData().getJSONObject("Media")
+			.optJSONObject("relations")
+			?.optJSONArray("edges")
+			?: return emptyList()
+		return edges.mapJSON { edge ->
+			val node = edge.optJSONObject("node") ?: return@mapJSON null
+			val title = node.optJSONObject("title")?.getStringOrNull("userPreferred") ?: return@mapJSON null
+			ScrobblerRelated(
+				relation = edge.getStringOrNull("relationType")
+					?.lowercase()
+					?.replace('_', ' ')
+					?.replaceFirstChar { it.uppercase() }
+					.orEmpty(),
+				title = title,
+				url = node.getStringOrNull("siteUrl").orEmpty(),
+				isManga = node.getStringOrNull("type") == "MANGA",
+			)
+		}.filterNotNull()
 	}
 
 	private suspend fun saveRate(json: JSONObject, mangaId: Long) {

@@ -742,6 +742,21 @@ object NovelHtmlTemplate {
 				window.captureAnchor = captureAnchor;
 				window.restoreAnchor = restoreAnchor;
 				window.getCurrentParagraph = getCurrentParagraph;
+				// Text for TTS: from the paragraph on screen to the end of the loaded text.
+				window.getTextFromCurrentParagraph = function() {
+					const blocks = getParagraphElements();
+					if (!blocks.length) {
+						const e = document.getElementById('content') || document.body;
+						return e ? e.innerText : '';
+					}
+					const start = Math.max(0, getCurrentParagraph());
+					const parts = [];
+					for (let i = start; i < blocks.length; i++) {
+						const text = blocks[i].innerText;
+						if (text && text.trim().length) parts.push(text.trim());
+					}
+					return parts.join('\n');
+				};
 				window.scrollToParagraph = scrollToParagraph;
 				window.restoreBookmark = restoreBookmark;
 				window.setAutoScrollSpeed = setAutoScrollSpeed;

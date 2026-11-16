@@ -33,6 +33,7 @@ import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.scrobbling.common.domain.Scrobbler
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerRelated
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingStatus
 import hanten.wre.app.stats.data.StatsRepository
@@ -167,6 +168,26 @@ class DetailsViewModel @Inject constructor(
 	val scrobblingInfo: StateFlow<List<ScrobblingInfo>> = interactor.observeScrobblingInfo(mangaId)
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
+
+	/** Curated relations from a linked tracker; only manga/ranobe entries are kept. */
+	val relatedWorks: StateFlow<List<ScrobblerRelated>> = scrobblingInfo
+		.map { infos -> infos.map { it.scrobbler } }
+		.distinctUntilChanged()
+		.mapLatest { services ->
+			for (service in services) {
+				val scrobbler = scrobblers.firstOrNull { it.scrobblerService == service && it.isEnabled } ?: continue
+				val related = runCatchingCancellable {
+					scrobbler.getRelated(mangaId)
+				}.onFailure {
+					it.printStackTraceDebug("DetailsViewModel::relatedWorks")
+				}.getOrNull().orEmpty().filter { it.isManga }
+				if (related.isNotEmpty()) {
+					return@mapLatest related
+				}
+			}
+			emptyList()
+		}.flowOn(Dispatchers.IO)
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
 	val tags = manga.mapLatest {
 		mangaListMapper.mapTags(it?.tags.orEmpty())

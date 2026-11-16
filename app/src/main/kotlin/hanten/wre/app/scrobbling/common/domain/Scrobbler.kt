@@ -16,6 +16,7 @@ import hanten.wre.app.scrobbling.common.data.ScrobblerRepository
 import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerMangaInfo
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerRelated
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblingInfo
@@ -122,6 +123,12 @@ abstract class Scrobbler(
 
 	suspend fun unregisterScrobbling(mangaId: Long) {
 		repository.unregister(mangaId)
+	}
+
+	/** Related works reported by the tracker for the linked entry, or empty when not linked. */
+	suspend fun getRelated(mangaId: Long): List<ScrobblerRelated> {
+		val targetId = db.getScrobblingDao().find(scrobblerService.id, mangaId)?.targetId ?: return emptyList()
+		return repository.getRelated(targetId)
 	}
 
 	protected suspend fun getMangaInfo(id: Long): ScrobblerMangaInfo {

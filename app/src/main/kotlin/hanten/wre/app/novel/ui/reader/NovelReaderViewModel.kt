@@ -470,7 +470,20 @@ class NovelReaderViewModel @Inject constructor(
 	}
 
 	private fun errorHtml(message: String): String {
-		return "<div style='padding: 32px; text-align: center;'><p>$message</p></div>"
+		val retry = context.getString(R.string.try_again)
+		return "<div style='padding: 32px; text-align: center;'><p>$message</p>" +
+			"<p><a href='$RETRY_URL' style='display:inline-block;padding:12px 24px;" +
+			"border:1px solid currentColor;border-radius:24px;color:inherit;text-decoration:none;'>" +
+			"$retry</a></p></div>"
+	}
+
+	/** Called from the error page: reload details when there are no chapters yet, else the chapter. */
+	fun retryCurrentChapter() {
+		if (_chapters.value.isEmpty()) {
+			loadNovel()
+		} else {
+			loadChapterAtIndex(_currentChapterIndex.value)
+		}
 	}
 
 	private fun setChapterContent(html: String) {
@@ -615,5 +628,6 @@ class NovelReaderViewModel @Inject constructor(
 		private const val MAX_PREFETCHED_CHAPTERS = 4
 		private const val EPUB_BASE_URL = "https://futon.reader/"
 		private const val PROGRESS_SAVE_INTERVAL_MS = 5_000L
+		const val RETRY_URL = "https://hanten.local/novel-retry"
 	}
 }

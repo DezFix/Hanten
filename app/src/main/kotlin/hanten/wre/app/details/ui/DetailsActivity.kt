@@ -4,7 +4,10 @@ import android.app.assist.AssistContent
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.ClickableSpan
 import android.text.SpannedString
 import android.view.Gravity
 import android.view.View
@@ -73,6 +76,7 @@ import hanten.wre.app.core.util.ext.drawableStart
 import hanten.wre.app.core.util.ext.end
 import hanten.wre.app.core.util.ext.enqueueWith
 import hanten.wre.app.core.util.ext.getQuantityStringSafe
+import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.isTextTruncated
 import hanten.wre.app.core.util.ext.joinToStringWithLimit
@@ -88,6 +92,7 @@ import hanten.wre.app.databinding.ActivityDetailsBinding
 import hanten.wre.app.databinding.LayoutDetailsTableBinding
 import hanten.wre.app.details.data.MangaDetails
 import hanten.wre.app.details.data.ReadingTime
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerRelated
 import hanten.wre.app.details.service.MangaPrefetchService
 import hanten.wre.app.details.ui.model.ChapterListItem
 import hanten.wre.app.details.ui.model.HistoryInfo
@@ -183,6 +188,7 @@ class DetailsActivity :
 		viewModel.isLoading.observe(this, ::onLoadingStateChanged)
 		viewModel.scrobblingInfo.observe(this, ::onScrobblingInfoChanged)
 		viewModel.localSize.observe(this, ::onLocalSizeChanged)
+		viewModel.relatedWorks.observe(this, ::onRelatedWorksChanged)
 		viewModel.favouriteCategories.observe(this, ::onFavoritesChanged)
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.isStatsAvailable.observe(this, menuInvalidator)
@@ -368,6 +374,47 @@ class DetailsActivity :
 			infoBinding.textViewLocal.isVisible = true
 			infoBinding.textViewLocalLabel.isVisible = true
 		}
+	}
+
+	private fun onRelatedWorksChanged(related: List<ScrobblerRelated>) {
+		val textView = viewBinding.textViewRelatedWorks
+		if (related.isEmpty()) {
+			textView.isGone = true
+			return
+		}
+		val linkColor = getThemeColor(androidx.appcompat.R.attr.colorPrimary, Color.LTGRAY)
+		val text = SpannableStringBuilder()
+		text.append(getString(R.string.related_works_tracker))
+		for ((relation, items) in related.groupBy { it.relation }) {
+			text.append('\n')
+			if (relation.isNotBlank()) {
+				text.append(relation).append(": ")
+			}
+			items.forEachIndexed { index, item ->
+				if (index > 0) text.append(", ")
+				val start = text.length
+				text.append('«').append(item.title).append('»')
+				// The related work may live on another source: search all of them by title.
+				text.setSpan(
+					object : ClickableSpan() {
+						override fun onClick(widget: View) {
+							router.openSearch(item.title)
+						}
+
+						override fun updateDrawState(ds: TextPaint) {
+							ds.color = linkColor
+							ds.isUnderlineText = false
+						}
+					},
+					start,
+					text.length,
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+				)
+			}
+		}
+		textView.text = text
+		textView.movementMethod = LinkMovementMethodCompat.getInstance()
+		textView.isVisible = true
 	}
 
 	private fun onLoadingStateChanged(isLoading: Boolean) {

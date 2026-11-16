@@ -330,6 +330,7 @@ class TrackWorker @AssistedInject constructor(
 
 		private fun createConstraints() = Constraints.Builder()
 			.setRequiredNetworkType(if (settings.isTrackerWifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED)
+			.setRequiresCharging(settings.isTrackerChargingOnly)
 			.build()
 	}
 

@@ -17,6 +17,13 @@
 		android:summary="@string/tracker_wifi_only_summary"
 		android:title="@string/only_using_wifi" />
 
+	<SwitchPreferenceCompat
+		android:defaultValue="false"
+		android:dependency="tracker_enabled"
+		android:key="tracker_charging"
+		android:summary="@string/tracker_charging_only_summary"
+		android:title="@string/tracker_charging_only" />
+
 	<ListPreference
 		android:defaultValue="1"
 		android:dependency="tracker_enabled"

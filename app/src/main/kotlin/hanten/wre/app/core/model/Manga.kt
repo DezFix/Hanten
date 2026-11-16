@@ -107,6 +107,8 @@ fun Manga.getPreferredBranch(history: MangaHistory?): String? {
 	if (groups.size == 1) {
 		return groups.keys.first()
 	}
+	// The user's favourite translation teams win over language guessing.
+	PreferredBranches.pick(groups)?.let { return it }
 	for (locale in LocaleListCompat.getAdjustedDefault()) {
 		val displayLanguage = locale.getDisplayLanguage(locale)
 		val displayName = locale.getDisplayName(locale)

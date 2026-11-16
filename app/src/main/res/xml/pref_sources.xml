@@ -50,6 +50,12 @@
         android:title="@string/incognito_for_nsfw"
         app:useSimpleSummaryProvider="true" />
 
+    <EditTextPreference
+        android:key="preferred_branches"
+        android:summary="@string/preferred_branches_summary"
+        android:title="@string/preferred_branches"
+        app:allowDividerAbove="true" />
+
     <Preference
         android:key="tags_blacklist"
         android:title="@string/tags_blacklist"

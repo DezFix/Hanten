@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,6 +17,8 @@ import com.google.android.material.color.MaterialColors
 import hanten.wre.app.databinding.ItemNovelChapterBinding
 import hanten.wre.app.databinding.SheetNovelChaptersBinding
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import androidx.appcompat.R as appcompatR
 import com.google.android.material.R as materialR
@@ -67,20 +70,32 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 			callback?.onChapterSelected(index)
 		}
 		binding.chaptersList.adapter = adapter
+		val query = MutableStateFlow("")
+		val downloadedOnly = MutableStateFlow(false)
+		binding.editSearch.doAfterTextChanged { query.value = it?.toString().orEmpty().trim() }
+		binding.chipDownloaded.setOnCheckedChangeListener { _, isChecked -> downloadedOnly.value = isChecked }
 		var isScrolledToCurrent = false
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-				source.observeChapterList().collect { list ->
-					val titles = list.titles
-					val downloaded = list.downloaded
-					val currentIndex = list.currentIndex.coerceIn(0, (titles.size - 1).coerceAtLeast(0))
-					binding.chaptersList.isVisible = titles.isNotEmpty()
-					binding.textEmpty.isVisible = titles.isEmpty()
+				combine(source.observeChapterList(), query, downloadedOnly) { list, q, onlyDownloaded ->
+					Triple(list, q, onlyDownloaded)
+				}.collect { (list, q, onlyDownloaded) ->
+					binding.chipDownloaded.isVisible = list.downloaded.any { it }
+					// Search by title or by chapter number ("125" finds the 125th chapter).
+					val number = q.toIntOrNull()
+					val indices = list.titles.indices.filter { index ->
+						(!onlyDownloaded || list.downloaded.getOrElse(index) { false }) &&
+							(q.isEmpty() || list.titles[index].contains(q, ignoreCase = true) || number == index + 1)
+					}
+					binding.chaptersList.isVisible = indices.isNotEmpty()
+					binding.textEmpty.isVisible = indices.isEmpty()
 					// Update in place: replacing the adapter would jump the list back to the top.
-					adapter.setData(titles, downloaded, currentIndex)
-					if (titles.isNotEmpty() && !isScrolledToCurrent) {
+					adapter.setData(list.titles, list.downloaded, list.currentIndex, indices)
+					if (indices.isNotEmpty() && !isScrolledToCurrent && q.isEmpty() && !onlyDownloaded) {
 						isScrolledToCurrent = true
-						binding.chaptersList.scrollToPosition(currentIndex)
+						binding.chaptersList.scrollToPosition(
+							indices.indexOf(list.currentIndex).coerceAtLeast(0),
+						)
 					}
 				}
 			}
@@ -100,12 +115,14 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 		private var titles: List<String> = emptyList()
 		private var downloaded: BooleanArray = BooleanArray(0)
 		private var currentIndex: Int = -1
+		private var indices: List<Int> = emptyList()
 
 		@SuppressLint("NotifyDataSetChanged")
-		fun setData(titles: List<String>, downloaded: BooleanArray, currentIndex: Int) {
+		fun setData(titles: List<String>, downloaded: BooleanArray, currentIndex: Int, indices: List<Int>) {
 			this.titles = titles
 			this.downloaded = downloaded
 			this.currentIndex = currentIndex
+			this.indices = indices
 			notifyDataSetChanged()
 		}
 
@@ -116,11 +133,12 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 			return ViewHolder(ItemNovelChapterBinding.inflate(inflater, parent, false))
 		}
 
-		override fun getItemCount(): Int = titles.size
+		override fun getItemCount(): Int = indices.size
 
 		override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-			val isCurrent = position == currentIndex
-			holder.binding.textChapterTitle.text = titles[position]
+			val chapterIndex = indices[position]
+			val isCurrent = chapterIndex == currentIndex
+			holder.binding.textChapterTitle.text = titles[chapterIndex]
 			holder.binding.textChapterTitle.setTextColor(
 				MaterialColors.getColor(
 					holder.itemView,
@@ -128,11 +146,11 @@ class NovelChaptersSheet : BottomSheetDialogFragment() {
 				),
 			)
 			holder.itemView.isSelected = isCurrent
-			holder.binding.imageDownloaded.isVisible = downloaded.getOrElse(position) { false }
+			holder.binding.imageDownloaded.isVisible = downloaded.getOrElse(chapterIndex) { false }
 			holder.itemView.setOnClickListener {
-				val index = holder.bindingAdapterPosition
-				if (index != RecyclerView.NO_POSITION) {
-					onSelected(index)
+				val adapterPosition = holder.bindingAdapterPosition
+				if (adapterPosition != RecyclerView.NO_POSITION) {
+					onSelected(indices[adapterPosition])
 				}
 			}
 		}

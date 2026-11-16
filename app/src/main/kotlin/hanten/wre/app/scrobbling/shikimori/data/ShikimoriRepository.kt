@@ -23,10 +23,12 @@ import hanten.wre.app.scrobbling.common.data.ScrobblingEntity
 import hanten.wre.app.scrobbling.common.domain.ScrobblerAuthRequiredException
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerManga
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerMangaInfo
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerRelated
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerType
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerUser
 import okio.IOException
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
@@ -268,6 +270,32 @@ class ShikimoriRepository @Inject constructor(
 			.url("${BASE_URL}api/mangas/$id")
 		val response = okHttp.newCall(request.build()).await().parseJson()
 		return ScrobblerMangaInfo(response)
+	}
+
+	override suspend fun getRelated(id: Long): List<ScrobblerRelated> {
+		val request = Request.Builder()
+			.get()
+			.url("${BASE_URL}api/mangas/$id/related")
+		val response = okHttp.newCall(request.build()).await().parseJsonArray()
+		val isRussianUi = Locale.getDefault().language in setOf("ru", "uk", "be")
+		return response.mapJSON { jo ->
+			val manga = jo.optJSONObject("manga")
+			val anime = jo.optJSONObject("anime")
+			val target = manga ?: anime ?: return@mapJSON null
+			val relation = (if (isRussianUi) jo.getStringOrNull("relation_russian") else null)
+				?: jo.getStringOrNull("relation")
+				?: ""
+			val title = (if (isRussianUi) target.getStringOrNull("russian") else null)
+				?.takeIf { it.isNotBlank() }
+				?: target.getStringOrNull("name")
+				?: return@mapJSON null
+			ScrobblerRelated(
+				relation = relation,
+				title = title,
+				url = target.getStringOrNull("url")?.toAbsoluteUrl(DOMAIN).orEmpty(),
+				isManga = manga != null,
+			)
+		}.filterNotNull()
 	}
 
 	suspend fun getUserRates(): List<ShikimoriUserRate> {

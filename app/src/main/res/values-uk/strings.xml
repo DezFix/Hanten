@@ -1122,4 +1122,12 @@
     <string name="novel_fullscreen">Повноекранний режим</string>
     <string name="novel_chapter_heading">Розділ %1$s</string>
     <string name="novel_chapter_heading_volume">Розділ %1$d.%2$s</string>
+    <string name="related_works_tracker">Пов\'язані твори</string>
+    <string name="tracker_charging_only">Лише під час заряджання</string>
+    <string name="tracker_charging_only_summary">Перевіряти нові розділи лише коли пристрій заряджається</string>
+    <string name="preferred_branches">Улюблені команди перекладу</string>
+    <string name="preferred_branches_summary">Назви команд через кому, за пріоритетом. Використовуються для вибору перекладу за замовчуванням, якщо в тайтлу їх кілька</string>
+    <string name="novel_tts_sleep_timer">Таймер сну</string>
+    <string name="novel_tts_sleep_off">Вимкнено</string>
+    <string name="novel_tts_sleep_minutes">Через %d хв</string>
 </resources>

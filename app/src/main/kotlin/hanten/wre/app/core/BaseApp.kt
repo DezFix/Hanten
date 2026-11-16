@@ -1,6 +1,7 @@
 package hanten.wre.app.core
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,6 +12,7 @@ import dagger.hilt.android.HiltAndroidApp
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.os.AppValidator
+import hanten.wre.app.core.model.PreferredBranches
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.util.ext.processLifecycleScope
 import hanten.wre.app.core.util.ext.printStackTraceDebug
@@ -80,12 +82,21 @@ open class BaseApp : Application(), Configuration.Provider {
 			Security.insertProviderAt(Conscrypt.newProvider(), 1)
 		}
 		setupActivityLifecycleCallbacks()
+		PreferredBranches.update(settings.preferredBranches)
+		settings.subscribe(preferredBranchesListener)
 		mihonExtensionManager.initialize()
 		processLifecycleScope.launch(Dispatchers.IO) {
 			setupDatabaseObservers()
 			localStorageChanges.collect(localMangaIndexProvider.get())
 		}
 		workScheduleManager.init()
+	}
+
+	// Kept as a field: SharedPreferences holds listeners weakly.
+	private val preferredBranchesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+		if (key == AppSettings.KEY_PREFERRED_BRANCHES) {
+			PreferredBranches.update(settings.preferredBranches)
+		}
 	}
 
 	@WorkerThread
