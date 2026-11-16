@@ -84,9 +84,30 @@ abstract class MangaDao {
 	)
 	abstract suspend fun cleanup(idsToKeep: Set<Long>)
 
+	@Query("SELECT description FROM manga WHERE manga_id = :id")
+	protected abstract suspend fun findDescription(id: Long): String?
+
+	@Query("SELECT details_updated_at FROM manga WHERE manga_id = :id")
+	protected abstract suspend fun findDetailsUpdatedAt(id: Long): Long?
+
 	@Transaction
 	open suspend fun upsert(manga: MangaEntity, tags: Iterable<TagEntity>? = null) {
-		upsert(manga)
+		// List items (favourites, suggestions, bookmarks, download queue) usually come
+		// without a description. Do not wipe the cached details with a list snapshot.
+		val entity = if (manga.description == null) {
+			val cached = findDescription(manga.id)
+			if (cached != null) {
+				manga.copy(
+					description = cached,
+					detailsUpdatedAt = findDetailsUpdatedAt(manga.id) ?: 0L,
+				)
+			} else {
+				manga
+			}
+		} else {
+			manga
+		}
+		upsert(entity)
 		if (tags != null) {
 			clearTagRelation(manga.id)
 			tags.map {

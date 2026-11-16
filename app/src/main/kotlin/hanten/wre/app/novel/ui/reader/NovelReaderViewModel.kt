@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.R
 import hanten.wre.app.core.model.isNovel
+import hanten.wre.app.core.model.toReaderHtml
 import hanten.wre.app.core.model.isNsfw
 import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
@@ -25,6 +26,7 @@ import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.stats.domain.StatsCollector
 import org.jsoup.Jsoup
+import hanten.wre.app.parsers.util.runCatchingCancellable
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -485,20 +487,33 @@ class NovelReaderViewModel @Inject constructor(
 	 */
 	private fun sanitizeNovelHtml(html: String): String {
 		val doc = Jsoup.parseBodyFragment(html)
-		doc.select("script, iframe, object, embed").remove()
+		// Pretty printing changes whitespace between inline elements and costs time on long chapters.
+		doc.outputSettings().prettyPrint(false)
+		// EPUB chapters are full XHTML documents: keep <link>/<style> (publisher CSS), but drop
+		// <base> and refresh redirects that would move the reader away from the book.
+		doc.select("script, iframe, object, embed, base, meta[http-equiv]").remove()
 		for (element in doc.select("*")) {
 			for (attribute in element.attributes().asList()) {
 				val key = attribute.key
-				val value = attribute.value
+				val value = attribute.value.trim()
 				if (key.startsWith("on", ignoreCase = true) ||
 					key.equals("srcdoc", ignoreCase = true) ||
-					value.startsWith("javascript:", ignoreCase = true)
+					value.startsWith("javascript:", ignoreCase = true) ||
+					value.startsWith("vbscript:", ignoreCase = true)
 				) {
 					element.removeAttr(key)
+				} else if (value.startsWith("file://", ignoreCase = true)) {
+					element.attr(key, toLocalFileUrl(value))
 				}
 			}
 		}
 		return doc.body().html()
+	}
+
+	private fun toLocalFileUrl(fileUrl: String): String {
+		val path = runCatching { URI(fileUrl).path }.getOrNull()
+			?: fileUrl.removePrefix("file://")
+		return NovelReaderSettings.LOCAL_FILE_URL_PREFIX + path
 	}
 
 	private suspend fun fetchChapterHtml(chapter: MangaChapter): String? = withContext(Dispatchers.IO) {
@@ -558,16 +573,24 @@ class NovelReaderViewModel @Inject constructor(
 		val cur = _manga.value ?: return
 		val chap = _currentChapter.value ?: return
 		if (isIncognitoMode(cur)) return
+		// Capture the position now: on a chapter switch the index and paragraph
+		// change right after this call, before the coroutine gets to run.
+		val chaps = _chapters.value
+		val page = _currentChapterIndex.value
+		val paragraph = currentParagraph
 		viewModelScope.launch(Dispatchers.IO) {
-			val chaps = _chapters.value
-			historyRepository.addOrUpdate(
-				manga = cur.copy(chapters = chaps),
-				chapterId = chap.id,
-				page = _currentChapterIndex.value,
-				scroll = if (currentParagraph >= 0) -currentParagraph - 1 else 0,
-				percent = percent,
-				force = false,
-			)
+			runCatchingCancellable {
+				historyRepository.addOrUpdate(
+					manga = cur.copy(chapters = chaps),
+					chapterId = chap.id,
+					page = page,
+					scroll = if (paragraph >= 0) -paragraph - 1 else 0,
+					percent = percent,
+					force = false,
+				)
+			}.onFailure {
+				it.printStackTraceDebug()
+			}
 		}
 	}
 

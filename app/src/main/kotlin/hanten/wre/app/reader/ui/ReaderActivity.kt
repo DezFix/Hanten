@@ -123,6 +123,8 @@ class ReaderActivity :
     // Tracks whether the foldable device is in an unfolded state (half-opened or flat)
     private var isFoldUnfolded: Boolean = false
 
+    private var isRedirectedToTextReader = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityReaderBinding.inflate(layoutInflater))
@@ -140,7 +142,9 @@ class ReaderActivity :
         // Widgets and launcher shortcuts know only the manga id, so a text work may land here.
         viewModel.mangaDetails.filterNotNull().observe(this) { details ->
             val manga = details.toManga()
-            if (manga.isNovel) {
+            // mangaDetails emits again when details refresh; open the text reader only once.
+            if (manga.isNovel && !isRedirectedToTextReader) {
+                isRedirectedToTextReader = true
                 val isPdf = manga.url.endsWith(".pdf", ignoreCase = true) ||
                     manga.url.startsWith("pdf://", ignoreCase = true)
                 startActivity(
@@ -149,7 +153,7 @@ class ReaderActivity :
                             this@ReaderActivity,
                             if (isPdf) PdfReaderActivity::class.java else NovelReaderActivity::class.java,
                         )
-                        putExtra(AppRouter.KEY_MANGA, ParcelableManga(manga))
+                        putExtra(AppRouter.KEY_MANGA, ParcelableManga(manga, withDescription = false))
                     },
                 )
                 finish()

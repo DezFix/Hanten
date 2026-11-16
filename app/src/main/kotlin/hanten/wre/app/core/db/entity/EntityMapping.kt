@@ -82,7 +82,7 @@ fun Manga.toEntity() = MangaEntity(
 	title = title,
 	authors = authors.joinToString(VALUES_DIVIDER.toString()),
 	description = description?.take(MAX_DESCRIPTION_LENGTH),
-	detailsUpdatedAt = System.currentTimeMillis(),
+	detailsUpdatedAt = if (description != null) System.currentTimeMillis() else 0L,
 )
 
 fun MangaTag.toEntity() = TagEntity(

@@ -1,6 +1,7 @@
 package hanten.wre.app.novel.ui.reader
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -8,12 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import hanten.wre.app.R
 import hanten.wre.app.databinding.SheetNovelReaderConfigBinding
 import hanten.wre.app.novel.data.model.NovelReadingMode
 import hanten.wre.app.novel.data.model.NovelTextAlign
 import hanten.wre.app.novel.data.model.NovelTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Locale
 
@@ -195,7 +200,22 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 	}
 
 	private fun importFont(uri: Uri) {
-		val resolver = requireContext().contentResolver
+		val context = requireContext().applicationContext
+		// Fonts can weigh tens of megabytes (CJK); never copy them on the main thread.
+		viewLifecycleOwner.lifecycleScope.launch {
+			val target = withContext(Dispatchers.IO) { copyFont(context, uri) } ?: return@launch
+			if (_binding == null) return@launch
+			updateSettings {
+				copy(
+					fontFamily = NovelReaderSettings.CUSTOM_FONT_FAMILY,
+					customFontPath = target.absolutePath,
+				)
+			}
+		}
+	}
+
+	private fun copyFont(context: Context, uri: Uri): File? {
+		val resolver = context.contentResolver
 		val displayName = runCatching {
 			resolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
 				if (cursor.moveToFirst()) cursor.getString(0) else null
@@ -206,19 +226,28 @@ class NovelReaderConfigSheet : BottomSheetDialogFragment() {
 			?.lowercase(Locale.ROOT)
 			?.takeIf { it == "ttf" || it == "otf" }
 			?: "ttf"
-		val target = File(requireContext().filesDir, "novel_reader_font.$extension")
-		val copied = runCatching {
-			resolver.openInputStream(uri)?.use { input ->
-				target.outputStream().use { output -> input.copyTo(output) }
+		val target = File(context.filesDir, "novel_reader_font.$extension")
+		val part = File(context.filesDir, "novel_reader_font.part")
+		return try {
+			val copied = resolver.openInputStream(uri)?.use { input ->
+				part.outputStream().use { output -> input.copyTo(output) }
 			}
-		}.isSuccess && target.length() > 0
-		if (copied) {
-			updateSettings {
-				copy(
-					fontFamily = NovelReaderSettings.CUSTOM_FONT_FAMILY,
-					customFontPath = target.absolutePath,
-				)
+			if (copied == null || part.length() == 0L) {
+				null
+			} else {
+				target.delete()
+				if (!part.renameTo(target)) {
+					part.copyTo(target, overwrite = true)
+				}
+				// Remove the font of the other extension left from a previous import.
+				File(context.filesDir, if (extension == "ttf") "novel_reader_font.otf" else "novel_reader_font.ttf")
+					.delete()
+				target
 			}
+		} catch (e: Exception) {
+			null
+		} finally {
+			part.delete()
 		}
 	}
 

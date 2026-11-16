@@ -1,5 +1,7 @@
 package hanten.wre.app.novel.ui.reader
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -243,9 +245,15 @@ class NovelReaderActivity :
 					val path = url.path.orEmpty()
 					// Offline novel cache rewrites images to file:// URLs.
 					// Only files inside the novel cache may be served to the WebView.
-					if (url.scheme == "file") {
+					val localFilePath = when {
+						url.scheme == "file" -> path
+						url.host == "hanten.local" && path.startsWith(LOCAL_FILE_PATH_PREFIX) ->
+							path.removePrefix(LOCAL_FILE_PATH_PREFIX)
+						else -> null
+					}
+					if (localFilePath != null) {
 						val cacheRoot = File(filesDir, "novels").canonicalFile
-						val file = File(path).canonicalFile
+						val file = File(localFilePath).canonicalFile
 						if (file.path.startsWith(cacheRoot.path + File.separator) && file.isFile) {
 							val ext = file.extension
 							val mime = MimeTypes.getMimeTypeFromExtension(ext)?.toString()
@@ -378,13 +386,47 @@ class NovelReaderActivity :
 				Toast.makeText(this, R.string.novel_error_loading_chapter, Toast.LENGTH_SHORT).show()
 				return@evaluateJavascript
 			}
-			val chunks = text.chunked(3000)
+			val maxLength = (TextToSpeech.getMaxSpeechInputLength() - 100).coerceIn(500, TTS_CHUNK_LENGTH)
+			val chunks = splitForSpeech(text, maxLength)
 			chunks.forEachIndexed { index, chunk ->
 				val id = if (index == chunks.lastIndex) "novel-last" else "novel-$index"
 				engine.speak(chunk, if (index == 0) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD, null, id)
 			}
 			setTtsSpeaking(true)
 		}
+	}
+
+	/**
+	 * Splits text into utterances on paragraph/sentence boundaries. Plain fixed-size
+	 * chunks cut words in half, and the engine then mispronounces both halves.
+	 */
+	private fun splitForSpeech(text: String, maxLength: Int): List<String> {
+		val result = ArrayList<String>()
+		var start = 0
+		while (start < text.length) {
+			var end = (start + maxLength).coerceAtMost(text.length)
+			if (end < text.length) {
+				val slice = text.substring(start, end)
+				val cut = slice.lastIndexOf('\n').takeIf { it > maxLength / 2 }
+					?: slice.indexOfLastSentenceEnd().takeIf { it > maxLength / 2 }
+					?: slice.lastIndexOf(' ').takeIf { it > 0 }
+				if (cut != null) {
+					end = start + cut + 1
+				}
+			}
+			text.substring(start, end).trim().takeIf { it.isNotEmpty() }?.let(result::add)
+			start = end
+		}
+		return result
+	}
+
+	private fun String.indexOfLastSentenceEnd(): Int {
+		for (i in lastIndex downTo 0) {
+			if (this[i] == '.' || this[i] == '!' || this[i] == '?' || this[i] == '…') {
+				return i
+			}
+		}
+		return -1
 	}
 
 	private fun setTtsSpeaking(value: Boolean) {
@@ -697,15 +739,21 @@ class NovelReaderActivity :
 		val chapters = viewModel.chapters.value
 		if (chapters.isEmpty()) return
 		if (supportFragmentManager.findFragmentByTag(NovelChaptersSheet.TAG) != null) return
-		val titles = ArrayList<String>(chapters.size)
-		for ((index, chapter) in chapters.withIndex()) {
-			val chapterTitle = chapter.title?.takeIf { it.isNotBlank() } ?: (index + 1).toString()
-			titles.add(chapterTitle)
-		}
-		val downloadedIds = viewModel.downloadedChapterIds.value
-		val downloaded = BooleanArray(chapters.size) { index -> chapters[index].id in downloadedIds }
-		NovelChaptersSheet.newInstance(titles, viewModel.currentChapterIndex.value, downloaded)
+		NovelChaptersSheet.newInstance()
 			.show(supportFragmentManager, NovelChaptersSheet.TAG)
+	}
+
+	override fun observeChapterList(): Flow<NovelChaptersSheet.ChapterList> = combine(
+		viewModel.chapters,
+		viewModel.downloadedChapterIds,
+	) { chapters, downloadedIds ->
+		NovelChaptersSheet.ChapterList(
+			titles = chapters.mapIndexed { index, chapter ->
+				chapter.title?.takeIf { it.isNotBlank() } ?: (index + 1).toString()
+			},
+			downloaded = BooleanArray(chapters.size) { index -> chapters[index].id in downloadedIds },
+			currentIndex = viewModel.currentChapterIndex.value,
+		)
 	}
 
 	override fun onChapterSelected(index: Int) {
@@ -935,6 +983,9 @@ class NovelReaderActivity :
 	private companion object {
 		const val STATE_AUTO_SCROLL_ACTIVE = "novel_auto_scroll_active"
 		const val SEARCH_DEBOUNCE_MS = 250L
+		const val TTS_CHUNK_LENGTH = 3000
+		val LOCAL_FILE_PATH_PREFIX: String =
+			NovelReaderSettings.LOCAL_FILE_URL_PREFIX.substringAfter("hanten.local")
 		const val DEFAULT_USER_AGENT =
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 		val IMAGE_EXTENSIONS = setOf(".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".bmp")

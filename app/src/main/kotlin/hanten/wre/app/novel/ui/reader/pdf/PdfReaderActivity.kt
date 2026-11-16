@@ -1,5 +1,7 @@
 package hanten.wre.app.novel.ui.reader.pdf
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.GestureDetector
@@ -113,15 +115,8 @@ class PdfReaderActivity :
 	private fun showTableOfContents() {
 		val count = viewModel.pageCount.value
 		if (count <= 0) return
-		val titles = ArrayList<String>(count)
-		for (index in 0 until count) {
-			titles.add(getString(R.string.pdf_page_title, index + 1))
-		}
-		NovelChaptersSheet.newInstance(
-			titles = titles,
-			currentIndex = viewModel.currentPage.value,
-			downloaded = BooleanArray(count),
-		).show(supportFragmentManager, NovelChaptersSheet.TAG)
+		if (supportFragmentManager.findFragmentByTag(NovelChaptersSheet.TAG) != null) return
+		NovelChaptersSheet.newInstance().show(supportFragmentManager, NovelChaptersSheet.TAG)
 	}
 
 	private fun toggleNightMode() {
@@ -201,6 +196,14 @@ class PdfReaderActivity :
 			val total = viewModel.pageCount.value
 			updatePageIndicator(value.toInt() - 1, total)
 		}
+	}
+
+	override fun observeChapterList(): Flow<NovelChaptersSheet.ChapterList> = viewModel.pageCount.map { count ->
+		NovelChaptersSheet.ChapterList(
+			titles = List(count) { index -> getString(R.string.pdf_page_title, index + 1) },
+			downloaded = BooleanArray(count),
+			currentIndex = viewModel.currentPage.value,
+		)
 	}
 
 	override fun onChapterSelected(index: Int) {

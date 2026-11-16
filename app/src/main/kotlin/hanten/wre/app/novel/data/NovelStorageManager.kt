@@ -94,7 +94,12 @@ class NovelStorageManager @Inject constructor(
 				if (!partFile.renameTo(target)) {
 					partFile.copyTo(target, overwrite = true)
 				}
-				parseFileToManga(target)
+				// Not an EPUB/PDF (or a broken one): do not leave an unreadable file in
+				// the managed folder, it would never show up and only waste space.
+				parseFileToManga(target) ?: run {
+					target.delete()
+					null
+				}
 			} finally {
 				partFile.delete()
 			}
@@ -148,9 +153,13 @@ class NovelStorageManager @Inject constructor(
 
 			val manga = if (isEpub) {
 				val epubParser = EpubParser(file)
-				val book = epubParser.parseBook()
-				val cover = extractCover(file, epubParser, book?.coverHref)
-				epubParser.close()
+				// Close the zip even when a broken book throws while parsing.
+				val (book, cover) = try {
+					val parsed = epubParser.parseBook()
+					parsed to extractCover(file, epubParser, parsed?.coverHref)
+				} finally {
+					epubParser.close()
+				}
 				val chapters = book?.chapters?.map { ec ->
 					MangaChapter(
 						id = ec.id,
@@ -183,8 +192,13 @@ class NovelStorageManager @Inject constructor(
 					source = LocalNovelSource,
 				)
 			} else {
-				val pdfHelper = PdfRendererHelper(file)
-				val count = pdfHelper.pageCount
+				val count = PdfRendererHelper(file).let { helper ->
+					try {
+						helper.pageCount
+					} finally {
+						helper.close()
+					}
+				}
 				val chapters = (0 until count).map { pageIdx ->
 					MangaChapter(
 						id = pageIdx.toLong(),
@@ -198,7 +212,6 @@ class NovelStorageManager @Inject constructor(
 						branch = null,
 					)
 				}
-				pdfHelper.close()
 
 				Manga(
 					id = mangaId,

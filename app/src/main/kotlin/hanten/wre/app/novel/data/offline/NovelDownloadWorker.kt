@@ -28,6 +28,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
+import hanten.wre.app.core.model.toReaderHtml
 import hanten.wre.app.R
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.MangaRepository
@@ -69,6 +70,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 			val repository = repositoryFactory.create(manga.source)
 			val total = chapters.size
 			var done = 0
+			var failed = 0
 			setProgress(progressData(manga, done, total))
 			for (chapter in chapters) {
 				if (isStopped) {
@@ -76,15 +78,28 @@ class NovelDownloadWorker @AssistedInject constructor(
 				}
 				coroutineContext.ensureActive()
 				if (!offlineRepository.isChapterDownloaded(manga.id, chapter.id)) {
-					val html = when (val content = repository.getChapterContent(chapter)) {
-						is hanten.wre.app.core.model.ChapterContent.Document -> content.html
-						is hanten.wre.app.core.model.ChapterContent.Images ->
-							content.pages.joinToString(separator = "") { it.url }
+					try {
+						val html = repository.getChapterContent(chapter).toReaderHtml()
+						if (html.isBlank()) {
+							failed++
+						} else {
+							offlineRepository.cacheChapter(manga, chapter, html, explicit = true)
+						}
+					} catch (e: CancellationException) {
+						throw e
+					} catch (e: IOException) {
+						throw e // network problem: retry the whole work later
+					} catch (e: Exception) {
+						// One broken chapter (parse error, removed page) must not stop the rest.
+						e.printStackTraceDebug("NovelDownloadWorker::chapter ${chapter.id}")
+						failed++
 					}
-					offlineRepository.cacheChapter(manga, chapter, html, explicit = true)
 				}
 				done++
 				setProgress(progressData(manga, done, total))
+			}
+			if (total > 0 && failed == total) {
+				return Result.failure()
 			}
 			exportEpub(manga)
 			downloadQueueRepository.removeFromQueueByManga(manga.id)
@@ -92,7 +107,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 		} catch (e: CancellationException) {
 			throw e
 		} catch (e: IOException) {
-			Result.retry()
+			if (runAttemptCount < MAX_ATTEMPTS) Result.retry() else Result.failure()
 		} catch (e: Throwable) {
 			e.printStackTraceDebug("NovelDownloadWorker::doWork")
 			Result.failure()
@@ -164,6 +179,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 		const val KEY_PROGRESS = "progress"
 		const val KEY_MAX = "max"
 		const val KEY_TITLE = "title"
+		private const val MAX_ATTEMPTS = 5
 
 		fun uniqueName(mangaId: Long) = "novel_download_$mangaId"
 
@@ -205,7 +221,9 @@ class NovelDownloadScheduler @Inject constructor(
 		mangaDataRepository.storeManga(manga, replaceExisting = true)
 		workManager.enqueueUniqueWork(
 			NovelDownloadWorker.uniqueName(manga.id),
-			ExistingWorkPolicy.KEEP,
+			// KEEP silently dropped chapters selected while another download of the
+			// same novel was running. Append them as the next work instead.
+			ExistingWorkPolicy.APPEND_OR_REPLACE,
 			NovelDownloadWorker.createRequest(manga, chapterIds, allowMetered),
 		)
 	}

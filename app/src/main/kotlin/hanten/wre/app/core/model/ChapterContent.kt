@@ -12,3 +12,11 @@ sealed interface ChapterContent {
 		val baseUrl: String?,
 	) : ChapterContent
 }
+
+/** HTML for the text reader and the offline cache. Image chapters become a list of <img> tags. */
+fun ChapterContent.toReaderHtml(): String = when (this) {
+	is ChapterContent.Document -> html
+	is ChapterContent.Images -> pages.joinToString(separator = "") { page ->
+		"<p><img src=\"" + page.url.replace("\"", "&quot;") + "\"/></p>"
+	}
+}

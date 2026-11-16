@@ -35,8 +35,10 @@ data class NovelReaderSettings(
 		get() = if (theme == NovelTheme.CUSTOM) customTextColor else theme.textColor
 
 	private fun fontFaceCss(): String {
-		customFontPath?.takeIf { fontFamily == CUSTOM_FONT_FAMILY && it.isNotBlank() } ?: return ""
-		return "@font-face { font-family: 'UserFont'; src: url('$CUSTOM_FONT_URL'); }"
+		val path = customFontPath?.takeIf { fontFamily == CUSTOM_FONT_FAMILY && it.isNotBlank() } ?: return ""
+		// The version busts the WebView cache: a newly imported font reuses the same URL.
+		val version = runCatching { java.io.File(path).lastModified() }.getOrDefault(0L)
+		return "@font-face { font-family: 'UserFont'; src: url('$CUSTOM_FONT_URL?v=$version'); }"
 	}
 
 	fun toCssVariables(
@@ -77,6 +79,13 @@ data class NovelReaderSettings(
 		private const val KEY_CUSTOM_FONT_PATH = "novel_custom_font_path"
 		const val CUSTOM_FONT_FAMILY = "user"
 		const val CUSTOM_FONT_URL = "https://hanten.local/novel-font"
+
+		/**
+		 * Offline chapters reference images as file:// URLs. A page loaded with an https
+		 * base URL may not load file:// sub-resources (the renderer blocks them before
+		 * shouldInterceptRequest), so the reader rewrites them to this virtual origin.
+		 */
+		const val LOCAL_FILE_URL_PREFIX = "https://hanten.local/novel-file"
 		private const val KEY_LINE_SPACING = "novel_line_spacing"
 		private const val KEY_PARA_MARGIN = "novel_para_margin"
 		private const val KEY_TEXT_INDENT = "novel_text_indent"
