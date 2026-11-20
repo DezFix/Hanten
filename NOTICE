@@ -1,0 +1,34 @@
+Hanten
+Copyright (C) Hanten contributors
+
+Hanten is free software licensed under the GNU General Public License v3.0
+(see LICENSE). It is derived from, and includes code from, the projects below.
+Their copyright notices are kept in the source files they apply to.
+
+-------------------------------------------------------------------------------
+Kotatsu — https://github.com/KotatsuApp/Kotatsu
+Copyright (C) Koitharu and Kotatsu contributors
+License: GNU General Public License v3.0
+Hanten started as a fork of Kotatsu; most of the application code originates there.
+
+-------------------------------------------------------------------------------
+Futon — https://github.com/AppFuton/Futon
+Copyright (C) Futon contributors
+License: GNU General Public License v3.0
+Source of the light novel reader and other improvements.
+
+-------------------------------------------------------------------------------
+Tachiyomi / Mihon — https://github.com/mihonapp/mihon
+Copyright (C) The Tachiyomi Open Source Project, Mihon Open Source Project
+License: Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+The Tachiyomi extension compatibility layer (and the planned .tachibk backup
+import) is based on their work. Files copied or adapted from these projects keep their
+original Apache 2.0 header. Apache 2.0 code may be combined into a GPL v3 work.
+
+-------------------------------------------------------------------------------
+Kotatsu-Redo parsers — https://github.com/Kotatsu-Redo/kotatsu-parsers-redo
+Kototoro — https://github.com/Kototoro-app/Kototoro
+See each project for its license.
+
+-------------------------------------------------------------------------------
+Third-party libraries are listed in the app under About → Licenses.

@@ -32,6 +32,15 @@ android {
 		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 20803
         versionName project.hasProperty('versionName') ? project.property('versionName') : '2.8.3'
         generatedDensities = []
+		// The app's GitHub repository lives in one place (gradle.properties: hanten.repo / hanten.branch),
+		// so moving to a new repository is a one-line change. Update checks read releases from it.
+		def appRepo = project.findProperty('hanten.repo') ?: 'DezFix/Hanten'
+		def appBranch = project.findProperty('hanten.branch') ?: 'devel'
+		resValue 'string', 'github_updates_repo', appRepo
+		resValue 'string', 'github_updates_branch', appBranch
+		resValue 'string', 'url_github', "https://github.com/${appRepo}"
+		resValue 'string', 'url_user_manual', "https://github.com/${appRepo}/blob/${appBranch}/README.md"
+		resValue 'string', 'app_icon_url', "https://raw.githubusercontent.com/${appRepo}/refs/heads/${appBranch}/metadata/en-US/icon.png"
 		testInstrumentationRunner 'hanten.wre.app.HiltTestRunner'
 		ksp {
 			arg('room.generateKotlin', 'true')

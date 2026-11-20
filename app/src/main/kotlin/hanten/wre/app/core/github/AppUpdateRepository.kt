@@ -24,7 +24,9 @@ class AppUpdateRepository @Inject constructor(
 	private val changelogUrl = buildString {
 		append("https://raw.githubusercontent.com/")
 		append(repo)
-		append("/refs/heads/devel/CHANGELOG.md")
+		append("/refs/heads/")
+		append(context.getString(R.string.github_updates_branch))
+		append("/CHANGELOG.md")
 	}
 
 	private val latestReleaseUrl = buildString {

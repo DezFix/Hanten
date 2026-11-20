@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<!-- Hanten (default): icon colors -->
+	<style name="ThemeOverlay.Hanten.Hanten">
+		<item name="colorPrimary">@color/hicon_primary</item>
+		<item name="colorOnPrimary">@color/hicon_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/hicon_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/hicon_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/hicon_secondary</item>
+		<item name="colorOnSecondary">@color/hicon_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/hicon_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/hicon_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/hicon_tertiary</item>
+		<item name="colorOnTertiary">@color/hicon_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/hicon_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/hicon_onTertiaryContainer</item>
+		<item name="colorError">@color/hicon_error</item>
+		<item name="colorOnError">@color/hicon_onError</item>
+		<item name="colorErrorContainer">@color/hicon_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/hicon_onErrorContainer</item>
+		<item name="android:colorBackground">@color/hicon_background</item>
+		<item name="colorOnBackground">@color/hicon_onBackground</item>
+		<item name="colorSurface">@color/hicon_surface</item>
+		<item name="colorOnSurface">@color/hicon_onSurface</item>
+		<item name="colorSurfaceVariant">@color/hicon_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/hicon_onSurfaceVariant</item>
+		<item name="colorOutline">@color/hicon_outline</item>
+		<item name="colorOutlineVariant">@color/hicon_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/hicon_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/hicon_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/hicon_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/hicon_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/hicon_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/hicon_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/hicon_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/hicon_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/hicon_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/hicon_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/hicon_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/hicon_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/hicon_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/hicon_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/hicon_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/hicon_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/hicon_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/hicon_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/hicon_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/hicon_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/hicon_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/hicon_surfaceContainerHighest</item>
+	</style>
 	<!-- Totoro -->
 	<style name="ThemeOverlay.Hanten.Totoro">
 		<item name="colorPrimary">@color/totoro_primary</item>

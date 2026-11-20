@@ -13,6 +13,7 @@ enum class ColorScheme(
 	@StringRes val titleResId: Int,
 ) {
 
+	HANTEN(R.style.ThemeOverlay_Hanten_Hanten, R.string.theme_name_hanten),
 	DEFAULT(R.style.ThemeOverlay_Hanten_Totoro, R.string.theme_name_totoro),
 	MONET(R.style.ThemeOverlay_Hanten_Monet, R.string.theme_name_dynamic),
 	EXPRESSIVE(R.style.ThemeOverlay_Hanten_Expressive, R.string.theme_name_expressive),
@@ -29,12 +30,12 @@ enum class ColorScheme(
 
 	companion object {
 
+		/**
+		 * The app's own scheme (icon colors) is the default for new installs on every device;
+		 * wallpaper colors (Monet) stay one tap away in Appearance. Existing users keep their saved choice.
+		 */
 		val default: ColorScheme
-			get() = if (DynamicColors.isDynamicColorAvailable()) {
-				MONET
-			} else {
-				DEFAULT
-			}
+			get() = HANTEN
 
 		fun getAvailableList(): List<ColorScheme> {
 			val list = ColorScheme.entries.toMutableList()

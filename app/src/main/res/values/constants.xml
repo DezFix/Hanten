@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="url_github" translatable="false">https://github.com/DezFix/Hanten</string>
 	<string name="url_website" translatable="false">https://dezfix.github.io</string>
 	<string name="url_donate" translatable="false">https://ko-fi.com/dezfix</string>
 	<string name="url_telegram_web" translatable="false"></string>
 	<string name="url_telegram" translatable="false"></string>
 	<string name="url_weblate" translatable="false">https://hosted.weblate.org/engage/hanten/</string>
-	<string name="url_user_manual" translatable="false">https://github.com/DezFix/Hanten/blob/devel/README.md</string>
 	<string name="account_type_sync" translatable="false">hanten.wre.app.sync</string>
-	<string name="github_updates_repo" translatable="false">DezFix/Hanten</string>
+	<!-- url_github, url_user_manual, github_updates_repo/branch and app_icon_url are generated
+	     in app/build.gradle from hanten.repo / hanten.branch in gradle.properties. -->
 	<string name="shikimori_clientId" translatable="false">c3Bs-V6E0lOs7jVW839oclKL0jTWw4em2cvSS_9Ia3g</string>
 	<string name="shikimori_clientSecret" translatable="false">zfZcAysneAac0LivWKjJZuQofRhWc6c2Y3Hm0Klk8ac</string>
 	<string name="anilist_clientId" translatable="false">51625</string>
@@ -16,7 +15,6 @@
 	<string name="mal_clientId" translatable="false">a32713f3215bbaf787032e7e7ca3e606</string>
 	<string name="sync_authority_history" translatable="false">hanten.wre.app.history</string>
 	<string name="sync_authority_favourites" translatable="false">hanten.wre.app.favourites</string>
-	<string name="app_icon_url" translatable="false">https://raw.githubusercontent.com/DezFix/Hanten/refs/heads/devel/metadata/en-US/icon.png</string>
 	<string-array name="values_theme" translatable="false">
 		<item>-1</item>
 		<item>1</item>

@@ -2,7 +2,9 @@
 
 # Hanten — свободная читалка манги для Android
 
-**Форк проектов [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) • Пакет `hanten.wre.app` • Прямые обновления из GitHub Releases**
+**Манга, манхва и ранобэ в одном приложении • Без рекламы и аккаунтов • Прямые обновления из GitHub Releases**
+
+*Вырос из [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) — спасибо им, подробности в разделе [«Благодарности»](#благодарности).*
 
 **В приоритете — поддержка русскоязычных и украиноязычных источников, но чиним и остальные: пользуетесь — пишите, поможем всем.**
 
@@ -122,20 +124,20 @@ D3:F2:AB:2D:82:AF:A0:AB:02:D5:F6:83:98:26:84:7D:85:0B:39:F8:02:65:77:7D:EB:DE:AB
 
 <div align="left">
 
-**Hanten построен на великолепной работе проекта [Kotatsu](https://github.com/KotatsuApp/Kotatsu).**
+Hanten — самостоятельное приложение, но оно не появилось бы без чужой открытой работы. Спасибо:
 
-Мы искренне благодарны:
+* **[Kotatsu](https://github.com/KotatsuApp/Kotatsu)** (Koitharu и участники) — основа приложения: библиотека, читалка,
+  загрузки, трекеры, встроенные парсеры. Большая часть кода Hanten начиналась здесь
+* **[Futon](https://github.com/AppFuton/Futon)** — форк Kotatsu, из которого пришли читалка ранобэ и ряд улучшений
+* **[Mihon](https://github.com/mihonapp/mihon)** и **Tachiyomi** — идеи интерфейса, API расширений и формат бэкапов
+  `.tachibk`, благодаря которому из них можно перенести библиотеку
+* **[Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)** — развитие и поддержка парсеров
+* **[Kototoro](https://github.com/Kototoro-app/Kototoro)** — гайд по интеграции расширений Tachiyomi
+* **[keiyoushi](https://github.com/keiyoushi/extensions)** — каталог расширений Tachiyomi
+* **Переводчикам** Kotatsu и Hanten на [Weblate](https://hosted.weblate.org/engage/hanten/) и всем, кто сообщал об ошибках
 
-* **Разработчикам оригинальной Kotatsu** — за замечательную читалку и открытый исходный код
-* **Сообществу Kotatsu** — за вклад, тестирование и поддержку
-* **Всем переводчикам**, которые помогали локализовать Kotatsu через [Weblate](https://hosted.weblate.org/engage/kotatsu/)
-* **[Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)** — за развитие и поддержку парсеров
-* **[Kototoro](https://github.com/Kototoro-app/Kototoro)** — за гайд по интеграции расширений Tachiyomi
+Лицензии и авторство заимствованного кода — в файле [NOTICE](./NOTICE). Hanten распространяется по GPL v3, как и Kotatsu.
 
-Этот проект стоит на плечах гигантов. Преданность команды Kotatsu созданию богатой и удобной читалки дала невероятный фундамент для Hanten.
-
-**Спасибо всем, кто вложился в Kotatsu — ваша работа продолжает служить сообществу читателей манги!**
-
-Оригинальный проект Kotatsu: [github.com/KotatsuApp/Kotatsu](https://github.com/KotatsuApp/Kotatsu)
+Если Hanten тебе полезен, автора можно поддержать на [Ko-fi](https://ko-fi.com/dezfix).
 
 </div>
