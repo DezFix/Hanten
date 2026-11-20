@@ -262,6 +262,11 @@
 
 	<!-- Shapes -->
 
+	<!-- Larger cover on the title card -->
+	<style name="ShapeAppearanceOverlay.Hanten.Cover.Details" parent="">
+		<item name="cornerSize">16dp</item>
+	</style>
+
 	<style name="ShapeAppearanceOverlay.Hanten.Cover" parent="">
 		<item name="cornerSize">12dp</item>
 	</style>

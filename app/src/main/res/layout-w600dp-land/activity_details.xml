@@ -72,7 +72,7 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintWidth_percent="0.3"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover"
+					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Details"
 					app:useExistingDrawable="true"
 					tools:background="@tools:sample/backgrounds/scenic[5]"
 					tools:ignore="ContentDescription,UnusedAttribute" />
@@ -112,6 +112,7 @@
 					android:ellipsize="end"
 					android:maxLines="5"
 					android:textAppearance="?attr/textAppearanceHeadlineSmall"
+					android:textStyle="bold"
 					android:textIsSelectable="true"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toEndOf="@id/imageView_cover"
