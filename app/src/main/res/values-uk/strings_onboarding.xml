@@ -21,4 +21,9 @@
 	<string name="library_all_titles">Усі тайтли</string>
 	<string name="library_new_folder">Нова тека</string>
 	<string name="library_from_mihon">З Mihon</string>
+	<string name="onboarding_profile_title">Твій профіль</string>
+	<string name="onboarding_profile_subtitle">Лише на цьому пристрої, без реєстрації. Можна пропустити.</string>
+	<string name="profile_name_hint">Нік</string>
+	<string name="profile_avatar">Аватар</string>
+	<string name="profile_color">Колір</string>
 </resources>

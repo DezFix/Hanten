@@ -2,4 +2,5 @@
 <resources>
 	<dimen name="onboarding_dot_height">6dp</dimen>
 	<dimen name="onboarding_dot_gap">6dp</dimen>
+	<dimen name="onboarding_profile_option">44dp</dimen>
 </resources>

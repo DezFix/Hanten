@@ -184,6 +184,19 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		get() = prefs.getBoolean(KEY_LIBRARY_FOLDERS_MODE, true)
 		set(value) = prefs.edit { putBoolean(KEY_LIBRARY_FOLDERS_MODE, value) }
 
+	/** Local profile: kept on the device only and saved with the settings in backups. */
+	var profileName: String?
+		get() = prefs.getString(KEY_PROFILE_NAME, null)?.takeIf { it.isNotBlank() }
+		set(value) = prefs.edit { putString(KEY_PROFILE_NAME, value?.trim()) }
+
+	var profileAvatar: Int
+		get() = prefs.getInt(KEY_PROFILE_AVATAR, 0)
+		set(value) = prefs.edit { putInt(KEY_PROFILE_AVATAR, value) }
+
+	var profileColor: Int
+		get() = prefs.getInt(KEY_PROFILE_COLOR, 0)
+		set(value) = prefs.edit { putInt(KEY_PROFILE_COLOR, value) }
+
 	val isTrackerEnabled: Boolean
 		get() = prefs.getBoolean(KEY_TRACKER_ENABLED, true)
 
@@ -851,6 +864,9 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_DOWNLOADS_FORMAT = "downloads_format"
 		const val KEY_ALL_FAVOURITES_VISIBLE = "all_favourites_visible"
 		const val KEY_LIBRARY_FOLDERS_MODE = "library_folders_mode"
+		const val KEY_PROFILE_NAME = "profile_name"
+		const val KEY_PROFILE_AVATAR = "profile_avatar"
+		const val KEY_PROFILE_COLOR = "profile_color"
 		const val KEY_DOH = "doh"
 		const val KEY_EXIT_CONFIRM = "exit_confirm"
 		const val KEY_INCOGNITO_MODE = "incognito"

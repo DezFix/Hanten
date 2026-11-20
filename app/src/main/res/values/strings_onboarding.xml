@@ -21,4 +21,9 @@
 	<string name="library_all_titles">All titles</string>
 	<string name="library_new_folder">New folder</string>
 	<string name="library_from_mihon">From Mihon</string>
+	<string name="onboarding_profile_title">Your profile</string>
+	<string name="onboarding_profile_subtitle">Stays on this device, no sign-up. You can skip it.</string>
+	<string name="profile_name_hint">Nickname</string>
+	<string name="profile_avatar">Avatar</string>
+	<string name="profile_color">Color</string>
 </resources>

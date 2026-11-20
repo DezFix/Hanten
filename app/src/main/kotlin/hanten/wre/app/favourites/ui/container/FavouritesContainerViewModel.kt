@@ -37,7 +37,7 @@ class FavouritesContainerViewModel @Inject constructor(
 							mangaCount = covers.size,
 							covers = covers.take(COVERS_PREVIEW),
 							category = category,
-							isTrackerEnabled = category.isTrackingEnabled,
+							isTrackerEnabled = category.isTrackingEnabled && isTrackingFavourites(),
 							isActionsEnabled = false,
 						),
 					)
@@ -54,6 +54,10 @@ class FavouritesContainerViewModel @Inject constructor(
 			settings.isLibraryFoldersMode = value
 		}
 	}
+
+	/** The per-folder switch only matters when update checks run for favourites at all. */
+	private fun isTrackingFavourites() =
+		settings.isTrackerEnabled && AppSettings.TRACK_FAVOURITES in settings.trackSources
 
 	private companion object {
 

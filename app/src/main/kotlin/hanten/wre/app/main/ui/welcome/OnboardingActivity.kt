@@ -1,9 +1,13 @@
 package hanten.wre.app.main.ui.welcome
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,6 +16,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.core.widget.doAfterTextChanged
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.google.android.material.chip.Chip
@@ -20,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.nav.router
+import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.BaseActivity
 import hanten.wre.app.core.ui.widgets.ChipsView
@@ -30,7 +36,9 @@ import hanten.wre.app.core.util.ext.tryLaunch
 import hanten.wre.app.databinding.ActivityOnboardingBinding
 import hanten.wre.app.filter.ui.model.FilterProperty
 import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.profile.ProfileStyle
 import java.util.Locale
+import javax.inject.Inject
 import kotlin.math.roundToInt
 import androidx.appcompat.R as appcompatR
 import com.google.android.material.R as materialR
@@ -47,12 +55,15 @@ class OnboardingActivity :
 	View.OnClickListener,
 	ActivityResultCallback<Uri?> {
 
+	@Inject
+	lateinit var settings: AppSettings
+
 	private val viewModel by viewModels<WelcomeViewModel>()
 	private val backupSelectCall = registerForActivityResult(ActivityResultContracts.OpenDocument(), this)
 	private var step = 0
 
 	private val steps: List<View>
-		get() = with(viewBinding) { listOf(stepWelcome, stepKinds, stepLanguages, stepImport) }
+		get() = with(viewBinding) { listOf(stepWelcome, stepProfile, stepKinds, stepLanguages, stepImport) }
 
 	private val backCallback = object : OnBackPressedCallback(false) {
 		override fun handleOnBackPressed() = showStep(step - 1)
@@ -76,6 +87,7 @@ class OnboardingActivity :
 			chipsListMode.onChipClickListener = this@OnboardingActivity
 		}
 		createDots()
+		setupProfile()
 		viewModel.locales.observe(this, ::onLocalesChanged)
 		viewModel.types.observe(this, ::onTypesChanged)
 		viewModel.listMode.observe(this, ::onListModeChanged)
@@ -140,6 +152,62 @@ class OnboardingActivity :
 		}
 		backCallback.isEnabled = step > 0
 		updateDots()
+	}
+
+	/** Local profile: nickname, avatar glyph and color, saved to settings as they change. */
+	private fun setupProfile() {
+		val binding = viewBinding
+		binding.editProfileName.setText(settings.profileName)
+		binding.editProfileName.doAfterTextChanged {
+			settings.profileName = it?.toString()
+			updateProfilePreview()
+		}
+		val size = resources.getDimensionPixelSize(R.dimen.onboarding_profile_option)
+		val gap = resources.getDimensionPixelSize(R.dimen.onboarding_dot_gap) * 2
+		ProfileStyle.avatars.indices.forEach { index ->
+			val view = TextView(this).apply {
+				gravity = Gravity.CENTER
+				textSize = 20f
+				setTextColor(Color.WHITE)
+				setBackgroundResource(R.drawable.bg_profile_avatar)
+				setOnClickListener {
+					settings.profileAvatar = index
+					updateProfilePreview()
+				}
+			}
+			binding.rowAvatars.addView(view, LinearLayout.LayoutParams(size, size).apply { marginEnd = gap })
+		}
+		ProfileStyle.colors.indices.forEach { index ->
+			val view = View(this).apply {
+				setBackgroundResource(R.drawable.bg_profile_avatar)
+				backgroundTintList = ColorStateList.valueOf(ProfileStyle.color(index))
+				contentDescription = getString(R.string.profile_color)
+				setOnClickListener {
+					settings.profileColor = index
+					updateProfilePreview()
+				}
+			}
+			binding.rowColors.addView(view, LinearLayout.LayoutParams(size, size).apply { marginEnd = gap })
+		}
+		updateProfilePreview()
+	}
+
+	private fun updateProfilePreview() {
+		val binding = viewBinding
+		val name = binding.editProfileName.text?.toString()
+		val color = ProfileStyle.color(settings.profileColor)
+		binding.textAvatarPreview.text = ProfileStyle.avatarText(settings.profileAvatar, name)
+		binding.textAvatarPreview.backgroundTintList = ColorStateList.valueOf(color)
+		val neutral = getThemeColor(materialR.attr.colorOutline)
+		for (i in 0 until binding.rowAvatars.childCount) {
+			val view = binding.rowAvatars.getChildAt(i) as TextView
+			view.text = ProfileStyle.avatarText(i, name)
+			val selected = i == settings.profileAvatar
+			view.backgroundTintList = ColorStateList.valueOf(if (selected) color else neutral)
+		}
+		for (i in 0 until binding.rowColors.childCount) {
+			binding.rowColors.getChildAt(i).alpha = if (i == settings.profileColor) 1f else 0.45f
+		}
 	}
 
 	private fun createDots() {
@@ -215,7 +283,7 @@ class OnboardingActivity :
 	private companion object {
 
 		const val KEY_STEP = "step"
-		const val LAST_STEP = 3
+		const val LAST_STEP = 4
 		const val ACTIVE_DOT_SCALE = 4.5f
 	}
 }

@@ -110,7 +110,87 @@
 				</com.google.android.material.chip.ChipGroup>
 			</LinearLayout>
 
-			<!-- Step 2: what do you read -->
+			<!-- Step 2: local profile -->
+			<LinearLayout
+				android:id="@+id/step_profile"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="24dp"
+				android:visibility="gone">
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_profile_title" />
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Subtitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_profile_subtitle" />
+
+				<TextView
+					android:id="@+id/text_avatar_preview"
+					android:layout_width="96dp"
+					android:layout_height="96dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginTop="24dp"
+					android:background="@drawable/bg_profile_avatar"
+					android:gravity="center"
+					android:importantForAccessibility="no"
+					android:textColor="@android:color/white"
+					android:textSize="36sp"
+					android:textStyle="bold" />
+
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:hint="@string/profile_name_hint">
+
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/edit_profile_name"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:imeOptions="actionDone"
+						android:inputType="textPersonName"
+						android:maxLength="24"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:text="@string/profile_avatar"
+					android:textAppearance="?textAppearanceTitleSmall" />
+
+				<LinearLayout
+					android:id="@+id/row_avatars"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:orientation="horizontal" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:text="@string/profile_color"
+					android:textAppearance="?textAppearanceTitleSmall" />
+
+				<LinearLayout
+					android:id="@+id/row_colors"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:orientation="horizontal" />
+			</LinearLayout>
+
+			<!-- Step 3: what do you read -->
 			<LinearLayout
 				android:id="@+id/step_kinds"
 				android:layout_width="match_parent"

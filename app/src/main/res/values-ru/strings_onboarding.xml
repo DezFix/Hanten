@@ -21,4 +21,9 @@
 	<string name="library_all_titles">Все тайтлы</string>
 	<string name="library_new_folder">Новая папка</string>
 	<string name="library_from_mihon">Из Mihon</string>
+	<string name="onboarding_profile_title">Твой профиль</string>
+	<string name="onboarding_profile_subtitle">Только на этом устройстве, без регистрации. Можно пропустить.</string>
+	<string name="profile_name_hint">Ник</string>
+	<string name="profile_avatar">Аватар</string>
+	<string name="profile_color">Цвет</string>
 </resources>

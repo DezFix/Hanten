@@ -1,5 +1,6 @@
 package hanten.wre.app.favourites.ui.container
 
+import androidx.core.view.isVisible
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.core.model.FavouriteCategory
 import hanten.wre.app.core.ui.BaseListAdapter
@@ -42,6 +43,8 @@ private fun libraryFolderAD(
 	bind {
 		binding.textViewTitle.text = item.category.title
 		binding.textViewCount.text = item.mangaCount.toString()
+		// Bell = new chapters are checked for this folder
+		binding.imageViewTracking.isVisible = item.isTrackerEnabled
 		binding.coversView.setCoversAsync(item.covers)
 	}
 }
