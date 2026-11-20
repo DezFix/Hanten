@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import hanten.wre.app.today.ui.TodayFragment
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.ui.AllBookmarksFragment
 import hanten.wre.app.core.nav.AppRouter
@@ -185,6 +186,7 @@ class MainNavigationDelegate(
 
 	private fun onNavigationItemSelected(@IdRes itemId: Int): Boolean {
 		val newFragment = when (itemId) {
+			R.id.nav_today -> TodayFragment::class.java
 			R.id.nav_history -> HistoryListFragment::class.java
 			R.id.nav_favorites -> FavouritesContainerFragment::class.java
 			R.id.nav_explore -> ExploreFragment::class.java
@@ -223,6 +225,7 @@ class MainNavigationDelegate(
 	}
 
 	private fun getItemId(fragment: Fragment) = when (fragment) {
+		is TodayFragment -> R.id.nav_today
 		is HistoryListFragment -> R.id.nav_history
 		is FavouritesContainerFragment -> R.id.nav_favorites
 		is ExploreFragment -> R.id.nav_explore

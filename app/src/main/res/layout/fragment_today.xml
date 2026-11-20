@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/scrollView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:clipToPadding="false">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingTop="8dp"
+		android:paddingBottom="96dp">
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/card_continue"
+			style="@style/Widget.Material3.CardView.Filled"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:visibility="gone"
+			app:cardCornerRadius="24dp"
+			tools:visibility="visible">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:padding="16dp">
+
+				<com.google.android.material.card.MaterialCardView
+					android:layout_width="96dp"
+					android:layout_height="136dp"
+					app:cardCornerRadius="14dp"
+					app:cardElevation="0dp"
+					app:strokeWidth="0dp">
+
+					<hanten.wre.app.image.ui.CoverImageView
+						android:id="@+id/image_continue_cover"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:scaleType="centerCrop" />
+				</com.google.android.material.card.MaterialCardView>
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="136dp"
+					android:layout_marginStart="16dp"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/_continue"
+						android:textAllCaps="true"
+						android:textAppearance="?textAppearanceLabelMedium"
+						android:textColor="?colorPrimary"
+						android:textStyle="bold" />
+
+					<TextView
+						android:id="@+id/text_continue_title"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="4dp"
+						android:ellipsize="end"
+						android:maxLines="2"
+						android:textAppearance="?textAppearanceTitleMedium"
+						android:textStyle="bold"
+						tools:text="@tools:sample/lorem[3]" />
+
+					<TextView
+						android:id="@+id/text_continue_subtitle"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="2dp"
+						android:singleLine="true"
+						android:textAppearance="?textAppearanceBodyMedium"
+						android:textColor="?colorOnSurfaceVariant"
+						tools:text="ReadManga · 72%" />
+
+					<com.google.android.material.progressindicator.LinearProgressIndicator
+						android:id="@+id/progress_continue"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						app:trackCornerRadius="2dp"
+						app:trackThickness="4dp" />
+
+					<Space
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:layout_weight="1" />
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_continue"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/read" />
+				</LinearLayout>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<TextView
+			android:id="@+id/text_updates_title"
+			style="@style/TextAppearance.Hanten.Today.Section"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/new_chapters" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_updates"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:clipToPadding="false"
+			android:orientation="horizontal"
+			android:paddingHorizontal="10dp"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+		<TextView
+			android:id="@+id/text_recent_title"
+			style="@style/TextAppearance.Hanten.Today.Section"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/today_recent" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_recent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:clipToPadding="false"
+			android:orientation="horizontal"
+			android:paddingHorizontal="10dp"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+		<LinearLayout
+			android:id="@+id/layout_empty"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			android:paddingHorizontal="32dp"
+			android:paddingTop="96dp"
+			android:visibility="gone">
+
+			<ImageView
+				android:layout_width="128dp"
+				android:layout_height="128dp"
+				android:importantForAccessibility="no"
+				android:src="@mipmap/ic_launcher" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:gravity="center"
+				android:text="@string/text_history_holder_primary"
+				android:textAppearance="?textAppearanceTitleMedium" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:gravity="center"
+				android:text="@string/today_empty_hint"
+				android:textAppearance="?textAppearanceBodyMedium"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+	</LinearLayout>
+</androidx.core.widget.NestedScrollView>

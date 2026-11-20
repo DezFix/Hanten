@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="TextAppearance.Hanten.Today.Section" parent="">
+		<item name="android:layout_marginHorizontal">16dp</item>
+		<item name="android:layout_marginTop">24dp</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:textAppearance">?textAppearanceTitleMedium</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+</resources>

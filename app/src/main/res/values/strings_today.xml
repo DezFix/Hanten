@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="today_recent">Recently read</string>
+	<string name="today_empty_hint">Find something to read in Explore. New chapters from your library will show up here too.</string>
+</resources>

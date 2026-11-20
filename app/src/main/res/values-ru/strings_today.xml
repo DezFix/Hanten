@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="today_recent">Недавно читал</string>
+	<string name="today_empty_hint">Найди что почитать в Каталоге. Здесь же появятся новые главы из библиотеки.</string>
+</resources>
