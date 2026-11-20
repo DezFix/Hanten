@@ -29,8 +29,8 @@
 
 	<item
 		android:id="@+id/action_favourite"
-		android:icon="@drawable/ic_heart"
-		android:title="@string/categories"
+		android:icon="@drawable/ic_library_folder"
+		android:title="@string/library_move_to_folder"
 		app:showAsAction="ifRoom|withText" />
 
 	<item

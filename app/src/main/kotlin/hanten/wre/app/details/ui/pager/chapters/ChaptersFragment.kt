@@ -158,6 +158,7 @@ class ChaptersFragment :
 	}
 
 	private fun onChaptersChanged(list: List<ListModel>) {
+		showMissingChapters(list)
 		val adapter = chaptersAdapter ?: return
 		if (adapter.itemCount == 0) {
 			val position = list.indexOfFirst { it is ChapterListItem && it.isCurrent } - 1
@@ -175,6 +176,36 @@ class ChaptersFragment :
 		}
 	}
 
+	/**
+	 * Warns about holes in whole chapter numbers of the shown list (one translation branch), e.g. a
+	 * translator skipped 151-152. Fractional chapters (10.5) do not count; huge jumps are ignored as noise.
+	 */
+	private fun showMissingChapters(list: List<ListModel>) {
+		val view = viewBinding?.textViewMissing ?: return
+		val numbers = list.mapNotNull { (it as? ChapterListItem)?.chapter?.number }
+			.filter { it > 0f }
+			.map { it.toInt() }
+			.distinct()
+			.sorted()
+		var missing = 0
+		var firstGap: IntRange? = null
+		for (i in 1 until numbers.size) {
+			val gap = numbers[i] - numbers[i - 1] - 1
+			if (gap in 1..MAX_GAP) {
+				missing += gap
+				if (firstGap == null) firstGap = (numbers[i - 1] + 1)..(numbers[i] - 1)
+			}
+		}
+		val range = firstGap
+		if (missing == 0 || range == null) {
+			view.isVisible = false
+			return
+		}
+		val rangeText = if (range.first == range.last) range.first.toString() else "${range.first}–${range.last}"
+		view.text = getString(R.string.chapters_missing, missing, rangeText)
+		view.isVisible = true
+	}
+
 	private fun onFilterChanged(list: List<ChipsView.ChipModel>) {
 		viewBinding?.chipsFilter?.run {
 			setChips(list)
@@ -186,3 +217,6 @@ class ChaptersFragment :
 		requireViewBinding().progressBar.isVisible = isLoading
 	}
 }
+
+/** Bigger jumps are usually numbering quirks of the source, not missing chapters. */
+private const val MAX_GAP = 50

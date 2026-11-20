@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.view.ActionMode
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -12,6 +13,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.model.FavouriteCategory
@@ -87,7 +91,33 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 		return true
 	}
 
-	override fun onNewFolderClick() = router.openFavoriteCategoryCreate()
+	/** Quick folder creation; everything else (order, visibility) stays in the folder editor (long press). */
+	override fun onNewFolderClick() {
+		val context = context ?: return
+		val padding = resources.getDimensionPixelSize(R.dimen.margin_normal)
+		val input = TextInputEditText(context).apply {
+			hint = getString(R.string.library_folder_name)
+			setSingleLine()
+		}
+		val track = MaterialSwitch(context).apply {
+			setText(R.string.library_folder_track)
+			isChecked = true
+		}
+		val content = LinearLayout(context).apply {
+			orientation = LinearLayout.VERTICAL
+			setPadding(padding, padding / 2, padding, 0)
+			addView(input)
+			addView(track)
+		}
+		MaterialAlertDialogBuilder(context)
+			.setTitle(R.string.library_new_folder)
+			.setView(content)
+			.setNegativeButton(android.R.string.cancel, null)
+			.setPositiveButton(R.string.library_create) { _, _ ->
+				viewModel.createFolder(input.text?.toString().orEmpty(), track.isChecked)
+			}
+			.show()
+	}
 
 	override fun onActionModeStarted(mode: ActionMode) {
 		viewBinding?.toggleMode?.isEnabled = false

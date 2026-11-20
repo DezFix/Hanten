@@ -31,12 +31,34 @@
 
 	</HorizontalScrollView>
 
+	<!-- Gaps in chapter numbers of the selected translation, e.g. "2 chapters missing: 151-152" -->
+	<TextView
+		android:id="@+id/textView_missing"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/scrollView_filter"
+		android:layout_marginHorizontal="@dimen/margin_normal"
+		android:layout_marginBottom="6dp"
+		android:background="@drawable/bg_more_section"
+		android:backgroundTint="?colorErrorContainer"
+		android:drawablePadding="8dp"
+		android:gravity="center_vertical"
+		android:paddingHorizontal="14dp"
+		android:paddingVertical="10dp"
+		android:textAppearance="?textAppearanceBodyMedium"
+		android:textColor="?colorOnErrorContainer"
+		android:visibility="gone"
+		app:drawableStartCompat="@drawable/ic_info_outline"
+		app:drawableTint="?colorOnErrorContainer"
+		tools:text="2 chapters missing: 151-152"
+		tools:visibility="visible" />
+
 	<hanten.wre.app.core.ui.list.fastscroll.FastScrollRecyclerView
 		android:id="@+id/recyclerView_chapters"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_alignWithParentIfMissing="true"
-		android:layout_below="@id/scrollView_filter"
+		android:layout_below="@id/textView_missing"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentEnd="true"
 		android:layout_alignParentBottom="true"

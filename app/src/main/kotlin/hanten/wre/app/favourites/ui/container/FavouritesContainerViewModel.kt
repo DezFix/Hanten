@@ -12,6 +12,7 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.favourites.ui.categories.adapter.CategoryListModel
+import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.list.ui.model.ListModel
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavouritesContainerViewModel @Inject constructor(
 	private val settings: AppSettings,
-	favouritesRepository: FavouritesRepository,
+	private val favouritesRepository: FavouritesRepository,
 ) : BaseViewModel() {
 
 	val isFoldersMode = MutableStateFlow(settings.isLibraryFoldersMode)
@@ -47,6 +48,18 @@ class FavouritesContainerViewModel @Inject constructor(
 		}
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, listOf(NewFolderItem))
+
+	fun createFolder(title: String, isTrackerEnabled: Boolean) {
+		if (title.isBlank()) return
+		launchJob(Dispatchers.IO) {
+			favouritesRepository.createCategory(
+				title = title.trim(),
+				sortOrder = ListSortOrder.NEWEST,
+				isTrackerEnabled = isTrackerEnabled,
+				isVisibleOnShelf = true,
+			)
+		}
+	}
 
 	fun setFoldersMode(value: Boolean) {
 		if (isFoldersMode.value != value) {

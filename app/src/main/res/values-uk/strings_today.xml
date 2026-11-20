@@ -3,4 +3,9 @@
 	<string name="today_recent">Нещодавно читав</string>
 	<string name="today_empty_hint">Знайди, що почитати, у Каталозі. Тут також будуть нові розділи з бібліотеки.</string>
 	<string name="profile_local_hint">Зберігається лише на цьому пристрої</string>
+	<string name="library_move_to_folder">До теки</string>
+	<string name="library_folder_name">Назва</string>
+	<string name="library_folder_track">Перевіряти нові розділи</string>
+	<string name="library_create">Створити</string>
+	<string name="chapters_missing">Пропущено розділів: %1$d (перші: %2$s)</string>
 </resources>

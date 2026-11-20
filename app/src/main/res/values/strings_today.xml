@@ -3,4 +3,9 @@
 	<string name="today_recent">Recently read</string>
 	<string name="today_empty_hint">Find something to read in Explore. New chapters from your library will show up here too.</string>
 	<string name="profile_local_hint">Stored on this device only</string>
+	<string name="library_move_to_folder">To folder</string>
+	<string name="library_folder_name">Name</string>
+	<string name="library_folder_track">Check for new chapters</string>
+	<string name="library_create">Create</string>
+	<string name="chapters_missing">Chapters missing: %1$d (first: %2$s)</string>
 </resources>
