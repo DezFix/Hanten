@@ -14,10 +14,11 @@
 	<string name="onboarding_import_title">Перенести библиотеку?</string>
 	<string name="onboarding_import_subtitle">Избранное, категории, история и прогресс глав переедут из бэкапа.</string>
 	<string name="onboarding_import_kotatsu">Бэкап Hanten, Kotatsu или Futon</string>
-	<string name="onboarding_import_mihon">Бэкап Mihon или Tachiyomi (скоро)</string>
+	<string name="onboarding_import_mihon">Бэкап Mihon или Tachiyomi (.tachibk)</string>
 	<string name="onboarding_import_later">Можно сделать и позже: Настройки → Резервное копирование.</string>
 	<string name="onboarding_finish">Готово</string>
 	<string name="library_folders">Папки</string>
 	<string name="library_all_titles">Все тайтлы</string>
 	<string name="library_new_folder">Новая папка</string>
+	<string name="library_from_mihon">Из Mihon</string>
 </resources>

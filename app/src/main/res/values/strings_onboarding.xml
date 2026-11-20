@@ -14,10 +14,11 @@
 	<string name="onboarding_import_title">Move your library?</string>
 	<string name="onboarding_import_subtitle">Favourites, categories, history and reading progress come over from a backup.</string>
 	<string name="onboarding_import_kotatsu">Backup from Hanten, Kotatsu or Futon</string>
-	<string name="onboarding_import_mihon">Backup from Mihon or Tachiyomi (soon)</string>
+	<string name="onboarding_import_mihon">Backup from Mihon or Tachiyomi (.tachibk)</string>
 	<string name="onboarding_import_later">You can do this later in Settings → Backup and restore.</string>
 	<string name="onboarding_finish">Done</string>
 	<string name="library_folders">Folders</string>
 	<string name="library_all_titles">All titles</string>
 	<string name="library_new_folder">New folder</string>
+	<string name="library_from_mihon">From Mihon</string>
 </resources>

@@ -1,9 +1,12 @@
 package hanten.wre.app.backups.ui.restore
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import hanten.wre.app.R
+import hanten.wre.app.backups.data.mihon.MihonBackupConverter
 import hanten.wre.app.backups.data.model.BackupIndex
 import hanten.wre.app.backups.domain.BackupSection
 import hanten.wre.app.core.nav.AppRouter
@@ -15,6 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runInterruptible
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
+import java.io.BufferedInputStream
+import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.Date
@@ -29,8 +34,18 @@ class RestoreViewModel @Inject constructor(
 	@ApplicationContext context: Context,
 ) : BaseViewModel() {
 
-	val uri = savedStateHandle.get<String>(AppRouter.KEY_FILE)?.toUriOrNull()
+	private val sourceUri = savedStateHandle.get<String>(AppRouter.KEY_FILE)?.toUriOrNull()
 	private val contentResolver = context.contentResolver
+	private val cacheDir = context.cacheDir
+	private val uncategorizedTitle = context.getString(R.string.library_from_mihon)
+
+	/** The backup to restore: the picked file, or its Hanten-format copy if a Mihon backup was picked. */
+	@Volatile
+	var uri: Uri? = sourceUri
+		private set
+
+	/** Set when a Mihon/Tachiyomi backup was converted: what it contained. */
+	val mihonImport = MutableStateFlow<MihonBackupConverter.Result?>(null)
 
 	val availableEntries = MutableStateFlow<List<BackupSectionModel>>(emptyList())
 	val backupDate = MutableStateFlow<Date?>(null)
@@ -44,7 +59,8 @@ class RestoreViewModel @Inject constructor(
 
 	private suspend fun loadBackupInfo() {
 		val sections = runInterruptible(Dispatchers.IO) {
-			if (uri == null) throw FileNotFoundException()
+			val uri = prepareBackupFile() ?: throw FileNotFoundException()
+			this.uri = uri
 			ZipInputStream(contentResolver.openInputStream(uri)).use { stream ->
 				val result = EnumSet.noneOf(BackupSection::class.java)
 				var entry = stream.nextEntry
@@ -108,10 +124,36 @@ class RestoreViewModel @Inject constructor(
 		}
 	}
 
+	/**
+	 * Mihon/Tachiyomi backups (.tachibk, gzip) are converted into a Hanten backup in the cache dir,
+	 * so the rest of the restore flow, including RestoreService, reads one format only.
+	 */
+	private fun prepareBackupFile(): Uri? {
+		val source = sourceUri ?: return null
+		val stream = contentResolver.openInputStream(source) ?: return null
+		BufferedInputStream(stream).use { input ->
+			if (!MihonBackupConverter.isMihonBackup(input)) {
+				return source
+			}
+			val dir = File(cacheDir, MIHON_IMPORT_DIR).apply { mkdirs() }
+			val file = File(dir, MIHON_IMPORT_FILE)
+			file.outputStream().use { output ->
+				mihonImport.value = MihonBackupConverter.convert(input, output, uncategorizedTitle)
+			}
+			return Uri.fromFile(file)
+		}
+	}
+
 	private fun InputStream.readDate(): Date? = runCatching {
 		val index = Json.decodeFromStream<List<BackupIndex>>(this)
 		Date(index.single().createdAt)
 	}.onFailure { e ->
 		e.printStackTraceDebug("RestoreViewModel::InputStream")
 	}.getOrNull()
+
+	private companion object {
+
+		const val MIHON_IMPORT_DIR = "restore"
+		const val MIHON_IMPORT_FILE = "mihon-import.bk.zip"
+	}
 }

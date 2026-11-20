@@ -69,6 +69,7 @@ class OnboardingActivity :
 			buttonSkip.setOnClickListener(this@OnboardingActivity)
 			buttonHaveBackup.setOnClickListener(this@OnboardingActivity)
 			buttonRestore.setOnClickListener(this@OnboardingActivity)
+			buttonRestoreMihon.setOnClickListener(this@OnboardingActivity)
 			buttonDirectories.setOnClickListener(this@OnboardingActivity)
 			chipsType.onChipClickListener = this@OnboardingActivity
 			chipsLocales.onChipClickListener = this@OnboardingActivity
@@ -97,7 +98,7 @@ class OnboardingActivity :
 			R.id.button_next -> if (step == LAST_STEP) finish() else showStep(step + 1)
 			R.id.button_back -> showStep(step - 1)
 			R.id.button_skip, R.id.button_have_backup -> showStep(LAST_STEP)
-			R.id.button_restore -> if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
+			R.id.button_restore, R.id.button_restore_mihon -> if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
 				Snackbar.make(v, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
 			}
 
