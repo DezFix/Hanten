@@ -323,9 +323,13 @@ class NovelReaderViewModel @Inject constructor(
 						deletePreviousIfRead(manga, previous)
 					}
 				}
+			} catch (e: CancellationException) {
+				throw e
 			} catch (e: Exception) {
 				e.printStackTraceDebug()
 				setChapterContent(errorHtml(context.getString(R.string.novel_error_loading_chapter)))
+				// Same error UI as the manga reader: lets the user solve a captcha / sign in and retry
+				errorEvent.call(e)
 			} finally {
 				_isReadingLoading.value = false
 			}

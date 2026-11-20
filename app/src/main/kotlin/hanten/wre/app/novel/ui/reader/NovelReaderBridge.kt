@@ -9,7 +9,7 @@ class NovelReaderBridge(
 	private val scope: CoroutineScope,
 	private val onScroll: (percent: Float) -> Unit,
 	private val onNearBottomReached: () -> Unit,
-	private val onCenterTapped: () -> Unit,
+	private val onTapped: (xFraction: Float, yFraction: Float) -> Unit,
 	private val onPreviousChapter: () -> Unit,
 	private val onNextChapter: () -> Unit,
 	private val onPageChange: (currentPage: Int, totalPages: Int) -> Unit,
@@ -39,9 +39,9 @@ class NovelReaderBridge(
 	}
 
 	@JavascriptInterface
-	fun onCenterTap() {
+	fun onTap(xFraction: Float, yFraction: Float) {
 		scope.launch(Dispatchers.Main) {
-			onCenterTapped()
+			onTapped(xFraction, yFraction)
 		}
 	}
 

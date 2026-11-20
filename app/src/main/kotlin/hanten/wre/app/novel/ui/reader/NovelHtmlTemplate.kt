@@ -346,6 +346,8 @@ object NovelHtmlTemplate {
 					return container.scrollLeft <= 2;
 				}
 
+				window.turnPageFromApp = function(direction) { turnPage(direction); };
+
 				function turnPage(direction) {
 					if (!isPagedMode) {
 						if (window.AndroidNovelBridge) {
@@ -378,16 +380,9 @@ object NovelHtmlTemplate {
 					const selection = window.getSelection();
 					if (selection && selection.toString().length > 0) return;
 
-					const width = window.innerWidth;
-					const x = e.clientX;
-					const leftZone = isPagedMode ? width * 0.3 : width * 0.25;
-					const rightZone = isPagedMode ? width * 0.7 : width * 0.75;
-					if (x < leftZone) {
-						turnPage(-1);
-					} else if (x > rightZone) {
-						turnPage(1);
-					} else {
-						if (window.AndroidNovelBridge) window.AndroidNovelBridge.onCenterTap();
+					// The app maps the tap to an action with the same tap grid as the manga reader
+					if (window.AndroidNovelBridge) {
+						window.AndroidNovelBridge.onTap(e.clientX / window.innerWidth, e.clientY / window.innerHeight);
 					}
 				}, { passive: true });
 

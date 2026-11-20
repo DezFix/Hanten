@@ -31,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
+import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.prefs.AppSettings
@@ -49,7 +50,10 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.util.formatSimple
 import hanten.wre.app.parsers.util.longHashCode
+import hanten.wre.app.reader.data.TapGridSettings
+import hanten.wre.app.reader.domain.TapGridArea
 import hanten.wre.app.reader.ui.ReaderChrome
+import hanten.wre.app.reader.ui.tapgrid.TapAction
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
@@ -89,6 +93,9 @@ class NovelReaderActivity :
 
 	@Inject
 	lateinit var bookmarksRepository: BookmarksRepository
+
+	@Inject
+	lateinit var tapGridSettings: TapGridSettings
 
 	private var bookmarks: List<Bookmark> = emptyList()
 	private var bookmarkJob: Job? = null
@@ -137,6 +144,15 @@ class NovelReaderActivity :
 		isAutoScrollActive = savedInstanceState?.getBoolean(STATE_AUTO_SCROLL_ACTIVE) ?: false
 
 		setupWebView()
+		viewModel.onError.observeEvent(
+			this,
+			SnackbarErrorObserver(
+				host = viewBinding.coordinator,
+				fragment = null,
+				resolver = exceptionResolver,
+				onResolved = { isResolved -> if (isResolved) viewModel.retryCurrentChapter() },
+			),
+		)
 		setupControls()
 		setupTts()
 		applyReaderColors()
@@ -219,9 +235,7 @@ class NovelReaderActivity :
 			onNearBottomReached = {
 				viewModel.loadNextChapterForInfiniteScroll()
 			},
-			onCenterTapped = {
-				toggleUiVisibility()
-			},
+			onTapped = { x, y -> onReaderTap(x, y) },
 			onPreviousChapter = {
 				viewModel.switchChapter(-1)
 			},
@@ -886,6 +900,29 @@ class NovelReaderActivity :
 		} catch (e: Throwable) {
 			response?.close()
 			null
+		}
+	}
+
+	/**
+	 * Same tap zones as the manga reader (Settings → Reader → Tap zones). Unconfigured zones keep the
+	 * old novel behaviour: left third back, right third forward, middle toggles the bars.
+	 */
+	private fun onReaderTap(xFraction: Float, yFraction: Float) {
+		val column = (xFraction * 3).toInt().coerceIn(0, 2)
+		val row = (yFraction * 3).toInt().coerceIn(0, 2)
+		val area = TapGridArea.entries[row * 3 + column]
+		val action = tapGridSettings.getTapAction(area, isLongTap = false) ?: when (column) {
+			0 -> TapAction.PAGE_PREV
+			2 -> TapAction.PAGE_NEXT
+			else -> TapAction.TOGGLE_UI
+		}
+		when (action) {
+			TapAction.PAGE_NEXT -> viewBinding.webView.evaluateJavascript("window.turnPageFromApp(1)", null)
+			TapAction.PAGE_PREV -> viewBinding.webView.evaluateJavascript("window.turnPageFromApp(-1)", null)
+			TapAction.CHAPTER_NEXT -> viewModel.switchChapter(1)
+			TapAction.CHAPTER_PREV -> viewModel.switchChapter(-1)
+			TapAction.TOGGLE_UI -> toggleUiVisibility()
+			TapAction.SHOW_MENU -> NovelReaderConfigSheet.newInstance().show(supportFragmentManager, NovelReaderConfigSheet.TAG)
 		}
 	}
 
