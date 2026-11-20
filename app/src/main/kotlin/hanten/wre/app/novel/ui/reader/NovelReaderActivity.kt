@@ -37,6 +37,7 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.util.MimeTypes
 import hanten.wre.app.core.util.ext.getParcelableExtraCompat
+import hanten.wre.app.core.util.ext.isAnimationsEnabled
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
@@ -48,6 +49,7 @@ import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaChapter
 import hanten.wre.app.parsers.util.formatSimple
 import hanten.wre.app.parsers.util.longHashCode
+import hanten.wre.app.reader.ui.ReaderChrome
 import hanten.wre.app.reader.ui.ReaderState
 import hanten.wre.app.reader.ui.ScreenOrientationHelper
 import kotlinx.coroutines.Dispatchers
@@ -568,12 +570,8 @@ class NovelReaderActivity :
 	}
 
 	private fun applyReaderColors() {
-		val background = readerSettings.effectiveBackgroundColor
-		val text = readerSettings.effectiveTextColor
-		viewBinding.appbarTop.setBackgroundColor(background)
-		viewBinding.toolbar.setTitleTextColor(text)
-		viewBinding.toolbar.setSubtitleTextColor(text)
-		viewBinding.toolbar.navigationIcon?.setTint(text)
+		// The page follows the reading theme; the bars stay in the app theme, like in the manga reader.
+		viewBinding.webView.setBackgroundColor(readerSettings.effectiveBackgroundColor)
 	}
 
 	private fun setupControls() {
@@ -893,8 +891,13 @@ class NovelReaderActivity :
 
 	private fun toggleUiVisibility() {
 		isUiVisible = !isUiVisible
-		viewBinding.cardBottom.isVisible = isUiVisible
-		viewBinding.appbarTop.isVisible = isUiVisible
+		ReaderChrome.setVisible(
+			root = viewBinding.coordinator,
+			top = viewBinding.appbarTop,
+			bottom = viewBinding.cardBottom,
+			isVisible = isUiVisible,
+			animate = isAnimationsEnabled,
+		)
 		applySystemBarsVisibility()
 		viewBinding.coordinator.post { updateReaderSafeArea() }
 	}

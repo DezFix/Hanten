@@ -18,8 +18,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="top"
-		android:background="@android:color/transparent"
-		app:elevation="0dp">
+		android:elevation="@dimen/m3_card_elevated_elevation"
+		app:elevation="@dimen/m3_card_elevated_elevation"
+		app:liftOnScroll="false">
 
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"
@@ -39,23 +40,23 @@
 		android:indeterminate="true"
 		android:visibility="gone" />
 
-	<!-- Bottom Docked Toolbar -->
-	<com.google.android.material.card.MaterialCardView
+	<!-- Bottom docked toolbar: same container and color as the manga reader (ReaderChrome) -->
+	<com.google.android.material.dockedtoolbar.DockedToolbarLayout
 		android:id="@+id/card_bottom"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom"
-		app:cardCornerRadius="0dp"
-		app:cardElevation="6dp"
-		app:strokeWidth="0dp">
+		android:fitsSystemWindows="false"
+		app:cardBackgroundColor="?colorSurfaceContainer"
+		app:layout_insetEdge="bottom">
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:paddingHorizontal="16dp"
-			android:paddingTop="8dp"
-			android:paddingBottom="12dp">
+			android:paddingHorizontal="8dp"
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp">
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -66,8 +67,8 @@
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_prev"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/previous_chapter"
 					app:icon="@drawable/ic_prev" />
 
@@ -82,8 +83,8 @@
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_next"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/next_chapter"
 					app:icon="@drawable/ic_next" />
 
@@ -107,48 +108,48 @@
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_search"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/novel_search"
 					app:icon="@drawable/ic_search" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_chapters"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/novel_chapters_title"
 					app:icon="@drawable/ic_list" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_bookmark"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/bookmark_add"
 					app:icon="@drawable/ic_bookmark" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_auto_scroll"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/automatic_scroll"
 					app:icon="@drawable/ic_action_resume" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_tts"
 					style="?materialIconButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/novel_tts"
 					app:icon="@drawable/ic_play" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_font_settings"
 					style="?materialIconButtonFilledTonalStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
 					android:contentDescription="@string/novel_font_size"
 					app:icon="@drawable/ic_font" />
 
@@ -156,6 +157,6 @@
 
 		</LinearLayout>
 
-	</com.google.android.material.card.MaterialCardView>
+	</com.google.android.material.dockedtoolbar.DockedToolbarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -413,19 +413,15 @@ class ReaderActivity :
 
     private fun setUiIsVisible(isUiVisible: Boolean) {
         if (viewBinding.appbarTop.isVisible != isUiVisible) {
-            if (isAnimationsEnabled) {
-                val transition = TransitionSet()
-                    .setOrdering(TransitionSet.ORDERING_TOGETHER)
-                    .addTransition(Slide(Gravity.TOP).addTarget(viewBinding.appbarTop))
-                    .addTransition(Fade().addTarget(viewBinding.infoBar))
-                viewBinding.toolbarDocked?.let {
-                    transition.addTransition(Slide(Gravity.BOTTOM).addTarget(it))
-                }
-                TransitionManager.beginDelayedTransition(viewBinding.root, transition)
-            }
+            ReaderChrome.setVisible(
+                root = viewBinding.root,
+                top = viewBinding.appbarTop,
+                bottom = viewBinding.toolbarDocked,
+                isVisible = isUiVisible,
+                animate = isAnimationsEnabled,
+                viewBinding.infoBar,
+            )
             val isFullscreen = settings.isReaderFullscreenEnabled
-            viewBinding.appbarTop.isVisible = isUiVisible
-            viewBinding.toolbarDocked?.isVisible = isUiVisible
             viewBinding.infoBar.isGone = isUiVisible || (!viewModel.isInfoBarEnabled.value)
             viewBinding.infoBar.isTimeVisible = isFullscreen
             updateScrollTimerButton()
