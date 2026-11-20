@@ -144,6 +144,10 @@ class SettingsActivity :
 	private fun openDefaultFragment() {
 		val fragment = when (intent?.action) {
 			AppRouter.ACTION_READER -> ReaderSettingsFragment()
+			AppRouter.ACTION_APPEARANCE -> AppearanceSettingsFragment()
+			AppRouter.ACTION_ABOUT -> AboutSettingsFragment()
+			AppRouter.ACTION_STORAGE -> StorageAndNetworkSettingsFragment()
+			AppRouter.ACTION_SERVICES -> ServicesSettingsFragment()
 			AppRouter.ACTION_SUGGESTIONS -> SuggestionsSettingsFragment()
 			AppRouter.ACTION_HISTORY -> BackupsSettingsFragment()
 			AppRouter.ACTION_TRACKER -> TrackerSettingsFragment()

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/scrollView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:clipToPadding="false">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingHorizontal="16dp"
+		android:paddingTop="8dp"
+		android:paddingBottom="96dp">
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/card_profile"
+			style="@style/Widget.Material3.CardView.Filled"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:cardCornerRadius="22dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:orientation="horizontal"
+				android:padding="16dp">
+
+				<TextView
+					android:id="@+id/text_avatar"
+					android:layout_width="56dp"
+					android:layout_height="56dp"
+					android:background="@drawable/bg_profile_avatar"
+					android:gravity="center"
+					android:importantForAccessibility="no"
+					android:textColor="@android:color/white"
+					android:textSize="22sp"
+					android:textStyle="bold" />
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="14dp"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<TextView
+						android:id="@+id/text_profile_name"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:singleLine="true"
+						android:textAppearance="?textAppearanceTitleMedium"
+						android:textStyle="bold" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="@string/profile_local_hint"
+						android:textAppearance="?textAppearanceBodySmall"
+						android:textColor="?colorOnSurfaceVariant" />
+				</LinearLayout>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<GridLayout
+			android:id="@+id/grid_quick"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:columnCount="3"
+			android:useDefaultMargins="false" />
+
+		<com.google.android.material.materialswitch.MaterialSwitch
+			android:id="@+id/switch_incognito"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:background="@drawable/bg_more_section"
+			android:minHeight="60dp"
+			android:paddingHorizontal="16dp"
+			android:text="@string/incognito_mode"
+			android:textAppearance="?textAppearanceTitleSmall" />
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="4dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="8dp"
+			android:text="@string/settings"
+			android:textAllCaps="true"
+			android:textAppearance="?textAppearanceLabelMedium"
+			android:textColor="?colorOnSurfaceVariant" />
+
+		<LinearLayout
+			android:id="@+id/list_settings"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/bg_more_section"
+			android:orientation="vertical"
+			android:paddingVertical="4dp" />
+	</LinearLayout>
+</androidx.core.widget.NestedScrollView>

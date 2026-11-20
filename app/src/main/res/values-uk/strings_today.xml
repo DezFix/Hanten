@@ -2,4 +2,5 @@
 <resources>
 	<string name="today_recent">Нещодавно читав</string>
 	<string name="today_empty_hint">Знайди, що почитати, у Каталозі. Тут також будуть нові розділи з бібліотеки.</string>
+	<string name="profile_local_hint">Зберігається лише на цьому пристрої</string>
 </resources>

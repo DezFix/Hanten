@@ -266,6 +266,30 @@ class AppRouter private constructor(
 
     fun openSettings() = startActivity(SettingsActivity::class.java)
 
+    fun openAppearanceSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_APPEARANCE))
+    }
+
+    fun openAboutSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_ABOUT))
+    }
+
+    fun openStorageSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_STORAGE))
+    }
+
+    fun openServicesSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_SERVICES))
+    }
+
+    fun openTrackerSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_TRACKER))
+    }
+
+    fun openBackupSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_HISTORY))
+    }
+
     fun openReaderSettings() {
         startActivity(readerSettingsIntent(contextOrNull() ?: return))
     }
@@ -876,6 +900,10 @@ class AppRouter private constructor(
         const val ACTION_SUGGESTIONS = "${BuildConfig.APPLICATION_ID}.action.MANAGE_SUGGESTIONS"
         const val ACTION_TRACKER = "${BuildConfig.APPLICATION_ID}.action.MANAGE_TRACKER"
         const val ACTION_PERIODIC_BACKUP = "${BuildConfig.APPLICATION_ID}.action.MANAGE_PERIODIC_BACKUP"
+        const val ACTION_APPEARANCE = "${BuildConfig.APPLICATION_ID}.action.MANAGE_APPEARANCE"
+        const val ACTION_ABOUT = "${BuildConfig.APPLICATION_ID}.action.ABOUT"
+        const val ACTION_STORAGE = "${BuildConfig.APPLICATION_ID}.action.MANAGE_STORAGE"
+        const val ACTION_SERVICES = "${BuildConfig.APPLICATION_ID}.action.MANAGE_SERVICES"
 
         private const val ACCOUNT_KEY = "account"
         private const val ACTION_ACCOUNT_SYNC_SETTINGS = "android.settings.ACCOUNT_SYNC_SETTINGS"

@@ -10,6 +10,7 @@
 	<!-- Navigation -->
 	<item name="nav_history" type="id" />
 	<item name="nav_today" type="id" />
+	<item name="nav_more" type="id" />
 	<item name="nav_favorites" type="id" />
 	<item name="nav_local" type="id" />
 	<item name="nav_explore" type="id" />
