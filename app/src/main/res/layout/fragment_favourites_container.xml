@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<com.google.android.material.tabs.TabLayout
-		android:id="@+id/tabs"
+	<com.google.android.material.button.MaterialButtonToggleGroup
+		android:id="@+id/toggle_mode"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@null"
-		app:tabGravity="start"
-		app:tabMode="scrollable" />
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+		app:selectionRequired="true"
+		app:singleSelection="true">
 
-	<androidx.viewpager2.widget.ViewPager2
-		android:id="@+id/pager"
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_mode_folders"
+			style="@style/Widget.Material3.Button.OutlinedButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/library_folders" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_mode_all"
+			style="@style/Widget.Material3.Button.OutlinedButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/library_all_titles" />
+	</com.google.android.material.button.MaterialButtonToggleGroup>
+
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:visibility="gone" />
+		android:layout_height="match_parent">
 
-	<ViewStub
-		android:id="@+id/stub_empty"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout="@layout/item_empty_state"
-		tools:visibility="visible" />
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_folders"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clipToPadding="false"
+			android:paddingHorizontal="10dp"
+			android:paddingBottom="88dp" />
 
+		<androidx.fragment.app.FragmentContainerView
+			android:id="@+id/container_all"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone" />
+	</FrameLayout>
 </LinearLayout>

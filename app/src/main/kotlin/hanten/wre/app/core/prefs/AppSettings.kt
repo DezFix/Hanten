@@ -179,6 +179,11 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		get() = prefs.getBoolean(KEY_ALL_FAVOURITES_VISIBLE, true)
 		set(value) = prefs.edit { putBoolean(KEY_ALL_FAVOURITES_VISIBLE, value) }
 
+	/** Library opens on folders (categories as cards) or on the flat list of all titles. */
+	var isLibraryFoldersMode: Boolean
+		get() = prefs.getBoolean(KEY_LIBRARY_FOLDERS_MODE, true)
+		set(value) = prefs.edit { putBoolean(KEY_LIBRARY_FOLDERS_MODE, value) }
+
 	val isTrackerEnabled: Boolean
 		get() = prefs.getBoolean(KEY_TRACKER_ENABLED, true)
 
@@ -845,6 +850,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_DOWNLOADS_METERED_NETWORK = "downloads_metered_network"
 		const val KEY_DOWNLOADS_FORMAT = "downloads_format"
 		const val KEY_ALL_FAVOURITES_VISIBLE = "all_favourites_visible"
+		const val KEY_LIBRARY_FOLDERS_MODE = "library_folders_mode"
 		const val KEY_DOH = "doh"
 		const val KEY_EXIT_CONFIRM = "exit_confirm"
 		const val KEY_INCOGNITO_MODE = "incognito"

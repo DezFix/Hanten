@@ -17,4 +17,7 @@
 	<string name="onboarding_import_mihon">Копія Mihon або Tachiyomi (незабаром)</string>
 	<string name="onboarding_import_later">Можна зробити й пізніше: Налаштування → Резервне копіювання.</string>
 	<string name="onboarding_finish">Готово</string>
+	<string name="library_folders">Теки</string>
+	<string name="library_all_titles">Усі тайтли</string>
+	<string name="library_new_folder">Нова тека</string>
 </resources>
