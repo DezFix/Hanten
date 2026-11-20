@@ -36,8 +36,8 @@ fun exploreButtonsAD(
 	{ layoutInflater, parent -> ItemExploreButtonsBinding.inflate(layoutInflater, parent, false) },
 ) {
 
-	binding.buttonBookmarks.setOnClickListener(clickListener)
-	binding.buttonDownloads.setOnClickListener(clickListener)
+	binding.buttonSuggestions.setOnClickListener(clickListener)
+	binding.buttonManageSources.setOnClickListener(clickListener)
 	binding.buttonLocal.setOnClickListener(clickListener)
 	binding.buttonRandom.setOnClickListener(clickListener)
 

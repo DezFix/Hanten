@@ -14,12 +14,12 @@
 		app:icon="@drawable/ic_storage" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/button_bookmarks"
+		android:id="@+id/button_suggestions"
 		style="@style/Widget.Hanten.ExploreButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/bookmarks"
-		app:icon="@drawable/ic_bookmark" />
+		android:text="@string/suggestions"
+		app:icon="@drawable/ic_suggestion" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/button_random"
@@ -30,18 +30,18 @@
 		app:icon="@drawable/ic_dice" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/button_downloads"
+		android:id="@+id/button_manage_sources"
 		style="@style/Widget.Hanten.ExploreButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/downloads"
-		app:icon="@drawable/ic_download" />
+		android:text="@string/manage_sources"
+		app:icon="@drawable/ic_settings" />
 
 	<androidx.constraintlayout.helper.widget.Flow
 		android:id="@+id/flow"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:constraint_referenced_ids="button_local,button_bookmarks,button_random,button_downloads"
+		app:constraint_referenced_ids="button_local,button_suggestions,button_random,button_manage_sources"
 		app:flow_horizontalGap="12dp"
 		app:flow_maxElementsWrap="@integer/explore_buttons_columns"
 		app:flow_verticalGap="8dp"

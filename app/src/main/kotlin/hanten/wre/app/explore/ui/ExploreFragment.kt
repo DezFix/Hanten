@@ -126,9 +126,9 @@ class ExploreFragment :
 	override fun onClick(v: View) {
 		when (v.id) {
 			R.id.button_local -> router.openList(LocalMangaSource, null, null)
-			R.id.button_bookmarks -> router.openBookmarks()
+			R.id.button_suggestions -> router.openSuggestions()
 			R.id.button_more -> router.openSuggestions()
-			R.id.button_downloads -> router.openDownloads()
+			R.id.button_manage_sources -> router.openManageSources()
 			R.id.button_random -> viewModel.openRandom()
 		}
 	}
