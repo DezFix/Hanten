@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="onboarding_tagline">Манга, манхва и ранобэ в одном приложении. Русские и украинские источники из коробки.</string>
+	<string name="onboarding_feature_sources">130+ источников</string>
+	<string name="onboarding_feature_offline">Офлайн</string>
+	<string name="onboarding_feature_tts">Озвучка ранобэ</string>
+	<string name="onboarding_feature_no_account">Без аккаунта</string>
+	<string name="onboarding_start">Начать</string>
+	<string name="onboarding_have_backup">У меня есть бэкап</string>
+	<string name="onboarding_kinds_title">Что читаешь?</string>
+	<string name="onboarding_kinds_subtitle">Включим подходящие источники. Можно выбрать всё.</string>
+	<string name="onboarding_languages_title">Языки</string>
+	<string name="onboarding_languages_subtitle">Включим источники на этих языках. Поменять можно в любой момент в Каталоге.</string>
+	<string name="onboarding_import_title">Перенести библиотеку?</string>
+	<string name="onboarding_import_subtitle">Избранное, категории, история и прогресс глав переедут из бэкапа.</string>
+	<string name="onboarding_import_kotatsu">Бэкап Hanten, Kotatsu или Futon</string>
+	<string name="onboarding_import_mihon">Бэкап Mihon или Tachiyomi (скоро)</string>
+	<string name="onboarding_import_later">Можно сделать и позже: Настройки → Резервное копирование.</string>
+	<string name="onboarding_finish">Готово</string>
+</resources>

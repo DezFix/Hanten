@@ -79,7 +79,7 @@ import hanten.wre.app.list.ui.config.ListConfigSection
 import hanten.wre.app.local.ui.ImportDialogFragment
 import hanten.wre.app.local.ui.info.LocalInfoDialog
 import hanten.wre.app.main.ui.MainActivity
-import hanten.wre.app.main.ui.welcome.WelcomeSheet
+import hanten.wre.app.main.ui.welcome.OnboardingActivity
 import hanten.wre.app.reader.ui.colorfilter.ColorFilterConfigActivity
 import hanten.wre.app.reader.ui.config.ReaderConfigSheet
 import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
@@ -542,9 +542,7 @@ class AppRouter private constructor(
         }.showDistinct()
     }
 
-    fun showWelcomeSheet() {
-        WelcomeSheet().showDistinct()
-    }
+    fun showWelcomeSheet() = startActivity(OnboardingActivity::class.java)
 
     fun showChapterPagesSheet() {
         ChaptersPagesSheet().showDistinct()
@@ -627,13 +625,11 @@ class AppRouter private constructor(
         return sheet?.dialog?.isShowing == true
     }
 
+    /** Closes first-run setup, e.g. after a backup restore has started from it. */
     fun closeWelcomeSheet(): Boolean {
-        val tag = fragmentTag<WelcomeSheet>()
-        val sheet = fragment?.findFragmentByTagRecursive(tag)
-            ?: activity?.supportFragmentManager?.findFragmentByTag(tag)
-            ?: return false
-        return if (sheet is WelcomeSheet) {
-            sheet.dismissAllowingStateLoss()
+        val host = activity ?: fragment?.activity
+        return if (host is OnboardingActivity) {
+            host.finish()
             true
         } else {
             false

@@ -145,6 +145,10 @@
 				android:resource="@xml/remote_action" />
 		</activity>
 		<activity
+			android:name="hanten.wre.app.main.ui.welcome.OnboardingActivity"
+			android:exported="false"
+			android:theme="@style/Theme.Hanten" />
+		<activity
 			android:name="hanten.wre.app.novel.ui.reader.NovelReaderActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:exported="false"

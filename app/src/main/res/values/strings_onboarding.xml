@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="onboarding_tagline">Manga, manhwa and light novels in one app. Russian and Ukrainian sources out of the box.</string>
+	<string name="onboarding_feature_sources">130+ sources</string>
+	<string name="onboarding_feature_offline">Offline reading</string>
+	<string name="onboarding_feature_tts">Novel read-aloud</string>
+	<string name="onboarding_feature_no_account">No account needed</string>
+	<string name="onboarding_start">Get started</string>
+	<string name="onboarding_have_backup">I have a backup</string>
+	<string name="onboarding_kinds_title">What do you read?</string>
+	<string name="onboarding_kinds_subtitle">We will enable matching sources. Pick as many as you like.</string>
+	<string name="onboarding_languages_title">Languages</string>
+	<string name="onboarding_languages_subtitle">Sources in these languages will be enabled. You can change it any time in Explore.</string>
+	<string name="onboarding_import_title">Move your library?</string>
+	<string name="onboarding_import_subtitle">Favourites, categories, history and reading progress come over from a backup.</string>
+	<string name="onboarding_import_kotatsu">Backup from Hanten, Kotatsu or Futon</string>
+	<string name="onboarding_import_mihon">Backup from Mihon or Tachiyomi (soon)</string>
+	<string name="onboarding_import_later">You can do this later in Settings → Backup and restore.</string>
+	<string name="onboarding_finish">Done</string>
+</resources>

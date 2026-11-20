@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="onboarding_tagline">Манґа, манхва та ранобе в одному застосунку. Російські й українські джерела з коробки.</string>
+	<string name="onboarding_feature_sources">130+ джерел</string>
+	<string name="onboarding_feature_offline">Офлайн</string>
+	<string name="onboarding_feature_tts">Озвучення ранобе</string>
+	<string name="onboarding_feature_no_account">Без облікового запису</string>
+	<string name="onboarding_start">Почати</string>
+	<string name="onboarding_have_backup">У мене є резервна копія</string>
+	<string name="onboarding_kinds_title">Що читаєш?</string>
+	<string name="onboarding_kinds_subtitle">Увімкнемо відповідні джерела. Можна вибрати все.</string>
+	<string name="onboarding_languages_title">Мови</string>
+	<string name="onboarding_languages_subtitle">Увімкнемо джерела цими мовами. Змінити можна будь-коли в Каталозі.</string>
+	<string name="onboarding_import_title">Перенести бібліотеку?</string>
+	<string name="onboarding_import_subtitle">Обране, категорії, історія та прогрес розділів переїдуть із резервної копії.</string>
+	<string name="onboarding_import_kotatsu">Копія Hanten, Kotatsu або Futon</string>
+	<string name="onboarding_import_mihon">Копія Mihon або Tachiyomi (незабаром)</string>
+	<string name="onboarding_import_later">Можна зробити й пізніше: Налаштування → Резервне копіювання.</string>
+	<string name="onboarding_finish">Готово</string>
+</resources>

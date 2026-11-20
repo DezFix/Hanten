@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?android:colorBackground"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingHorizontal="24dp">
+
+		<LinearLayout
+			android:id="@+id/dots"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="horizontal" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_skip"
+			style="@style/Widget.Material3.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/skip" />
+	</LinearLayout>
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:fillViewport="true">
+
+		<FrameLayout
+			android:id="@+id/steps_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingHorizontal="24dp">
+
+			<!-- Step 1: welcome -->
+			<LinearLayout
+				android:id="@+id/step_welcome"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:orientation="vertical"
+				android:paddingVertical="24dp">
+
+				<com.google.android.material.imageview.ShapeableImageView
+					android:layout_width="168dp"
+					android:layout_height="168dp"
+					android:contentDescription="@string/app_name"
+					android:scaleType="centerCrop"
+					android:src="@drawable/onboarding_hero"
+					app:shapeAppearanceOverlay="@style/ShapeAppearance.Hanten.Onboarding.Hero" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="28dp"
+					android:text="@string/app_name"
+					android:textAppearance="?textAppearanceDisplaySmall"
+					android:textStyle="bold" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:text="@string/onboarding_tagline"
+					android:textAppearance="?textAppearanceBodyLarge"
+					android:textColor="?colorOnSurfaceVariant" />
+
+				<com.google.android.material.chip.ChipGroup
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="24dp">
+
+					<com.google.android.material.chip.Chip
+						style="@style/Widget.Hanten.Chip.Assist"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:clickable="false"
+						android:text="@string/onboarding_feature_sources" />
+
+					<com.google.android.material.chip.Chip
+						style="@style/Widget.Hanten.Chip.Assist"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:clickable="false"
+						android:text="@string/onboarding_feature_offline" />
+
+					<com.google.android.material.chip.Chip
+						style="@style/Widget.Hanten.Chip.Assist"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:clickable="false"
+						android:text="@string/onboarding_feature_tts" />
+
+					<com.google.android.material.chip.Chip
+						style="@style/Widget.Hanten.Chip.Assist"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:clickable="false"
+						android:text="@string/onboarding_feature_no_account" />
+				</com.google.android.material.chip.ChipGroup>
+			</LinearLayout>
+
+			<!-- Step 2: what do you read -->
+			<LinearLayout
+				android:id="@+id/step_kinds"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="24dp"
+				android:visibility="gone"
+				tools:visibility="visible">
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_kinds_title" />
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Subtitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_kinds_subtitle" />
+
+				<hanten.wre.app.core.ui.widgets.ChipsView
+					android:id="@+id/chips_type"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="28dp"
+					android:text="@string/list_mode"
+					android:textAppearance="?textAppearanceTitleMedium" />
+
+				<hanten.wre.app.core.ui.widgets.ChipsView
+					android:id="@+id/chips_list_mode"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+			</LinearLayout>
+
+			<!-- Step 3: languages -->
+			<LinearLayout
+				android:id="@+id/step_languages"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="24dp"
+				android:visibility="gone">
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_languages_title" />
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Subtitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_languages_subtitle" />
+
+				<hanten.wre.app.core.ui.widgets.ChipsView
+					android:id="@+id/chips_locales"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+			</LinearLayout>
+
+			<!-- Step 4: move the library over -->
+			<LinearLayout
+				android:id="@+id/step_import"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="24dp"
+				android:visibility="gone">
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_import_title" />
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Subtitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/onboarding_import_subtitle" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_restore"
+					style="@style/Widget.Hanten.Onboarding.Option"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:text="@string/onboarding_import_kotatsu"
+					app:icon="@drawable/ic_backup_restore" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_restore_mihon"
+					style="@style/Widget.Hanten.Onboarding.Option"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:enabled="false"
+					android:text="@string/onboarding_import_mihon"
+					app:icon="@drawable/ic_backup_restore" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_directories"
+					style="@style/Widget.Hanten.Onboarding.Option"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:text="@string/local_manga_directories"
+					app:icon="@drawable/ic_storage" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
+					android:text="@string/onboarding_import_later"
+					android:textAppearance="?textAppearanceBodyMedium"
+					android:textColor="?colorOnSurfaceVariant" />
+			</LinearLayout>
+		</FrameLayout>
+	</androidx.core.widget.NestedScrollView>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingHorizontal="24dp"
+		android:paddingTop="8dp"
+		android:paddingBottom="16dp">
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_next"
+			android:layout_width="match_parent"
+			android:layout_height="56dp"
+			android:text="@string/onboarding_start"
+			android:textAppearance="?textAppearanceTitleMedium" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_have_backup"
+			style="@style/Widget.Material3.Button.OutlinedButton"
+			android:layout_width="match_parent"
+			android:layout_height="52dp"
+			android:layout_marginTop="8dp"
+			android:text="@string/onboarding_have_backup" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_back"
+			style="@style/Widget.Material3.Button.TextButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:text="@string/back"
+			android:visibility="gone" />
+	</LinearLayout>
+</LinearLayout>
