@@ -1,5 +1,11 @@
 package hanten.wre.app.more.ui
 
+import hanten.wre.app.databinding.ItemMoreRowBinding
+import androidx.core.text.inSpans
+import android.text.style.RelativeSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableStringBuilder
+import android.graphics.drawable.GradientDrawable
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -39,27 +45,34 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	@Inject
 	lateinit var settings: AppSettings
 
-	private class Entry(@DrawableRes val icon: Int, @StringRes val title: Int, val action: AppRouter.() -> Unit)
+	private class Entry(
+		@DrawableRes val icon: Int,
+		@StringRes val title: Int,
+		@StringRes val hint: Int = 0,
+		val action: AppRouter.() -> Unit,
+	)
 
 	private val quick = listOf(
 		Entry(R.drawable.ic_download, R.string.downloads) { openDownloads() },
 		Entry(R.drawable.ic_history, R.string.history) { openHistory() },
 		Entry(R.drawable.ic_bookmark, R.string.bookmarks) { openBookmarks() },
 		Entry(R.drawable.ic_book_page, R.string.statistics) { openStatistic() },
+		Entry(R.drawable.ic_feed, R.string.feed) { openFeed() },
 		Entry(R.drawable.ic_updated, R.string.more_updates) { openMangaUpdates() },
-		Entry(R.drawable.ic_folder_file, R.string.library_folders) { openFavoriteCategories() },
 	)
 
 	private val sections = listOf(
-		Entry(R.drawable.ic_appearance, R.string.appearance) { openAppearanceSettings() },
-		Entry(R.drawable.ic_reader_ltr, R.string.reader_settings) { openReaderSettings() },
-		Entry(R.drawable.ic_web, R.string.remote_sources) { openSourcesSettings() },
-		Entry(R.drawable.ic_notification, R.string.check_for_new_chapters) { openTrackerSettings() },
-		Entry(R.drawable.ic_download, R.string.downloads) { openDownloadsSetting() },
-		Entry(R.drawable.ic_storage, R.string.storage_and_network) { openStorageSettings() },
-		Entry(R.drawable.ic_services, R.string.services) { openServicesSettings() },
-		Entry(R.drawable.ic_backup_restore, R.string.backup_restore) { openBackupSettings() },
-		Entry(R.drawable.ic_info_outline, R.string.about) { openAboutSettings() },
+		Entry(R.drawable.ic_appearance, R.string.appearance, R.string.more_hint_appearance) { openAppearanceSettings() },
+		Entry(R.drawable.ic_reader_ltr, R.string.reader_settings, R.string.more_hint_reader) { openReaderSettings() },
+		Entry(R.drawable.ic_web, R.string.remote_sources, R.string.more_hint_sources) { openSourcesSettings() },
+		Entry(R.drawable.ic_notification, R.string.check_for_new_chapters, R.string.more_hint_tracker) {
+			openTrackerSettings()
+		},
+		Entry(R.drawable.ic_download, R.string.downloads, R.string.more_hint_downloads) { openDownloadsSetting() },
+		Entry(R.drawable.ic_storage, R.string.storage_and_network, R.string.more_hint_storage) { openStorageSettings() },
+		Entry(R.drawable.ic_services, R.string.services, R.string.more_hint_services) { openServicesSettings() },
+		Entry(R.drawable.ic_backup_restore, R.string.backup_restore, R.string.more_hint_backup) { openBackupSettings() },
+		Entry(R.drawable.ic_info_outline, R.string.about, R.string.more_hint_about) { openAboutSettings() },
 		// The full settings screen is only needed for its search: every section is listed above
 		Entry(R.drawable.ic_search, R.string.settings_search) { openSettings() },
 	)
@@ -88,14 +101,23 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 			binding.gridQuick.addView(tile)
 		}
 		sections.forEach { entry ->
-			val row = inflater.inflate(R.layout.item_more_row, binding.listSettings, false) as TextView
-			row.setText(entry.title)
-			row.setCompoundDrawablesRelativeWithIntrinsicBounds(
-				ContextCompat.getDrawable(row.context, entry.icon), null, null, null,
-			)
-			row.compoundDrawableTintList = ColorStateList.valueOf(muted)
-			row.setOnClickListener { entry.action.invoke(router) }
-			binding.listSettings.addView(row)
+			val row = ItemMoreRowBinding.inflate(inflater, binding.listSettings, false)
+			row.textTitle.setText(entry.title)
+			row.imageIcon.setImageResource(entry.icon)
+			row.imageIcon.imageTintList = ColorStateList.valueOf(muted)
+			if (entry.hint != 0) row.textHint.setText(entry.hint) else row.textHint.text = null
+			row.root.setOnClickListener { entry.action.invoke(router) }
+			binding.listSettings.addView(row.root)
+		}
+		// Incognito with a short explanation under the title (mockup)
+		binding.switchIncognito.text = SpannableStringBuilder(getString(R.string.incognito_mode))
+			.append('\n')
+			.inSpans(
+				RelativeSizeSpan(HINT_SIZE),
+				ForegroundColorSpan(muted),
+			) { append(getString(R.string.more_incognito_hint)) }
+		binding.buttonProfile.setOnClickListener {
+			startActivity(Intent(it.context, ProfileActivity::class.java))
 		}
 		binding.switchIncognito.isChecked = settings.isIncognitoModeEnabled
 		binding.switchIncognito.setOnCheckedChangeListener { _, isChecked ->
@@ -123,7 +145,16 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		val name = settings.profileName
 		binding.textProfileName.text = name ?: getString(R.string.profile_no_name)
 		binding.textAvatar.text = ProfileStyle.avatarText(settings.profileAvatar, name)
-		binding.textAvatar.backgroundTintList = ColorStateList.valueOf(ProfileStyle.color(settings.profileColor))
+		// avatar in the profile color with an accent ring (mockup)
+		binding.textAvatar.backgroundTintList = null
+		binding.textAvatar.background = GradientDrawable().apply {
+			shape = GradientDrawable.OVAL
+			setColor(ProfileStyle.color(settings.profileColor))
+			setStroke(
+				resources.getDimensionPixelSize(R.dimen.profile_choice_ring),
+				binding.root.context.getThemeColor(appcompatR.attr.colorPrimary),
+			)
+		}
 	}
 
 	private fun showProfileNameDialog() {
@@ -148,6 +179,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	private companion object {
 
 		const val TILE_MARGIN = 8
+		const val HINT_SIZE = 0.85f
 		const val MAX_NAME_LENGTH = 24
 	}
 }

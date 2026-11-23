@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Hanten 3.0 settings row (mockup): icon, title, short hint on the right -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="?selectableItemBackground"
-	android:drawablePadding="16dp"
 	android:gravity="center_vertical"
-	android:minHeight="52dp"
-	android:paddingHorizontal="16dp"
-	android:textAppearance="?textAppearanceBodyLarge" />
+	android:minHeight="54dp"
+	android:orientation="horizontal"
+	android:paddingHorizontal="16dp">
+
+	<ImageView
+		android:id="@+id/image_icon"
+		android:layout_width="22dp"
+		android:layout_height="22dp"
+		android:importantForAccessibility="no" />
+
+	<TextView
+		android:id="@+id/text_title"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="14dp"
+		android:layout_weight="1"
+		android:ellipsize="end"
+		android:singleLine="true"
+		android:textAppearance="?textAppearanceTitleSmall"
+		tools:text="Appearance" />
+
+	<TextView
+		android:id="@+id/text_hint"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:ellipsize="end"
+		android:maxWidth="150dp"
+		android:singleLine="true"
+		android:textAppearance="?textAppearanceBodySmall"
+		android:textColor="?colorOnSurfaceVariant"
+		tools:text="Theme, grid" />
+</LinearLayout>

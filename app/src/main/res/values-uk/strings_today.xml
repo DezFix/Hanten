@@ -57,4 +57,14 @@
 	<string name="catalog_more_sources">Ще джерела</string>
 	<string name="catalog_builtin_sources">Вбудовані джерела</string>
 	<string name="catalog_extensions">Розширення Tachiyomi</string>
+	<string name="more_hint_appearance">Тема, сітка, меню</string>
+	<string name="more_hint_reader">Манга і ранобе</string>
+	<string name="more_hint_sources">Вбудовані та розширення</string>
+	<string name="more_hint_tracker">Wi-Fi, частота</string>
+	<string name="more_hint_downloads">Тека, формат</string>
+	<string name="more_hint_storage">Кеш, проксі</string>
+	<string name="more_hint_services">Трекери, рекомендації</string>
+	<string name="more_hint_backup">Авто, Mihon, Kotatsu</string>
+	<string name="more_hint_about">Версія, оновлення</string>
+	<string name="more_incognito_hint">Історія не зберігається</string>
 </resources>
