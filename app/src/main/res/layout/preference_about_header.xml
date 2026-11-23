@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: About header per mockup — icon, name, version line, update button -->
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:gravity="center_horizontal"
 	android:orientation="vertical"
-	android:paddingTop="24dp"
-	android:paddingBottom="8dp">
+	android:paddingTop="16dp"
+	android:paddingBottom="12dp">
 
 	<ImageView
-		android:layout_width="72dp"
-		android:layout_height="72dp"
+		android:layout_width="96dp"
+		android:layout_height="96dp"
 		android:contentDescription="@string/app_name"
 		android:src="@mipmap/ic_launcher" />
 
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="12dp"
+		android:layout_marginTop="10dp"
+		android:fontFamily="@font/unbounded"
 		android:gravity="center"
 		android:text="@string/app_name"
-		android:textAppearance="?textAppearanceHeadlineSmall" />
+		android:textColor="?colorOnSurface"
+		android:textSize="24sp"
+		android:textStyle="bold" />
+
+	<!-- tapping the version 8 times still starts the unicorn easter egg -->
+	<TextView
+		android:id="@+id/text_version"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:background="?selectableItemBackground"
+		android:gravity="center"
+		android:padding="4dp"
+		android:textAppearance="?textAppearanceBodyMedium"
+		android:textColor="?colorOnSurfaceVariant"
+		tools:text="Версия 3.0.0 · Без рекламы и аккаунтов" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/button_check_updates"
+		style="@style/Widget.Material3.Button.TonalButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/check_updates" />
 
 </LinearLayout>

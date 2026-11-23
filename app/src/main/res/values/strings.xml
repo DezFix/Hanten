@@ -1065,12 +1065,17 @@
     <string name="card_percent_left">%1$s%% left</string>
     <string name="card_chapters_read">Read %1$d of %2$d chapters</string>
     <string name="card_chapters_left">Chapters left: %1$d</string>
-    <string name="appearance_preview">Preview</string>
-    <string name="appearance_preview_title">Title name</string>
     <string name="appearance_mode">Mode</string>
     <string name="appearance_accent">Accent</string>
     <string name="appearance_corners">Corners</string>
     <string name="appearance_nav">Bottom menu</string>
     <string name="appearance_nav_hint">Selected %1$d of %2$d. Change the order below</string>
     <string name="appearance_nav_order">Tab order</string>
+    <string name="backup_action_create">Create backup</string>
+    <string name="backup_action_restore">Restore</string>
+    <string name="about_version_line">Version %s · No ads, no accounts</string>
+    <string name="donate_card_text">Hanten is free, with no ads and no data collection. It is made by one person in their free time. If you like the app, you can buy the author a coffee.</string>
+    <string name="donate_card_button">Support on Ko-fi</string>
+    <string name="report_problem">Report a problem</string>
+    <string name="backup_screen_title">Backup and transfer</string>
 </resources>

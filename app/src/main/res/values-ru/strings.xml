@@ -1132,12 +1132,17 @@
     <string name="card_percent_left">Осталось %1$s%%</string>
     <string name="card_chapters_read">Прочитано %1$d из %2$d глав</string>
     <string name="card_chapters_left">Осталось глав: %1$d</string>
-    <string name="appearance_preview">Предпросмотр</string>
-    <string name="appearance_preview_title">Название тайтла</string>
     <string name="appearance_mode">Режим</string>
     <string name="appearance_accent">Акцент</string>
     <string name="appearance_corners">Скругление</string>
     <string name="appearance_nav">Нижнее меню</string>
     <string name="appearance_nav_hint">Выбрано %1$d из %2$d. Порядок меняется ниже</string>
     <string name="appearance_nav_order">Порядок вкладок</string>
+    <string name="backup_action_create">Создать бэкап</string>
+    <string name="backup_action_restore">Восстановить</string>
+    <string name="about_version_line">Версия %s · Без рекламы и аккаунтов</string>
+    <string name="donate_card_text">Hanten бесплатный, без рекламы и без сбора данных. Его делает один человек в свободное время. Если приложение тебе нравится, можно угостить автора чашкой кофе.</string>
+    <string name="donate_card_button">Поддержать на Ko-fi</string>
+    <string name="report_problem">Сообщить о проблеме</string>
+    <string name="backup_screen_title">Бэкап и перенос</string>
 </resources>

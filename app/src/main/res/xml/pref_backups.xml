@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/backup_restore">
 
+    <!-- Hanten 3.0: big buttons per mockup; the rows below stay for settings search and are hidden in code -->
+    <hanten.wre.app.settings.utils.LayoutPreference
+        android:key="backup_actions"
+        android:layout="@layout/preference_backup_actions" />
+
     <Preference
         android:key="backup"
         android:persistent="false"
@@ -22,6 +27,7 @@
 
         <Preference
             android:icon="@drawable/ic_backup_restore"
+            android:layout="@layout/preference_card"
             android:key="migrate_kotatsu"
             android:persistent="false"
             android:summary="@string/migrate_kotatsu_summary"
@@ -29,6 +35,7 @@
 
         <Preference
             android:icon="@drawable/ic_backup_restore"
+            android:layout="@layout/preference_card"
             android:key="migrate_mihon"
             android:persistent="false"
             android:summary="@string/migrate_mihon_summary"

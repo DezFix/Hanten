@@ -5,12 +5,6 @@
     android:title="@string/appearance">
 
     <!-- Hanten 3.0: visual blocks per mockup (preview, theme tiles, mode, AMOLED, accent, corners, tabs) -->
-    <Preference
-        android:key="appearance_preview"
-        android:layout="@layout/preference_appearance_preview"
-        android:persistent="false"
-        android:selectable="false" />
-
     <hanten.wre.app.settings.utils.ThemeChooserPreference
         android:key="color_theme"
         android:title="@string/theme" />

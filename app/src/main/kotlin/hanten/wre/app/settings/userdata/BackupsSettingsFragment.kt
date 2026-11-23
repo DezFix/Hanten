@@ -19,9 +19,10 @@ import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.tryLaunch
+import hanten.wre.app.settings.utils.LayoutPreference
 
 @AndroidEntryPoint
-class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
+class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_screen_title),
     ActivityResultCallback<Uri?> {
 
     private val viewModel: BackupsSettingsViewModel by viewModels()
@@ -45,6 +46,30 @@ class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pref_backups)
+        // Hanten 3.0: create/restore are big buttons (mockup); the rows stay only for settings search
+        findPreference<Preference>(AppSettings.KEY_BACKUP)?.isVisible = false
+        findPreference<Preference>(AppSettings.KEY_RESTORE)?.isVisible = false
+        findPreference<LayoutPreference>(KEY_ACTIONS)?.run {
+            clickableIds = intArrayOf(R.id.button_backup, R.id.button_restore)
+            onViewClick = { v ->
+                when (v.id) {
+                    R.id.button_backup -> createBackup(v.context)
+                    R.id.button_restore -> selectBackupFile()
+                }
+            }
+        }
+    }
+
+    private fun createBackup(context: android.content.Context) {
+        if (!backupCreateCall.tryLaunch(BackupUtils.generateFileName(context))) {
+            Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun selectBackupFile() {
+        if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
+            Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,21 +81,13 @@ class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         return when (preference.key) {
             AppSettings.KEY_BACKUP -> {
-                if (!backupCreateCall.tryLaunch(BackupUtils.generateFileName(preference.context))) {
-                    Snackbar.make(
-                        listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT,
-                    ).show()
-                }
+                createBackup(preference.context)
                 true
             }
 
             // "Move from another app" uses the same picker: the restore dialog detects the format itself
             AppSettings.KEY_RESTORE, KEY_MIGRATE_KOTATSU, KEY_MIGRATE_MIHON -> {
-                if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
-                    Snackbar.make(
-                        listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT,
-                    ).show()
-                }
+                selectBackupFile()
                 true
             }
 
@@ -88,6 +105,7 @@ class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
 
         const val KEY_MIGRATE_KOTATSU = "migrate_kotatsu"
         const val KEY_MIGRATE_MIHON = "migrate_mihon"
+        const val KEY_ACTIONS = "backup_actions"
     }
 
     private fun bindPeriodicalBackupSummary() {

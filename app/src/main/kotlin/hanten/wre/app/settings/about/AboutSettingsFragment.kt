@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import android.content.Intent
@@ -21,6 +22,7 @@ import hanten.wre.app.core.github.AppUpdateFlow
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BasePreferenceFragment
+import hanten.wre.app.settings.utils.LayoutPreference
 import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.core.models.Shape
 import nl.dionsegijn.konfetti.xml.KonfettiView
@@ -50,6 +52,36 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 			title = getString(R.string.app_version, BuildConfig.VERSION_NAME)
 		}
 		findPreference<Preference>(AppSettings.KEY_LINK_TELEGRAM)?.isVisible = false
+		// Hanten 3.0: version, update check and Ko-fi moved into the header and the support card (mockup);
+		// the old rows stay in the XML for settings search only
+		findPreference<Preference>(AppSettings.KEY_APP_VERSION)?.isVisible = false
+		findPreference<Preference>("check_updates")?.isVisible = false
+		findPreference<Preference>("about_donate")?.isVisible = false
+		findPreference<LayoutPreference>("about_header")?.run {
+			clickableIds = intArrayOf(R.id.text_version, R.id.button_check_updates)
+			onBind = { view ->
+				view.findViewById<TextView>(R.id.text_version)?.text =
+					getString(R.string.about_version_line, BuildConfig.VERSION_NAME)
+			}
+			onViewClick = { v ->
+				when (v.id) {
+					R.id.button_check_updates -> checkForUpdates()
+					R.id.text_version -> onVersionClick()
+				}
+			}
+		}
+		findPreference<LayoutPreference>("about_donate_card")?.run {
+			clickableIds = intArrayOf(R.id.button_donate)
+			onViewClick = { openLink(R.string.url_donate, getString(R.string.donate_title)) }
+		}
+	}
+
+	private fun onVersionClick() {
+		versionClickCount++
+		if (versionClickCount == 8) {
+			versionClickCount = 0
+			triggerEasterEgg()
+		}
 	}
 
 	override fun onCreateView(
@@ -89,10 +121,13 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 	override fun onPreferenceTreeClick(preference: Preference): Boolean {
 		return when (preference.key) {
 			AppSettings.KEY_APP_VERSION -> {
-				versionClickCount++
-				if (versionClickCount == 8) {
-					versionClickCount = 0
-					triggerEasterEgg()
+				onVersionClick()
+				true
+			}
+
+			"about_issues" -> {
+				if (!router.openExternalBrowser(getString(R.string.url_github) + "/issues", preference.title)) {
+					Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
 				}
 				true
 			}

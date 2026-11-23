@@ -90,8 +90,9 @@
 	<dimen name="header_padding_start">20dp</dimen>
 	<dimen name="header_padding_end">10dp</dimen>
 	<dimen name="theme_tile_stroke">2dp</dimen>
-	<dimen name="theme_tile_margin">5dp</dimen>
+	<dimen name="theme_tile_margin">4dp</dimen>
 	<dimen name="accent_swatch_size">44dp</dimen>
 	<dimen name="accent_swatch_gap">10dp</dimen>
 	<dimen name="accent_swatch_stroke">3dp</dimen>
+	<dimen name="profile_banner_height">150dp</dimen>
 </resources>

@@ -4,12 +4,13 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:title="@string/about">
 
-	<Preference
+	<hanten.wre.app.settings.utils.LayoutPreference
 		android:key="about_header"
-		android:layout="@layout/preference_about_header"
-		android:persistent="false"
-		android:selectable="false"
-		app:allowDividerBelow="false" />
+		android:layout="@layout/preference_about_header" />
+
+	<hanten.wre.app.settings.utils.LayoutPreference
+		android:key="about_donate_card"
+		android:layout="@layout/preference_donate_card" />
 
 	<Preference
 		android:key="app_version"
@@ -45,6 +46,12 @@
 		android:summary="@string/url_user_manual"
 		android:title="@string/user_manual"
 		app:allowDividerAbove="true" />
+
+	<Preference
+		android:key="about_issues"
+		android:icon="@drawable/ic_alert_outline"
+		android:persistent="false"
+		android:title="@string/report_problem" />
 
 	<Preference
 		android:key="about_legal"
@@ -84,35 +91,45 @@
 	<PreferenceCategory android:title="@string/credits_title">
 
 		<Preference
+			android:layout="@layout/preference_card"
 			android:persistent="false"
+			app:iconSpaceReserved="false"
 			android:summary="@string/credits_kotatsu"
 			android:title="Kotatsu">
 			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/KotatsuApp/Kotatsu" />
 		</Preference>
 
 		<Preference
+			android:layout="@layout/preference_card"
 			android:persistent="false"
+			app:iconSpaceReserved="false"
 			android:summary="@string/credits_futon"
 			android:title="Futon">
 			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/AppFuton/Futon" />
 		</Preference>
 
 		<Preference
+			android:layout="@layout/preference_card"
 			android:persistent="false"
+			app:iconSpaceReserved="false"
 			android:summary="@string/credits_mihon"
 			android:title="@string/credits_mihon_title">
 			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/mihonapp/mihon" />
 		</Preference>
 
 		<Preference
+			android:layout="@layout/preference_card"
 			android:persistent="false"
+			app:iconSpaceReserved="false"
 			android:summary="@string/credits_keiyoushi"
 			android:title="@string/credits_keiyoushi_title">
 			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/keiyoushi/extensions" />
 		</Preference>
 
 		<Preference
+			android:layout="@layout/preference_card"
 			android:persistent="false"
+			app:iconSpaceReserved="false"
 			android:summary="@string/credits_people"
 			android:title="@string/credits_people_title"
 			android:selectable="false" />

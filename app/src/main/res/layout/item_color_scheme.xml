@@ -9,7 +9,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:checkable="true"
-	app:cardCornerRadius="16dp"
+	app:cardCornerRadius="14dp"
 	app:checkedIcon="@null"
 	app:strokeColor="?colorPrimary"
 	tools:theme="@style/ThemeOverlay.Hanten.Miku">
@@ -18,12 +18,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:padding="8dp">
+		android:padding="6dp">
 
 		<FrameLayout
 			android:id="@+id/preview"
 			android:layout_width="match_parent"
-			android:layout_height="64dp"
+			android:layout_height="44dp"
 			android:background="@drawable/bg_theme_preview">
 
 			<LinearLayout
@@ -31,7 +31,7 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="bottom"
 				android:orientation="vertical"
-				android:padding="8dp">
+				android:padding="6dp">
 
 				<hanten.wre.app.core.ui.widgets.ShapeView
 					android:id="@+id/shape_1"
@@ -49,15 +49,15 @@
 
 					<hanten.wre.app.core.ui.widgets.ShapeView
 						android:id="@+id/shape_primary"
-						android:layout_width="32dp"
-						android:layout_height="12dp"
+						android:layout_width="26dp"
+						android:layout_height="10dp"
 						android:background="?colorPrimary"
 						app:cornerSize="6dp" />
 
 					<hanten.wre.app.core.ui.widgets.ShapeView
 						android:id="@+id/shape_2"
-						android:layout_width="12dp"
-						android:layout_height="12dp"
+						android:layout_width="10dp"
+						android:layout_height="10dp"
 						android:layout_marginStart="4dp"
 						android:background="?colorSecondary"
 						app:cornerSize="6dp" />
@@ -68,10 +68,10 @@
 
 			<ImageView
 				android:id="@+id/imageView_check"
-				android:layout_width="20dp"
-				android:layout_height="20dp"
+				android:layout_width="16dp"
+				android:layout_height="16dp"
 				android:layout_gravity="top|end"
-				android:layout_margin="6dp"
+				android:layout_margin="4dp"
 				android:importantForAccessibility="no"
 				android:visibility="gone"
 				app:srcCompat="@drawable/ic_mtrl_checked_circle"
@@ -84,10 +84,9 @@
 			android:id="@+id/textView_title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
+			android:layout_marginTop="6dp"
 			android:ellipsize="end"
-			android:maxLines="2"
-			android:minLines="2"
+			android:maxLines="1"
 			android:textAppearance="?attr/textAppearanceLabelLarge"
 			android:textColor="?android:attr/textColorPrimary"
 			android:textStyle="bold"

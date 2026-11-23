@@ -60,6 +60,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityProfileBinding.inflate(layoutInflater))
 		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = false)
+		supportActionBar?.title = null
 		viewBinding.buttonEdit.setOnClickListener(this)
 		viewBinding.buttonName.setOnClickListener(this)
 		viewBinding.buttonStats.setOnClickListener(this)
@@ -76,11 +77,15 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
 		val barsInsets = insets.systemBarsInsets
 		viewBinding.appbar.updatePadding(left = barsInsets.left, right = barsInsets.right, top = barsInsets.top)
+		// the banner goes under the status bar, so the scroll content gets no top padding
 		viewBinding.scrollView.updatePadding(
 			left = barsInsets.left,
 			right = barsInsets.right,
 			bottom = barsInsets.bottom,
 		)
+		viewBinding.viewBanner.layoutParams = viewBinding.viewBanner.layoutParams.apply {
+			height = resources.getDimensionPixelSize(R.dimen.profile_banner_height) + barsInsets.top
+		}
 		return insets.consumeAllSystemBarsInsets()
 	}
 
@@ -104,6 +109,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 		viewBinding.textAvatar.text = ProfileStyle.avatarText(settings.profileAvatar, name)
 		viewBinding.textAvatar.backgroundTintList = ColorStateList.valueOf(color)
 		viewBinding.viewBanner.setBackgroundColor(ColorUtils.setAlphaComponent(color, BANNER_ALPHA))
+		viewBinding.layoutEdit.strokeColor = color
 		bindAvatarChoices(name, color)
 		bindColorChoices()
 	}
@@ -184,6 +190,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 					Chip(this@ProfileActivity).apply {
 						text = tag.title
 						isClickable = false
+						// filled chips like in the mockup
+						chipBackgroundColor = ColorStateList.valueOf(
+							getThemeColor(com.google.android.material.R.attr.colorPrimaryContainer),
+						)
+						setTextColor(getThemeColor(com.google.android.material.R.attr.colorOnPrimaryContainer))
+						chipStrokeWidth = 0f
 					},
 				)
 			}
@@ -214,7 +226,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 
 	private companion object {
 
-		const val BANNER_ALPHA = 110
+		const val BANNER_ALPHA = 200
 		const val AVATAR_TEXT_SP = 18f
 		const val GENRES_LIMIT = 6
 		const val MAX_NAME_LENGTH = 24
