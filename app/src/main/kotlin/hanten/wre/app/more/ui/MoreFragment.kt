@@ -60,7 +60,8 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_services, R.string.services) { openServicesSettings() },
 		Entry(R.drawable.ic_backup_restore, R.string.backup_restore) { openBackupSettings() },
 		Entry(R.drawable.ic_info_outline, R.string.about) { openAboutSettings() },
-		Entry(R.drawable.ic_settings, R.string.settings) { openSettings() },
+		// The full settings screen is only needed for its search: every section is listed above
+		Entry(R.drawable.ic_search, R.string.settings_search) { openSettings() },
 	)
 
 	override fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?) =

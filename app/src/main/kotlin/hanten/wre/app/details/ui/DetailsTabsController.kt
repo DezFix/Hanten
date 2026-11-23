@@ -48,7 +48,7 @@ class DetailsTabsController(
 
 	// A removed tab is recycled by TabLayout, so the Similar tab is created anew each time it is shown
 	private var similarTab: TabLayout.Tab? = null
-	private var currentTab = TAB_CHAPTERS
+	private var currentTab = TAB_INFO
 	private val menuProvider = ChapterPagesMenuProvider(
 		viewModel = viewModel,
 		settings = settings,
@@ -57,17 +57,14 @@ class DetailsTabsController(
 	)
 
 	init {
-		tabs.addTab(chaptersTab, false)
 		tabs.addTab(infoTab, false)
+		tabs.addTab(chaptersTab, false)
 		pagesTab?.let { tabs.addTab(it, false) }
 		tabs.addTab(bookmarksTab, false)
 		menuToolbar.addMenuProvider(menuProvider)
 		activity.onBackPressedDispatcher.addCallback(activity, menuProvider)
-		val initial = when (settings.defaultDetailsTab) {
-			TAB_PAGES -> pagesTab ?: chaptersTab
-			TAB_BOOKMARKS -> bookmarksTab
-			else -> chaptersTab
-		}
+		// Hanten 3.0: the card opens on Info; chapters are one tap away
+		val initial = infoTab
 		initial.select()
 		show(initial.tag as Int)
 		tabs.addOnTabSelectedListener(this)

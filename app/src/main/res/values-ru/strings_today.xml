@@ -50,4 +50,5 @@
 	<string name="today_ranobe">Ранобэ</string>
 	<string name="check_new_chapters">Проверить новые главы</string>
 	<string name="today_no_new_chapters">Новых глав пока нет. Потяни экран вниз, чтобы проверить библиотеку.</string>
+	<string name="settings_search">Поиск по настройкам</string>
 </resources>
