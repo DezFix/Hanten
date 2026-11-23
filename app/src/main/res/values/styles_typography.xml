@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Hanten 3.0 typography: Unbounded for headings, Manrope for everything else -->
+	<style name="TextAppearance.Hanten.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+		<item name="fontFamily">@font/unbounded</item>
+		<item name="android:fontFamily">@font/unbounded</item>
+	</style>
+	<style name="TextAppearance.Hanten.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+		<item name="fontFamily">@font/manrope_strong</item>
+		<item name="android:fontFamily">@font/manrope_strong</item>
+	</style>
+	<style name="TextAppearance.Hanten.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+		<item name="fontFamily">@font/manrope_strong</item>
+		<item name="android:fontFamily">@font/manrope_strong</item>
+	</style>
+	<style name="TextAppearance.Hanten.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+		<item name="fontFamily">@font/manrope_strong</item>
+		<item name="android:fontFamily">@font/manrope_strong</item>
+	</style>
+	<style name="TextAppearance.Hanten.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+		<item name="fontFamily">@font/manrope_strong</item>
+		<item name="android:fontFamily">@font/manrope_strong</item>
+	</style>
+	<style name="TextAppearance.Hanten.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+		<item name="fontFamily">@font/manrope_strong</item>
+		<item name="android:fontFamily">@font/manrope_strong</item>
+	</style>
+	<style name="TextAppearance.Hanten.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+		<item name="fontFamily">@font/manrope</item>
+		<item name="android:fontFamily">@font/manrope</item>
+	</style>
+	<style name="TextAppearance.Hanten.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+		<item name="fontFamily">@font/manrope</item>
+		<item name="android:fontFamily">@font/manrope</item>
+	</style>
+	<style name="TextAppearance.Hanten.BodySmall" parent="TextAppearance.Material3.BodySmall">
+		<item name="fontFamily">@font/manrope</item>
+		<item name="android:fontFamily">@font/manrope</item>
+	</style>
+</resources>

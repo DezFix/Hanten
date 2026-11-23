@@ -82,6 +82,24 @@
 		<item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Hanten.ExtraLarge</item>
 		<item name="bottomNavigationStyle">@style/Widget.Hanten.BottomNavigationView</item>
 		<item name="materialCardViewStyle">@style/Widget.Hanten.CardView</item>
+		<!-- Hanten 3.0 fonts -->
+		<item name="fontFamily">@font/manrope</item>
+		<item name="android:fontFamily">@font/manrope</item>
+		<item name="textAppearanceDisplayLarge">@style/TextAppearance.Hanten.DisplayLarge</item>
+		<item name="textAppearanceDisplayMedium">@style/TextAppearance.Hanten.DisplayMedium</item>
+		<item name="textAppearanceDisplaySmall">@style/TextAppearance.Hanten.DisplaySmall</item>
+		<item name="textAppearanceHeadlineLarge">@style/TextAppearance.Hanten.HeadlineLarge</item>
+		<item name="textAppearanceHeadlineMedium">@style/TextAppearance.Hanten.HeadlineMedium</item>
+		<item name="textAppearanceHeadlineSmall">@style/TextAppearance.Hanten.HeadlineSmall</item>
+		<item name="textAppearanceTitleLarge">@style/TextAppearance.Hanten.TitleLarge</item>
+		<item name="textAppearanceTitleMedium">@style/TextAppearance.Hanten.TitleMedium</item>
+		<item name="textAppearanceTitleSmall">@style/TextAppearance.Hanten.TitleSmall</item>
+		<item name="textAppearanceLabelLarge">@style/TextAppearance.Hanten.LabelLarge</item>
+		<item name="textAppearanceLabelMedium">@style/TextAppearance.Hanten.LabelMedium</item>
+		<item name="textAppearanceLabelSmall">@style/TextAppearance.Hanten.LabelSmall</item>
+		<item name="textAppearanceBodyLarge">@style/TextAppearance.Hanten.BodyLarge</item>
+		<item name="textAppearanceBodyMedium">@style/TextAppearance.Hanten.BodyMedium</item>
+		<item name="textAppearanceBodySmall">@style/TextAppearance.Hanten.BodySmall</item>
 	</style>
 
 	<!--== Default Theme ==-->
