@@ -33,6 +33,44 @@
 			android:text="@string/library_all_titles" />
 	</com.google.android.material.button.MaterialButtonToggleGroup>
 
+	<!-- View mode for "All titles": grid / list / detailed (same setting as the list mode in settings) -->
+	<com.google.android.material.button.MaterialButtonToggleGroup
+		android:id="@+id/toggle_view"
+		style="@style/Widget.Hanten.SegmentedGroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginBottom="4dp"
+		android:visibility="gone"
+		app:selectionRequired="true"
+		app:singleSelection="true">
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_view_grid"
+			style="@style/Widget.Hanten.Button.Segment.Icon"
+			android:layout_width="44dp"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/grid"
+			app:icon="@drawable/ic_grid" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_view_list"
+			style="@style/Widget.Hanten.Button.Segment.Icon"
+			android:layout_width="44dp"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/list"
+			app:icon="@drawable/ic_list" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_view_detailed"
+			style="@style/Widget.Hanten.Button.Segment.Icon"
+			android:layout_width="44dp"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/detailed_list"
+			app:icon="@drawable/ic_list_detailed" />
+	</com.google.android.material.button.MaterialButtonToggleGroup>
+
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">

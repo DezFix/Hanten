@@ -45,7 +45,9 @@ private fun libraryFolderAD(
 		binding.textViewCount.text = item.mangaCount.toString()
 		// Bell = new chapters are checked for this folder
 		binding.imageViewTracking.isVisible = item.isTrackerEnabled
-		binding.coversView.setCoversAsync(item.covers)
+		binding.imageViewCover1.setImageAsync(item.covers.getOrNull(0))
+		binding.imageViewCover2.setImageAsync(item.covers.getOrNull(1))
+		binding.imageViewCover3.setImageAsync(item.covers.getOrNull(2))
 	}
 }
 

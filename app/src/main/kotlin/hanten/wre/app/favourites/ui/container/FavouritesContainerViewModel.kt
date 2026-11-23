@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.plus
 import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.favourites.ui.categories.adapter.CategoryListModel
@@ -27,6 +28,12 @@ class FavouritesContainerViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 	val isFoldersMode = MutableStateFlow(settings.isLibraryFoldersMode)
+
+	var listMode: ListMode
+		get() = settings.favoritesListMode
+		set(value) {
+			settings.favoritesListMode = value
+		}
 
 	val folders = favouritesRepository.observeCategoriesWithCovers()
 		.map { map ->

@@ -17,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.R
 import hanten.wre.app.core.model.FavouriteCategory
 import hanten.wre.app.core.nav.router
@@ -65,6 +66,14 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 			if (viewModel.isFoldersMode.value) R.id.button_mode_folders else R.id.button_mode_all,
 		)
 		binding.toggleMode.addOnButtonCheckedListener(this)
+		binding.toggleView.check(
+			when (viewModel.listMode) {
+				ListMode.GRID -> R.id.button_view_grid
+				ListMode.LIST -> R.id.button_view_list
+				ListMode.DETAILED_LIST -> R.id.button_view_detailed
+			},
+		)
+		binding.toggleView.addOnButtonCheckedListener(this)
 		actionModeDelegate.addListener(this)
 		viewModel.folders.observe(viewLifecycleOwner) { adapter.items = it }
 		viewModel.isFoldersMode.observe(viewLifecycleOwner, ::onModeChanged)
@@ -79,8 +88,12 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat = insets
 
 	override fun onButtonChecked(group: MaterialButtonToggleGroup, checkedId: Int, isChecked: Boolean) {
-		if (isChecked) {
-			viewModel.setFoldersMode(checkedId == R.id.button_mode_folders)
+		if (!isChecked) return
+		when (checkedId) {
+			R.id.button_view_grid -> viewModel.listMode = ListMode.GRID
+			R.id.button_view_list -> viewModel.listMode = ListMode.LIST
+			R.id.button_view_detailed -> viewModel.listMode = ListMode.DETAILED_LIST
+			else -> viewModel.setFoldersMode(checkedId == R.id.button_mode_folders)
 		}
 	}
 
@@ -121,16 +134,19 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 
 	override fun onActionModeStarted(mode: ActionMode) {
 		viewBinding?.toggleMode?.isEnabled = false
+		viewBinding?.toggleView?.isEnabled = false
 	}
 
 	override fun onActionModeFinished(mode: ActionMode) {
 		viewBinding?.toggleMode?.isEnabled = true
+		viewBinding?.toggleView?.isEnabled = true
 	}
 
 	private fun onModeChanged(isFolders: Boolean) {
 		val binding = viewBinding ?: return
 		binding.recyclerFolders.isVisible = isFolders
 		binding.containerAll.isVisible = !isFolders
+		binding.toggleView.isVisible = !isFolders
 		if (!isFolders && childFragmentManager.findFragmentByTag(TAG_ALL) == null) {
 			childFragmentManager.commit {
 				replace(R.id.container_all, FavouritesListFragment.newInstance(FavouritesListFragment.NO_ID), TAG_ALL)

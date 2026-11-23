@@ -5,13 +5,16 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_margin="6dp"
-	android:minHeight="146dp"
+	android:minHeight="112dp"
 	app:cardCornerRadius="18dp"
-	app:strokeColor="?colorOutline">
+	app:cardBackgroundColor="@android:color/transparent"
+	app:strokeColor="?colorOutline"
+	app:strokeWidth="2dp">
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="146dp"
+		android:layout_height="match_parent"
+		android:minHeight="112dp"
 		android:gravity="center"
 		android:orientation="vertical">
 
