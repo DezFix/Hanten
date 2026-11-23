@@ -397,4 +397,29 @@
 		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
+
+	<!-- Hanten 3.0: pill segmented control (Library Folders / All titles) -->
+	<style name="Widget.Hanten.SegmentedGroup" parent="">
+		<item name="android:background">@drawable/bg_segmented</item>
+		<item name="android:padding">4dp</item>
+		<item name="android:spacing">4dp</item>
+		<item name="innerCornerSize">10dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearance.Hanten.Segment</item>
+	</style>
+
+	<style name="ShapeAppearance.Hanten.Segment" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">10dp</item>
+	</style>
+
+	<style name="Widget.Hanten.Button.Segment" parent="Widget.Material3.Button.TextButton">
+		<item name="backgroundTint">@color/segment_button_bg</item>
+		<item name="android:textColor">@color/segment_button_text</item>
+		<item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
+		<item name="android:minHeight">40dp</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearance.Hanten.Segment</item>
+		<item name="rippleColor">?attr/colorControlHighlight</item>
+	</style>
 </resources>

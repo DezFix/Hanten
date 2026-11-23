@@ -204,6 +204,9 @@
 	<declare-styleable name="IconsView">
 		<attr name="iconSize" />
 		<attr name="iconSpacing" format="dimension" />
+		<attr name="iconsBackground" format="reference" />
+		<attr name="iconPadding" />
+		<attr name="iconsElevation" format="dimension" />
 	</declare-styleable>
 
 	<declare-styleable name="FilterFieldLayout">

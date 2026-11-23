@@ -18,6 +18,9 @@ class IconsView @JvmOverloads constructor(
 
 	private var iconSize = LayoutParams.WRAP_CONTENT
 	private var iconSpacing = 0
+	private var iconBackgroundRes = 0
+	private var iconPadding = 0
+	private var iconElevation = 0f
 
 	val iconsCount: Int
 		get() {
@@ -34,6 +37,9 @@ class IconsView @JvmOverloads constructor(
 		context.withStyledAttributes(attrs, R.styleable.IconsView) {
 			iconSize = getDimensionPixelSize(R.styleable.IconsView_iconSize, iconSize)
 			iconSpacing = getDimensionPixelOffset(R.styleable.IconsView_iconSpacing, iconSpacing)
+			iconBackgroundRes = getResourceId(R.styleable.IconsView_iconsBackground, 0)
+			iconPadding = getDimensionPixelOffset(R.styleable.IconsView_iconPadding, 0)
+			iconElevation = getDimension(R.styleable.IconsView_iconsElevation, 0f)
 		}
 	}
 
@@ -82,9 +88,14 @@ class IconsView @JvmOverloads constructor(
 
 	private fun addImageView() = ImageView(context).also {
 		it.scaleType = ImageView.ScaleType.FIT_CENTER
+		if (iconBackgroundRes != 0) {
+			it.setBackgroundResource(iconBackgroundRes)
+			it.setPadding(iconPadding, iconPadding, iconPadding, iconPadding)
+			it.elevation = iconElevation
+		}
 		val lp = LayoutParams(iconSize, iconSize)
 		if (isNotEmpty()) {
-			lp.marginStart = iconSpacing
+			if (orientation == VERTICAL) lp.topMargin = iconSpacing else lp.marginStart = iconSpacing
 		}
 		addView(it, lp)
 	}
