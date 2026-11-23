@@ -87,7 +87,10 @@
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="8dp"
+						app:indicatorTrackGapSize="0dp"
+						app:trackColor="?colorOutlineVariant"
 						app:trackCornerRadius="2dp"
+						app:trackStopIndicatorSize="0dp"
 						app:trackThickness="4dp" />
 
 					<Space
@@ -99,6 +102,7 @@
 						android:id="@+id/button_continue"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						app:cornerRadius="14dp"
 						android:text="@string/read" />
 				</LinearLayout>
 			</LinearLayout>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 44dp round action button (mockup): fills a 48x56 action slot -->
+<!-- 44dp round action button (mockup): a 50x44 action slot with a 3dp gap on each side -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
 	android:color="?attr/colorControlHighlight">
 	<item>
 		<inset
-			android:insetLeft="2dp"
-			android:insetTop="6dp"
-			android:insetRight="2dp"
-			android:insetBottom="6dp">
+			android:insetLeft="3dp"
+			android:insetTop="0dp"
+			android:insetRight="3dp"
+			android:insetBottom="0dp">
 			<shape android:shape="oval">
 				<solid android:color="?attr/colorSurfaceContainerHigh" />
 			</shape>

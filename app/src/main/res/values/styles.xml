@@ -455,16 +455,18 @@
 
 	<style name="Widget.Hanten.HeaderAction" parent="Widget.AppCompat.ActionButton">
 		<item name="android:background">@drawable/bg_header_action</item>
-		<item name="android:minWidth">48dp</item>
-		<item name="android:paddingStart">12dp</item>
-		<item name="android:paddingEnd">12dp</item>
+		<item name="android:minWidth">50dp</item>
+		<item name="android:maxWidth">50dp</item>
+		<item name="android:paddingStart">13dp</item>
+		<item name="android:paddingEnd">13dp</item>
 	</style>
 
 	<style name="Widget.Hanten.HeaderAction.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
 		<item name="android:background">@drawable/bg_header_action</item>
-		<item name="android:minWidth">48dp</item>
-		<item name="android:paddingStart">12dp</item>
-		<item name="android:paddingEnd">12dp</item>
+		<item name="android:minWidth">50dp</item>
+		<item name="android:maxWidth">50dp</item>
+		<item name="android:paddingStart">13dp</item>
+		<item name="android:paddingEnd">13dp</item>
 	</style>
 
 	<style name="Widget.Hanten.HeaderButton" parent="">
