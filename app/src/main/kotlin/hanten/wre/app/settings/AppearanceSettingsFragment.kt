@@ -45,9 +45,12 @@ import hanten.wre.app.parsers.util.mapToSet
 import hanten.wre.app.parsers.util.names
 import hanten.wre.app.parsers.util.toTitleCase
 import hanten.wre.app.settings.protect.ProtectSetupActivity
+import hanten.wre.app.settings.utils.AccentColorPreference
 import hanten.wre.app.settings.utils.ActivityListPreference
 import hanten.wre.app.settings.utils.MultiSummaryProvider
+import hanten.wre.app.settings.utils.NavTabsPreference
 import hanten.wre.app.settings.utils.PercentSummaryProvider
+import hanten.wre.app.settings.utils.SegmentedListPreference
 import hanten.wre.app.settings.utils.SliderPreference
 import hanten.wre.app.settings.utils.ThemeChooserPreference
 import kotlin.coroutines.cancellation.CancellationException
@@ -126,6 +129,13 @@ class AppearanceSettingsFragment :
             pref.summaryProvider = MultiSummaryProvider(R.string.none)
             pref.values = settings.searchSuggestionTypes.mapToSet { it.name }
         }
+        findPreference<SegmentedListPreference>(AppSettings.KEY_THEME)?.run {
+            // mockup order: Light / Dark / System
+            entries = arrayOf(getString(R.string.light), getString(R.string.dark), getString(R.string.follow_system))
+            entryValues = arrayOf("1", "2", "-1")
+        }
+        findPreference<AccentColorPreference>(AppSettings.KEY_ACCENT_COLOR)?.colorScheme = settings.colorScheme
+        findPreference<NavTabsPreference>(KEY_NAV_TABS)?.settings = settings
         bindNavSummary()
     }
 
@@ -165,6 +175,7 @@ class AppearanceSettingsFragment :
 
             AppSettings.KEY_NAV_MAIN -> {
                 bindNavSummary()
+                findPreference<NavTabsPreference>(KEY_NAV_TABS)?.refresh()
             }
 
             AppSettings.KEY_APP_PASSWORD -> {
@@ -278,5 +289,6 @@ class AppearanceSettingsFragment :
 
     private companion object {
         const val KEY_CUSTOM_THEME_IMPORT = "custom_theme_import"
+        const val KEY_NAV_TABS = "nav_tabs"
     }
 }

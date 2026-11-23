@@ -4,22 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/appearance">
 
+    <!-- Hanten 3.0: visual blocks per mockup (preview, theme tiles, mode, AMOLED, accent, corners, tabs) -->
+    <Preference
+        android:key="appearance_preview"
+        android:layout="@layout/preference_appearance_preview"
+        android:persistent="false"
+        android:selectable="false" />
+
     <hanten.wre.app.settings.utils.ThemeChooserPreference
         android:key="color_theme"
-        android:title="@string/color_theme" />
+        android:title="@string/theme" />
 
     <Preference
         android:key="custom_theme_import"
         android:title="@string/custom_theme_import"
         android:summary="@string/custom_theme_import_summary" />
 
-    <ListPreference
+    <hanten.wre.app.settings.utils.SegmentedListPreference
         android:defaultValue="-1"
         android:entries="@array/themes"
         android:entryValues="@array/values_theme"
         android:key="theme"
-        android:title="@string/theme"
-        app:useSimpleSummaryProvider="true" />
+        android:title="@string/appearance_mode" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
@@ -27,21 +33,28 @@
         android:summary="@string/black_dark_theme_summary"
         android:title="@string/black_dark_theme" />
 
-    <ListPreference
+    <hanten.wre.app.settings.utils.AccentColorPreference
         android:defaultValue="theme"
         android:entries="@array/accent_colors"
         android:entryValues="@array/values_accent_colors"
         android:key="accent_color"
-        android:title="@string/accent_color"
-        app:useSimpleSummaryProvider="true" />
+        android:title="@string/appearance_accent" />
 
-    <ListPreference
+    <hanten.wre.app.settings.utils.SegmentedListPreference
         android:defaultValue="medium"
         android:entries="@array/corner_styles"
         android:entryValues="@array/values_corner_styles"
         android:key="corner_style"
-        android:title="@string/corner_style"
-        app:useSimpleSummaryProvider="true" />
+        android:title="@string/appearance_corners" />
+
+    <hanten.wre.app.settings.utils.NavTabsPreference
+        android:key="nav_tabs"
+        android:title="@string/appearance_nav" />
+
+    <PreferenceScreen
+        android:fragment="hanten.wre.app.settings.nav.NavConfigFragment"
+        android:key="nav_main"
+        android:title="@string/appearance_nav_order" />
 
     <hanten.wre.app.settings.utils.ActivityListPreference
         android:key="app_locale"
@@ -113,11 +126,6 @@
         <MultiSelectListPreference
             android:key="search_suggest_types"
             android:title="@string/search_suggestions" />
-
-        <PreferenceScreen
-            android:fragment="hanten.wre.app.settings.nav.NavConfigFragment"
-            android:key="nav_main"
-            android:title="@string/main_screen_sections" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"

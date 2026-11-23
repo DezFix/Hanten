@@ -10,8 +10,8 @@
 		<item>Бирюзовый</item>
 	</string-array>
 	<string-array name="corner_styles">
-		<item>Маленькое</item>
-		<item>Среднее</item>
-		<item>Большое</item>
+		<item>Острые</item>
+		<item>Мягкие</item>
+		<item>Круглые</item>
 	</string-array>
 </resources>

@@ -1,61 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<!-- Hanten 3.0: detailed list card per mockup (Library board, "Подробный" mode) -->
+<com.google.android.material.card.MaterialCardView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	style="@style/Widget.Hanten.CardView"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@drawable/custom_selectable_item_background">
+	android:layout_marginHorizontal="2dp"
+	android:layout_marginVertical="5dp"
+	app:cardCornerRadius="16dp">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content"
+		android:padding="10dp">
 
 		<hanten.wre.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
-			android:layout_width="0dp"
-			android:layout_height="118dp"
-			android:background="?colorSurfaceContainer"
+			android:layout_width="64dp"
+			android:layout_height="92dp"
+			android:background="?colorSurfaceContainerHighest"
 			app:aspectRationHeight="0"
 			app:aspectRationWidth="0"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintDimensionRatio="2:3"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Medium"
 			app:trimImage="true"
 			tools:src="@tools:sample/backgrounds/scenic" />
 
-		<hanten.wre.app.history.ui.util.ReadingProgressView
-			android:id="@+id/progressView"
-			android:layout_width="@dimen/card_indicator_size"
-			android:layout_height="@dimen/card_indicator_size"
-			android:layout_margin="@dimen/card_indicator_offset"
-			app:layout_constraintBottom_toBottomOf="@id/imageView_cover"
-			app:layout_constraintEnd_toEndOf="@id/imageView_cover" />
-
-		<hanten.wre.app.core.ui.widgets.IconsView
-			android:id="@+id/iconsView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:background="@drawable/bg_list_icons"
-			android:orientation="horizontal"
-			android:padding="4dp"
-			app:iconSize="14dp"
-			app:iconSpacing="4dp"
-			app:layout_constraintStart_toStartOf="@id/imageView_cover"
-			app:layout_constraintTop_toTopOf="@id/imageView_cover" />
-
 		<LinearLayout
 			android:layout_width="0dp"
-			android:layout_height="0dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginEnd="12dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="12dp"
+			android:layout_marginEnd="6dp"
+			android:minHeight="92dp"
 			android:orientation="vertical"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@+id/imageView_cover"
+			app:layout_constraintEnd_toStartOf="@id/badge"
+			app:layout_constraintStart_toEndOf="@id/imageView_cover"
 			app:layout_constraintTop_toTopOf="parent">
 
 			<TextView
@@ -63,39 +45,75 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:ellipsize="end"
-				android:maxLines="3"
-				android:textAppearance="?attr/textAppearanceBodyLarge"
-				app:lineHeight="18dp"
+				android:maxLines="2"
+				android:textAppearance="?attr/textAppearanceTitleSmall"
+				android:textColor="?android:attr/textColorPrimary"
+				android:textSize="15sp"
 				tools:text="@tools:sample/lorem/random" />
 
 			<TextView
 				android:id="@+id/textView_author"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="4dp"
+				android:layout_marginTop="2dp"
 				android:ellipsize="end"
-				android:gravity="center_vertical"
 				android:maxLines="1"
-				android:textAppearance="?attr/textAppearanceBodyMedium"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toEndOf="@+id/imageView_cover"
-				app:layout_constraintTop_toBottomOf="@+id/textView_title"
-				tools:text="@tools:sample/lorem/random" />
+				android:textAppearance="?attr/textAppearanceBodySmall"
+				android:textColor="?android:attr/textColorSecondary"
+				tools:text="Манга · ReadManga · Выходит" />
 
 			<TextView
 				android:id="@+id/textView_tags"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="2dp"
+				android:ellipsize="end"
+				android:maxLines="1"
+				android:textAppearance="?attr/textAppearanceBodySmall"
+				android:textColor="?android:attr/textColorTertiary"
+				tools:text="Сёнэн, Фэнтези, Приключения" />
+
+			<hanten.wre.app.core.ui.widgets.IconsView
+				android:id="@+id/iconsView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:orientation="horizontal"
+				app:iconSize="16dp"
+				app:iconSpacing="6dp" />
+
+			<Space
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_weight="1" />
+
+			<TextView
+				android:id="@+id/textView_progress"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:layout_marginTop="4dp"
 				android:ellipsize="end"
-				android:gravity="center_vertical"
-				android:maxLines="2"
+				android:maxLines="1"
 				android:textAppearance="?attr/textAppearanceBodySmall"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toEndOf="@+id/imageView_cover"
-				app:layout_constraintTop_toBottomOf="@+id/textView_author"
-				app:lineHeight="14dp"
-				tools:text="@tools:sample/lorem/random" />
+				android:textColor="?android:attr/textColorSecondary"
+				android:visibility="gone"
+				tools:text="Прочитано 72%"
+				tools:visibility="visible" />
+
+			<com.google.android.material.progressindicator.LinearProgressIndicator
+				android:id="@+id/progressBar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:max="1000"
+				android:visibility="gone"
+				app:indicatorColor="?colorPrimary"
+				app:trackColor="?colorOutlineVariant"
+				app:trackCornerRadius="2dp"
+				app:trackStopIndicatorSize="0dp"
+				app:trackThickness="4dp"
+				tools:progress="720"
+				tools:visibility="visible" />
 
 		</LinearLayout>
 
@@ -103,7 +121,6 @@
 			android:id="@+id/badge"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_small"
 			android:visibility="gone"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
@@ -113,4 +130,4 @@
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</com.google.android.material.card.MaterialCardView>

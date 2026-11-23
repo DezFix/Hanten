@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!-- Hanten 3.0: theme tile, inflated in the theme's own context so it previews it -->
+<com.google.android.material.card.MaterialCardView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="wrap_content"
+	android:id="@+id/card"
+	style="@style/Widget.Hanten.CardView"
+	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="?selectableItemBackground"
-	android:orientation="vertical"
-	android:padding="6dp"
+	android:checkable="true"
+	app:cardCornerRadius="16dp"
+	app:checkedIcon="@null"
+	app:strokeColor="?colorPrimary"
 	tools:theme="@style/ThemeOverlay.Hanten.Miku">
 
-	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/card"
-		style="?materialCardViewFilledStyle"
-		android:layout_width="@dimen/widget_cover_width"
-		android:layout_height="@dimen/widget_cover_height"
-		android:focusableInTouchMode="false"
-		app:strokeColor="?colorOutline">
-
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:padding="6dp">
-
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:text="Abc"
-				android:textSize="12sp"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				tools:ignore="HardcodedText" />
-
-			<hanten.wre.app.core.ui.widgets.ShapeView
-				android:id="@+id/shape_1"
-				android:layout_width="0dp"
-				android:layout_height="6dp"
-				android:layout_marginBottom="6dp"
-				android:background="?colorSecondary"
-				app:cornerSize="4dp"
-				app:layout_constraintBottom_toTopOf="@id/shape_2"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintHorizontal_bias="0"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintWidth_percent="0.4" />
-
-			<hanten.wre.app.core.ui.widgets.ShapeView
-				android:id="@+id/shape_2"
-				android:layout_width="0dp"
-				android:layout_height="6dp"
-				android:background="?colorSecondary"
-				app:cornerSize="4dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintHorizontal_bias="0"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintVertical_bias="0.65"
-				app:layout_constraintWidth_percent="0.7" />
-
-			<hanten.wre.app.core.ui.widgets.ShapeView
-				android:id="@+id/shape_primary"
-				android:layout_width="16dp"
-				android:layout_height="16dp"
-				android:background="?colorPrimary"
-				app:cornerSize="6dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent" />
-
-		</androidx.constraintlayout.widget.ConstraintLayout>
-
-		<ImageView
-			android:id="@+id/imageView_check"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="top|end"
-			android:layout_margin="6dp"
-			android:visibility="gone"
-			app:srcCompat="@drawable/ic_mtrl_checked_circle"
-			app:tint="?colorPrimary"
-			tools:visibility="visible" />
-
-	</com.google.android.material.card.MaterialCardView>
-
-	<TextView
-		android:id="@+id/textView_title"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:elegantTextHeight="false"
-		android:ellipsize="end"
-		android:paddingTop="4dp"
-		android:singleLine="true"
-		android:textAppearance="?attr/textAppearanceTitleSmall"
-		android:textColor="?android:attr/textColorPrimary"
-		tools:text="@string/theme_name_miku" />
-</LinearLayout>
+		android:orientation="vertical"
+		android:padding="8dp">
+
+		<FrameLayout
+			android:id="@+id/preview"
+			android:layout_width="match_parent"
+			android:layout_height="64dp"
+			android:background="@drawable/bg_theme_preview">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				android:orientation="vertical"
+				android:padding="8dp">
+
+				<hanten.wre.app.core.ui.widgets.ShapeView
+					android:id="@+id/shape_1"
+					android:layout_width="match_parent"
+					android:layout_height="6dp"
+					android:layout_marginEnd="24dp"
+					android:background="?colorOnSurface"
+					app:cornerSize="3dp" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="4dp"
+					android:orientation="horizontal">
+
+					<hanten.wre.app.core.ui.widgets.ShapeView
+						android:id="@+id/shape_primary"
+						android:layout_width="32dp"
+						android:layout_height="12dp"
+						android:background="?colorPrimary"
+						app:cornerSize="6dp" />
+
+					<hanten.wre.app.core.ui.widgets.ShapeView
+						android:id="@+id/shape_2"
+						android:layout_width="12dp"
+						android:layout_height="12dp"
+						android:layout_marginStart="4dp"
+						android:background="?colorSecondary"
+						app:cornerSize="6dp" />
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<ImageView
+				android:id="@+id/imageView_check"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:layout_gravity="top|end"
+				android:layout_margin="6dp"
+				android:importantForAccessibility="no"
+				android:visibility="gone"
+				app:srcCompat="@drawable/ic_mtrl_checked_circle"
+				app:tint="?colorPrimary"
+				tools:visibility="visible" />
+
+		</FrameLayout>
+
+		<TextView
+			android:id="@+id/textView_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:ellipsize="end"
+			android:maxLines="2"
+			android:minLines="2"
+			android:textAppearance="?attr/textAppearanceLabelLarge"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textStyle="bold"
+			tools:text="@string/theme_name_miku" />
+
+	</LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

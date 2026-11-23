@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "From theme" mark for the accent swatch: letter A in a small frame -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="20dp"
+	android:height="20dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:fillColor="#00000000"
+		android:pathData="M6,19 L12,5 L18,19 M8.6,13.5 L15.4,13.5"
+		android:strokeWidth="2.2"
+		android:strokeColor="#FFFFFFFF"
+		android:strokeLineCap="round"
+		android:strokeLineJoin="round" />
+</vector>

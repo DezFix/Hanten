@@ -10,8 +10,8 @@
 		<item>Бірюзовий</item>
 	</string-array>
 	<string-array name="corner_styles">
-		<item>Мале</item>
-		<item>Середнє</item>
-		<item>Велике</item>
+		<item>Гострі</item>
+		<item>М’які</item>
+		<item>Круглі</item>
 	</string-array>
 </resources>
