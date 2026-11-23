@@ -51,6 +51,9 @@ import hanten.wre.app.list.ui.adapter.MangaListListener
 import hanten.wre.app.list.ui.adapter.TypedListSpacingDecoration
 import hanten.wre.app.list.ui.model.ListHeader
 import hanten.wre.app.list.ui.model.ListModel
+import hanten.wre.app.list.ui.model.MangaCompactListModel
+import hanten.wre.app.list.ui.model.MangaDetailedListModel
+import hanten.wre.app.list.ui.model.MangaGridModel
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.list.ui.size.DynamicItemSizeResolver
 import hanten.wre.app.main.ui.owners.AppBarOwner
@@ -80,6 +83,8 @@ abstract class MangaListFragment :
 	private var selectionController: ListSelectionController? = null
 	private var spanResolver: GridSpanResolver? = null
 	private val spanSizeLookup = SpanSizeLookup()
+	private var appliedListMode: ListMode? = null
+	private var pendingListMode: ListMode? = null
 	open val isSwipeRefreshEnabled = true
 
 	protected abstract val viewModel: MangaListViewModel
@@ -150,6 +155,8 @@ abstract class MangaListFragment :
 		selectionController = null
 		spanResolver = null
 		spanSizeLookup.invalidateCache()
+		appliedListMode = null
+		pendingListMode = null
 		super.onDestroyView()
 	}
 
@@ -190,6 +197,11 @@ abstract class MangaListFragment :
 
 	private suspend fun onListChanged(list: List<ListModel>) {
 		listAdapter?.emit(list)
+		pendingListMode?.let { mode ->
+			if (isContentReadyFor(mode, list)) {
+				applyListMode(mode)
+			}
+		}
 		spanSizeLookup.invalidateCache()
 		viewBinding?.recyclerView?.let {
 			paginationListener?.postInvalidate(it)
@@ -248,7 +260,34 @@ abstract class MangaListFragment :
 		spanResolver?.setGridSize(scale, requireViewBinding().recyclerView)
 	}
 
+	/**
+	 * The mode arrives before the list is re-mapped to the new item type. Switching the layout manager
+	 * right away lays out old items in the new layout (e.g. grid covers stretched to full width),
+	 * so we wait until the adapter holds items of the new mode.
+	 */
 	private fun onListModeChanged(mode: ListMode) {
+		if (appliedListMode == null || isContentReadyFor(mode, listAdapter?.items.orEmpty())) {
+			applyListMode(mode)
+		} else {
+			pendingListMode = mode
+		}
+	}
+
+	private fun isContentReadyFor(mode: ListMode, list: List<ListModel>): Boolean {
+		val first = list.firstOrNull { it is MangaListModel } ?: return true
+		return when (mode) {
+			ListMode.LIST -> first is MangaCompactListModel
+			ListMode.DETAILED_LIST -> first is MangaDetailedListModel
+			ListMode.GRID -> first is MangaGridModel
+		}
+	}
+
+	private fun applyListMode(mode: ListMode) {
+		pendingListMode = null
+		if (appliedListMode == mode) {
+			return
+		}
+		appliedListMode = mode
 		spanSizeLookup.invalidateCache()
 		with(requireViewBinding().recyclerView) {
 			removeOnLayoutChangeListener(spanResolver)
