@@ -312,6 +312,9 @@
 			</intent-filter>
 		</activity>
 		<activity
+			android:name="hanten.wre.app.profile.ProfileActivity"
+			android:label="@string/profile_title" />
+		<activity
 			android:name="hanten.wre.app.stats.ui.StatsActivity"
 			android:label="@string/reading_stats" />
 		<activity

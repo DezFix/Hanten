@@ -1,5 +1,6 @@
 package hanten.wre.app.more.ui
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputFilter
@@ -22,6 +23,7 @@ import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BaseFragment
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.databinding.FragmentMoreBinding
+import hanten.wre.app.profile.ProfileActivity
 import hanten.wre.app.profile.ProfileStyle
 import javax.inject.Inject
 import androidx.appcompat.R as appcompatR
@@ -98,7 +100,13 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		binding.switchIncognito.setOnCheckedChangeListener { _, isChecked ->
 			settings.isIncognitoModeEnabled = isChecked
 		}
-		binding.cardProfile.setOnClickListener { showProfileNameDialog() }
+		binding.cardProfile.setOnClickListener {
+			startActivity(Intent(it.context, ProfileActivity::class.java))
+		}
+		binding.cardProfile.setOnLongClickListener {
+			showProfileNameDialog()
+			true
+		}
 	}
 
 	override fun onResume() {
