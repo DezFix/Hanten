@@ -9,6 +9,7 @@ import hanten.wre.app.core.nav.AppRouter
 
 class FavouritesContainerMenuProvider(
 	private val router: AppRouter,
+	private val onNewFolder: () -> Unit,
 ) : MenuProvider {
 
 	override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -20,6 +21,8 @@ class FavouritesContainerMenuProvider(
 			R.id.action_manage -> {
 				router.openFavoriteCategories()
 			}
+
+			R.id.action_new_folder -> onNewFolder()
 
 			else -> return false
 		}

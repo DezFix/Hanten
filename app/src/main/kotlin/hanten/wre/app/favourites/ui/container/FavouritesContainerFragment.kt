@@ -1,5 +1,11 @@
 package hanten.wre.app.favourites.ui.container
 
+import hanten.wre.app.list.domain.ListSortOrder
+import hanten.wre.app.core.util.ext.getThemeColor
+import androidx.core.text.inSpans
+import androidx.annotation.StringRes
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableStringBuilder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +44,7 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 	ActionModeListener,
 	RecyclerViewOwner,
 	LibraryFolderListener,
+	FavouritesListFragment.SortOrderListener,
 	MaterialButtonToggleGroup.OnButtonCheckedListener {
 
 	private val viewModel: FavouritesContainerViewModel by viewModels()
@@ -77,7 +84,16 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 		actionModeDelegate.addListener(this)
 		viewModel.folders.observe(viewLifecycleOwner) { adapter.items = it }
 		viewModel.isFoldersMode.observe(viewLifecycleOwner, ::onModeChanged)
-		addMenuProvider(FavouritesContainerMenuProvider(router))
+		addMenuProvider(FavouritesContainerMenuProvider(router, ::onNewFolderClick))
+		binding.buttonSort.setOnClickListener {
+			(childFragmentManager.findFragmentByTag(TAG_ALL) as? FavouritesListFragment)?.showSortSheet()
+		}
+		viewModel.foldersCount.observe(viewLifecycleOwner) { count ->
+			binding.buttonModeFolders.text = segmentText(R.string.library_folders, count)
+		}
+		viewModel.titlesCount.observe(viewLifecycleOwner) { count ->
+			binding.buttonModeAll.text = segmentText(R.string.library_all_titles, count)
+		}
 	}
 
 	override fun onDestroyView() {
@@ -146,7 +162,7 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 		val binding = viewBinding ?: return
 		binding.recyclerFolders.isVisible = isFolders
 		binding.containerAll.isVisible = !isFolders
-		binding.toggleView.isVisible = !isFolders
+		binding.layoutListControls.isVisible = !isFolders
 		if (!isFolders && childFragmentManager.findFragmentByTag(TAG_ALL) == null) {
 			childFragmentManager.commit {
 				replace(R.id.container_all, FavouritesListFragment.newInstance(FavouritesListFragment.NO_ID), TAG_ALL)
@@ -157,5 +173,17 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 	private companion object {
 
 		const val TAG_ALL = "all_titles"
+	}
+
+	override fun onSortOrderChanged(order: ListSortOrder?) {
+		viewBinding?.buttonSort?.text = getString(order?.titleResId ?: R.string.sort_order)
+	}
+
+	/** "Folders 5" with the number in a quieter color, like the mockup's switch. */
+	private fun segmentText(@StringRes title: Int, count: Int): CharSequence {
+		val muted = requireContext().getThemeColor(android.R.attr.textColorSecondary)
+		return SpannableStringBuilder(getString(title)).append("  ").inSpans(ForegroundColorSpan(muted)) {
+			append(count.toString())
+		}
 	}
 }

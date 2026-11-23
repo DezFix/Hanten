@@ -1,5 +1,10 @@
 package hanten.wre.app.favourites.ui.list
 
+import hanten.wre.app.databinding.SheetLibrarySortBinding
+import hanten.wre.app.core.util.ext.observe
+import com.google.android.material.chip.Chip
+import com.google.android.material.slider.TickVisibilityMode
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -32,6 +37,44 @@ class FavouritesListFragment : MangaListFragment(), PopupMenu.OnMenuItemClickLis
 	override fun onViewBindingCreated(binding: FragmentListBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
 		binding.recyclerView.isVP2BugWorkaroundEnabled = true
+		viewModel.sortOrder.observe(viewLifecycleOwner) { order ->
+			(parentFragment as? SortOrderListener)?.onSortOrderChanged(order)
+		}
+	}
+
+	/** Hanten 3.0 sort sheet: every sort order as a chip, plus the cover size. */
+	fun showSortSheet() {
+		val context = context ?: return
+		val sheetBinding = SheetLibrarySortBinding.inflate(layoutInflater)
+		val dialog = BottomSheetDialog(context)
+		val current = viewModel.sortOrder.value
+		for (order in ListSortOrder.FAVORITES.sortedByOrdinal()) {
+			val chip = Chip(context, null, com.google.android.material.R.attr.chipStyle).apply {
+				setText(order.titleResId)
+				isCheckable = true
+				isChecked = order == current
+				setOnClickListener {
+					viewModel.setSortOrder(order)
+					dialog.dismiss()
+				}
+			}
+			sheetBinding.chipsSort.addView(chip)
+		}
+		sheetBinding.sliderGridSize.value = settings.gridSize.toFloat().coerceIn(
+			sheetBinding.sliderGridSize.valueFrom,
+			sheetBinding.sliderGridSize.valueTo,
+		)
+		sheetBinding.sliderGridSize.tickVisibilityMode = TickVisibilityMode.TICK_VISIBILITY_HIDDEN
+		sheetBinding.sliderGridSize.addOnChangeListener { _, value, fromUser ->
+			if (fromUser) settings.gridSize = value.toInt()
+		}
+		dialog.setContentView(sheetBinding.root)
+		dialog.show()
+	}
+
+	fun interface SortOrderListener {
+
+		fun onSortOrderChanged(order: ListSortOrder?)
 	}
 
 	override fun onScrolledToEnd() = viewModel.requestMoreItems()

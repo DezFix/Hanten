@@ -51,4 +51,6 @@
 	<string name="check_new_chapters">Перевірити нові розділи</string>
 	<string name="today_no_new_chapters">Нових розділів поки немає. Потягни екран вниз, щоб перевірити бібліотеку.</string>
 	<string name="settings_search">Пошук у налаштуваннях</string>
+	<string name="library_display">Відображення</string>
+	<string name="library_cover_size">Розмір обкладинок</string>
 </resources>

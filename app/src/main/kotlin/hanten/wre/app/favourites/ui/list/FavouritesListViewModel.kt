@@ -63,6 +63,7 @@ class FavouritesListViewModel @Inject constructor(
 ) : MangaListViewModel(settings, mangaDataRepository, localStorageChanges), QuickFilterListener {
 
 	val categoryId: Long = savedStateHandle[AppRouter.KEY_ID] ?: NO_ID
+	private val appSettings = settings
 	private val quickFilter = quickFilterFactory.create(categoryId)
 	private val refreshTrigger = MutableStateFlow(Any())
 	private val limit = MutableStateFlow(PAGE_SIZE)
@@ -130,6 +131,8 @@ class FavouritesListViewModel @Inject constructor(
 
 	fun setSortOrder(order: ListSortOrder) {
 		if (categoryId == NO_ID) {
+			// "All titles" keeps its order in the settings (it was read from there but never written)
+			appSettings.allFavoritesSortOrder = order
 			return
 		}
 		launchJob {

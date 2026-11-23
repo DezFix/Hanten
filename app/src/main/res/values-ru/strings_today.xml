@@ -51,4 +51,6 @@
 	<string name="check_new_chapters">Проверить новые главы</string>
 	<string name="today_no_new_chapters">Новых глав пока нет. Потяни экран вниз, чтобы проверить библиотеку.</string>
 	<string name="settings_search">Поиск по настройкам</string>
+	<string name="library_display">Отображение</string>
+	<string name="library_cover_size">Размер обложек</string>
 </resources>

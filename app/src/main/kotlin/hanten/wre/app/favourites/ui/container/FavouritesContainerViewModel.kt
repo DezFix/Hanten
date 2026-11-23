@@ -29,6 +29,17 @@ class FavouritesContainerViewModel @Inject constructor(
 
 	val isFoldersMode = MutableStateFlow(settings.isLibraryFoldersMode)
 
+	/** Numbers on the Folders / All titles switch. */
+	// lazy: `folders` is declared further down
+	val foldersCount by lazy {
+		folders.map { list -> list.count { it is CategoryListModel } }
+			.stateIn(viewModelScope + Dispatchers.Default, SharingStarted.Eagerly, 0)
+	}
+	val titlesCount by lazy {
+		favouritesRepository.observeMangaCount()
+			.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, 0)
+	}
+
 	var listMode: ListMode
 		get() = settings.favoritesListMode
 		set(value) {
