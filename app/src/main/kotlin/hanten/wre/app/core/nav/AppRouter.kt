@@ -271,6 +271,13 @@ class AppRouter private constructor(
 
     fun openSettings() = startActivity(SettingsActivity::class.java)
 
+    /** Hanten 3.0: the magnifier in the More header opens settings with the search field already open. */
+    fun openSettingsSearch() {
+        startActivity(
+            Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_SETTINGS_SEARCH),
+        )
+    }
+
     fun openAppearanceSettings() {
         startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_APPEARANCE))
     }
@@ -881,6 +888,7 @@ class AppRouter private constructor(
 
         const val KEY_DATA = "data"
         const val KEY_SCROLL_TO_STATS = "scroll_to_stats"
+        const val ACTION_SETTINGS_SEARCH = "${BuildConfig.APPLICATION_ID}.action.SETTINGS_SEARCH"
         const val KEY_ENTRIES = "entries"
         const val KEY_ERROR = "error"
         const val KEY_EXCLUDE = "exclude"

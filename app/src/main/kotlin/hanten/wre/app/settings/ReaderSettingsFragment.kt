@@ -23,6 +23,7 @@ import hanten.wre.app.core.prefs.ReaderControl
 import hanten.wre.app.core.prefs.ReaderMode
 import hanten.wre.app.core.ui.BasePreferenceFragment
 import hanten.wre.app.core.util.ext.setDefaultValueCompat
+import hanten.wre.app.novel.ui.reader.NovelReaderSettings
 import hanten.wre.app.parsers.util.mapToSet
 import hanten.wre.app.parsers.util.names
 import hanten.wre.app.settings.reader.SmartResumeThresholdDialog
@@ -72,7 +73,15 @@ class ReaderSettingsFragment :
 			summaryProvider = MultiSummaryProvider(R.string.disabled)
 		}
 		findPreference<SliderPreference>(AppSettings.KEY_WEBTOON_ZOOM_OUT)?.summaryProvider = PercentSummaryProvider()
-		findPreference<SeekBarPreference>("novel_font_size")?.min = 12
+		findPreference<SeekBarPreference>("novel_font_size")?.run {
+			min = 12
+			value = NovelReaderSettings.load(context).fontSizeSp.toInt()
+			setOnPreferenceChangeListener { _, newValue ->
+				val size = (newValue as? Int ?: return@setOnPreferenceChangeListener false).toFloat()
+				NovelReaderSettings.save(context, NovelReaderSettings.load(context).copy(fontSizeSp = size))
+				true
+			}
+		}
 		findPreference<SeekBarPreference>("novel_page_margin")?.min = 0
 		updateReaderModeDependency()
 		findPreference<EditTextPreference>(AppSettings.KEY_SMART_RESUME_PERCENTAGE)?.summaryProvider =

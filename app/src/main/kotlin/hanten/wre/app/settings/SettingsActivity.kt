@@ -71,6 +71,11 @@ class SettingsActivity :
 		}
 		viewModel.isSearchActive.observe(this, ::toggleSearchMode)
 		viewModel.onNavigateToPreference.observeEvent(this, ::navigateToPreference)
+		if (savedInstanceState == null && intent?.action == AppRouter.ACTION_SETTINGS_SEARCH) {
+			viewModel.startSearch()
+			// the search field lives in the root screen menu; expand it once the menu exists
+			viewBinding.root.post { invalidateMenu() }
+		}
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {

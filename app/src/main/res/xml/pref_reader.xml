@@ -244,10 +244,13 @@
 			android:title="@string/novel_font_family"
 			app:useSimpleSummaryProvider="true" />
 
+		<!-- not persisted here: the ranobe reader stores the size as a float (NovelReaderSettings);
+		     an int here crashed this screen and the settings search after reading any ranobe -->
 		<SeekBarPreference
 			android:defaultValue="18"
 			android:key="novel_font_size"
 			android:max="36"
+			android:persistent="false"
 			android:title="@string/novel_font_size"
 			app:showSeekBarValue="true" />
 

@@ -52,6 +52,8 @@ import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_
 import com.google.android.material.search.SearchView
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
+import hanten.wre.app.more.ui.MoreFragment
 import hanten.wre.app.backups.ui.periodical.PeriodicalBackupService
 import hanten.wre.app.browser.AdListUpdateService
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
@@ -127,12 +129,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	override val bottomNav: SlidingBottomNavigationView?
 		get() = viewBinding.bottomNav
 
+	private var isMoreTabShown = false
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityMainBinding.inflate(layoutInflater))
 		setSupportActionBar(viewBinding.toolbarMain ?: viewBinding.searchBar)
 		supportActionBar?.setDisplayShowTitleEnabled(false)
-		viewBinding.buttonSearch?.setOnClickListener { viewBinding.searchView.show() }
+		viewBinding.buttonSearch?.setOnClickListener {
+			if (isMoreTabShown) router.openSettingsSearch() else viewBinding.searchView.show()
+		}
 
 		viewBinding.fab?.setOnClickListener(this)
 		viewBinding.navRail?.headerView?.findViewById<View>(R.id.railFab)?.setOnClickListener(this)
@@ -194,8 +200,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	}
 
 	override fun onFragmentChanged(fragment: Fragment, fromUser: Boolean) {
-		// the Catalog has its own big search field
+		// the Catalog has its own big search field; on More the magnifier searches settings
 		viewBinding.buttonSearch?.isVisible = fragment !is ExploreFragment
+		isMoreTabShown = fragment is MoreFragment
+		viewBinding.buttonSearch?.setContentDescriptionAndTooltip(
+			if (isMoreTabShown) R.string.settings_search else R.string.search,
+		)
 		adjustFabVisibility(topFragment = fragment)
 		adjustAppbar(topFragment = fragment)
 		if (fromUser) {
