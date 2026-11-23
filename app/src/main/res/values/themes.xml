@@ -74,6 +74,14 @@
 		<item name="dotIndicatorStyle">@style/Widget.Hanten.DotIndicator</item>
 		<item name="badgeViewStyle">@style/Widget.Hanten.BadgeView</item>
 		<item name="coverImageViewStyle">@style/Widget.Hanten.ImageView.Cover</item>
+
+		<!-- Hanten 3.0 look: softer corners and the mockup's bottom bar -->
+		<item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.Hanten.Small</item>
+		<item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.Hanten.Medium</item>
+		<item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.Hanten.Large</item>
+		<item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Hanten.ExtraLarge</item>
+		<item name="bottomNavigationStyle">@style/Widget.Hanten.BottomNavigationView</item>
+		<item name="materialCardViewStyle">@style/Widget.Hanten.CardView</item>
 	</style>
 
 	<!--== Default Theme ==-->

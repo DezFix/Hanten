@@ -351,4 +351,50 @@
 		<item name="drawableSize">@dimen/m3_chip_icon_size</item>
 	</style>
 
+	<!-- Hanten 3.0 look (see the "Hanten UI" mockup) -->
+	<style name="ShapeAppearance.Hanten.Small" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">10dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Hanten.Medium" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">16dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Hanten.Large" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">20dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Hanten.ExtraLarge" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">28dp</item>
+	</style>
+
+	<style name="Widget.Hanten.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+		<item name="backgroundTint">?colorSurfaceContainer</item>
+		<item name="itemActiveIndicatorStyle">@style/Widget.Hanten.BottomNavigationView.ActiveIndicator</item>
+		<item name="itemIconTint">@color/nav_item_hanten</item>
+		<item name="itemTextColor">@color/nav_item_hanten</item>
+		<item name="itemTextAppearanceActive">?textAppearanceLabelMedium</item>
+		<item name="itemTextAppearanceActiveBoldEnabled">true</item>
+	</style>
+
+	<style name="Widget.Hanten.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+		<item name="android:color">?colorPrimaryContainer</item>
+	</style>
+
+	<style name="Widget.Hanten.CardView" parent="Widget.Material3.CardView.Filled">
+		<item name="cardBackgroundColor">?colorSurfaceContainer</item>
+		<item name="shapeAppearance">?shapeAppearanceCornerLarge</item>
+	</style>
+
+	<!-- Big screen title above the search bar on the main tabs -->
+	<style name="TextAppearance.Hanten.ScreenTitle" parent="TextAppearance.Material3.HeadlineMedium">
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">?colorOnSurface</item>
+		<item name="android:letterSpacing">-0.01</item>
+	</style>
+
 </resources>

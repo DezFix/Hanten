@@ -434,9 +434,9 @@
 	<color name="sakura_surfaceContainerHighest">#EFDFE1</color>
 	<!-- Hanten: colors of the app icon (cream, navy, sakura red) -->
 	<color name="hicon_primary">#A63D41</color>
-	<color name="hicon_onPrimary">#FFFFFF</color>
-	<color name="hicon_primaryContainer">#FFDAD8</color>
-	<color name="hicon_onPrimaryContainer">#410007</color>
+	<color name="hicon_onPrimary">#FFF8EE</color>
+	<color name="hicon_primaryContainer">#F2D6D2</color>
+	<color name="hicon_onPrimaryContainer">#7E2C30</color>
 	<color name="hicon_secondary">#3E4A78</color>
 	<color name="hicon_onSecondary">#FFFFFF</color>
 	<color name="hicon_secondaryContainer">#DCE1FF</color>
@@ -449,11 +449,11 @@
 	<color name="hicon_onError">#FFFFFF</color>
 	<color name="hicon_errorContainer">#FFDAD6</color>
 	<color name="hicon_onErrorContainer">#410002</color>
-	<color name="hicon_background">#F7F1E8</color>
+	<color name="hicon_background">#F4EEE3</color>
 	<color name="hicon_onBackground">#1F2A4D</color>
-	<color name="hicon_surface">#F7F1E8</color>
+	<color name="hicon_surface">#F4EEE3</color>
 	<color name="hicon_onSurface">#1F2A4D</color>
-	<color name="hicon_surfaceVariant">#ECE1D3</color>
+	<color name="hicon_surfaceVariant">#E4DBCB</color>
 	<color name="hicon_onSurfaceVariant">#4A5272</color>
 	<color name="hicon_outline">#7B7F94</color>
 	<color name="hicon_outlineVariant">#CFC4B0</color>
@@ -473,11 +473,11 @@
 	<color name="hicon_onTertiaryFixed">#241A00</color>
 	<color name="hicon_tertiaryFixedDim">#DBC58C</color>
 	<color name="hicon_onTertiaryFixedVariant">#554519</color>
-	<color name="hicon_surfaceDim">#E2D9CC</color>
-	<color name="hicon_surfaceBright">#FBF6EE</color>
-	<color name="hicon_surfaceContainerLowest">#FFFFFF</color>
-	<color name="hicon_surfaceContainerLow">#F4EEE3</color>
-	<color name="hicon_surfaceContainer">#EEE7DB</color>
-	<color name="hicon_surfaceContainerHigh">#E8E0D3</color>
-	<color name="hicon_surfaceContainerHighest">#E2D9CC</color>
+	<color name="hicon_surfaceDim">#DCD2C0</color>
+	<color name="hicon_surfaceBright">#F8F3EA</color>
+	<color name="hicon_surfaceContainerLowest">#FBF7F0</color>
+	<color name="hicon_surfaceContainerLow">#EFE8DC</color>
+	<color name="hicon_surfaceContainer">#EBE3D5</color>
+	<color name="hicon_surfaceContainerHigh">#E4DBCB</color>
+	<color name="hicon_surfaceContainerHighest">#DCD2C0</color>
 </resources>

@@ -2,6 +2,7 @@ package hanten.wre.app.main.ui.welcome
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
@@ -205,8 +206,17 @@ class OnboardingActivity :
 			val selected = i == settings.profileAvatar
 			view.backgroundTintList = ColorStateList.valueOf(if (selected) color else neutral)
 		}
+		// Every swatch gets an outline (dark colors vanish on the night background); the chosen one a thick ring
+		val ring = getThemeColor(materialR.attr.colorOnSurface)
+		val density = resources.displayMetrics.density
 		for (i in 0 until binding.rowColors.childCount) {
-			binding.rowColors.getChildAt(i).alpha = if (i == settings.profileColor) 1f else 0.45f
+			val selected = i == settings.profileColor
+			binding.rowColors.getChildAt(i).background = GradientDrawable().apply {
+				shape = GradientDrawable.OVAL
+				setColor(ProfileStyle.color(i))
+				setStroke((if (selected) 3f else 1f).times(density).toInt(), if (selected) ring else neutral)
+			}
+			binding.rowColors.getChildAt(i).backgroundTintList = null
 		}
 	}
 

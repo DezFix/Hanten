@@ -8,4 +8,10 @@
 	<string name="library_folder_track">Check for new chapters</string>
 	<string name="library_create">Create</string>
 	<string name="chapters_missing">Chapters missing: %1$d (first: %2$s)</string>
+	<string name="library_tab">Library</string>
+	<string name="today_empty_title">What you read will show up here</string>
+	<string name="profile_no_name">Set a nickname</string>
+	<string name="more_updates">Updates</string>
+	<string name="explore_on_device">On device</string>
+	<string name="explore_sources">Sources</string>
 </resources>

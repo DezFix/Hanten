@@ -12,7 +12,7 @@
     <string name="grid">Сетка</string>
     <string name="list_mode">Вид списка</string>
     <string name="settings">Настройки</string>
-    <string name="remote_sources">Источники манги</string>
+    <string name="remote_sources">Источники</string>
     <string name="loading_">Загрузка…</string>
     <string name="chapter_d_of_d">Глава %1$d из %2$d</string>
     <string name="close">Закрыть</string>
@@ -30,7 +30,7 @@
     <string name="create_shortcut">Создать ярлык</string>
     <string name="share_s">Поделиться %s</string>
     <string name="search">Поиск</string>
-    <string name="search_manga">Поиск манги</string>
+    <string name="search_manga">Поиск</string>
     <string name="manga_downloading_">Загрузка…</string>
     <string name="processing_">Обработка…</string>
     <string name="download_complete">Загружено</string>
@@ -273,7 +273,7 @@
     <string name="random">Случайная</string>
     <string name="reorder">Упорядочить</string>
     <string name="empty">Пусто</string>
-    <string name="explore">Обзор</string>
+    <string name="explore">Каталог</string>
     <string name="confirm_exit">Нажмите Назад ещё раз, чтобы выйти</string>
     <string name="exit_confirmation_summary">Нажмите Назад 2 раза для выхода из приложения</string>
     <string name="other_cache">Другой кэш</string>
@@ -377,7 +377,7 @@
     <string name="suggestion_manga">Рекомендация: %s</string>
     <string name="suggestions_notifications_summary">Иногда показывать уведомления с рекомендуемой мангой</string>
     <string name="remove_completed_downloads_confirm">Ваша история загрузок будет удалена навсегда. Загруженные файлы не будут затронуты</string>
-    <string name="suggestions_enable_prompt">Хотите ли Вы получать персонализированные рекомендации манги\?</string>
+    <string name="suggestions_enable_prompt">Включить рекомендации? Hanten будет подбирать тайтлы по тому, что ты читаешь.</string>
     <string name="web_view_unavailable">WebView недоступен: проверьте, установлен ли провайдер WebView</string>
     <string name="clear_network_cache">Очистить сетевой кэш</string>
     <string name="address">Адрес</string>

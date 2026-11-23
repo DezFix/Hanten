@@ -35,6 +35,18 @@
 			android:fitsSystemWindows="true"
 			app:layout_scrollFlags="scroll|enterAlways|snap" />
 
+		<TextView
+			android:id="@+id/textView_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingHorizontal="20dp"
+			android:paddingTop="8dp"
+			android:paddingBottom="4dp"
+			android:singleLine="true"
+			android:textAppearance="@style/TextAppearance.Hanten.ScreenTitle"
+			app:layout_scrollFlags="scroll|enterAlways|snap"
+			tools:text="@string/today" />
+
 		<com.google.android.material.search.SearchBar
 			android:id="@+id/search_bar"
 			android:layout_width="match_parent"

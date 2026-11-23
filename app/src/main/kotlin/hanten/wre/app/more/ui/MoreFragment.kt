@@ -44,7 +44,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_history, R.string.history) { openHistory() },
 		Entry(R.drawable.ic_bookmark, R.string.bookmarks) { openBookmarks() },
 		Entry(R.drawable.ic_book_page, R.string.statistics) { openStatistic() },
-		Entry(R.drawable.ic_updated, R.string.updated) { openMangaUpdates() },
+		Entry(R.drawable.ic_updated, R.string.more_updates) { openMangaUpdates() },
 		Entry(R.drawable.ic_folder_file, R.string.library_folders) { openFavoriteCategories() },
 	)
 
@@ -112,7 +112,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	private fun bindProfile() {
 		val binding = viewBinding ?: return
 		val name = settings.profileName
-		binding.textProfileName.text = name ?: getString(R.string.profile_name_hint)
+		binding.textProfileName.text = name ?: getString(R.string.profile_no_name)
 		binding.textAvatar.text = ProfileStyle.avatarText(settings.profileAvatar, name)
 		binding.textAvatar.backgroundTintList = ColorStateList.valueOf(ProfileStyle.color(settings.profileColor))
 	}

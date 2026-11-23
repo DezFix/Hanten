@@ -22,7 +22,7 @@
     <string name="detailed_list">Детальний список</string>
     <string name="list_mode">Режим списку</string>
     <string name="settings">Налаштування</string>
-    <string name="remote_sources">Джерела манґи</string>
+    <string name="remote_sources">Джерела</string>
     <string name="loading_">Завантаження…</string>
     <string name="computing_">Обчислення…</string>
     <string name="chapter_d_of_d">Розділ %1$d із %2$d</string>
@@ -33,7 +33,7 @@
     <string name="create_shortcut">Створити ярлик</string>
     <string name="share_s">Поділитися %s</string>
     <string name="search">Пошук</string>
-    <string name="search_manga">Пошук манґи</string>
+    <string name="search_manga">Пошук</string>
     <string name="processing_">Обробка…</string>
     <string name="by_name">Ім\'я</string>
     <string name="popular">Популярна</string>
@@ -278,7 +278,7 @@
     <string name="categories_delete_confirm">Ви впевнені, що бажаєте видалити вибрані улюблені категорії? \nУсю манґу в них буде втрачено, і це неможливо скасувати.</string>
     <string name="reorder">Впорядкувати</string>
     <string name="empty">Порожньо</string>
-    <string name="explore">Огляд</string>
+    <string name="explore">Каталог</string>
     <string name="saved_manga">Збережена манґа</string>
     <string name="pages_cache">Кеш сторінок</string>
     <string name="storage_usage">Використання сховища</string>
@@ -379,7 +379,7 @@
     <string name="downloads_paused">Завантаження призупинено</string>
     <string name="downloads_removed">Завантаження видалено</string>
     <string name="downloads_cancelled">Завантаження скасовано</string>
-    <string name="suggestions_enable_prompt">Хочете отримувати персоналізовані пропозиції щодо манґи\?</string>
+    <string name="suggestions_enable_prompt">Увімкнути рекомендації? Hanten підбиратиме тайтли за тим, що ти читаєш.</string>
     <string name="web_view_unavailable">WebView недоступний: перевірте, чи встановлено провайдер WebView</string>
     <string name="clear_network_cache">Очистити мережевий кеш</string>
     <string name="port">Порт</string>

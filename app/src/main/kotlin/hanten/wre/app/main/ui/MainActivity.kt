@@ -142,9 +142,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		)
 		navigationDelegate.addOnFragmentChangedListener(this)
 		navigationDelegate.onCreate(this, savedInstanceState)
-		viewBinding.textViewTitle?.let { tv ->
-			navigationDelegate.observeTitle().observe(this) { tv.text = it }
-		}
+		navigationDelegate.observeTitle().observe(this) { viewBinding.textViewTitle.text = it }
 
 		addMenuProvider(MainMenuProvider(router, viewModel))
 

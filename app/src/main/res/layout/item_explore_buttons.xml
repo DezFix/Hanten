@@ -10,7 +10,7 @@
 		style="@style/Widget.Hanten.ExploreButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/local_storage"
+		android:text="@string/explore_on_device"
 		app:icon="@drawable/ic_storage" />
 
 	<com.google.android.material.button.MaterialButton
@@ -34,7 +34,7 @@
 		style="@style/Widget.Hanten.ExploreButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/manage_sources"
+		android:text="@string/explore_sources"
 		app:icon="@drawable/ic_settings" />
 
 	<androidx.constraintlayout.helper.widget.Flow

@@ -8,4 +8,10 @@
 	<string name="library_folder_track">Проверять новые главы</string>
 	<string name="library_create">Создать</string>
 	<string name="chapters_missing">Пропущено глав: %1$d (первые: %2$s)</string>
+	<string name="library_tab">Библиотека</string>
+	<string name="today_empty_title">Здесь появится то, что ты читаешь</string>
+	<string name="profile_no_name">Задай ник</string>
+	<string name="more_updates">Обновления</string>
+	<string name="explore_on_device">На устройстве</string>
+	<string name="explore_sources">Источники</string>
 </resources>

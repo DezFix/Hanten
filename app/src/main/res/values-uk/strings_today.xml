@@ -8,4 +8,10 @@
 	<string name="library_folder_track">Перевіряти нові розділи</string>
 	<string name="library_create">Створити</string>
 	<string name="chapters_missing">Пропущено розділів: %1$d (перші: %2$s)</string>
+	<string name="library_tab">Бібліотека</string>
+	<string name="today_empty_title">Тут зʼявиться те, що ти читаєш</string>
+	<string name="profile_no_name">Вкажи нік</string>
+	<string name="more_updates">Оновлення</string>
+	<string name="explore_on_device">На пристрої</string>
+	<string name="explore_sources">Джерела</string>
 </resources>

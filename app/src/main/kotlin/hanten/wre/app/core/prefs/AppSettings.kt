@@ -82,7 +82,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		}
 
 	val isNavLabelsVisible: Boolean
-		get() = prefs.getBoolean(KEY_NAV_LABELS, false)
+		get() = prefs.getBoolean(KEY_NAV_LABELS, true)
 
 	val isNavBarPinned: Boolean
 		get() = prefs.getBoolean(KEY_NAV_PINNED, false)
