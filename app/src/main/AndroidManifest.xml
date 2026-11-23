@@ -170,6 +170,9 @@
 			android:name="hanten.wre.app.history.ui.HistoryActivity"
 			android:label="@string/history" />
 		<activity
+			android:name="hanten.wre.app.tracker.ui.feed.FeedActivity"
+			android:label="@string/feed" />
+		<activity
 			android:name="hanten.wre.app.tracker.ui.updates.UpdatesActivity"
 			android:label="@string/updates" />
 		<activity

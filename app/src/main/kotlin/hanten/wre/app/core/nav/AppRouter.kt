@@ -255,6 +255,11 @@ class AppRouter private constructor(
 
     fun openFavoriteCategoryCreate() = openFavoriteCategoryEdit(FavouritesCategoryEditActivity.NO_ID)
 
+    fun openFeed() {
+        val context = contextOrNull() ?: return
+        startActivity(Intent(context, hanten.wre.app.tracker.ui.feed.FeedActivity::class.java))
+    }
+
     fun openMangaUpdates() {
         startActivity(mangaUpdatesIntent(contextOrNull() ?: return))
     }

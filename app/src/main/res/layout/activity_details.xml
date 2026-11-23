@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0 title card (mockup): header with cover and actions, pinned tabs, chapters inline instead of a sheet -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:clipToPadding="false"
 	tools:context=".details.ui.DetailsActivity"
 	tools:ignore="ViewBindingType"
 	tools:viewBindingType="android.view.ViewGroup">
@@ -14,337 +14,437 @@
 		android:id="@+id/appbar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="?colorSurface"
 		android:elevation="0dp"
 		android:fitsSystemWindows="true"
 		app:elevation="0dp"
 		app:liftOnScroll="false">
 
-		<com.google.android.material.appbar.MaterialToolbar
-			android:id="@id/toolbar"
+		<FrameLayout
+			android:id="@+id/layout_header"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content"
+			android:background="?colorSurfaceContainerLow"
+			app:layout_scrollFlags="scroll">
 
-	</com.google.android.material.appbar.AppBarLayout>
-
-    <hanten.wre.app.image.ui.CoverImageView
-        android:id="@+id/imageView_blur_background"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:scaleType="centerCrop"
-        android:alpha="0.55"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:useExistingDrawable="true"
-        tools:background="@tools:sample/backgrounds/scenic[5]" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@drawable/gradient_fade_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/swipeRefreshLayout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-		<androidx.core.widget.NestedScrollView
-			android:id="@+id/scrollView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:clipToPadding="false"
-			android:scrollIndicators="top"
-			android:scrollbars="vertical">
-
-			<androidx.constraintlayout.widget.ConstraintLayout
+			<hanten.wre.app.image.ui.CoverImageView
+				android:id="@+id/imageView_blur_background"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:paddingBottom="@dimen/margin_normal">
+				android:alpha="0.4"
+				android:scaleType="centerCrop"
+				app:aspectRationHeight="0"
+				app:aspectRationWidth="0"
+				app:useExistingDrawable="true"
+				tools:background="@tools:sample/backgrounds/scenic[5]" />
 
-				<hanten.wre.app.image.ui.CoverImageView
-					android:id="@+id/imageView_cover"
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_marginStart="16dp"
-					android:layout_marginTop="16dp"
-					android:background="?colorSecondaryContainer"
-					android:clipToOutline="true"
-					android:foreground="?selectableItemBackground"
-					android:scaleType="centerCrop"
-					app:allowRgb565="false"
-					app:aspectRationHeight="0"
-					app:aspectRationWidth="0"
-					app:layout_constraintDimensionRatio="H,13:18"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintHorizontal_bias="0"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent"
-					app:layout_constraintWidth_percent="0.34"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Details"
-					app:useExistingDrawable="true"
-					tools:background="@tools:sample/backgrounds/scenic[5]"
-					tools:ignore="ContentDescription,UnusedAttribute" />
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@drawable/gradient_fade_bottom" />
 
-				<TextView
-					android:id="@+id/textView_nsfw_16"
-					style="@style/Widget.Hanten.TextView.Badge"
-					android:layout_width="wrap_content"
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingStart="10dp"
+				android:paddingEnd="10dp"
+				android:paddingBottom="16dp">
+
+				<com.google.android.material.appbar.MaterialToolbar
+					android:id="@id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:layout_marginTop="6dp"
+					android:minHeight="44dp"
+					android:background="@null"
+					android:theme="@style/ThemeOverlay.Hanten.HeaderActions"
+					app:contentInsetStart="0dp"
+					app:contentInsetStartWithNavigation="0dp" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_margin="@dimen/card_indicator_offset"
-					android:backgroundTint="@color/nsfw_16"
-					android:text="@string/nsfw_16"
-					android:visibility="gone"
-					app:layout_constraintBottom_toBottomOf="@id/imageView_cover"
-					app:layout_constraintEnd_toEndOf="@id/imageView_cover"
-					tools:visibility="visible" />
-
-				<TextView
-					android:id="@+id/textView_nsfw_18"
-					style="@style/Widget.Hanten.TextView.Badge"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="@dimen/card_indicator_offset"
-					android:backgroundTint="@color/nsfw_18"
-					android:text="@string/nsfw"
-					android:visibility="gone"
-					app:layout_constraintBottom_toBottomOf="@id/imageView_cover"
-					app:layout_constraintEnd_toEndOf="@id/imageView_cover" />
-
-				<hanten.wre.app.core.ui.widgets.SelectableTextView
-					android:id="@+id/textView_title"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="16dp"
-					android:layout_marginTop="16dp"
-					android:layout_marginEnd="16dp"
-					android:ellipsize="end"
-					android:maxLines="@integer/details_title_lines"
-					android:textAppearance="?attr/textAppearanceHeadlineSmall"
-					android:textIsSelectable="true"
-					android:textStyle="bold"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@id/imageView_cover"
-					app:layout_constraintTop_toTopOf="parent"
-					tools:text="@tools:sample/lorem" />
-
-				<hanten.wre.app.core.ui.widgets.SelectableTextView
-					android:id="@+id/textView_subtitle"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="16dp"
-					android:layout_marginTop="4dp"
-					android:layout_marginEnd="16dp"
-					android:ellipsize="end"
-					android:maxLines="3"
-					android:textAppearance="?attr/textAppearanceBodyMedium"
-					android:textColor="?colorOnSurfaceVariant"
-					android:textIsSelectable="true"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@id/imageView_cover"
-					app:layout_constraintTop_toBottomOf="@id/textView_title"
-					tools:text="@tools:sample/lorem[12]" />
-
-				<com.google.android.material.chip.Chip
-					android:id="@+id/chip_favorite"
-					style="@style/Widget.Hanten.Chip.Dropdown"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="16dp"
 					android:layout_marginTop="8dp"
-					app:chipIcon="@drawable/ic_heart_outline"
-					app:layout_constraintStart_toEndOf="@id/imageView_cover"
-					app:layout_constraintTop_toBottomOf="@id/textView_subtitle"
-					tools:text="@string/add_to_favourites" />
+					android:baselineAligned="false"
+					android:gravity="bottom"
+					android:orientation="horizontal"
+					android:paddingHorizontal="10dp">
 
-				<androidx.constraintlayout.widget.Barrier
-					android:id="@+id/barrier_cover"
-					android:layout_width="0dp"
+					<FrameLayout
+						android:layout_width="112dp"
+						android:layout_height="160dp">
+
+						<hanten.wre.app.image.ui.CoverImageView
+							android:id="@+id/imageView_cover"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="?colorSecondaryContainer"
+							android:foreground="?selectableItemBackground"
+							android:scaleType="centerCrop"
+							app:allowRgb565="false"
+							app:aspectRationHeight="0"
+							app:aspectRationWidth="0"
+							app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.DetailsCover"
+							app:useExistingDrawable="true"
+							tools:background="@tools:sample/backgrounds/scenic[5]"
+							tools:ignore="ContentDescription,UnusedAttribute" />
+
+						<TextView
+							android:id="@+id/textView_nsfw_16"
+							style="@style/Widget.Hanten.TextView.Badge"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="bottom|end"
+							android:layout_margin="@dimen/card_indicator_offset"
+							android:backgroundTint="@color/nsfw_16"
+							android:text="@string/nsfw_16"
+							android:visibility="gone" />
+
+						<TextView
+							android:id="@+id/textView_nsfw_18"
+							style="@style/Widget.Hanten.TextView.Badge"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="bottom|end"
+							android:layout_margin="@dimen/card_indicator_offset"
+							android:backgroundTint="@color/nsfw_18"
+							android:text="@string/nsfw"
+							android:visibility="gone" />
+					</FrameLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="16dp"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<hanten.wre.app.core.ui.widgets.SelectableTextView
+							android:id="@+id/textView_title"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:ellipsize="end"
+							android:maxLines="4"
+							android:textAppearance="@style/TextAppearance.Hanten.DetailsTitle"
+							android:textIsSelectable="true"
+							tools:text="@tools:sample/lorem" />
+
+						<hanten.wre.app.core.ui.widgets.SelectableTextView
+							android:id="@+id/textView_subtitle"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="6dp"
+							android:ellipsize="end"
+							android:maxLines="3"
+							android:textAppearance="?attr/textAppearanceBodyMedium"
+							android:textColor="?colorOnSurfaceVariant"
+							android:textIsSelectable="true"
+							tools:text="Author · Ongoing" />
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="8dp"
+							android:orientation="horizontal">
+
+							<TextView
+								android:id="@+id/text_header_type"
+								style="@style/Widget.Hanten.TextView.HeaderPill"
+								tools:text="Manhwa" />
+
+							<TextView
+								android:id="@+id/text_header_source"
+								style="@style/Widget.Hanten.TextView.HeaderPill"
+								android:layout_marginStart="6dp"
+								android:ellipsize="end"
+								android:maxWidth="120dp"
+								android:singleLine="true"
+								tools:text="Remanga" />
+
+							<TextView
+								android:id="@+id/text_header_rating"
+								style="@style/Widget.Hanten.TextView.HeaderPill"
+								android:layout_marginStart="6dp"
+								android:textColor="?colorPrimary"
+								android:visibility="gone"
+								tools:text="★ 8.6"
+								tools:visibility="visible" />
+						</LinearLayout>
+					</LinearLayout>
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					app:barrierDirection="bottom"
-					app:constraint_referenced_ids="imageView_cover,chip_favorite" />
+					android:layout_marginTop="16dp"
+					android:gravity="center_vertical"
+					android:orientation="horizontal"
+					android:paddingHorizontal="10dp">
 
-				<com.google.android.material.tabs.TabLayout
-					android:id="@+id/tabs_details"
-					style="@style/Widget.Material3.TabLayout"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:background="@android:color/transparent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/barrier_cover"
-					app:tabGravity="start"
-					app:tabMode="scrollable" />
+					<com.google.android.material.button.MaterialSplitButton
+						android:id="@+id/split_button_read"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1">
 
-				<androidx.constraintlayout.widget.Barrier
-					android:id="@+id/barrier_header"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					app:barrierDirection="bottom"
-					app:barrierMargin="@dimen/margin_small"
-					app:constraint_referenced_ids="tabs_details" />
+						<Button
+							android:id="@+id/button_read"
+							style="?materialSplitButtonLeadingFilledStyle"
+							android:layout_width="0dp"
+							android:layout_height="52dp"
+							android:layout_weight="1"
+							android:text="@string/read"
+							android:textAppearance="?textAppearanceTitleMedium"
+							app:cornerRadius="16dp" />
 
-				<include layout="@layout/layout_details_table" />
+						<Button
+							android:id="@+id/button_read_menu"
+							style="?materialSplitButtonIconFilledStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="52dp"
+							android:contentDescription="@string/show_menu"
+							app:icon="?expandCollapseIndicator"
+							app:toggleCheckedStateOnClick="false" />
+					</com.google.android.material.button.MaterialSplitButton>
 
-				<TextView
-					android:id="@+id/textView_description_title"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/margin_small"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:layout_weight="1"
-					android:gravity="center_vertical|start"
-					android:padding="@dimen/grid_spacing"
-					android:singleLine="true"
-					android:text="@string/description"
-					android:textAppearance="?textAppearanceTitleSmall"
-					app:layout_constraintEnd_toStartOf="@id/button_description_more"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/textView_progress_label" />
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_favorite"
+						style="@style/Widget.Hanten.Button.DetailsSquare"
+						android:layout_marginStart="10dp"
+						android:contentDescription="@string/add_to_favourites"
+						app:icon="@drawable/ic_heart_outline" />
 
-				<Button
-					android:id="@+id/button_description_more"
-					style="@style/Widget.Hanten.Button.More"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="8dp"
-					android:text="@string/more"
-					app:layout_constraintBaseline_toBaselineOf="@id/textView_description_title"
-					app:layout_constraintEnd_toEndOf="parent" />
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_download"
+						style="@style/Widget.Hanten.Button.DetailsSquare"
+						android:layout_marginStart="10dp"
+						android:contentDescription="@string/download"
+						app:icon="@drawable/ic_download" />
+				</LinearLayout>
+			</LinearLayout>
+		</FrameLayout>
 
-				<hanten.wre.app.core.ui.widgets.SelectableTextView
-					android:id="@+id/textView_description"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/margin_normal"
-					android:layout_marginTop="@dimen/margin_small"
-					android:layout_marginEnd="@dimen/margin_normal"
-					android:ellipsize="end"
-					android:lineSpacingMultiplier="1.2"
-					android:maxLines="@integer/details_description_lines"
-					android:textAppearance="?attr/textAppearanceBodyMedium"
-					android:textIsSelectable="true"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/textView_description_title"
-					tools:ignore="UnusedAttribute"
-					tools:text="@tools:sample/lorem/random" />
+		<!-- Pinned: tabs + the chapters/pages menu (search, order, grid, downloaded only) -->
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:paddingEnd="6dp">
 
-				<hanten.wre.app.core.ui.widgets.ChipsView
-					android:id="@+id/chips_tags"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/screen_padding"
-					android:layout_marginTop="@dimen/margin_normal"
-					app:chipSpacingHorizontal="6dp"
-					app:chipSpacingVertical="6dp"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/textView_description" />
+			<com.google.android.material.tabs.TabLayout
+				android:id="@+id/tabs_details"
+				style="@style/Widget.Hanten.TabLayout.Details"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
 
-				<TextView
-					android:id="@+id/textView_scrobbling_title"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/margin_small"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:layout_weight="1"
-					android:gravity="center_vertical|start"
-					android:padding="@dimen/grid_spacing"
-					android:singleLine="true"
-					android:text="@string/tracking"
-					android:textAppearance="?textAppearanceTitleSmall"
-					app:layout_constraintEnd_toStartOf="@id/button_scrobbling_more"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/chips_tags" />
+			<com.google.android.material.appbar.MaterialToolbar
+				android:id="@+id/toolbar_chapters"
+				android:layout_width="wrap_content"
+				android:layout_height="44dp"
+				android:minHeight="44dp"
+				android:background="@null"
+				android:theme="@style/ThemeOverlay.Hanten.HeaderActions"
+				app:contentInsetEnd="0dp"
+				app:contentInsetStart="0dp" />
+		</LinearLayout>
 
-				<Button
-					android:id="@+id/button_scrobbling_more"
-					style="@style/Widget.Hanten.Button.More"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="8dp"
-					android:text="@string/manage"
-					app:layout_constraintBaseline_toBaselineOf="@id/textView_scrobbling_title"
-					app:layout_constraintEnd_toEndOf="parent" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?colorOutlineVariant" />
+	</com.google.android.material.appbar.AppBarLayout>
 
-				<androidx.recyclerview.widget.RecyclerView
-					android:id="@+id/recyclerView_scrobbling"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="16dp"
-					android:layout_marginEnd="16dp"
-					android:layout_marginBottom="12dp"
-					android:nestedScrollingEnabled="false"
-					android:orientation="vertical"
-					android:overScrollMode="never"
-					android:scrollbars="none"
-					android:visibility="gone"
-					app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/textView_scrobbling_title"
-					tools:itemCount="2"
-					tools:listitem="@layout/item_scrobbling_info"
-					tools:visibility="visible" />
-
-				<androidx.constraintlayout.widget.Group
-					android:id="@+id/group_scrobbling"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:visibility="gone"
-					app:constraint_referenced_ids="recyclerView_scrobbling,textView_scrobbling_title,button_scrobbling_more"
-					tools:visibility="visible" />
-
-				<TextView
-					android:id="@+id/textView_related_works"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/margin_normal"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:autoLink="none"
-					android:lineSpacingMultiplier="1.2"
-					android:textAppearance="?attr/textAppearanceBodyMedium"
-					android:textColor="?colorOnSurfaceVariant"
-					android:visibility="gone"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling"
-					tools:text="Сиквел: «Название»"
-					tools:visibility="visible" />
-
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-		</androidx.core.widget.NestedScrollView>
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-	<androidx.fragment.app.FragmentContainerView
-		android:id="@+id/container_bottom_sheet"
-		android:name="hanten.wre.app.details.ui.pager.ChaptersPagesSheet"
-		style="@style/Widget.Material3.BottomSheet"
+	<FrameLayout
+		android:id="@+id/layout_content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:elevation="6dp"
-		android:nestedScrollingEnabled="false"
-		android:outlineProvider="background"
-		app:behavior_fitToContents="false"
-		app:behavior_hideable="false"
-		app:behavior_peekHeight="@dimen/details_bs_peek_height"
-		app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-		app:paddingBottomSystemWindowInsets="false"
-		tools:layout="@layout/sheet_chapters_pages" />
+		android:clipToPadding="false"
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/swipeRefreshLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone">
+
+			<androidx.core.widget.NestedScrollView
+				android:id="@+id/scrollView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:clipToPadding="false"
+				android:scrollbars="vertical">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingBottom="@dimen/margin_normal">
+
+					<Space
+						android:id="@+id/barrier_header"
+						android:layout_width="0dp"
+						android:layout_height="4dp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<include layout="@layout/layout_details_table" />
+
+					<TextView
+						android:id="@+id/textView_description_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/margin_small"
+						android:layout_marginTop="@dimen/margin_normal"
+						android:layout_weight="1"
+						android:gravity="center_vertical|start"
+						android:padding="@dimen/grid_spacing"
+						android:singleLine="true"
+						android:text="@string/description"
+						android:textAppearance="?textAppearanceTitleSmall"
+						app:layout_constraintEnd_toStartOf="@id/button_description_more"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/textView_progress_label" />
+
+					<Button
+						android:id="@+id/button_description_more"
+						style="@style/Widget.Hanten.Button.More"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:text="@string/more"
+						app:layout_constraintBaseline_toBaselineOf="@id/textView_description_title"
+						app:layout_constraintEnd_toEndOf="parent" />
+
+					<hanten.wre.app.core.ui.widgets.SelectableTextView
+						android:id="@+id/textView_description"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/margin_normal"
+						android:layout_marginTop="@dimen/margin_small"
+						android:layout_marginEnd="@dimen/margin_normal"
+						android:ellipsize="end"
+						android:lineSpacingMultiplier="1.2"
+						android:maxLines="@integer/details_description_lines"
+						android:textAppearance="?attr/textAppearanceBodyMedium"
+						android:textIsSelectable="true"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/textView_description_title"
+						tools:ignore="UnusedAttribute"
+						tools:text="@tools:sample/lorem/random" />
+
+					<hanten.wre.app.core.ui.widgets.ChipsView
+						android:id="@+id/chips_tags"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/screen_padding"
+						android:layout_marginTop="@dimen/margin_normal"
+						app:chipSpacingHorizontal="6dp"
+						app:chipSpacingVertical="6dp"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/textView_description" />
+
+					<TextView
+						android:id="@+id/textView_scrobbling_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/margin_small"
+						android:layout_marginTop="@dimen/margin_normal"
+						android:layout_weight="1"
+						android:gravity="center_vertical|start"
+						android:padding="@dimen/grid_spacing"
+						android:singleLine="true"
+						android:text="@string/tracking"
+						android:textAppearance="?textAppearanceTitleSmall"
+						app:layout_constraintEnd_toStartOf="@id/button_scrobbling_more"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/chips_tags" />
+
+					<Button
+						android:id="@+id/button_scrobbling_more"
+						style="@style/Widget.Hanten.Button.More"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:text="@string/manage"
+						app:layout_constraintBaseline_toBaselineOf="@id/textView_scrobbling_title"
+						app:layout_constraintEnd_toEndOf="parent" />
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/recyclerView_scrobbling"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="16dp"
+						android:layout_marginEnd="16dp"
+						android:layout_marginBottom="12dp"
+						android:nestedScrollingEnabled="false"
+						android:orientation="vertical"
+						android:overScrollMode="never"
+						android:scrollbars="none"
+						android:visibility="gone"
+						app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/textView_scrobbling_title"
+						tools:itemCount="2"
+						tools:listitem="@layout/item_scrobbling_info"
+						tools:visibility="visible" />
+
+					<androidx.constraintlayout.widget.Group
+						android:id="@+id/group_scrobbling"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:visibility="gone"
+						app:constraint_referenced_ids="recyclerView_scrobbling,textView_scrobbling_title,button_scrobbling_more"
+						tools:visibility="visible" />
+
+					<TextView
+						android:id="@+id/textView_related_works"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/margin_normal"
+						android:layout_marginTop="@dimen/margin_normal"
+						android:autoLink="none"
+						android:lineSpacingMultiplier="1.2"
+						android:textAppearance="?attr/textAppearanceBodyMedium"
+						android:textColor="?colorOnSurfaceVariant"
+						android:visibility="gone"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling"
+						tools:text="Сиквел: «Название»"
+						tools:visibility="visible" />
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+			</androidx.core.widget.NestedScrollView>
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+		<FrameLayout
+			android:id="@+id/container_chapters"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
+		<FrameLayout
+			android:id="@+id/container_pages"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone" />
+
+		<FrameLayout
+			android:id="@+id/container_bookmarks"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone" />
+	</FrameLayout>
 
 	<View
 		android:id="@+id/navbarDim"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="0dp"
 		android:layout_gravity="bottom"
-		android:background="?colorSurfaceContainerLow"
-		android:elevation="9dp"
-		tools:layout_height="10dp" />
+		android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -49,4 +49,5 @@
 	<string name="today_all">All</string>
 	<string name="today_ranobe">Ranobe</string>
 	<string name="check_new_chapters">Check for new chapters</string>
+	<string name="today_no_new_chapters">No new chapters yet. Pull down to check your library.</string>
 </resources>

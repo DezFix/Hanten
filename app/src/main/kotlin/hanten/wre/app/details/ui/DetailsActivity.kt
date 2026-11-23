@@ -1,5 +1,8 @@
 package hanten.wre.app.details.ui
 
+import hanten.wre.app.core.model.isNovel
+import hanten.wre.app.details.ui.pager.ChaptersPagesSheet
+import android.content.res.ColorStateList
 import android.app.assist.AssistContent
 import android.content.Context
 import android.graphics.Color
@@ -138,8 +141,9 @@ class DetailsActivity :
 	private lateinit var infoBinding: LayoutDetailsTableBinding
 	private var tabsController: DetailsTabsController? = null
 
+	// Hanten 3.0: chapters are on the page now (phone); tablets keep their side panel
 	override val bottomSheet: View?
-		get() = viewBinding.containerBottomSheet
+		get() = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -147,7 +151,10 @@ class DetailsActivity :
 		infoBinding = LayoutDetailsTableBinding.bind(viewBinding.root)
 		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = false)
 		supportActionBar?.setDisplayShowTitleEnabled(false)
-		viewBinding.chipFavorite.setOnClickListener(this)
+		viewBinding.chipFavorite?.setOnClickListener(this)
+		viewBinding.buttonFavorite?.setOnClickListener(this)
+		viewBinding.buttonDownload?.setOnClickListener(this)
+		viewBinding.splitButtonRead?.let { ReadButtonDelegate(it, viewModel, router).attach(this) }
 		infoBinding.textViewLocal.setOnClickListener(this)
 		infoBinding.textViewSource.setOnClickListener(this)
 		viewBinding.imageViewCover.setOnClickListener(this)
@@ -160,26 +167,39 @@ class DetailsActivity :
 		infoBinding.textViewAuthor.movementMethod = LinkMovementMethodCompat.getInstance()
 		viewBinding.textViewDescription.movementMethod = LinkMovementMethodCompat.getInstance()
 		viewBinding.chipsTags.onChipClickListener = this
-		TitleScrollCoordinator(viewBinding.textViewTitle).attach(viewBinding.scrollView)
+		if (viewBinding.layoutHeader == null) {
+			// tablets: the toolbar shows the title once it scrolls away; on phones the big header title stays visible
+			TitleScrollCoordinator(viewBinding.textViewTitle).attach(viewBinding.scrollView)
+		}
 		if (settings.isDescriptionExpanded) {
 			viewBinding.textViewDescription.maxLines = Int.MAX_VALUE - 1
 		}
-		viewBinding.containerBottomSheet?.let { sheet ->
-			sheet.setOnClickListener(this)
-			sheet.addOnLayoutChangeListener(this)
-			onBackPressedDispatcher.addCallback(BottomSheetCollapseCallback(sheet))
-			BottomSheetBehavior.from(sheet).addBottomSheetCallback(
-				DetailsBottomSheetCallback(viewBinding.swipeRefreshLayout, checkNotNull(viewBinding.navbarDim)),
+		val tabs = viewBinding.tabsDetails
+		val menuToolbar = viewBinding.toolbarChapters
+		if (tabs != null && menuToolbar != null) {
+			val isNovel = viewModel.manga.value?.isNovel == true
+			tabsController = DetailsTabsController(
+				activity = this,
+				tabs = tabs,
+				appBar = viewBinding.appbar,
+				infoScroll = viewBinding.scrollView,
+				infoContainer = viewBinding.swipeRefreshLayout,
+				similarTarget = viewBinding.textViewRelatedWorks,
+				containers = buildMap {
+					viewBinding.containerChapters?.let { put(ChaptersPagesSheet.TAB_CHAPTERS, it) }
+					viewBinding.containerPages?.let { put(ChaptersPagesSheet.TAB_PAGES, it) }
+					viewBinding.containerBookmarks?.let { put(ChaptersPagesSheet.TAB_BOOKMARKS, it) }
+				},
+				menuToolbar = menuToolbar,
+				viewModel = viewModel,
+				settings = settings,
+				isPagesTabEnabled = settings.isPagesTabEnabled && !isNovel,
 			)
-			viewBinding.tabsDetails?.let { tabs ->
-				tabsController = DetailsTabsController(
-					tabs = tabs,
-					sheet = sheet,
-					scrollView = viewBinding.scrollView,
-					infoTarget = infoBinding.cardDetails,
-					similarTarget = viewBinding.textViewRelatedWorks,
-				)
-			}
+			val menuInvalidator = MenuInvalidator(menuToolbar)
+			viewModel.isChaptersReversed.observe(this, menuInvalidator)
+			viewModel.isChaptersInGridView.observe(this, menuInvalidator)
+			viewModel.isDownloadedOnly.observe(this, menuInvalidator)
+			viewModel.emptyReason.observe(this, menuInvalidator)
 		}
 
 		val appRouter = router
@@ -236,9 +256,14 @@ class DetailsActivity :
 				router.showLocalInfoDialog(manga)
 			}
 
-			R.id.chip_favorite -> {
+			R.id.chip_favorite, R.id.button_favorite -> {
 				val manga = viewModel.getMangaOrNull() ?: return
 				router.showFavoriteDialog(manga)
+			}
+
+			R.id.button_download -> {
+				val manga = viewModel.getMangaOrNull() ?: return
+				router.showDownloadDialog(manga, viewBinding.scrollView)
 			}
 
 			R.id.imageView_cover -> {
@@ -329,14 +354,7 @@ class DetailsActivity :
 		oldRight: Int,
 		oldBottom: Int
 	) {
-		with(viewBinding) {
-			containerBottomSheet?.let { sheet ->
-				val peekHeight = BottomSheetBehavior.from(sheet).peekHeight
-				if (scrollView.paddingBottom != peekHeight) {
-					scrollView.updatePadding(bottom = peekHeight)
-				}
-			}
-		}
+		// No bottom sheet anymore: nothing to keep in sync with its peek height
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
@@ -358,20 +376,35 @@ class DetailsActivity :
 			)
 			return insets.consume(v, typeMask, bottom = true, end = true)
 		} else {
-			viewBinding.navbarDim?.updateLayoutParams {
-				height = barsInsets.bottom
-			}
+			viewBinding.layoutContent?.updatePadding(bottom = barsInsets.bottom)
 			return insets
 		}
 	}
 
 	private fun onFavoritesChanged(categories: Set<FavouriteCategory>) {
-		val chip = viewBinding.chipFavorite
-		chip.setChipIconResource(if (categories.isEmpty()) R.drawable.ic_heart_outline else R.drawable.ic_heart)
-		chip.text = if (categories.isEmpty()) {
+		val label = if (categories.isEmpty()) {
 			getString(R.string.add_to_favourites)
 		} else {
 			categories.joinToStringWithLimit(this, FAV_LABEL_LIMIT) { it.title }
+		}
+		val icon = if (categories.isEmpty()) R.drawable.ic_heart_outline else R.drawable.ic_heart
+		viewBinding.chipFavorite?.let { chip ->
+			chip.setChipIconResource(icon)
+			chip.text = label
+		}
+		viewBinding.buttonFavorite?.let { button ->
+			button.setIconResource(icon)
+			button.contentDescription = label
+			button.setTooltipCompat(label)
+			button.iconTint = ColorStateList.valueOf(
+				getThemeColor(
+					if (categories.isEmpty()) {
+						com.google.android.material.R.attr.colorOnSurface
+					} else {
+						androidx.appcompat.R.attr.colorPrimary
+					},
+				),
+			)
 		}
 	}
 
@@ -449,11 +482,41 @@ class DetailsActivity :
 		val manga = details.toManga()
 		with(viewBinding) {
 			textViewTitle.text = manga.title
-			textViewSubtitle.textAndVisible = buildString {
-				append(getString(manga.contentType.titleResId))
-				if (manga.altTitles.isNotEmpty()) {
-					append('\n')
-					append(manga.altTitles.joinToString("\n"))
+			if (textHeaderType == null) {
+				// tablet layout: the old subtitle (type + alternative titles)
+				textViewSubtitle.textAndVisible = buildString {
+					append(getString(manga.contentType.titleResId))
+					if (manga.altTitles.isNotEmpty()) {
+						append('\n')
+						append(manga.altTitles.joinToString("\n"))
+					}
+				}
+			} else {
+				// Hanten 3.0 header: "Author · Status", alternative titles below; type/source/rating as pills
+				textViewSubtitle.textAndVisible = buildString {
+					val authors = manga.authors.take(2).joinToString(", ")
+					append(authors)
+					manga.state?.let { state ->
+						if (isNotEmpty()) append(" · ")
+						append(getString(state.titleResId))
+					}
+					if (manga.altTitles.isNotEmpty()) {
+						if (isNotEmpty()) append('\n')
+						append(manga.altTitles.joinToString("\n"))
+					}
+				}
+				textHeaderType?.text = getString(manga.contentType.titleResId)
+				textHeaderSource?.textAndVisible = if (
+					manga.source == LocalMangaSource || manga.source == UnknownMangaSource
+				) {
+					null
+				} else {
+					manga.source.getTitle(this@DetailsActivity)
+				}
+				textHeaderRating?.textAndVisible = if (manga.hasRating) {
+					"★ " + String.format("%.1f", manga.rating * 10)
+				} else {
+					null
 				}
 			}
 			textViewNsfw16.isVisible = manga.contentRating == ContentRating.SUGGESTIVE

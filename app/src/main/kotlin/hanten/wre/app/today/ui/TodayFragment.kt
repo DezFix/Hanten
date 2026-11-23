@@ -48,7 +48,11 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		val recentAdapter = TodayCoversAdapter(openDetails)
 		binding.recyclerUpdates.adapter = updatesAdapter
 		binding.recyclerRecent.adapter = recentAdapter
-		binding.buttonUpdatesAll.setOnClickListener { router.openMangaUpdates() }
+		binding.buttonUpdatesAll.setOnClickListener { router.openFeed() }
+		// Pull down = look for new chapters in the library (same as the round button in the header)
+		binding.swipeRefresh.isEnabled = viewModel.isTrackerEnabled
+		binding.swipeRefresh.setOnRefreshListener { viewModel.checkNewChapters() }
+		viewModel.isCheckingUpdates.observe(viewLifecycleOwner) { binding.swipeRefresh.isRefreshing = it }
 		if (viewModel.isTrackerEnabled) {
 			requireActivity().addMenuProvider(this, viewLifecycleOwner)
 		}
@@ -56,7 +60,6 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		viewModel.history.observe(viewLifecycleOwner) { list -> onHistoryChanged(list, recentAdapter) }
 		viewModel.updates.observe(viewLifecycleOwner) { list ->
 			updatesAdapter.submitList(list)
-			binding.layoutUpdatesHeader.isVisible = list.isNotEmpty()
 			binding.recyclerUpdates.isVisible = list.isNotEmpty()
 			binding.textUpdatesTitle.text = sectionTitle(getString(R.string.new_chapters), list.size)
 			updateEmptyState()
@@ -140,7 +143,12 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 	private fun updateEmptyState() {
 		val binding = viewBinding ?: return
 		val history = viewModel.history.value ?: return
-		binding.layoutEmpty.isVisible = history.isEmpty() && viewModel.updates.value.isEmpty()
+		val updates = viewModel.updates.value
+		val isEmpty = history.isEmpty() && updates.isEmpty()
+		binding.layoutEmpty.isVisible = isEmpty
+		// The New chapters block stays on the home screen whenever new chapters are checked
+		binding.layoutUpdatesHeader.isVisible = viewModel.isTrackerEnabled && !isEmpty
+		binding.textUpdatesEmpty.isVisible = viewModel.isTrackerEnabled && !isEmpty && updates.isEmpty()
 	}
 
 	private companion object {

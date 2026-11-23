@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/swipeRefresh"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+<androidx.core.widget.NestedScrollView
 	android:id="@+id/scrollView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -133,6 +138,17 @@
 				android:text="@string/today_all" />
 		</LinearLayout>
 
+		<TextView
+			android:id="@+id/text_updates_empty"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:text="@string/today_no_new_chapters"
+			android:textAppearance="?textAppearanceBodyMedium"
+			android:textColor="?colorOnSurfaceVariant"
+			android:visibility="gone"
+			tools:visibility="visible" />
+
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recycler_updates"
 			android:layout_width="match_parent"
@@ -209,3 +225,4 @@
 		</LinearLayout>
 	</LinearLayout>
 </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

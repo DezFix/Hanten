@@ -28,6 +28,9 @@ class TodayViewModel @Inject constructor(
 
 	val isTrackerEnabled = settings.isTrackerEnabled
 
+	val isCheckingUpdates = trackScheduler.observeIsRunning()
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, false)
+
 	fun checkNewChapters() {
 		trackScheduler.startNow()
 	}

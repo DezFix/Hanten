@@ -49,4 +49,5 @@
 	<string name="today_all">Усі</string>
 	<string name="today_ranobe">Ранобе</string>
 	<string name="check_new_chapters">Перевірити нові розділи</string>
+	<string name="today_no_new_chapters">Нових розділів поки немає. Потягни екран вниз, щоб перевірити бібліотеку.</string>
 </resources>

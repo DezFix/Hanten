@@ -13,7 +13,6 @@ import com.google.android.material.slider.TickVisibilityMode
 import hanten.wre.app.R
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.model.isNovel
-import hanten.wre.app.core.ui.sheet.BaseAdaptiveSheet
 import hanten.wre.app.core.util.ext.setValueRounded
 import hanten.wre.app.core.util.progress.IntPercentLabelFormatter
 import hanten.wre.app.details.ui.pager.ChaptersPagesSheet.Companion.TAB_BOOKMARKS
@@ -21,19 +20,22 @@ import hanten.wre.app.details.ui.pager.ChaptersPagesSheet.Companion.TAB_CHAPTERS
 import hanten.wre.app.details.ui.pager.ChaptersPagesSheet.Companion.TAB_PAGES
 import java.lang.ref.WeakReference
 
+/**
+ * Menu of the chapters / pages / bookmarks lists. Used by the reader's chapters sheet and by the title card,
+ * so it only knows the current tab and how to react when the chapter search opens.
+ */
 class ChapterPagesMenuProvider(
 	private val viewModel: ChaptersPagesViewModel,
-	private val sheet: BaseAdaptiveSheet<*>,
-	private val pager: ViewPager2,
 	private val settings: AppSettings,
+	private val currentTab: () -> Int,
+	private val onSearchExpanded: (Boolean) -> Unit,
 ) : OnBackPressedCallback(false), MenuProvider, SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
 	Slider.OnChangeListener {
 
 	private var expandedItemRef: WeakReference<MenuItem>? = null
 
 	override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-		val tab = getCurrentTab()
-		when (tab) {
+		when (currentTab()) {
 			TAB_CHAPTERS -> {
 				menuInflater.inflate(R.menu.opt_chapters, menu)
 				menu.findItem(R.id.action_search)?.run {
@@ -85,7 +87,7 @@ class ChapterPagesMenuProvider(
 
 	override fun onMenuItemActionExpand(item: MenuItem): Boolean {
 		expandedItemRef = WeakReference(item)
-		sheet.expandAndLock()
+		onSearchExpanded(true)
 		isEnabled = true
 		return true
 	}
@@ -95,7 +97,7 @@ class ChapterPagesMenuProvider(
 		isEnabled = false
 		(item.actionView as? SearchView)?.setQuery("", false)
 		viewModel.performChapterSearch(null)
-		sheet.unlock()
+		onSearchExpanded(false)
 		return true
 	}
 
@@ -129,11 +131,15 @@ class ChapterPagesMenuProvider(
 		addOnChangeListener(this@ChapterPagesMenuProvider)
 	}
 
-	private fun getCurrentTab(): Int {
-		var page = pager.currentItem
-		if (page > 0 && pager.adapter?.itemCount == 2) { // no Pages page
-			page++ // shift
+	companion object {
+
+		/** Tab of the sheet's pager; without the Pages page the bookmarks page is the second one. */
+		fun tabOf(pager: ViewPager2): Int {
+			var page = pager.currentItem
+			if (page > 0 && pager.adapter?.itemCount == 2) { // no Pages page
+				page++ // shift
+			}
+			return page
 		}
-		return page
 	}
 }

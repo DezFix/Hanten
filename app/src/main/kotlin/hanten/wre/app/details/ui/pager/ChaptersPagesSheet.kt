@@ -76,7 +76,12 @@ class ChaptersPagesSheet : BaseAdaptiveSheet<SheetChaptersPagesBinding>(),
 		binding.pager.setCurrentItem(defaultTab, false)
 		binding.tabs.isVisible = adapter.itemCount > 1
 
-		val menuProvider = ChapterPagesMenuProvider(viewModel, this, binding.pager, settings)
+		val menuProvider = ChapterPagesMenuProvider(
+			viewModel = viewModel,
+			settings = settings,
+			currentTab = { ChapterPagesMenuProvider.tabOf(binding.pager) },
+			onSearchExpanded = { isExpanded -> if (isExpanded) expandAndLock() else unlock() },
+		)
 		onBackPressedDispatcher.addCallback(viewLifecycleOwner, menuProvider)
 		binding.toolbar.addMenuProvider(menuProvider)
 
