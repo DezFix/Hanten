@@ -1,5 +1,6 @@
 package hanten.wre.app.explore.ui
 
+import hanten.wre.app.explore.ui.model.ExploreMoreSources
 import androidx.collection.LongSet
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -156,6 +157,10 @@ class ExploreViewModel @Inject constructor(
 		buildList(sources, suggestions, grid, randomLoading, allSourcesEnabled, newSources)
 	}.withErrorHandling()
 
+	fun toggleGridMode() {
+		settings.isSourcesGridMode = !settings.isSourcesGridMode
+	}
+
 	private fun buildList(
 		sources: List<MangaSourceInfo>,
 		recommendation: List<Manga>,
@@ -177,6 +182,7 @@ class ExploreViewModel @Inject constructor(
 				badge = if (!allSourcesEnabled && hasNewSources) "" else null,
 			)
 			sources.mapTo(result) { MangaSourceItem(it, isGrid) }
+			result += ExploreMoreSources
 		} else {
 			result += EmptyHint(
 				icon = R.drawable.ic_empty_common,

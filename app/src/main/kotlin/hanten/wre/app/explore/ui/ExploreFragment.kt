@@ -1,5 +1,6 @@
 package hanten.wre.app.explore.ui
 
+import hanten.wre.app.main.ui.MainActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -82,9 +83,10 @@ class ExploreFragment :
 			setItemViewCacheSize(20)
 			SpanSizeResolver(this, resources.getDimensionPixelSize(R.dimen.explore_grid_width)).attach()
 			addItemDecoration(TypedListSpacingDecoration(context, false))
+			addItemDecoration(SourcesGroupDecoration(context))
 			checkNotNull(sourceSelectionController).attachToRecyclerView(this)
 		}
-		addMenuProvider(ExploreMenuProvider(router))
+		addMenuProvider(ExploreMenuProvider(router, viewModel))
 		viewModel.content.observe(viewLifecycleOwner, checkNotNull(exploreAdapter))
 		viewModel.onError.observeEvent(viewLifecycleOwner, SnackbarErrorObserver(binding.recyclerView, this))
 		viewModel.onOpenManga.observeEvent(viewLifecycleOwner, ::onOpenManga)
@@ -126,6 +128,10 @@ class ExploreFragment :
 	override fun onClick(v: View) {
 		when (v.id) {
 			R.id.button_local -> router.openList(LocalMangaSource, null, null)
+			R.id.button_search_all -> (activity as? MainActivity)?.openSearch()
+			R.id.row_catalog -> router.openSourcesCatalog()
+			R.id.row_extensions -> router.openExtensionDownloader()
+			R.id.row_manage -> router.openManageSources()
 			R.id.button_suggestions -> router.openSuggestions()
 			R.id.button_more -> router.openSuggestions()
 			R.id.button_manage_sources -> router.openManageSources()
@@ -228,6 +234,7 @@ class ExploreFragment :
 	}
 
 	private fun onGridModeChanged(isGrid: Boolean) {
+		activity?.invalidateMenu() // grid / list icon in the header
 		requireViewBinding().recyclerView.layoutManager = if (isGrid) {
 			GridLayoutManager(requireContext(), 4).also { lm ->
 				lm.spanSizeLookup = ExploreGridSpanSizeLookup(checkNotNull(exploreAdapter), lm)

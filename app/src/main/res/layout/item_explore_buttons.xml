@@ -5,6 +5,26 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
+	<!-- Hanten 3.0: search all sources (opens the app search with suggestions) -->
+	<TextView
+		android:id="@+id/button_search_all"
+		android:layout_width="0dp"
+		android:layout_height="52dp"
+		android:layout_marginBottom="14dp"
+		android:background="@drawable/bg_search_field"
+		android:drawablePadding="10dp"
+		android:focusable="true"
+		android:gravity="center_vertical"
+		android:paddingHorizontal="16dp"
+		android:text="@string/catalog_search_hint"
+		android:textAppearance="?textAppearanceBodyLarge"
+		android:textColor="?colorOnSurfaceVariant"
+		app:drawableStartCompat="@drawable/ic_search"
+		app:drawableTint="?colorOnSurfaceVariant"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/button_local"
 		style="@style/Widget.Hanten.ExploreButton"
@@ -41,13 +61,14 @@
 		android:id="@+id/flow"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:constraint_referenced_ids="button_local,button_suggestions,button_random,button_manage_sources"
-		app:flow_horizontalGap="12dp"
+		app:constraint_referenced_ids="button_suggestions,button_random,button_local,button_manage_sources"
+		android:layout_marginTop="14dp"
+		app:flow_horizontalGap="8dp"
 		app:flow_maxElementsWrap="@integer/explore_buttons_columns"
 		app:flow_verticalGap="8dp"
 		app:flow_wrapMode="aligned"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toBottomOf="@id/button_search_all" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,4 +53,8 @@
 	<string name="settings_search">Search settings</string>
 	<string name="library_display">Display</string>
 	<string name="library_cover_size">Cover size</string>
+	<string name="catalog_search_hint">Search all sources</string>
+	<string name="catalog_more_sources">More sources</string>
+	<string name="catalog_builtin_sources">Built-in sources</string>
+	<string name="catalog_extensions">Tachiyomi extensions</string>
 </resources>

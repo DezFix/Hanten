@@ -53,7 +53,8 @@ class TypedListSpacingDecoration(
 			ListItemType.PAGE_THUMB -> outRect.set(spacingNormal)
 			ListItemType.MANGA_GRID -> outRect.set(0)
 
-			ListItemType.EXPLORE_BUTTONS -> outRect.set(spacingNormal)
+			ListItemType.EXPLORE_BUTTONS,
+			ListItemType.EXPLORE_MORE_SOURCES -> outRect.set(spacingNormal)
 
 			ListItemType.FOOTER_LOADING,
 			ListItemType.FOOTER_ERROR,

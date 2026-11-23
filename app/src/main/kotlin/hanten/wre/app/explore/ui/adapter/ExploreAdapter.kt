@@ -18,6 +18,7 @@ class ExploreAdapter(
 
 	init {
 		addDelegate(ListItemType.EXPLORE_BUTTONS, exploreButtonsAD(listener))
+		addDelegate(ListItemType.EXPLORE_MORE_SOURCES, exploreMoreSourcesAD(listener))
 		addDelegate(
 			ListItemType.EXPLORE_SUGGESTION,
 			exploreRecommendationItemAD(mangaClickListener),

@@ -53,4 +53,8 @@
 	<string name="settings_search">Поиск по настройкам</string>
 	<string name="library_display">Отображение</string>
 	<string name="library_cover_size">Размер обложек</string>
+	<string name="catalog_search_hint">Искать во всех источниках</string>
+	<string name="catalog_more_sources">Ещё источники</string>
+	<string name="catalog_builtin_sources">Встроенные источники</string>
+	<string name="catalog_extensions">Расширения Tachiyomi</string>
 </resources>

@@ -15,10 +15,10 @@
 		android:id="@+id/imageView_icon"
 		android:layout_width="40dp"
 		android:layout_height="40dp"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginBottom="8dp"
-		android:background="?colorSurfaceContainer"
+		android:layout_marginStart="14dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		android:background="?colorSurfaceContainerHighest"
 		android:scaleType="centerCrop"
 		app:iconStyle="@style/FaviconDrawable.Small"
 		app:layout_constraintBottom_toBottomOf="parent"
@@ -28,8 +28,9 @@
 		tools:src="@tools:sample/backgrounds/scenic" />
 
 	<LinearLayout
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:layout_weight="1"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="@dimen/margin_small"
 		android:orientation="vertical">
@@ -56,5 +57,27 @@
 			tools:text="@tools:sample/lorem[2]" />
 
 	</LinearLayout>
+
+	<TextView
+		android:id="@+id/textView_type"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/bg_header_pill"
+		android:paddingHorizontal="8dp"
+		android:paddingVertical="3dp"
+		android:singleLine="true"
+		android:textAppearance="?textAppearanceLabelSmall"
+		android:textColor="?colorOnSurfaceVariant"
+		tools:text="Манга" />
+
+	<ImageView
+		android:layout_width="20dp"
+		android:layout_height="20dp"
+		android:layout_marginStart="8dp"
+		android:layout_marginEnd="8dp"
+		android:importantForAccessibility="no"
+		android:src="@drawable/ic_expand_more"
+		android:rotation="-90"
+		app:tint="?colorOnSurfaceVariant" />
 
 </LinearLayout>

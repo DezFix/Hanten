@@ -167,24 +167,23 @@
 		<item name="subtitleTextAppearance">?attr/textAppearanceBodySmall</item>
 	</style>
 
-	<style name="Widget.Hanten.ExploreButton" parent="Widget.Material3.Button.ElevatedButton.Icon">
-		<item name="android:minHeight">56dp</item>
+	<!-- Hanten 3.0 Catalog tiles (mockup): icon above the label, 2 per row -->
+	<style name="Widget.Hanten.ExploreButton" parent="Widget.Material3.Button.TonalButton.Icon">
+		<item name="android:minHeight">76dp</item>
 		<item name="android:singleLine">true</item>
-		<item name="shapeAppearance">?shapeAppearanceCornerExtraLarge</item>
-		<item name="android:ellipsize">marquee</item>
-		<item name="android:marqueeRepeatLimit">marquee_forever</item>
-		<item name="iconSize">22dp</item>
-		<item name="iconPadding">16dp</item>
-		<item name="iconGravity">start</item>
+		<item name="android:ellipsize">end</item>
+		<item name="cornerRadius">16dp</item>
+		<item name="iconSize">24dp</item>
+		<item name="iconPadding">6dp</item>
+		<item name="iconGravity">top</item>
 		<item name="iconTint">?attr/colorPrimary</item>
-		<item name="android:textColor">?attr/colorPrimary</item>
-		<item name="android:insetTop">2dp</item>
-		<item name="android:insetBottom">2dp</item>
-		<item name="android:gravity">start|center_vertical</item>
-		<item name="backgroundTint">?attr/colorSurfaceContainerHigh</item>
-		<!-- Hack. Removing shadow. For AMOLED -->
-		<item name="android:outlineProvider">none</item>
-		<item name="elevation">24dp</item>
+		<item name="backgroundTint">?attr/colorSurfaceContainer</item>
+		<item name="android:textColor">?attr/colorOnSurface</item>
+		<item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
 	</style>
 
 	<style name="Widget.Hanten.TextView.Indicator" parent="Widget.MaterialComponents.TextView">

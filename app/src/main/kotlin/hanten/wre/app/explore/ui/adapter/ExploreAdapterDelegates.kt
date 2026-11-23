@@ -1,5 +1,9 @@
 package hanten.wre.app.explore.ui.adapter
 
+import hanten.wre.app.explore.ui.model.ExploreMoreSources
+import hanten.wre.app.databinding.ItemExploreMoreSourcesBinding
+import hanten.wre.app.core.model.titleResId
+import hanten.wre.app.core.model.contentType
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
@@ -37,6 +41,7 @@ fun exploreButtonsAD(
 ) {
 
 	binding.buttonSuggestions.setOnClickListener(clickListener)
+	binding.buttonSearchAll.setOnClickListener(clickListener)
 	binding.buttonManageSources.setOnClickListener(clickListener)
 	binding.buttonLocal.setOnClickListener(clickListener)
 	binding.buttonRandom.setOnClickListener(clickListener)
@@ -105,12 +110,27 @@ fun exploreSourceListItemAD(
 	bind { payloads ->
 		binding.textViewTitle.text = item.source.getTitle(context)
 		binding.textViewTitle.drawableStart = if (item.source.isPinned) iconPinned else null
+		// the type is shown as a tag on the right, so the subtitle keeps only the rest (language)
+		val typeTitle = context.getString(item.source.contentType.titleResId)
 		binding.textViewSubtitle.text = item.source.getSummary(context)
+			?.removePrefix(typeTitle)?.removePrefix(",")?.trim()
+		binding.textViewType.text = typeTitle
 		if (payloads.isEmpty() || boundSource?.name != item.source.name) {
 			binding.imageViewIcon.setImageAsync(item.source)
 			boundSource = item.source.mangaSource
 		}
 	}
+}
+
+/** Hanten 3.0 "More sources": built-in catalog, Tachiyomi extensions, source management. */
+fun exploreMoreSourcesAD(
+	clickListener: View.OnClickListener,
+) = adapterDelegateViewBinding<ExploreMoreSources, ListModel, ItemExploreMoreSourcesBinding>(
+	{ layoutInflater, parent -> ItemExploreMoreSourcesBinding.inflate(layoutInflater, parent, false) },
+) {
+	binding.rowCatalog.setOnClickListener(clickListener)
+	binding.rowExtensions.setOnClickListener(clickListener)
+	binding.rowManage.setOnClickListener(clickListener)
 }
 
 fun exploreSourceGridItemAD(

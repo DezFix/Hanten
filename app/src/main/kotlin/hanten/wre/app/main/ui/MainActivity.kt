@@ -1,5 +1,6 @@
 package hanten.wre.app.main.ui
 
+import hanten.wre.app.explore.ui.ExploreFragment
 import hanten.wre.app.today.ui.TodayFragment
 import android.Manifest
 import android.content.Intent
@@ -193,7 +194,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	}
 
 	override fun onFragmentChanged(fragment: Fragment, fromUser: Boolean) {
-		viewBinding.imageLogo?.isVisible = fragment is TodayFragment
+		// the Catalog has its own big search field
+		viewBinding.buttonSearch?.isVisible = fragment !is ExploreFragment
 		adjustFabVisibility(topFragment = fragment)
 		adjustAppbar(topFragment = fragment)
 		if (fromUser) {
@@ -206,6 +208,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		if (provider !is MangaSearchMenuProvider) { // do not duplicate search menu item
 			super.addMenuProvider(provider, owner, state)
 		}
+	}
+
+	/** Opens the app-wide search (with suggestions), e.g. from the Catalog search field. */
+	fun openSearch() {
+		viewBinding.searchView.show()
 	}
 
 	override fun onClick(v: View) {
