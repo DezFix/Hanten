@@ -161,12 +161,32 @@
 					tools:text="@string/add_to_favourites" />
 
 				<androidx.constraintlayout.widget.Barrier
+					android:id="@+id/barrier_cover"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					app:barrierDirection="bottom"
+					app:constraint_referenced_ids="imageView_cover,chip_favorite" />
+
+				<com.google.android.material.tabs.TabLayout
+					android:id="@+id/tabs_details"
+					style="@style/Widget.Material3.TabLayout"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_normal"
+					android:background="@android:color/transparent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/barrier_cover"
+					app:tabGravity="start"
+					app:tabMode="scrollable" />
+
+				<androidx.constraintlayout.widget.Barrier
 					android:id="@+id/barrier_header"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					app:barrierDirection="bottom"
-					app:barrierMargin="@dimen/margin_normal"
-					app:constraint_referenced_ids="imageView_cover,chip_favorite" />
+					app:barrierMargin="@dimen/margin_small"
+					app:constraint_referenced_ids="tabs_details" />
 
 				<include layout="@layout/layout_details_table" />
 

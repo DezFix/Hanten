@@ -14,4 +14,7 @@
 	<string name="more_updates">Обновления</string>
 	<string name="explore_on_device">На устройстве</string>
 	<string name="explore_sources">Источники</string>
+	<string name="details_tab_chapters_count">Главы · %d</string>
+	<string name="details_tab_info">Инфо</string>
+	<string name="details_tab_similar">Похожее</string>
 </resources>

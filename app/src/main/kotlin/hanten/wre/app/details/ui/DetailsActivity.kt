@@ -136,6 +136,7 @@ class DetailsActivity :
 	private val viewModel: DetailsViewModel by viewModels()
 	private lateinit var menuProvider: DetailsMenuProvider
 	private lateinit var infoBinding: LayoutDetailsTableBinding
+	private var tabsController: DetailsTabsController? = null
 
 	override val bottomSheet: View?
 		get() = viewBinding.containerBottomSheet
@@ -170,6 +171,15 @@ class DetailsActivity :
 			BottomSheetBehavior.from(sheet).addBottomSheetCallback(
 				DetailsBottomSheetCallback(viewBinding.swipeRefreshLayout, checkNotNull(viewBinding.navbarDim)),
 			)
+			viewBinding.tabsDetails?.let { tabs ->
+				tabsController = DetailsTabsController(
+					tabs = tabs,
+					sheet = sheet,
+					scrollView = viewBinding.scrollView,
+					infoTarget = infoBinding.cardDetails,
+					similarTarget = viewBinding.textViewRelatedWorks,
+				)
+			}
 		}
 
 		val appRouter = router
@@ -378,6 +388,7 @@ class DetailsActivity :
 
 	private fun onRelatedWorksChanged(related: List<ScrobblerRelated>) {
 		val textView = viewBinding.textViewRelatedWorks
+		tabsController?.setSimilarVisible(related.isNotEmpty())
 		if (related.isEmpty()) {
 			textView.isGone = true
 			return
@@ -523,6 +534,7 @@ class DetailsActivity :
 	}
 
 	private fun onHistoryChanged(info: HistoryInfo, isLoading: Boolean) = with(infoBinding) {
+		tabsController?.setChaptersCount(if (isLoading) 0 else info.totalChapters)
 		textViewChapters.text = when {
 			isLoading -> getString(R.string.loading_)
 			info.currentChapter >= 0 -> getString(

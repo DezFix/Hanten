@@ -14,4 +14,7 @@
 	<string name="more_updates">Updates</string>
 	<string name="explore_on_device">On device</string>
 	<string name="explore_sources">Sources</string>
+	<string name="details_tab_chapters_count">Chapters · %d</string>
+	<string name="details_tab_info">Info</string>
+	<string name="details_tab_similar">Similar</string>
 </resources>

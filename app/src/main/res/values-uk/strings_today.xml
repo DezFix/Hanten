@@ -14,4 +14,7 @@
 	<string name="more_updates">Оновлення</string>
 	<string name="explore_on_device">На пристрої</string>
 	<string name="explore_sources">Джерела</string>
+	<string name="details_tab_chapters_count">Розділи · %d</string>
+	<string name="details_tab_info">Інфо</string>
+	<string name="details_tab_similar">Схоже</string>
 </resources>
