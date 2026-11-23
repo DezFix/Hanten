@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.core.model.LocalMangaSource
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
@@ -56,7 +57,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_download, R.string.downloads) { openDownloads() },
 		Entry(R.drawable.ic_history, R.string.history) { openHistory() },
 		Entry(R.drawable.ic_bookmark, R.string.bookmarks) { openBookmarks() },
-		Entry(R.drawable.ic_book_page, R.string.statistics) { openStatistic() },
+		Entry(R.drawable.ic_storage, R.string.on_device) { openList(LocalMangaSource, null, null) },
 		Entry(R.drawable.ic_feed, R.string.feed) { openFeed() },
 		Entry(R.drawable.ic_updated, R.string.more_updates) { openMangaUpdates() },
 	)

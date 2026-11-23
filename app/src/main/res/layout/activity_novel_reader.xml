@@ -27,7 +27,21 @@
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			app:navigationIcon="?attr/homeAsUpIndicator"
-			tools:title="@tools:sample/lorem" />
+			app:subtitleTextAppearance="@style/TextAppearance.Hanten.ReaderSubtitle"
+			app:titleTextAppearance="@style/TextAppearance.Hanten.ReaderTitle"
+			tools:title="@tools:sample/lorem">
+
+			<!-- Hanten 3.0: bookmark in the top bar, like the mockup -->
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_bookmark"
+				style="?materialIconButtonStyle"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_gravity="end"
+				android:layout_marginEnd="4dp"
+				android:contentDescription="@string/bookmark_add"
+				app:icon="@drawable/ic_bookmark" />
+		</com.google.android.material.appbar.MaterialToolbar>
 
 	</com.google.android.material.appbar.AppBarLayout>
 
@@ -58,6 +72,48 @@
 			android:paddingTop="4dp"
 			android:paddingBottom="4dp">
 
+			<!-- quick reading themes (mockup); the full list stays in the font sheet -->
+			<com.google.android.material.button.MaterialButtonToggleGroup
+				android:id="@+id/group_themes"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="4dp"
+				app:selectionRequired="false"
+				app:singleSelection="true">
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_theme_light"
+					style="?materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/novel_theme_light" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_theme_sepia"
+					style="?materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/novel_theme_sepia" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_theme_dark"
+					style="?materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/novel_theme_dark" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_theme_oled"
+					style="?materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/novel_theme_oled" />
+			</com.google.android.material.button.MaterialButtonToggleGroup>
+
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -66,7 +122,7 @@
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_prev"
-					style="?materialIconButtonStyle"
+					style="?materialIconButtonFilledTonalStyle"
 					android:layout_width="48dp"
 					android:layout_height="48dp"
 					android:contentDescription="@string/previous_chapter"
@@ -82,7 +138,7 @@
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_next"
-					style="?materialIconButtonStyle"
+					style="?materialIconButtonFilledTonalStyle"
 					android:layout_width="48dp"
 					android:layout_height="48dp"
 					android:contentDescription="@string/next_chapter"
@@ -90,69 +146,49 @@
 
 			</LinearLayout>
 
+
+			<!-- kept for the code that writes the chapter counter; the counter is shown in the top bar now -->
+			<TextView
+				android:id="@+id/text_progress"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
+				android:layout_marginTop="4dp"
 				android:orientation="horizontal">
-
-				<TextView
-					android:id="@+id/text_progress"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:textAppearance="?textAppearanceLabelMedium"
-					android:textColor="?colorOnSurfaceVariant"
-					tools:text="Chapter 1 (45%)" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_search"
-					style="?materialIconButtonStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/novel_search"
-					app:icon="@drawable/ic_search" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_chapters"
-					style="?materialIconButtonStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/novel_chapters_title"
-					app:icon="@drawable/ic_list" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_bookmark"
-					style="?materialIconButtonStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/bookmark_add"
-					app:icon="@drawable/ic_bookmark" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_auto_scroll"
-					style="?materialIconButtonStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/automatic_scroll"
-					app:icon="@drawable/ic_action_resume" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_tts"
-					style="?materialIconButtonStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/novel_tts"
-					app:icon="@drawable/ic_play" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/button_font_settings"
-					style="?materialIconButtonFilledTonalStyle"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:contentDescription="@string/novel_font_size"
+					style="@style/Widget.Hanten.ReaderAction"
+					android:text="@string/reader_act_font"
 					app:icon="@drawable/ic_font" />
 
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_chapters"
+					style="@style/Widget.Hanten.ReaderAction"
+					android:text="@string/chapters"
+					app:icon="@drawable/ic_list" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_tts"
+					style="@style/Widget.Hanten.ReaderAction"
+					android:text="@string/reader_act_listen"
+					app:icon="@drawable/ic_play" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_search"
+					style="@style/Widget.Hanten.ReaderAction"
+					android:text="@string/search"
+					app:icon="@drawable/ic_search" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_auto_scroll"
+					style="@style/Widget.Hanten.ReaderAction"
+					android:text="@string/reader_act_scroll"
+					app:icon="@drawable/ic_action_resume" />
 			</LinearLayout>
 
 		</LinearLayout>

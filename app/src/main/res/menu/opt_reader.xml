@@ -4,6 +4,12 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
+		android:id="@+id/action_bookmark"
+		android:icon="@drawable/ic_bookmark"
+		android:title="@string/bookmark_add"
+		app:showAsAction="always" />
+
+	<item
 		android:id="@+id/action_info"
 		android:icon="@drawable/ic_info_outline"
 		android:title="@string/details"

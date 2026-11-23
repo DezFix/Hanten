@@ -171,19 +171,11 @@
 						android:layout_weight="1" />
 				</LinearLayout>
 
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_stats"
-					style="@style/Widget.Material3.Button.TextButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="end"
-					android:text="@string/reading_stats" />
-
 				<TextView
 					android:id="@+id/text_genres_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="12dp"
+					android:layout_marginTop="20dp"
 					android:text="@string/profile_genres"
 					android:textAppearance="?textAppearanceTitleMedium"
 					android:textColor="?colorOnSurface"
@@ -203,6 +195,13 @@
 					android:text="@string/profile_genres_hint"
 					android:textAppearance="?textAppearanceBodySmall"
 					android:textColor="?colorOnSurfaceVariant" />
+
+				<include
+					android:id="@+id/stats"
+					layout="@layout/layout_profile_stats"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp" />
 
 				<TextView
 					android:layout_width="match_parent"

@@ -9,18 +9,15 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.ReaderControl
-import hanten.wre.app.core.util.ext.hasVisibleChildren
 import hanten.wre.app.core.util.ext.isRtl
 import hanten.wre.app.core.util.ext.setContentDescriptionAndTooltip
 import hanten.wre.app.core.util.ext.setTooltipCompat
@@ -87,8 +84,11 @@ class ReaderActionsView @JvmOverloads constructor(
 	var listener: OnInteractionListener? = null
 
 	init {
-		orientation = HORIZONTAL
-		gravity = Gravity.CENTER_VERTICAL
+		// Hanten 3.0: slider row on top, labeled actions below (mockup)
+		orientation = VERTICAL
+		gravity = Gravity.CENTER_HORIZONTAL
+		val padH = resources.getDimensionPixelOffset(R.dimen.margin_small)
+		setPadding(padH, padH / 2, padH, padH / 2)
 		binding.buttonNext.initAction()
 		binding.buttonPrev.initAction()
 		binding.buttonSave.initAction()
@@ -97,6 +97,8 @@ class ReaderActionsView @JvmOverloads constructor(
 		binding.buttonPagesThumbs.initAction()
 		binding.buttonTimer.initAction()
 		binding.buttonBookmark.initAction()
+		binding.buttonColorFilter.initAction()
+		binding.buttonSettings.initAction()
 		binding.slider.setLabelFormatter(PageLabelFormatter())
 		binding.slider.addOnChangeListener(this)
 		binding.slider.addOnSliderTouchListener(this)
@@ -129,6 +131,8 @@ class ReaderActionsView @JvmOverloads constructor(
 			R.id.button_screen_rotation -> listener?.toggleScreenOrientation()
 			R.id.button_options -> listener?.openMenu()
 			R.id.button_bookmark -> listener?.onBookmarkClick()
+			R.id.button_color_filter -> listener?.openColorFilter()
+			R.id.button_settings -> AppRouter.from(this)?.openReaderSettings()
 		}
 	}
 
@@ -197,9 +201,11 @@ class ReaderActionsView @JvmOverloads constructor(
 		binding.buttonScreenRotation.isVisible = ReaderControl.SCREEN_ROTATION in controls
 		binding.buttonSave.isVisible = ReaderControl.SAVE_PAGE in controls
 		binding.buttonTimer.isVisible = ReaderControl.TIMER in controls
-		binding.buttonBookmark.isVisible = ReaderControl.BOOKMARK in controls
+		// the bookmark lives in the top bar now (mockup)
+		binding.buttonBookmark.isVisible = false
 		binding.slider.isVisible = ReaderControl.SLIDER in controls
-		adjustLayoutParams()
+		binding.rowSlider.isVisible =
+			binding.buttonPrev.isVisible || binding.buttonNext.isVisible || binding.slider.isVisible
 	}
 
 	private fun updatePagesSheetButton() {
@@ -211,6 +217,7 @@ class ReaderActionsView @JvmOverloads constructor(
 		button.setContentDescriptionAndTooltip(
 			if (isPagesMode) R.string.pages else R.string.chapters,
 		)
+		button.setText(if (isPagesMode) R.string.pages else R.string.chapters)
 	}
 
 	private fun updateBookmarkButton() {
@@ -221,20 +228,6 @@ class ReaderActionsView @JvmOverloads constructor(
 		button.setContentDescriptionAndTooltip(
 			if (isBookmarkAdded) R.string.bookmark_remove else R.string.bookmark_add,
 		)
-	}
-
-	private fun adjustLayoutParams() {
-		val isSliderVisible = binding.slider.isVisible
-		repeat(childCount) { i ->
-			val child = getChildAt(i)
-			if (child is FrameLayout) {
-				child.isVisible = child.hasVisibleChildren
-				child.updateLayoutParams<LayoutParams> {
-					width = if (isSliderVisible) LayoutParams.WRAP_CONTENT else 0
-					weight = if (isSliderVisible) 0f else 1f
-				}
-			}
-		}
 	}
 
 	private fun updateRotationButton() {

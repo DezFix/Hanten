@@ -148,6 +148,9 @@ class ReaderControlDelegate(
 
 		fun toggleScreenOrientation()
 
+		/** Hanten 3.0: the color filter has its own button in the bottom panel. */
+		fun openColorFilter() = Unit
+
 		fun isReaderResumed(): Boolean
 	}
 }

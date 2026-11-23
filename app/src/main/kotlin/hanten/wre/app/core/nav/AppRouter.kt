@@ -98,7 +98,7 @@ import hanten.wre.app.settings.sources.extension.ExtensionDownloaderActivity
 import hanten.wre.app.settings.storage.MangaDirectorySelectDialog
 import hanten.wre.app.settings.storage.directories.MangaDirectoriesActivity
 import hanten.wre.app.settings.tracker.categories.TrackerCategoriesConfigSheet
-import hanten.wre.app.stats.ui.StatsActivity
+import hanten.wre.app.profile.ProfileActivity
 import hanten.wre.app.stats.ui.sheet.MangaStatsSheet
 import hanten.wre.app.suggestions.ui.SuggestionsActivity
 import hanten.wre.app.tracker.ui.updates.UpdatesActivity
@@ -340,7 +340,17 @@ class AppRouter private constructor(
 
     fun openTagsBlacklist() = startActivity(TagsBlacklistActivity::class.java)
 
-    fun openStatistic() = startActivity(StatsActivity::class.java)
+    /** Hanten 3.0: statistics live in the profile now; open it scrolled to the stats section. */
+    fun openStatistic() {
+        val context = contextOrNull() ?: return
+        startActivity(
+            Intent(context, ProfileActivity::class.java).putExtra(KEY_SCROLL_TO_STATS, true),
+        )
+    }
+
+    fun openProfile() {
+        startActivity(Intent(contextOrNull() ?: return, ProfileActivity::class.java))
+    }
 
     @CheckResult
     fun openExternalBrowser(url: String, chooserTitle: CharSequence? = null): Boolean {
@@ -870,6 +880,7 @@ class AppRouter private constructor(
             .build()
 
         const val KEY_DATA = "data"
+        const val KEY_SCROLL_TO_STATS = "scroll_to_stats"
         const val KEY_ENTRIES = "entries"
         const val KEY_ERROR = "error"
         const val KEY_EXCLUDE = "exclude"

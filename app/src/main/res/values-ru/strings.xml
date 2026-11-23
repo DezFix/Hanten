@@ -1145,4 +1145,11 @@
     <string name="donate_card_button">Поддержать на Ko-fi</string>
     <string name="report_problem">Сообщить о проблеме</string>
     <string name="backup_screen_title">Бэкап и перенос</string>
+    <string name="reader_act_mode">Режим</string>
+    <string name="reader_act_filter">Фильтр</string>
+    <string name="reader_act_scroll">Прокрутка</string>
+    <string name="reader_act_rotate">Поворот</string>
+    <string name="reader_act_font">Шрифт</string>
+    <string name="reader_act_listen">Слушать</string>
+    <string name="reader_page_line">%1$s · стр. %2$d из %3$d</string>
 </resources>

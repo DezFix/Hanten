@@ -1078,4 +1078,11 @@
     <string name="donate_card_button">Support on Ko-fi</string>
     <string name="report_problem">Report a problem</string>
     <string name="backup_screen_title">Backup and transfer</string>
+    <string name="reader_act_mode">Mode</string>
+    <string name="reader_act_filter">Filter</string>
+    <string name="reader_act_scroll">Scroll</string>
+    <string name="reader_act_rotate">Rotate</string>
+    <string name="reader_act_font">Font</string>
+    <string name="reader_act_listen">Listen</string>
+    <string name="reader_page_line">%1$s · page %2$d of %3$d</string>
 </resources>

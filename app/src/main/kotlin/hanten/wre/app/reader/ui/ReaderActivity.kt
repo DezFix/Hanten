@@ -467,6 +467,12 @@ class ReaderActivity :
         viewModel.switchChapterBy(delta)
     }
 
+    override fun openColorFilter() {
+        val page = viewModel.getCurrentPage() ?: return
+        val manga = viewModel.getMangaOrNull() ?: return
+        router.openColorFilterConfig(manga, page)
+    }
+
     override fun openMenu() {
         viewModel.saveCurrentState(readerManager.currentReader?.getCurrentState())
         val currentMode = readerManager.currentMode ?: return
@@ -541,6 +547,13 @@ class ReaderActivity :
         val chapterTitle = uiState.getChapterTitle(resources)
         supportActionBar?.subtitle = when {
             uiState.incognito -> getString(R.string.incognito_mode)
+            uiState.totalPages > 0 -> getString(
+                R.string.reader_page_line,
+                chapterTitle,
+                (uiState.currentPage + 1).coerceAtMost(uiState.totalPages),
+                uiState.totalPages,
+            )
+
             else -> chapterTitle
         }
         if (

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: reading statistics moved from its own screen into the profile -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/reading_stats"
+			android:textAppearance="?textAppearanceTitleMedium"
+			android:textColor="?colorOnSurface"
+			android:textStyle="bold" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_stats_clear"
+			style="@style/Widget.Material3.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/clear" />
+	</LinearLayout>
+
+	<com.google.android.material.progressindicator.LinearProgressIndicator
+		android:id="@+id/progress_stats"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:indeterminate="true"
+		android:visibility="gone"
+		app:trackCornerRadius="2dp" />
+
+	<HorizontalScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="-20dp"
+		android:clipToPadding="false"
+		android:paddingHorizontal="20dp"
+		android:scrollbars="none">
+
+		<com.google.android.material.chip.ChipGroup
+			android:id="@+id/layout_stats_chips"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:singleLine="true">
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_period"
+				style="@style/Widget.Hanten.Chip.Dropdown"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/week"
+				app:chipIcon="@drawable/ic_history" />
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_type"
+				style="@style/Widget.Hanten.Chip.Dropdown"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/manga"
+				app:chipIcon="@drawable/ic_sort" />
+		</com.google.android.material.chip.ChipGroup>
+	</HorizontalScrollView>
+
+	<!-- totals for the selected period -->
+	<LinearLayout
+		android:id="@+id/layout_stats_summary"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/bg_rounded_surface"
+		android:baselineAligned="false"
+		android:orientation="horizontal"
+		android:paddingVertical="12dp">
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/text_stats_time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:maxLines="1"
+				android:textAppearance="?textAppearanceTitleMedium"
+				android:textColor="?colorPrimary"
+				tools:text="12h 30m" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/stats_label_time"
+				android:textAppearance="?textAppearanceLabelMedium"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/text_stats_pages"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?textAppearanceTitleMedium"
+				android:textColor="?colorPrimary"
+				tools:text="480" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/stats_label_pages"
+				android:textAppearance="?textAppearanceLabelMedium"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/layout_stats_daily"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/text_stats_daily"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?textAppearanceTitleMedium"
+				android:textColor="?colorPrimary"
+				tools:text="68" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/stats_label_per_day"
+				android:textAppearance="?textAppearanceLabelMedium"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<hanten.wre.app.stats.ui.views.PieChartView
+		android:id="@+id/chart_stats"
+		android:layout_width="240dp"
+		android:layout_height="240dp"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="16dp" />
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recycler_stats"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="-20dp"
+		android:layout_marginTop="8dp"
+		android:nestedScrollingEnabled="false"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		tools:itemCount="3"
+		tools:listitem="@layout/item_stats" />
+
+	<TextView
+		android:id="@+id/text_stats_empty"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/bg_rounded_surface"
+		android:padding="14dp"
+		android:text="@string/empty_stats_text"
+		android:textAppearance="?textAppearanceBodyMedium"
+		android:textColor="?colorOnSurfaceVariant"
+		android:visibility="gone" />
+</LinearLayout>

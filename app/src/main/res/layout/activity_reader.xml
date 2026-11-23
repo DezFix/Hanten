@@ -71,6 +71,8 @@
 			android:elevation="@dimen/m3_card_elevated_elevation"
 			app:elevation="@dimen/m3_card_elevated_elevation"
 			app:popupTheme="@style/ThemeOverlay.Hanten"
+			app:subtitleTextAppearance="@style/TextAppearance.Hanten.ReaderSubtitle"
+			app:titleTextAppearance="@style/TextAppearance.Hanten.ReaderTitle"
 			tools:menu="@menu/opt_reader" />
 
 	</com.google.android.material.appbar.AppBarLayout>

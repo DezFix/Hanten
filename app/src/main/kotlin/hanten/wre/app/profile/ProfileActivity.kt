@@ -6,6 +6,28 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.View
+import android.view.Menu
+import android.widget.CompoundButton
+import androidx.activity.viewModels
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isGone
+import com.google.android.material.chip.ChipDrawable
+import hanten.wre.app.core.model.FavouriteCategory
+import hanten.wre.app.core.nav.AppRouter
+import hanten.wre.app.core.ui.BaseListAdapter
+import hanten.wre.app.core.ui.dialog.buildAlertDialog
+import hanten.wre.app.core.ui.list.OnListItemClickListener
+import hanten.wre.app.core.ui.util.ReversibleActionObserver
+import hanten.wre.app.core.util.HantenColors
+import hanten.wre.app.core.util.ext.observeEvent
+import hanten.wre.app.details.data.ReadingTime
+import hanten.wre.app.list.ui.adapter.ListItemType
+import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.stats.domain.StatsPeriod
+import hanten.wre.app.stats.domain.StatsRecord
+import hanten.wre.app.stats.ui.StatsViewModel
+import hanten.wre.app.stats.ui.statsAD
+import hanten.wre.app.stats.ui.views.PieChartView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.ColorUtils
@@ -42,7 +64,13 @@ import javax.inject.Inject
  * and favourite genres from the reading history. Levels and achievements come later.
  */
 @AndroidEntryPoint
-class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickListener {
+class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
+	View.OnClickListener,
+	OnListItemClickListener<Manga>,
+	PieChartView.OnSegmentClickListener,
+	CompoundButton.OnCheckedChangeListener {
+
+	private val statsViewModel: StatsViewModel by viewModels()
 
 	@Inject
 	lateinit var settings: AppSettings
@@ -63,7 +91,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 		supportActionBar?.title = null
 		viewBinding.buttonEdit.setOnClickListener(this)
 		viewBinding.buttonName.setOnClickListener(this)
-		viewBinding.buttonStats.setOnClickListener(this)
+		initStats()
 		viewBinding.statHours.textLabel.setText(R.string.profile_stat_hours)
 		viewBinding.statPages.textLabel.setText(R.string.profile_stat_pages)
 		viewBinding.statTitles.textLabel.setText(R.string.profile_stat_titles)
@@ -98,7 +126,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 			}
 
 			R.id.button_name -> showNameDialog()
-			R.id.button_stats -> router.openStatistic()
+			R.id.chip_period -> showPeriodSelector()
+			R.id.chip_type -> showTypeSelector()
+			R.id.button_stats_clear -> showClearStatsDialog()
 		}
 	}
 
@@ -205,6 +235,154 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
 			viewBinding.textGenresHint.isVisible = hasGenres
 		}
 	}
+
+	// region Reading statistics (moved here from the separate Statistics screen)
+
+	private fun initStats() {
+		val stats = viewBinding.stats
+		val adapter = BaseListAdapter<StatsRecord>()
+			.addDelegate(ListItemType.FEED, statsAD(this))
+		stats.recyclerStats.adapter = adapter
+		stats.chartStats.onSegmentClickListener = this
+		stats.chipPeriod.setOnClickListener(this)
+		stats.chipType.setOnClickListener(this)
+		stats.buttonStatsClear.setOnClickListener(this)
+		statsViewModel.isLoading.observe(this) { stats.progressStats.isVisible = it }
+		statsViewModel.period.observe(this) { stats.chipPeriod.setText(it.titleResId) }
+		statsViewModel.byGenre.observe(this) {
+			stats.chipType.setText(if (it) R.string.genres else R.string.manga)
+		}
+		statsViewModel.favoriteCategories.observe(this, ::createCategoriesChips)
+		statsViewModel.onActionDone.observeEvent(this, ReversibleActionObserver(viewBinding.scrollView))
+		statsViewModel.readingStats.observe(this) { records ->
+			val sum = records.sumOf { it.duration }
+			stats.chartStats.setData(
+				records.map { v ->
+					PieChartView.Segment(
+						value = (v.duration / 1000).toInt(),
+						label = v.manga?.title ?: v.tagName ?: getString(R.string.other_manga),
+						percent = if (sum > 0) (v.duration.toDouble() / sum).toFloat() else 0f,
+						color = HantenColors.ofManga(this, v.manga),
+						tag = v.manga,
+					)
+				},
+			)
+			adapter.emit(records)
+			val isEmpty = records.isEmpty()
+			stats.chartStats.isGone = isEmpty
+			stats.recyclerStats.isGone = isEmpty
+			stats.textStatsEmpty.isVisible = isEmpty
+			refreshStatsSummary()
+		}
+		statsViewModel.summary.observe(this) { refreshStatsSummary() }
+		if (intent.getBooleanExtra(AppRouter.KEY_SCROLL_TO_STATS, false)) {
+			viewBinding.scrollView.post {
+				viewBinding.scrollView.smoothScrollTo(0, viewBinding.stats.root.top)
+			}
+		}
+	}
+
+	private fun refreshStatsSummary() {
+		val stats = viewBinding.stats
+		val summary = statsViewModel.summary.value
+		val hasRecords = statsViewModel.readingStats.value.isNotEmpty()
+		if (summary == null || !hasRecords || (summary.durationMs == 0L && summary.pages == 0)) {
+			stats.layoutStatsSummary.isGone = true
+			return
+		}
+		stats.layoutStatsSummary.isGone = false
+		val minutes = TimeUnit.MILLISECONDS.toMinutes(summary.durationMs).toInt()
+		stats.textStatsTime.text = ReadingTime(minutes = minutes % 60, hours = minutes / 60, isContinue = false)
+			.formatShort(resources) ?: getString(R.string.less_than_minute_short)
+		stats.textStatsPages.text = summary.pages.toString()
+		val showDaily = summary.days > 0 && summary.days < Int.MAX_VALUE
+		stats.layoutStatsDaily.isGone = !showDaily
+		if (showDaily) {
+			stats.textStatsDaily.text = if (summary.pages < summary.days) {
+				getString(R.string.less_than_one_short)
+			} else {
+				(summary.pages / summary.days).toString()
+			}
+		}
+	}
+
+	override fun onItemClick(item: Manga, view: View) {
+		router.showStatisticSheet(item)
+	}
+
+	override fun onSegmentClick(view: PieChartView, segment: PieChartView.Segment) {
+		val manga = segment.tag as? Manga ?: return
+		onItemClick(manga, view)
+	}
+
+	override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+		val category = buttonView.tag as? FavouriteCategory ?: return
+		statsViewModel.setCategoryChecked(category, isChecked)
+	}
+
+	private fun createCategoriesChips(categories: List<FavouriteCategory>) {
+		val container = viewBinding.stats.layoutStatsChips
+		if (container.childCount > 2) return // period + type chips are already there
+		val checkedIds = statsViewModel.selectedCategories.value
+		for (category in categories) {
+			val chip = Chip(this)
+			chip.setChipDrawable(
+				ChipDrawable.createFromAttributes(this, null, 0, R.style.Widget_Hanten_Chip_Filter),
+			)
+			chip.text = category.title
+			chip.tag = category
+			chip.isChecked = category.id in checkedIds
+			chip.setOnCheckedChangeListener(this)
+			container.addView(chip)
+		}
+	}
+
+	private fun showClearStatsDialog() {
+		buildAlertDialog(this, isCentered = true) {
+			setMessage(R.string.clear_stats_confirm)
+			setTitle(R.string.clear_stats)
+			setIcon(R.drawable.ic_delete_all)
+			setNegativeButton(android.R.string.cancel, null)
+			setPositiveButton(R.string.clear) { _, _ -> statsViewModel.clearStats() }
+		}.show()
+	}
+
+	private fun showPeriodSelector() {
+		val menu = PopupMenu(this, viewBinding.stats.chipPeriod)
+		val selected = statsViewModel.period.value
+		for ((i, branch) in StatsPeriod.entries.withIndex()) {
+			val item = menu.menu.add(R.id.group_period, Menu.NONE, i, branch.titleResId)
+			item.isCheckable = true
+			item.isChecked = selected.ordinal == i
+		}
+		menu.menu.setGroupCheckable(R.id.group_period, true, true)
+		menu.setOnMenuItemClickListener { item ->
+			StatsPeriod.entries.getOrNull(item.order)?.also { statsViewModel.period.value = it } != null
+		}
+		menu.show()
+	}
+
+	private fun showTypeSelector() {
+		val menu = PopupMenu(this, viewBinding.stats.chipType)
+		val byGenre = statsViewModel.byGenre.value
+		val group = R.id.group_period + 1
+		menu.menu.add(group, Menu.NONE, 0, R.string.manga).apply {
+			isCheckable = true
+			isChecked = !byGenre
+		}
+		menu.menu.add(group, Menu.NONE, 1, R.string.genres).apply {
+			isCheckable = true
+			isChecked = byGenre
+		}
+		menu.menu.setGroupCheckable(group, true, true)
+		menu.setOnMenuItemClickListener {
+			statsViewModel.byGenre.value = it.order == 1
+			true
+		}
+		menu.show()
+	}
+
+	// endregion
 
 	private fun showNameDialog() {
 		val input = TextInputEditText(this).apply {

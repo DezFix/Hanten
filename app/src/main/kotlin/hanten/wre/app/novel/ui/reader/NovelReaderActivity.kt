@@ -29,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.novel.data.model.NovelTheme
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
@@ -611,7 +612,52 @@ class NovelReaderActivity :
 
 		viewBinding.sliderProgress.addOnSliderTouchListener(this)
 		viewBinding.sliderProgress.addOnChangeListener(this)
+		setupThemeButtons()
 	}
+
+	// region Hanten 3.0: quick reading themes in the bottom panel (mockup)
+
+	private val themeButtons by lazy {
+		mapOf(
+			R.id.button_theme_light to NovelTheme.LIGHT,
+			R.id.button_theme_sepia to NovelTheme.SEPIA,
+			R.id.button_theme_dark to NovelTheme.DARK,
+			R.id.button_theme_oled to NovelTheme.OLED,
+		)
+	}
+
+	private fun setupThemeButtons() {
+		syncThemeButtons()
+		viewBinding.groupThemes.addOnButtonCheckedListener { _, checkedId, isChecked ->
+			if (!isChecked) return@addOnButtonCheckedListener
+			val theme = themeButtons[checkedId] ?: return@addOnButtonCheckedListener
+			if (theme == readerSettings.theme) return@addOnButtonCheckedListener
+			val newSettings = readerSettings.copy(theme = theme)
+			NovelReaderSettings.save(this, newSettings)
+			onNovelSettingsChanged(newSettings)
+		}
+	}
+
+	private fun syncThemeButtons() {
+		val id = themeButtons.entries.firstOrNull { it.value == readerSettings.theme }?.key
+		if (id == null) {
+			viewBinding.groupThemes.clearChecked()
+		} else if (viewBinding.groupThemes.checkedButtonId != id) {
+			viewBinding.groupThemes.check(id)
+		}
+	}
+
+	private var lastSubtitlePercent = -1
+
+	private fun updateProgressSubtitle(percent: Float) {
+		val chapter = viewModel.currentChapter.value ?: return
+		val value = (percent * 100f).toInt().coerceIn(0, 100)
+		if (value == lastSubtitlePercent) return
+		lastSubtitlePercent = value
+		viewBinding.toolbar.subtitle = chapter.title + " · " + value + "%"
+	}
+
+	// endregion
 
 	@SuppressLint("SetTextI18n")
 	private fun observeViewModel() {
@@ -628,7 +674,8 @@ class NovelReaderActivity :
 				val idx = viewModel.currentChapterIndex.value + 1
 				val total = viewModel.chapters.value.size
 				viewBinding.textProgress.text = if (total > 0) "$idx / $total" else chapter.title
-				viewBinding.toolbar.subtitle = chapter.title
+				lastSubtitlePercent = -1
+				updateProgressSubtitle(viewModel.scrollProgress.value)
 			}
 			updateBookmarkButton()
 		}
@@ -655,6 +702,7 @@ class NovelReaderActivity :
 		}
 
 		viewModel.scrollProgress.observe(this) { percent ->
+			updateProgressSubtitle(percent)
 			if (!isSliderTracking) {
 				viewBinding.sliderProgress.value = (percent * 100f).coerceIn(0f, 100f)
 			}
@@ -986,6 +1034,7 @@ class NovelReaderActivity :
 	override fun onNovelSettingsChanged(settings: NovelReaderSettings) {
 		val modeChanged = settings.readingMode != readerSettings.readingMode
 		readerSettings = settings
+		syncThemeButtons()
 		viewBinding.webView.setBackgroundColor(settings.effectiveBackgroundColor)
 		applyReaderColors()
 		applySystemBarsVisibility()
