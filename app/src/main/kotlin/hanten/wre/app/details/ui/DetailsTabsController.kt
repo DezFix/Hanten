@@ -21,7 +21,8 @@ class DetailsTabsController(
 	private val behavior = BottomSheetBehavior.from(sheet)
 	private val chaptersTab = tabs.newTab().setText(R.string.chapters)
 	private val infoTab = tabs.newTab().setText(R.string.details_tab_info)
-	private val similarTab = tabs.newTab().setText(R.string.details_tab_similar)
+	// A removed tab is recycled by TabLayout, so the Similar tab is created anew each time it is shown
+	private var similarTab: TabLayout.Tab? = null
 	private var isSyncing = false
 
 	init {
@@ -40,14 +41,17 @@ class DetailsTabsController(
 	}
 
 	fun setSimilarVisible(isVisible: Boolean) {
-		val isAdded = similarTab.parent != null
-		if (isVisible == isAdded) return
+		val current = similarTab
+		if (isVisible == (current != null)) return
 		isSyncing = true
-		if (isVisible) {
-			tabs.addTab(similarTab, false)
+		if (current == null) {
+			val tab = tabs.newTab().setText(R.string.details_tab_similar)
+			tabs.addTab(tab, false)
+			similarTab = tab
 		} else {
-			if (similarTab.isSelected) infoTab.select()
-			tabs.removeTab(similarTab)
+			if (current.isSelected) infoTab.select()
+			tabs.removeTab(current)
+			similarTab = null
 		}
 		isSyncing = false
 	}

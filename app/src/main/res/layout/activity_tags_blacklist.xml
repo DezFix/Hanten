@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/text_blacklisted_title"
-                style="@style/TextAppearance.Material3.TitleMedium"
+                style="@style/TextAppearance.Hanten.TitleMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tags_blacklist"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/text_available_title"
-                style="@style/TextAppearance.Material3.TitleMedium"
+                style="@style/TextAppearance.Hanten.TitleMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/available" />

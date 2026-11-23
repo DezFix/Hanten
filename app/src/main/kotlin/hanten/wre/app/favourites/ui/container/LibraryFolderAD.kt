@@ -1,9 +1,12 @@
 package hanten.wre.app.favourites.ui.container
 
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isVisible
+import com.google.android.material.R as materialR
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hanten.wre.app.core.model.FavouriteCategory
 import hanten.wre.app.core.ui.BaseListAdapter
+import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.databinding.ItemLibraryFolderBinding
 import hanten.wre.app.databinding.ItemLibraryFolderNewBinding
 import hanten.wre.app.favourites.ui.categories.adapter.CategoryListModel
@@ -37,6 +40,11 @@ private fun libraryFolderAD(
 ) = adapterDelegateViewBinding<CategoryListModel, ListModel, ItemLibraryFolderBinding>(
 	{ inflater, parent -> ItemLibraryFolderBinding.inflate(inflater, parent, false) },
 ) {
+	// Empty slots stay visible as tiles, like in the mockup (the default fallback matches the card color)
+	val emptyTile = context.getThemeColor(materialR.attr.colorSurfaceContainerHighest).toDrawable()
+	arrayOf(binding.imageViewCover1, binding.imageViewCover2, binding.imageViewCover3).forEach {
+		it.fallbackDrawable = emptyTile
+	}
 	itemView.setOnClickListener { listener.onFolderClick(item.category) }
 	itemView.setOnLongClickListener { listener.onFolderLongClick(item.category) }
 

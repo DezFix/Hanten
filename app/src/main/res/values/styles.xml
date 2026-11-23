@@ -249,11 +249,11 @@
 		<item name="android:textColor">?attr/colorOnBackground</item>
 	</style>
 
-	<style name="TextAppearance.Hanten.Preference.Secondary" parent="TextAppearance.Material3.BodySmall" />
+	<style name="TextAppearance.Hanten.Preference.Secondary" parent="TextAppearance.Hanten.BodySmall" />
 
-	<style name="TextAppearance.Hanten.GridTitle" parent="TextAppearance.Material3.TitleSmall" />
+	<style name="TextAppearance.Hanten.GridTitle" parent="TextAppearance.Hanten.TitleSmall" />
 
-	<style name="TextAppearance.Hanten.GridTitle.Small" parent="TextAppearance.Material3.TitleSmall">
+	<style name="TextAppearance.Hanten.GridTitle.Small" parent="TextAppearance.Hanten.TitleSmall">
 		<item name="android:textSize">12sp</item>
 		<item name="android:letterSpacing">0.00714286</item>
 		<item name="lineHeight">14sp</item>
@@ -391,10 +391,11 @@
 	</style>
 
 	<!-- Big screen title above the search bar on the main tabs -->
-	<style name="TextAppearance.Hanten.ScreenTitle" parent="TextAppearance.Material3.HeadlineMedium">
+	<style name="TextAppearance.Hanten.ScreenTitle" parent="TextAppearance.Hanten.HeadlineMedium">
 		<item name="android:textStyle">bold</item>
 		<item name="android:textColor">?colorOnSurface</item>
 		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textSize">26sp</item>
 	</style>
 
 
