@@ -1,7 +1,9 @@
 package hanten.wre.app.search.ui.suggestion
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hanten.wre.app.R
 import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.prefs.AppSettings
@@ -102,51 +104,60 @@ class SearchSuggestionViewModel @Inject constructor(
 		}
 	}
 
+	/**
+	 * Hanten 3.0: every group gets a small title, and recent queries come first —
+	 * the screen reads as sections instead of one long mixed list.
+	 */
 	private suspend fun buildSearchSuggestion(
 		searchQuery: String,
 		enabledSources: Set<String>,
 		types: Set<SearchSuggestionType>,
 	): List<SearchSuggestionItem> = coroutineScope {
 		listOfNotNull(
+			if (SearchSuggestionType.QUERIES_RECENT in types) {
+				async { withHeader(R.string.search_section_recent, getRecentQueries(searchQuery)) }
+			} else {
+				null
+			},
 			if (SearchSuggestionType.GENRES in types) {
-				async { getTags(searchQuery) }
+				async { withHeader(R.string.genres, getTags(searchQuery)) }
 			} else {
 				null
 			},
 			if (SearchSuggestionType.MANGA in types) {
-				async { getManga(searchQuery) }
-			} else {
-				null
-			},
-			if (SearchSuggestionType.QUERIES_RECENT in types) {
-				async { getRecentQueries(searchQuery) }
+				async { withHeader(R.string.search_section_titles, getManga(searchQuery)) }
 			} else {
 				null
 			},
 			if (SearchSuggestionType.QUERIES_SUGGEST in types) {
-				async { getQueryHints(searchQuery) }
-			} else {
-				null
-			},
-			if (SearchSuggestionType.SOURCES in types) {
-				async { getSources(searchQuery, enabledSources) }
-			} else {
-				null
-			},
-			if (SearchSuggestionType.RECENT_SOURCES in types) {
-				async { getRecentSources(searchQuery) }
+				async { withHeader(R.string.search_section_hints, getQueryHints(searchQuery)) }
 			} else {
 				null
 			},
 			if (SearchSuggestionType.AUTHORS in types) {
-				async {
-					getAuthors(searchQuery)
-				}
+				async { withHeader(R.string.search_section_authors, getAuthors(searchQuery)) }
+			} else {
+				null
+			},
+			if (SearchSuggestionType.SOURCES in types) {
+				async { withHeader(R.string.search_section_sources, getSources(searchQuery, enabledSources)) }
+			} else {
+				null
+			},
+			if (SearchSuggestionType.RECENT_SOURCES in types) {
+				async { withHeader(R.string.search_section_recent_sources, getRecentSources(searchQuery)) }
 			} else {
 				null
 			},
 		).flatMap { it.await() }
 	}
+
+	private fun withHeader(@StringRes title: Int, items: List<SearchSuggestionItem>): List<SearchSuggestionItem> =
+		if (items.isEmpty() || items.all { it is SearchSuggestionItem.Text }) {
+			items
+		} else {
+			listOf(SearchSuggestionItem.Header(title)) + items
+		}
 
 	private suspend fun getAuthors(searchQuery: String): List<SearchSuggestionItem> = runCatchingCancellable {
 		repository.getAuthorsSuggestion(searchQuery, MAX_AUTHORS_ITEMS)

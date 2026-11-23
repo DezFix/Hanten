@@ -1,6 +1,10 @@
 package hanten.wre.app.search.ui.multi
 
+import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -53,18 +57,8 @@ class SearchActivity :
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivitySearchBinding.inflate(layoutInflater))
-		title = when (viewModel.kind) {
-			SearchKind.SIMPLE,
-			SearchKind.TITLE -> viewModel.query
-
-			SearchKind.AUTHOR -> getString(
-				R.string.inline_preference_pattern,
-				getString(R.string.author),
-				viewModel.query,
-			)
-
-			SearchKind.TAG -> getString(R.string.inline_preference_pattern, getString(R.string.genre), viewModel.query)
-		}
+		title = viewModel.query
+		initHeader()
 
 		val itemClickListener = OnListItemClickListener<SearchResultsListModel> { item, view ->
 			if (item.listFilter == null) {
@@ -92,17 +86,75 @@ class SearchActivity :
 		viewBinding.recyclerView.addItemDecoration(TypedListSpacingDecoration(this, true))
 
 		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = false)
-		supportActionBar?.setSubtitle(R.string.search_results)
-
-		addMenuProvider(SearchMenuProvider(this, viewModel))
+		supportActionBar?.setDisplayShowTitleEnabled(false)
 
 		viewModel.list.observe(this, adapter)
 		viewModel.onError.observeEvent(this, SnackbarErrorObserver(viewBinding.recyclerView, null))
 	}
 
+	// region Hanten 3.0 header: editable query, search kind and filters as chips (were a toolbar menu)
+
+	private fun initHeader() {
+		with(viewBinding.editQuery) {
+			setText(viewModel.query)
+			setSelection(text.length)
+			setOnEditorActionListener { _, actionId, event ->
+				val isSearch = actionId == EditorInfo.IME_ACTION_SEARCH ||
+					(event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+				if (isSearch) {
+					reopen(text?.toString().orEmpty().trim(), viewModel.kind)
+				}
+				isSearch
+			}
+		}
+		viewBinding.buttonClear.setOnClickListener {
+			viewBinding.editQuery.text = null
+			viewBinding.editQuery.requestFocus()
+			getSystemService(InputMethodManager::class.java)
+				?.showSoftInput(viewBinding.editQuery, InputMethodManager.SHOW_IMPLICIT)
+		}
+		viewBinding.chipsKind.check(
+			when (viewModel.kind) {
+				SearchKind.SIMPLE -> R.id.chip_kind_simple
+				SearchKind.TITLE -> R.id.chip_kind_title
+				SearchKind.AUTHOR -> R.id.chip_kind_author
+				SearchKind.TAG -> R.id.chip_kind_tag
+			},
+		)
+		viewBinding.chipsKind.setOnCheckedStateChangeListener { _, checkedIds ->
+			val kind = when (checkedIds.firstOrNull()) {
+				R.id.chip_kind_title -> SearchKind.TITLE
+				R.id.chip_kind_author -> SearchKind.AUTHOR
+				R.id.chip_kind_tag -> SearchKind.TAG
+				else -> SearchKind.SIMPLE
+			}
+			if (kind != viewModel.kind) {
+				reopen(viewModel.query, kind)
+			}
+		}
+		viewBinding.chipPinnedOnly.setOnCheckedChangeListener { _, isChecked -> viewModel.setPinnedOnly(isChecked) }
+		viewBinding.chipHideEmpty.setOnCheckedChangeListener { _, isChecked -> viewModel.setHideEmpty(isChecked) }
+	}
+
+	private fun reopen(query: String, kind: SearchKind) {
+		if (query.isEmpty() || (query == viewModel.query && kind == viewModel.kind)) {
+			return
+		}
+		router.openSearch(query = query, kind = kind)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+		} else {
+			@Suppress("DEPRECATION")
+			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+		}
+		finishAfterTransition()
+	}
+
+	// endregion
+
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
 		val barsInsets = insets.systemBarsInsets
-		viewBinding.toolbar.updatePadding(
+		viewBinding.layoutHeader.updatePadding(
 			top = barsInsets.top,
 			left = barsInsets.left,
 			right = barsInsets.right,

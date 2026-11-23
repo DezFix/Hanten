@@ -89,7 +89,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_gravity="end"
-			android:hint="@string/search_hint"
+			android:hint="@string/search_field_hint"
 			app:layout_anchor="@id/search_bar">
 
 			<androidx.recyclerview.widget.RecyclerView

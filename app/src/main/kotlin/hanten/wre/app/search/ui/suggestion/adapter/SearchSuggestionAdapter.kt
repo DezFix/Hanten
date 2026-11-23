@@ -20,5 +20,6 @@ class SearchSuggestionAdapter(
 			.addDelegate(searchSuggestionQueryHintAD(listener))
 			.addDelegate(searchSuggestionAuthorAD(listener))
 			.addDelegate(searchSuggestionTextAD())
+			.addDelegate(searchSuggestionHeaderAD())
 	}
 }

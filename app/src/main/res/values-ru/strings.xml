@@ -1152,4 +1152,12 @@
     <string name="reader_act_font">Шрифт</string>
     <string name="reader_act_listen">Слушать</string>
     <string name="reader_page_line">%1$s · стр. %2$d из %3$d</string>
+    <string name="search_kind_everywhere">Везде</string>
+    <string name="search_field_hint">Найти мангу или ранобэ</string>
+    <string name="search_section_recent">Недавние запросы</string>
+    <string name="search_section_titles">Тайтлы</string>
+    <string name="search_section_hints">Подсказки</string>
+    <string name="search_section_authors">Авторы</string>
+    <string name="search_section_sources">Источники</string>
+    <string name="search_section_recent_sources">Недавние источники</string>
 </resources>

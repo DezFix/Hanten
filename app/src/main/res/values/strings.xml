@@ -1085,4 +1085,12 @@
     <string name="reader_act_font">Font</string>
     <string name="reader_act_listen">Listen</string>
     <string name="reader_page_line">%1$s · page %2$d of %3$d</string>
+    <string name="search_kind_everywhere">Everywhere</string>
+    <string name="search_field_hint">Find manga or ranobe</string>
+    <string name="search_section_recent">Recent searches</string>
+    <string name="search_section_titles">Titles</string>
+    <string name="search_section_hints">Suggestions</string>
+    <string name="search_section_authors">Authors</string>
+    <string name="search_section_sources">Sources</string>
+    <string name="search_section_recent_sources">Recent sources</string>
 </resources>

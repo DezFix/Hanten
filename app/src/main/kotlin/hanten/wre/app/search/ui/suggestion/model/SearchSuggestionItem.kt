@@ -95,6 +95,14 @@ sealed interface SearchSuggestionItem : ListModel {
 		}
 	}
 
+	/** Hanten 3.0: a small section title above each group of suggestions. */
+	data class Header(
+		@StringRes val titleResId: Int,
+	) : SearchSuggestionItem {
+
+		override fun areItemsTheSame(other: ListModel): Boolean = other is Header && other.titleResId == titleResId
+	}
+
 	data class Text(
 		@StringRes val textResId: Int,
 		val error: Throwable?,
