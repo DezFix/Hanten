@@ -46,4 +46,7 @@
 	<string name="migrate_kotatsu_summary">.bk.zip: обране й категорії, історія та прогрес, закладки, трекери, налаштування читалки, джерела</string>
 	<string name="migrate_mihon_title">Mihon і Tachiyomi</string>
 	<string name="migrate_mihon_summary">.tachibk (також SY, J2K, Komikku): бібліотека й категорії як теки, прогрес та історія розділів. Налаштування читалки та завантажені розділи не переносяться</string>
+	<string name="today_all">Усі</string>
+	<string name="today_ranobe">Ранобе</string>
+	<string name="check_new_chapters">Перевірити нові розділи</string>
 </resources>

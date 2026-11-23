@@ -61,4 +61,25 @@
 		<item name="fontFamily">@font/manrope</item>
 		<item name="android:fontFamily">@font/manrope</item>
 	</style>
+	<!-- Default text appearance for plain TextViews: Manrope plus the theme text colors -->
+	<style name="TextAppearance.Hanten.Default" parent="TextAppearance.Hanten.BodyMedium">
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+		<item name="android:textColorHint">?android:attr/textColorHint</item>
+		<item name="android:textColorHighlight">?android:attr/textColorHighlight</item>
+		<item name="android:textColorLink">?android:attr/textColorLink</item>
+	</style>
+	<!-- Default text appearance for plain TextViews: Manrope plus the theme text colors -->
+	<style name="TextAppearance.Hanten.DefaultLarge" parent="TextAppearance.Hanten.BodyLarge">
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+		<item name="android:textColorHint">?android:attr/textColorHint</item>
+		<item name="android:textColorHighlight">?android:attr/textColorHighlight</item>
+		<item name="android:textColorLink">?android:attr/textColorLink</item>
+	</style>
+	<!-- Default text appearance for plain TextViews: Manrope plus the theme text colors -->
+	<style name="TextAppearance.Hanten.DefaultTitle" parent="TextAppearance.Hanten.TitleLarge">
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+		<item name="android:textColorHint">?android:attr/textColorHint</item>
+		<item name="android:textColorHighlight">?android:attr/textColorHighlight</item>
+		<item name="android:textColorLink">?android:attr/textColorLink</item>
+	</style>
 </resources>

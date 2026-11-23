@@ -14,6 +14,7 @@ import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.history.domain.model.MangaWithHistory
 import hanten.wre.app.list.domain.ListSortOrder
 import hanten.wre.app.tracker.domain.TrackingRepository
+import hanten.wre.app.tracker.work.TrackWorker
 import javax.inject.Inject
 
 /** "Today" home: what to continue, what got new chapters, what was read recently. */
@@ -22,7 +23,14 @@ class TodayViewModel @Inject constructor(
 	historyRepository: HistoryRepository,
 	trackingRepository: TrackingRepository,
 	settings: AppSettings,
+	private val trackScheduler: TrackWorker.Scheduler,
 ) : BaseViewModel() {
+
+	val isTrackerEnabled = settings.isTrackerEnabled
+
+	fun checkNewChapters() {
+		trackScheduler.startNow()
+	}
 
 	/** Null while loading; the first item is the "Continue" card. */
 	val history = historyRepository.observeAllWithHistory(ListSortOrder.LAST_READ, emptySet(), HISTORY_LIMIT)

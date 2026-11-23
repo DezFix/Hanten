@@ -1,5 +1,6 @@
 package hanten.wre.app.main.ui
 
+import hanten.wre.app.today.ui.TodayFragment
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -128,12 +129,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityMainBinding.inflate(layoutInflater))
-		setSupportActionBar(viewBinding.searchBar)
+		setSupportActionBar(viewBinding.toolbarMain ?: viewBinding.searchBar)
+		supportActionBar?.setDisplayShowTitleEnabled(false)
+		viewBinding.buttonSearch?.setOnClickListener { viewBinding.searchView.show() }
 
 		viewBinding.fab?.setOnClickListener(this)
 		viewBinding.navRail?.headerView?.findViewById<View>(R.id.railFab)?.setOnClickListener(this)
 		fadingAppbarMediator =
-			FadingAppbarMediator(viewBinding.appbar, viewBinding.layoutSearch ?: viewBinding.searchBar)
+			FadingAppbarMediator(
+				viewBinding.appbar,
+				checkNotNull(viewBinding.layoutSearch ?: viewBinding.searchBar ?: viewBinding.layoutHeader),
+			)
 
 		navigationDelegate = MainNavigationDelegate(
 			navBar = checkNotNull(bottomNav ?: viewBinding.navRail),
@@ -187,6 +193,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	}
 
 	override fun onFragmentChanged(fragment: Fragment, fromUser: Boolean) {
+		viewBinding.imageLogo?.isVisible = fragment is TodayFragment
 		adjustFabVisibility(topFragment = fragment)
 		adjustAppbar(topFragment = fragment)
 		if (fromUser) {
@@ -211,7 +218,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		val typeMask = WindowInsetsCompat.Type.systemBars()
 		val barsInsets = insets.getInsets(typeMask)
 		val searchBarDefaultMargin = resources.getDimensionPixelOffset(materialR.dimen.m3_searchbar_margin_horizontal)
-		viewBinding.searchBar.updateLayoutParams<MarginLayoutParams> {
+		viewBinding.layoutHeader?.updatePadding(
+			left = barsInsets.left + resources.getDimensionPixelOffset(R.dimen.header_padding_start),
+			right = barsInsets.right + resources.getDimensionPixelOffset(R.dimen.header_padding_end),
+		)
+		viewBinding.searchBar?.updateLayoutParams<MarginLayoutParams> {
 			marginEnd = searchBarDefaultMargin + barsInsets.end(v)
 			marginStart = if (viewBinding.navRail != null) {
 				searchBarDefaultMargin
@@ -271,7 +282,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		super.onSupportActionModeStarted(mode)
 		adjustFabVisibility()
 		bottomNav?.hide()
-		(viewBinding.layoutSearch ?: viewBinding.searchBar).isInvisible = true
+		(viewBinding.layoutSearch ?: viewBinding.searchBar ?: viewBinding.layoutHeader)?.isInvisible = true
 		updateContainerBottomMargin()
 	}
 
@@ -279,7 +290,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		super.onSupportActionModeFinished(mode)
 		adjustFabVisibility()
 		bottomNav?.show()
-		(viewBinding.layoutSearch ?: viewBinding.searchBar).isInvisible = false
+		(viewBinding.layoutSearch ?: viewBinding.searchBar ?: viewBinding.layoutHeader)?.isInvisible = false
 		updateContainerBottomMargin()
 	}
 

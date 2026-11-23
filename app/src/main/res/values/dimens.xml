@@ -87,4 +87,6 @@
 	<dimen name="fab_margin_bottom_padding">16dp</dimen>
 	<dimen name="profile_choice_size">44dp</dimen>
 	<dimen name="profile_choice_ring">3dp</dimen>
+	<dimen name="header_padding_start">20dp</dimen>
+	<dimen name="header_padding_end">10dp</dimen>
 </resources>

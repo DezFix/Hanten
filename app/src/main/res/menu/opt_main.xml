@@ -17,7 +17,7 @@
 		android:icon="@drawable/ic_download"
 		android:orderInCategory="10"
 		android:title="@string/downloads"
-		app:showAsAction="ifRoom" />
+		app:showAsAction="never" />
 
 	<item
 		android:id="@+id/action_incognito"

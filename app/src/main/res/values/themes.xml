@@ -83,8 +83,12 @@
 		<item name="bottomNavigationStyle">@style/Widget.Hanten.BottomNavigationView</item>
 		<item name="materialCardViewStyle">@style/Widget.Hanten.CardView</item>
 		<!-- Hanten 3.0 fonts -->
-		<item name="fontFamily">@font/manrope</item>
-		<item name="android:fontFamily">@font/manrope</item>
+		<item name="android:textAppearance">@style/TextAppearance.Hanten.Default</item>
+		<item name="android:textAppearanceSmall">@style/TextAppearance.Hanten.Default</item>
+		<item name="android:textAppearanceMedium">@style/TextAppearance.Hanten.DefaultLarge</item>
+		<item name="android:textAppearanceLarge">@style/TextAppearance.Hanten.DefaultTitle</item>
+		<item name="android:textAppearanceListItem">@style/TextAppearance.Hanten.DefaultLarge</item>
+		<item name="android:textAppearanceListItemSmall">@style/TextAppearance.Hanten.Default</item>
 		<item name="textAppearanceDisplayLarge">@style/TextAppearance.Hanten.DisplayLarge</item>
 		<item name="textAppearanceDisplayMedium">@style/TextAppearance.Hanten.DisplayMedium</item>
 		<item name="textAppearanceDisplaySmall">@style/TextAppearance.Hanten.DisplaySmall</item>

@@ -16,11 +16,12 @@
 
 		<com.google.android.material.card.MaterialCardView
 			android:id="@+id/card_continue"
-			style="@style/Widget.Material3.CardView.Filled"
+			style="@style/Widget.Hanten.CardView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginHorizontal="16dp"
 			android:visibility="gone"
+			app:cardBackgroundColor="?colorSurfaceContainerHigh"
 			app:cardCornerRadius="24dp"
 			tools:visibility="visible">
 
@@ -103,12 +104,30 @@
 			</LinearLayout>
 		</com.google.android.material.card.MaterialCardView>
 
-		<TextView
-			android:id="@+id/text_updates_title"
-			style="@style/TextAppearance.Hanten.Today.Section"
+		<LinearLayout
+			android:id="@+id/layout_updates_header"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/new_chapters" />
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:paddingEnd="8dp">
+
+			<TextView
+				android:id="@+id/text_updates_title"
+				style="@style/TextAppearance.Hanten.Today.Section"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/new_chapters" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_updates_all"
+				style="@style/Widget.Material3.Button.TextButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="12dp"
+				android:text="@string/today_all" />
+		</LinearLayout>
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recycler_updates"
@@ -134,6 +153,22 @@
 			android:orientation="horizontal"
 			android:paddingHorizontal="10dp"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+		<TextView
+			android:id="@+id/text_ranobe_title"
+			style="@style/TextAppearance.Hanten.Today.Section"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:text="@string/today_ranobe"
+			android:visibility="gone"
+			tools:visibility="visible" />
+
+		<LinearLayout
+			android:id="@+id/layout_ranobe"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" />
 
 		<LinearLayout
 			android:id="@+id/layout_empty"

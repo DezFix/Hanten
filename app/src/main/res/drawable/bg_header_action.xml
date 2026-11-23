@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 44dp round action button (mockup): fills a 48x56 action slot -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+	android:color="?attr/colorControlHighlight">
+	<item>
+		<inset
+			android:insetLeft="2dp"
+			android:insetTop="6dp"
+			android:insetRight="2dp"
+			android:insetBottom="6dp">
+			<shape android:shape="oval">
+				<solid android:color="?attr/colorSurfaceContainerHigh" />
+			</shape>
+		</inset>
+	</item>
+</ripple>
