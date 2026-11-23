@@ -27,6 +27,22 @@
         android:summary="@string/black_dark_theme_summary"
         android:title="@string/black_dark_theme" />
 
+    <ListPreference
+        android:defaultValue="theme"
+        android:entries="@array/accent_colors"
+        android:entryValues="@array/values_accent_colors"
+        android:key="accent_color"
+        android:title="@string/accent_color"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:defaultValue="medium"
+        android:entries="@array/corner_styles"
+        android:entryValues="@array/values_corner_styles"
+        android:key="corner_style"
+        android:title="@string/corner_style"
+        app:useSimpleSummaryProvider="true" />
+
     <hanten.wre.app.settings.utils.ActivityListPreference
         android:key="app_locale"
         android:title="@string/language" />

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Hanten 3.0 accent colors (Appearance: Accent) -->
+	<color name="accent_red_primary">#A63D41</color>
+	<color name="accent_red_on_primary">#FFF8EE</color>
+	<color name="accent_red_primary_container">#F2D6D2</color>
+	<color name="accent_red_on_primary_container">#7E2C30</color>
+	<color name="accent_blue_primary">#2F4B8A</color>
+	<color name="accent_blue_on_primary">#FFFFFF</color>
+	<color name="accent_blue_primary_container">#D9E2FF</color>
+	<color name="accent_blue_on_primary_container">#172F63</color>
+	<color name="accent_gold_primary">#8F6A00</color>
+	<color name="accent_gold_on_primary">#FFFFFF</color>
+	<color name="accent_gold_primary_container">#FFDF9E</color>
+	<color name="accent_gold_on_primary_container">#2C1F00</color>
+	<color name="accent_green_primary">#45703A</color>
+	<color name="accent_green_on_primary">#FFFFFF</color>
+	<color name="accent_green_primary_container">#C6EFB3</color>
+	<color name="accent_green_on_primary_container">#0F2009</color>
+	<color name="accent_plum_primary">#7A3E73</color>
+	<color name="accent_plum_on_primary">#FFFFFF</color>
+	<color name="accent_plum_primary_container">#FFD7F2</color>
+	<color name="accent_plum_on_primary_container">#32002F</color>
+	<color name="accent_teal_primary">#1E7A78</color>
+	<color name="accent_teal_on_primary">#FFFFFF</color>
+	<color name="accent_teal_primary_container">#A6F2EE</color>
+	<color name="accent_teal_on_primary_container">#00201F</color>
+</resources>

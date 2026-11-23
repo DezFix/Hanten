@@ -147,6 +147,8 @@ class AppearanceSettingsFragment :
 
             AppSettings.KEY_COLOR_THEME,
             AppSettings.KEY_THEME_AMOLED,
+            AppSettings.KEY_ACCENT_COLOR,
+            AppSettings.KEY_CORNER_STYLE,
                 -> {
                 postRestart()
             }

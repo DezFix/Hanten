@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Hanten 3.0: accent overlays, applied on top of the color scheme in BaseActivity -->
+	<style name="ThemeOverlay.Hanten.Accent.Red" parent="">
+		<item name="colorPrimary">@color/accent_red_primary</item>
+		<item name="colorOnPrimary">@color/accent_red_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_red_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_red_on_primary_container</item>
+		<item name="colorAccent">@color/accent_red_primary</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Accent.Blue" parent="">
+		<item name="colorPrimary">@color/accent_blue_primary</item>
+		<item name="colorOnPrimary">@color/accent_blue_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_blue_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_blue_on_primary_container</item>
+		<item name="colorAccent">@color/accent_blue_primary</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Accent.Gold" parent="">
+		<item name="colorPrimary">@color/accent_gold_primary</item>
+		<item name="colorOnPrimary">@color/accent_gold_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_gold_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_gold_on_primary_container</item>
+		<item name="colorAccent">@color/accent_gold_primary</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Accent.Green" parent="">
+		<item name="colorPrimary">@color/accent_green_primary</item>
+		<item name="colorOnPrimary">@color/accent_green_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_green_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_green_on_primary_container</item>
+		<item name="colorAccent">@color/accent_green_primary</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Accent.Plum" parent="">
+		<item name="colorPrimary">@color/accent_plum_primary</item>
+		<item name="colorOnPrimary">@color/accent_plum_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_plum_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_plum_on_primary_container</item>
+		<item name="colorAccent">@color/accent_plum_primary</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Accent.Teal" parent="">
+		<item name="colorPrimary">@color/accent_teal_primary</item>
+		<item name="colorOnPrimary">@color/accent_teal_on_primary</item>
+		<item name="colorPrimaryContainer">@color/accent_teal_primary_container</item>
+		<item name="colorOnPrimaryContainer">@color/accent_teal_on_primary_container</item>
+		<item name="colorAccent">@color/accent_teal_primary</item>
+	</style>
+	<!-- Hanten 3.0: corner rounding overlays (Appearance: Corners) -->
+	<style name="ShapeAppearance.Hanten.SmallCorners.Small" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">4dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.SmallCorners.Medium" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">6dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.SmallCorners.Large" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">8dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.SmallCorners.ExtraLarge" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">12dp</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Corners.Small" parent="">
+		<item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.Hanten.SmallCorners.Small</item>
+		<item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.Hanten.SmallCorners.Medium</item>
+		<item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.Hanten.SmallCorners.Large</item>
+		<item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Hanten.SmallCorners.ExtraLarge</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.LargeCorners.Small" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">14dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.LargeCorners.Medium" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">22dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.LargeCorners.Large" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">28dp</item>
+	</style>
+	<style name="ShapeAppearance.Hanten.LargeCorners.ExtraLarge" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">32dp</item>
+	</style>
+	<style name="ThemeOverlay.Hanten.Corners.Large" parent="">
+		<item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.Hanten.LargeCorners.Small</item>
+		<item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.Hanten.LargeCorners.Medium</item>
+		<item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.Hanten.LargeCorners.Large</item>
+		<item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Hanten.LargeCorners.ExtraLarge</item>
+	</style>
+</resources>

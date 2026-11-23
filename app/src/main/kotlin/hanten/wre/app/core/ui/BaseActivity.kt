@@ -89,6 +89,22 @@ abstract class BaseActivity<B : ViewBinding> :
 					.build(),
 			)
 		}
+		val accentOverlay = when (settings.accentColor) {
+			"red" -> R.style.ThemeOverlay_Hanten_Accent_Red
+			"blue" -> R.style.ThemeOverlay_Hanten_Accent_Blue
+			"gold" -> R.style.ThemeOverlay_Hanten_Accent_Gold
+			"green" -> R.style.ThemeOverlay_Hanten_Accent_Green
+			"plum" -> R.style.ThemeOverlay_Hanten_Accent_Plum
+			"teal" -> R.style.ThemeOverlay_Hanten_Accent_Teal
+			else -> 0
+		}
+		if (accentOverlay != 0) {
+			setTheme(accentOverlay)
+		}
+		when (settings.cornerStyle) {
+			"small" -> setTheme(R.style.ThemeOverlay_Hanten_Corners_Small)
+			"large" -> setTheme(R.style.ThemeOverlay_Hanten_Corners_Large)
+		}
 		if (isAmoledTheme) {
 			setTheme(R.style.ThemeOverlay_Hanten_Amoled)
 		}

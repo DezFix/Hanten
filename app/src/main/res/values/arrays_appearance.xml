@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="accent_colors">
+		<item>From theme</item>
+		<item>Red</item>
+		<item>Blue</item>
+		<item>Gold</item>
+		<item>Green</item>
+		<item>Plum</item>
+		<item>Teal</item>
+	</string-array>
+	<string-array name="corner_styles">
+		<item>Small</item>
+		<item>Medium</item>
+		<item>Large</item>
+	</string-array>
+	<string-array name="values_accent_colors" translatable="false">
+		<item>theme</item>
+		<item>red</item>
+		<item>blue</item>
+		<item>gold</item>
+		<item>green</item>
+		<item>plum</item>
+		<item>teal</item>
+	</string-array>
+	<string-array name="values_corner_styles" translatable="false">
+		<item>small</item>
+		<item>medium</item>
+		<item>large</item>
+	</string-array>
+</resources>

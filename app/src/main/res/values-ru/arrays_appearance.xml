@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="accent_colors">
+		<item>Как в теме</item>
+		<item>Красный</item>
+		<item>Синий</item>
+		<item>Золотой</item>
+		<item>Зелёный</item>
+		<item>Сливовый</item>
+		<item>Бирюзовый</item>
+	</string-array>
+	<string-array name="corner_styles">
+		<item>Маленькое</item>
+		<item>Среднее</item>
+		<item>Большое</item>
+	</string-array>
+</resources>

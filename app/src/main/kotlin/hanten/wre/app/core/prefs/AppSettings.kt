@@ -66,6 +66,14 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 	val isAmoledTheme: Boolean
 		get() = prefs.getBoolean(KEY_THEME_AMOLED, false)
 
+	/** Accent override: "theme" keeps the color scheme's own accent. */
+	val accentColor: String
+		get() = prefs.getString(KEY_ACCENT_COLOR, null) ?: "theme"
+
+	/** Corner rounding: small / medium / large. */
+	val cornerStyle: String
+		get() = prefs.getString(KEY_CORNER_STYLE, null) ?: "medium"
+
 	var mainNavItems: List<NavItem>
 		get() {
 			val raw = prefs.getString(KEY_NAV_MAIN, null)?.split(',')
@@ -779,6 +787,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_THEME = "theme"
 		const val KEY_COLOR_THEME = "color_theme"
 		const val KEY_THEME_AMOLED = "amoled_theme"
+		const val KEY_ACCENT_COLOR = "accent_color"
+		const val KEY_CORNER_STYLE = "corner_style"
 		const val KEY_OFFLINE_DISABLED = "no_offline"
 		const val KEY_PAGES_CACHE_CLEAR = "pages_cache_clear"
 		const val KEY_HTTP_CACHE_CLEAR = "http_cache_clear"
