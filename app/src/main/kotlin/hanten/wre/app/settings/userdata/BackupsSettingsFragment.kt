@@ -64,7 +64,8 @@ class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
                 true
             }
 
-            AppSettings.KEY_RESTORE -> {
+            // "Move from another app" uses the same picker: the restore dialog detects the format itself
+            AppSettings.KEY_RESTORE, KEY_MIGRATE_KOTATSU, KEY_MIGRATE_MIHON -> {
                 if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
                     Snackbar.make(
                         listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT,
@@ -81,6 +82,12 @@ class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_restore),
         if (result != null) {
             router.showBackupRestoreDialog(result)
         }
+    }
+
+    private companion object {
+
+        const val KEY_MIGRATE_KOTATSU = "migrate_kotatsu"
+        const val KEY_MIGRATE_MIHON = "migrate_mihon"
     }
 
     private fun bindPeriodicalBackupSummary() {

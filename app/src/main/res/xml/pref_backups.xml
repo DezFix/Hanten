@@ -16,6 +16,26 @@
         android:summary="@string/restore_summary"
         android:title="@string/restore_backup" />
 
+    <PreferenceCategory
+        android:summary="@string/migrate_hint"
+        android:title="@string/migrate_title">
+
+        <Preference
+            android:icon="@drawable/ic_backup_restore"
+            android:key="migrate_kotatsu"
+            android:persistent="false"
+            android:summary="@string/migrate_kotatsu_summary"
+            android:title="@string/migrate_kotatsu_title" />
+
+        <Preference
+            android:icon="@drawable/ic_backup_restore"
+            android:key="migrate_mihon"
+            android:persistent="false"
+            android:summary="@string/migrate_mihon_summary"
+            android:title="@string/migrate_mihon_title" />
+
+    </PreferenceCategory>
+
     <PreferenceScreen
         android:fragment="hanten.wre.app.backups.ui.periodical.PeriodicalBackupSettingsFragment"
         android:key="backup_periodic"
