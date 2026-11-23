@@ -51,6 +51,24 @@
 			tools:progress="400"
 			tools:visibility="visible" />
 
+		<!-- Hanten 3.0: how much is read, as text, so it is readable at a glance -->
+		<TextView
+			android:id="@+id/textView_progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|end"
+			android:layout_marginEnd="6dp"
+			android:layout_marginBottom="12dp"
+			android:background="@drawable/bg_progress_pill"
+			android:paddingHorizontal="6dp"
+			android:paddingVertical="1dp"
+			android:textColor="?colorOnPrimary"
+			android:textSize="11sp"
+			android:textStyle="bold"
+			android:visibility="gone"
+			tools:text="72%"
+			tools:visibility="visible" />
+
 		<hanten.wre.app.core.ui.widgets.IconsView
 			android:id="@+id/iconsView"
 			android:layout_width="wrap_content"

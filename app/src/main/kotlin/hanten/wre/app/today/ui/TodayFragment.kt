@@ -18,15 +18,22 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
 import hanten.wre.app.core.model.getTitle
-import hanten.wre.app.core.model.isNovelSource
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.ui.BaseFragment
+import hanten.wre.app.core.ui.BaseListAdapter
+import hanten.wre.app.core.ui.list.OnListItemClickListener
+import hanten.wre.app.core.prefs.ProgressIndicatorMode
+import hanten.wre.app.list.domain.ReadingProgress
+import hanten.wre.app.list.ui.adapter.ListItemType
+import hanten.wre.app.list.ui.adapter.getShortText
+import hanten.wre.app.list.ui.adapter.mangaGridItemAD
+import hanten.wre.app.list.ui.model.ListModel
+import hanten.wre.app.list.ui.model.MangaListModel
+import hanten.wre.app.list.ui.size.StaticItemSizeResolver
 import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.databinding.FragmentTodayBinding
-import hanten.wre.app.databinding.ItemTodayRanobeBinding
 import hanten.wre.app.history.domain.model.MangaWithHistory
-import hanten.wre.app.parsers.model.Manga
 import kotlin.math.roundToInt
 
 /**
@@ -43,9 +50,16 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 
 	override fun onViewBindingCreated(binding: FragmentTodayBinding, savedInstanceState: Bundle?) {
 		super.onViewBindingCreated(binding, savedInstanceState)
-		val openDetails: (Manga) -> Unit = { router.openDetails(it) }
-		val updatesAdapter = TodayCoversAdapter(openDetails)
-		val recentAdapter = TodayCoversAdapter(openDetails)
+		val coverWidth = resources.getDimensionPixelSize(R.dimen.today_cover_width)
+		val listener = object : OnListItemClickListener<MangaListModel> {
+			override fun onItemClick(item: MangaListModel, view: View) {
+				router.openDetails(item.toMangaWithOverride())
+			}
+		}
+		val updatesAdapter = BaseListAdapter<ListModel>()
+			.addDelegate(ListItemType.MANGA_GRID, mangaGridItemAD(StaticItemSizeResolver(coverWidth), listener))
+		val recentAdapter = BaseListAdapter<ListModel>()
+			.addDelegate(ListItemType.MANGA_GRID, mangaGridItemAD(StaticItemSizeResolver(coverWidth), listener))
 		binding.recyclerUpdates.adapter = updatesAdapter
 		binding.recyclerRecent.adapter = recentAdapter
 		binding.buttonUpdatesAll.setOnClickListener { router.openFeed() }
@@ -57,9 +71,14 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 			requireActivity().addMenuProvider(this, viewLifecycleOwner)
 		}
 
-		viewModel.history.observe(viewLifecycleOwner) { list -> onHistoryChanged(list, recentAdapter) }
+		viewModel.history.observe(viewLifecycleOwner) { list -> onHistoryChanged(list) }
+		viewModel.recent.observe(viewLifecycleOwner) { list ->
+			recentAdapter.emit(list)
+			binding.textRecentTitle.isVisible = list.isNotEmpty()
+			binding.recyclerRecent.isVisible = list.isNotEmpty()
+		}
 		viewModel.updates.observe(viewLifecycleOwner) { list ->
-			updatesAdapter.submitList(list)
+			updatesAdapter.emit(list)
 			binding.recyclerUpdates.isVisible = list.isNotEmpty()
 			binding.textUpdatesTitle.text = sectionTitle(getString(R.string.new_chapters), list.size)
 			updateEmptyState()
@@ -84,7 +103,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		else -> false
 	}
 
-	private fun onHistoryChanged(list: List<MangaWithHistory>?, recentAdapter: TodayCoversAdapter) {
+	private fun onHistoryChanged(list: List<MangaWithHistory>?) {
 		val binding = viewBinding ?: return
 		val first = list?.firstOrNull()
 		binding.cardContinue.isVisible = first != null
@@ -99,37 +118,18 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 			binding.cardContinue.setOnClickListener { router.openDetails(manga) }
 			binding.buttonContinue.setOnClickListener { router.openReader(manga, it) }
 		}
-		val others = list.orEmpty().drop(1)
-		val (ranobe, comics) = others.partition { it.manga.source.isNovelSource }
-		bindRanobe(ranobe.take(RANOBE_LIMIT))
-		val recent = comics.map { TodayCover(it.manga) }
-		recentAdapter.submitList(recent)
-		binding.textRecentTitle.isVisible = recent.isNotEmpty()
-		binding.recyclerRecent.isVisible = recent.isNotEmpty()
 		updateEmptyState()
-	}
-
-	private fun bindRanobe(items: List<MangaWithHistory>) {
-		val binding = viewBinding ?: return
-		val container = binding.layoutRanobe
-		container.removeAllViews()
-		binding.textRanobeTitle.isVisible = items.isNotEmpty()
-		for (item in items) {
-			val row = ItemTodayRanobeBinding.inflate(layoutInflater, container, false)
-			val manga = item.manga
-			row.textTitle.text = manga.title
-			row.textSubtitle.text = progressText(item)
-			row.imageCover.setImageAsync(manga.coverUrl, manga)
-			row.root.setOnClickListener { router.openDetails(manga) }
-			row.buttonRead.setOnClickListener { router.openReader(manga, it) }
-			container.addView(row.root)
-		}
 	}
 
 	private fun progressText(item: MangaWithHistory): String {
 		val source = item.manga.source.getTitle(requireContext())
 		val percent = item.history.percent
-		return if (percent >= 0f) "$source · ${(percent * 100).roundToInt()}%" else source
+		// same rounding as the cover pills, so "Continue" and the library never disagree (1% vs 0%)
+		return if (percent >= 0f) {
+			"$source · " + ReadingProgress(percent, 0, ProgressIndicatorMode.PERCENT_READ).getShortText()
+		} else {
+			source
+		}
 	}
 
 	private fun sectionTitle(title: String, count: Int): CharSequence {
@@ -149,10 +149,5 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		// The New chapters block stays on the home screen whenever new chapters are checked
 		binding.layoutUpdatesHeader.isVisible = viewModel.isTrackerEnabled && !isEmpty
 		binding.textUpdatesEmpty.isVisible = viewModel.isTrackerEnabled && !isEmpty && updates.isEmpty()
-	}
-
-	private companion object {
-
-		const val RANOBE_LIMIT = 3
 	}
 }

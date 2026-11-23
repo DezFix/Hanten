@@ -7,6 +7,7 @@ import hanten.wre.app.core.model.iconResId
 import hanten.wre.app.core.ui.list.AdapterDelegateClickListenerAdapter
 import hanten.wre.app.core.ui.list.OnListItemClickListener
 import hanten.wre.app.core.util.ext.setTooltipCompat
+import hanten.wre.app.core.util.ext.textAndVisible
 import hanten.wre.app.databinding.ItemMangaGridBinding
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.MangaGridModel
@@ -30,6 +31,7 @@ fun mangaGridItemAD(
 		// Hanten 3.0: the same thin bar on every cover, in every list (mockup); no round indicator
 		binding.progressView.isVisible = false
 		binding.progressBar.bindReadingProgress(item.progress)
+		binding.textViewProgress.textAndVisible = item.progress?.takeIf { it.isShownOnCard() }?.getShortText()
 		itemView.contentDescription = item.progress?.takeIf { it.isShownOnCard() }?.let {
 			item.title + ", " + it.getCardText(context)
 		}

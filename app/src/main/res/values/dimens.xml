@@ -95,4 +95,5 @@
 	<dimen name="accent_swatch_gap">10dp</dimen>
 	<dimen name="accent_swatch_stroke">3dp</dimen>
 	<dimen name="profile_banner_height">150dp</dimen>
+	<dimen name="today_cover_width">116dp</dimen>
 </resources>

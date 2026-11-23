@@ -22,7 +22,18 @@ fun mangaListItemAD(
 	bind {
 		itemView.setTooltipCompat(item.getSummary(context))
 		binding.textViewTitle.text = item.title
-		binding.textViewSubtitle.textAndVisible = context.getString(item.contentTypeResId) + " · " + item.subtitle
+		// Hanten 3.0: "Manga · Read 10% · tags" — progress is shown in every list mode
+		binding.textViewSubtitle.textAndVisible = buildString {
+			append(context.getString(item.contentTypeResId))
+			item.progress?.takeIf { it.isShownOnCard() }?.let {
+				append(" · ")
+				append(it.getCardText(context))
+			}
+			if (item.subtitle.isNotEmpty()) {
+				append(" · ")
+				append(item.subtitle)
+			}
+		}
 		binding.imageViewCover.setImageAsync(item.coverUrl, item.manga)
 		binding.badge.number = item.counter
 		binding.badge.isVisible = item.counter > 0

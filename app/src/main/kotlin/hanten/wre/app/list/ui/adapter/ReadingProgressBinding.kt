@@ -29,6 +29,15 @@ fun ReadingProgress.getCardText(context: Context): String = when (mode) {
 	else -> context.getString(R.string.card_percent_read, cardPercent(percent))
 }
 
+/** Short form for the cover pill: "72%", "12/40" in chapter modes, "✓" when finished. */
+fun ReadingProgress.getShortText(): String = when {
+	isCompleted() -> "\u2713"
+	mode == ProgressIndicatorMode.CHAPTERS_READ -> "$chapters/$totalChapters"
+	mode == ProgressIndicatorMode.CHAPTERS_LEFT -> "-$chaptersLeft"
+	mode == ProgressIndicatorMode.PERCENT_LEFT -> "-" + cardPercent(percentLeft) + "%"
+	else -> cardPercent(percent) + "%"
+}
+
 /** Like [ReadingProgress.percentToString], but a started title never reads as "0%" and an unfinished one never as "100%". */
 private fun cardPercent(value: Float): String {
 	if (ReadingProgress.isCompleted(value)) return "100"
