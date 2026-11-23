@@ -81,4 +81,47 @@
 		android:summary="@string/url_telegram_web"
 		android:title="@string/telegram_group" />
 
+	<PreferenceCategory android:title="@string/credits_title">
+
+		<Preference
+			android:persistent="false"
+			android:summary="@string/credits_kotatsu"
+			android:title="Kotatsu">
+			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/KotatsuApp/Kotatsu" />
+		</Preference>
+
+		<Preference
+			android:persistent="false"
+			android:summary="@string/credits_futon"
+			android:title="Futon">
+			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/AppFuton/Futon" />
+		</Preference>
+
+		<Preference
+			android:persistent="false"
+			android:summary="@string/credits_mihon"
+			android:title="@string/credits_mihon_title">
+			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/mihonapp/mihon" />
+		</Preference>
+
+		<Preference
+			android:persistent="false"
+			android:summary="@string/credits_keiyoushi"
+			android:title="@string/credits_keiyoushi_title">
+			<intent android:action="android.intent.action.VIEW" android:data="https://github.com/keiyoushi/extensions" />
+		</Preference>
+
+		<Preference
+			android:persistent="false"
+			android:summary="@string/credits_people"
+			android:title="@string/credits_people_title"
+			android:selectable="false" />
+
+		<Preference
+			android:persistent="false"
+			android:selectable="false"
+			android:summary="@string/credits_license" />
+
+	</PreferenceCategory>
+
 </PreferenceScreen>
