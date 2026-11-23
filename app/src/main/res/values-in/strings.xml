@@ -306,7 +306,6 @@
     <string name="disable_all">Matikan semua</string>
     <string name="dns_over_https">DNS melalui HTTPS</string>
     <string name="status_dropped">Didrop</string>
-    <string name="theme_name_mamimi">Mamimi</string>
     <string name="server_error">Kesalahan di sisi server (%1$d). Silakan coba lagi nanti</string>
     <string name="compact">Padat</string>
     <string name="prefetch_content">Pramuat konten</string>
@@ -322,7 +321,6 @@
     <string name="network_unavailable_hint">Nyalakan Wi-Fi atau jaringan seluler untuk membaca manga daring</string>
     <string name="user_agent">Tajuk Agen Pengguna</string>
     <string name="settings_apply_restart_required">Mulai ulang aplikasi untuk menerapkan perubahan ini</string>
-    <string name="theme_name_kanade">Kanade</string>
     <string name="error_no_space_left">Tidak ada ruang tersisa di perangkat</string>
     <string name="download_started">Unduhan dimulai</string>
     <string name="show_reading_indicators">Tampilkan indikator progres membaca</string>
@@ -334,10 +332,6 @@
     <string name="theme_name_dynamic">Dinamis</string>
     <string name="color_theme">Skema warna</string>
     <string name="show_in_grid_view">Perlihatkan dalam tampilan kisi</string>
-    <string name="theme_name_miku">Miku</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
-    <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="local_manga_processing">Pemrosesan manga tersimpan</string>
     <string name="disable_battery_optimization">Nonaktifkan pengoptimalan baterai</string>
@@ -802,8 +796,6 @@
     <string name="manga_override_hint">Perubahan ini akan memengaruhi cara manga ditampilkan di aplikasi</string>
     <string name="additional_action_required">Tindakan tambahan diperlukan</string>
     <string name="adblock_summary">Blokir iklan di browser bawaan (beta)</string>
-    <string name="theme_name_totoro">Totoro</string>
-    <string name="theme_name_itsuka">Itsuka</string>
     <string name="reader_multitask">Buka pembaca secara terpisah</string>
     <string name="reader_navigation_inverted_summary">Tukar arah tombol volume dan tombol arah navigasi perangkat keras (kiri/atas/bawah/kanan)</string>
     <string name="reader_navigation_inverted">Balik kontrol navigasi</string>

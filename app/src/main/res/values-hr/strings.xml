@@ -260,12 +260,7 @@
     <string name="theme_name_dynamic">Dinamična</string>
     <string name="color_theme">Shema boja</string>
     <string name="show_in_grid_view">Prikaži u mrežnom prikazu</string>
-    <string name="theme_name_miku">Miku</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
-    <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
-    <string name="theme_name_mamimi">Mamimi</string>
     <string name="services">Usluge</string>
     <string name="download_started">Preuzimanje je počelo</string>
     <string name="got_it">Shvaćam</string>
@@ -517,7 +512,6 @@
     <string name="screenshots_block_nsfw">Blokiraj na NSFW-u</string>
     <string name="suggestions_enable">Omogući prijedloge</string>
     <string name="suggestions_summary">Predložiti mangu na temelju vaših preferencija</string>
-    <string name="theme_name_kanade">Kanade</string>
     <string name="scrobbling_empty_hint">Za praćenje napretka čitanja odaberite Meni → Prati na zaslonu s detaljima mange.</string>
     <string name="sources_reorder_tip">Dodirnite i držite stavku da biste im promijenili redoslijed</string>
     <string name="settings_apply_restart_required">Ponovno pokrenite aplikaciju kako biste primijenili ove promjene</string>
@@ -808,8 +802,6 @@
     <string name="share_backup">Dijeli sigurnosnu kopiju</string>
     <string name="reader_multitask">Otvori čitač u zasebnom zadatku</string>
     <string name="reader_multitask_summary">Omogućuje istovremeno otvaranje više čitača s različitim mangama</string>
-    <string name="theme_name_itsuka">Itsuka</string>
-    <string name="theme_name_totoro">Totoro</string>
     <string name="book_effect">Žućkasta pozadina (plavi filtar)</string>
     <string name="local_storage_cleanup">Čišćenje lokalne memorije</string>
     <string name="packup_creation_failed">Neuspjelo stvaranje sigurnosne kopije</string>

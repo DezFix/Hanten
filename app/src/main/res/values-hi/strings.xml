@@ -260,9 +260,6 @@
     <string name="theme_name_dynamic">गतिशील</string>
     <string name="color_theme">रंग योजना</string>
     <string name="show_in_grid_view">ग्रिड दृश्य में दिखाएं</string>
-    <string name="theme_name_miku">Miku</string>
-    <string name="theme_name_rikka">Rikka</string>
-    <string name="theme_name_kanade">Kanade</string>
     <string name="scrobbling_empty_hint">पढ़ने की प्रगति को ट्रैक करने के लिए, मंगा विवरण स्क्रीन पर मेनू → ट्रैक का चयन करें।</string>
     <string name="services">सेवाएं</string>
     <string name="settings_apply_restart_required">कृपया इन परिवर्तनों को लागू करने के लिए एप्लिकेशन को पुनः आरंभ करें</string>
@@ -516,10 +513,7 @@
     <string name="network_unavailable_hint">मंगा को ऑनलाइन पढ़ने के लिए Wi-Fi या मोबाइल नेटवर्क चालू करें</string>
     <string name="source_disabled">स्रोत अक्षम किया गया</string>
     <string name="prefetch_content">सामग्री प्रीलोड हो रही है</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
     <string name="theme_name_sakura">Sakura</string>
-    <string name="theme_name_mamimi">Mamimi</string>
     <string name="nothing_here">यहां कुछ नहीं है</string>
     <string name="categories_delete_confirm">क्या आप वाकई चयनित पसंदीदा श्रेणियां मिटाना चाहते हैं? \nइसमें मौजूद सारा मंगा नष्ट हो जाएगा और इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="manga_error_description_pattern">त्रुटि विवरण:&lt;br&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;br&gt;&lt;br&gt;1। यह सुनिश्चित करने के लिए कि यह अपने स्रोत पर उपलब्ध है &lt;a href=%2$s&gt;मंगा को वेब ब्राउज़र में खोलने का प्रयास करें&lt;/a&gt;&lt;br&gt;2। सुनिश्चित करें कि आप &lt;a href=hanten://about&gt;Hanten के नवीनतम संस्करण&lt;/a&gt;&lt;br&gt;3 का उपयोग कर रहे हैं। यदि यह उपलब्ध है, तो डेवलपर्स को एक त्रुटि रिपोर्ट भेजें।</string>
@@ -1073,9 +1067,7 @@
     
 <string name="reader_multitask_summary">Allows you to keep multiple readers with different manga open at the same time</string>
     
-<string name="theme_name_itsuka">Itsuka</string>
     
-<string name="theme_name_totoro">Totoro</string>
     
 <string name="book_effect">Yellowish background (blue filter)</string>
     

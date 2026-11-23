@@ -333,14 +333,8 @@
     <string name="prefetch_content">Pré-carregamento de conteúdo</string>
     <string name="theme_name_dynamic">Dinâmico</string>
     <string name="settings_apply_restart_required">Por favor, reinicie o aplicativo para aplicar essas mudanças</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
-    <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="source_disabled">Fonte desativada</string>
-    <string name="theme_name_mamimi">Mamimi</string>
-    <string name="theme_name_miku">Miku</string>
-    <string name="theme_name_kanade">Kanade</string>
     <string name="scrobbling_empty_hint">Para acompanhar o progresso de leitura, selecione Menu → Rastrear na tela de detalhes da obra.</string>
     <string name="clear_new_chapters_counters">Também limpe as informações sobre novos capítulos</string>
     <string name="sync_auth_hint">Você pode entrar em uma conta existente ou criar uma nova</string>
@@ -804,8 +798,6 @@
     <string name="reader_navigation_inverted_summary">Inverter o sentido do botão de volume e da navegação por tecla direcional (esquerda/cima/baixo/direita)</string>
     <string name="reader_multitask">Abrir leitor em uma tarefa separada</string>
     <string name="reader_multitask_summary">Permite que você mantenha vários leitores com mangás diferentes abertos ao mesmo tempo</string>
-    <string name="theme_name_itsuka">Itsuka</string>
-    <string name="theme_name_totoro">Totoro</string>
     <string name="book_effect">Fundo amarelado (filtro azul)</string>
     <string name="local_storage_cleanup">Limpeza do armazenamento local</string>
     <string name="packup_creation_failed">Falha ao criar backup</string>

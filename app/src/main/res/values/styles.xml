@@ -422,4 +422,26 @@
 		<item name="shapeAppearance">@style/ShapeAppearance.Hanten.Segment</item>
 		<item name="rippleColor">?attr/colorControlHighlight</item>
 	</style>
+
+	<style name="ShapeAppearanceOverlay.Hanten.FolderCover" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">8dp</item>
+	</style>
+
+	<style name="Widget.Hanten.Button.Segment.Icon">
+		<item name="iconGravity">textStart</item>
+		<item name="iconPadding">0dp</item>
+		<item name="iconSize">20dp</item>
+		<item name="iconTint">@color/segment_button_text</item>
+		<item name="android:minWidth">0dp</item>
+		<item name="android:minHeight">34dp</item>
+		<item name="android:paddingStart">0dp</item>
+		<item name="android:paddingEnd">0dp</item>
+	</style>
+
+	<style name="Widget.Hanten.TextView.ProfileSection" parent="">
+		<item name="android:layout_marginTop">20dp</item>
+		<item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+		<item name="android:textColor">?attr/colorOnSurface</item>
+	</style>
 </resources>

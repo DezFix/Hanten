@@ -333,14 +333,8 @@
     <string name="theme_name_dynamic">动态</string>
     <string name="color_theme">配色主题</string>
     <string name="show_in_grid_view">网格视图</string>
-    <string name="theme_name_miku">Miku</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
-    <string name="theme_name_rikka">Rikka</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="services">服务</string>
-    <string name="theme_name_mamimi">Mamimi</string>
-    <string name="theme_name_kanade">Kanade</string>
     <string name="nothing_here">一片荒漠</string>
     <string name="scrobbling_empty_hint">要记录阅读进度，在漫画详情页里选择【菜单】→【进度记录】。</string>
     <string name="download_started">下载已开始</string>
@@ -803,8 +797,6 @@
     <string name="creating_backup">创建备份中</string>
     <string name="reader_multitask">以独立窗口打开阅读器</string>
     <string name="reader_multitask_summary">允许阅读不同漫画时打开多个同时共存的阅读器</string>
-    <string name="theme_name_itsuka">Itsuka</string>
-    <string name="theme_name_totoro">Totoro</string>
     <string name="main_screen">主页</string>
     <string name="main_screen_fab">显示浮动继续阅读按钮</string>
     <string name="main_screen_fab_summary">一键续读。这个按钮不会在无痕模式或没有阅读历史时出现</string>

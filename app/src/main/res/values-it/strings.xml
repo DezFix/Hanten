@@ -336,12 +336,6 @@
     <string name="scrobbling_empty_hint">Per tenere traccia dell\'avanzamento della lettura, seleziona Menu → Traccia nella schermata dei dettagli del manga.</string>
     <string name="nothing_here">Non c\'è niente qui</string>
     <string name="services">Servizi</string>
-    <string name="theme_name_mamimi">Mamimi</string>
-    <string name="theme_name_kanade">Kanade</string>
-    <string name="theme_name_asuka">Asuka</string>
-    <string name="theme_name_mion">Mion</string>
-    <string name="theme_name_rikka">Rikka</string>
-    <string name="theme_name_miku">Miku</string>
     <string name="download_started">Download iniziato</string>
     <string name="theme_name_sakura">Sakura</string>
     <string name="languages">Lingue</string>
@@ -810,8 +804,6 @@
     <string name="book_effect">Sfondo giallastro (filtro blu)</string>
     <string name="local_storage_cleanup">Pulizia dell\'archiviazione locale</string>
     <string name="packup_creation_failed">Creazione del backup non riuscita</string>
-    <string name="theme_name_itsuka">Itsuka</string>
-    <string name="theme_name_totoro">Totoro</string>
     <string name="main_screen">Schermata principale</string>
     <string name="main_screen_fab">Mostra il pulsante fluttuante Continua</string>
     <string name="main_screen_fab_summary">Permette di continuare la lettura con un solo tocco. Questo pulsante non apparirà in modalità in incognito o quando la cronologia è vuota</string>
