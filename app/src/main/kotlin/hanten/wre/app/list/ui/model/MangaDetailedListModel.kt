@@ -17,6 +17,8 @@ data class MangaDetailedListModel(
 	val isSaved: Boolean,
 	val tags: List<ChipsView.ChipModel>,
 	val isStale: Boolean = false,
+	/** Linked to Shikimori / AniList / MAL */
+	val isTracked: Boolean = false,
 ) : MangaListModel() {
 
 	override fun getChangePayload(previousState: ListModel): Any? = when {
@@ -25,7 +27,8 @@ data class MangaDetailedListModel(
 		previousState.progress != progress -> PAYLOAD_PROGRESS_CHANGED
 		previousState.isFavorite != isFavorite ||
 			previousState.isSaved != isSaved ||
-			previousState.isStale != isStale -> PAYLOAD_ANYTHING_CHANGED
+			previousState.isStale != isStale ||
+			previousState.isTracked != isTracked -> PAYLOAD_ANYTHING_CHANGED
 
 		else -> super.getChangePayload(previousState)
 	}

@@ -9,6 +9,10 @@ import kotlinx.coroutines.isActive
 @Dao
 abstract class ScrobblingDao {
 
+	/** Hanten 3.0: "in a tracker" badge on covers */
+	@Query("SELECT COUNT(*) FROM scrobblings WHERE manga_id = :mangaId")
+	abstract suspend fun countByManga(mangaId: Long): Int
+
 	@Query("SELECT * FROM scrobblings WHERE scrobbler = :scrobbler AND manga_id = :mangaId")
 	abstract suspend fun find(scrobbler: Int, mangaId: Long): ScrobblingEntity?
 

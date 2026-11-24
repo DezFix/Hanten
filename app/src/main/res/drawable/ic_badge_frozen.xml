@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0 cover status badge (mockup stroke icon); tinted per status in code -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:pathData="M12,2v20M3.3,7l17.4,10M3.3,17l17.4,-10M9,4l3,2 3,-2M9,20l3,-2 3,2"
+		android:strokeWidth="2.4"
+		android:strokeColor="#FFFFFFFF"
+		android:strokeLineCap="round"
+		android:strokeLineJoin="round" />
+</vector>

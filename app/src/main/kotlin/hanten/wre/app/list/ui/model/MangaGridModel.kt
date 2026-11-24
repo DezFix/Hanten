@@ -14,6 +14,8 @@ data class MangaGridModel(
 	val isFavorite: Boolean,
 	val isSaved: Boolean,
 	val isStale: Boolean = false,
+	/** Linked to Shikimori / AniList / MAL */
+	val isTracked: Boolean = false,
 ) : MangaListModel() {
 
 	override fun getChangePayload(previousState: ListModel): Any? = when {
@@ -22,7 +24,8 @@ data class MangaGridModel(
 		previousState.progress != progress -> PAYLOAD_PROGRESS_CHANGED
 		previousState.isFavorite != isFavorite ||
 			previousState.isSaved != isSaved ||
-			previousState.isStale != isStale -> PAYLOAD_ANYTHING_CHANGED
+			previousState.isStale != isStale ||
+			previousState.isTracked != isTracked -> PAYLOAD_ANYTHING_CHANGED
 
 		else -> super.getChangePayload(previousState)
 	}

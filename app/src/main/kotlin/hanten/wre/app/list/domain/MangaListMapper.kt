@@ -7,6 +7,7 @@ import androidx.annotation.IntDef
 import dagger.Reusable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.R
+import hanten.wre.app.core.db.MangaDatabase
 import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.prefs.ListMode
@@ -37,6 +38,7 @@ class MangaListMapper @Inject constructor(
 	private val localMangaIndex: LocalMangaIndex,
 	private val novelOfflineRepository: NovelOfflineRepository,
 	private val dataRepository: MangaDataRepository,
+	private val db: MangaDatabase,
 ) {
 
 
@@ -118,6 +120,7 @@ class MangaListMapper @Inject constructor(
 		isFavorite = isFavorite(manga.id, options),
 		isSaved = isSaved(manga.id, options),
 		tags = mapTags(manga.tags),
+		isTracked = isTracked(manga.id),
 	)
 
 	private suspend fun toGridModel(
@@ -131,7 +134,12 @@ class MangaListMapper @Inject constructor(
 		progress = getProgress(manga.id, options),
 		isFavorite = isFavorite(manga.id, options),
 		isSaved = isSaved(manga.id, options),
+		isTracked = isTracked(manga.id),
 	)
+
+	private suspend fun isTracked(mangaId: Long): Boolean = runCatching {
+		db.getScrobblingDao().countByManga(mangaId) > 0
+	}.getOrDefault(false)
 
 	private suspend fun toListModelImpl(
 		manga: Manga,

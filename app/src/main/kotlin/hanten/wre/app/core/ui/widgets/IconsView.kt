@@ -1,10 +1,12 @@
 package hanten.wre.app.core.ui.widgets
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isNotEmpty
@@ -73,6 +75,15 @@ class IconsView @JvmOverloads constructor(
 	fun addIcon(@DrawableRes resId: Int) {
 		val imageView = getNextImageView()
 		imageView.setImageResource(resId)
+		imageView.imageTintList = null
+		imageView.isVisible = true
+	}
+
+	/** An icon in its own color (cover status badges) */
+	fun addIcon(@DrawableRes resId: Int, @ColorInt tint: Int) {
+		val imageView = getNextImageView()
+		imageView.setImageResource(resId)
+		imageView.imageTintList = ColorStateList.valueOf(tint)
 		imageView.isVisible = true
 	}
 
