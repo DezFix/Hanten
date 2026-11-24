@@ -95,14 +95,6 @@
 			tools:number="8"
 			tools:visibility="visible" />
 
-		<TextView
-			android:id="@+id/textView_content_type"
-			style="@style/Widget.Hanten.TextView.ContentType"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="bottom|start"
-			tools:text="Novel"
-			tools:visibility="visible" />
 
 	</FrameLayout>
 
@@ -113,11 +105,23 @@
 		android:elegantTextHeight="false"
 		android:ellipsize="end"
 		android:lines="2"
-		android:paddingVertical="4dp"
+		android:paddingTop="4dp"
 		android:textAppearance="?attr/textAppearanceTitleSmall"
 		android:textColor="?android:attr/textColorPrimary"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/thumbnail"
 		tools:text="@tools:sample/lorem" />
+
+	<!-- Hanten 3.0: type under the title instead of a tag on the cover (it overlapped the progress) -->
+	<TextView
+		android:id="@+id/textView_content_type"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:ellipsize="end"
+		android:paddingBottom="4dp"
+		android:singleLine="true"
+		android:textAppearance="?attr/textAppearanceBodySmall"
+		android:textColor="?android:attr/textColorSecondary"
+		tools:text="Novel" />
 
 </LinearLayout>
