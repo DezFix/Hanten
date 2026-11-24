@@ -47,8 +47,9 @@ class DetailsMenuProvider(
 		val mangaDetails = viewModel.mangaDetails.value
 		val manga = mangaDetails?.toManga()
 		menu.findItem(R.id.action_share).isVisible = manga != null && AppRouter.isShareSupported(manga)
+		// the header button duplicates the download button next to ♥; keep it only where that one is absent (tablet)
 		menu.findItem(R.id.action_save).isVisible =
-			manga?.source != null && !manga.isLocal
+			manga?.source != null && !manga.isLocal && activity.findViewById<View>(R.id.button_download) == null
 		menu.findItem(R.id.action_delete).isVisible = mangaDetails?.local != null
 		menu.findItem(R.id.action_browser).isVisible = manga?.publicUrl?.isHttpUrl() == true
 		menu.findItem(R.id.action_alternatives).isVisible = manga?.source != LocalMangaSource
