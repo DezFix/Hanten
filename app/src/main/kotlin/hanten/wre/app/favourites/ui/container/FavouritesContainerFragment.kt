@@ -10,7 +10,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.TextView
+import hanten.wre.app.favourites.ui.FolderColorPicker
 import androidx.appcompat.view.ActionMode
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -132,18 +135,32 @@ class FavouritesContainerFragment : BaseFragment<FragmentFavouritesContainerBind
 			setText(R.string.library_folder_track)
 			isChecked = true
 		}
+		val colorsRow = LinearLayout(context).apply {
+			orientation = LinearLayout.HORIZONTAL
+			setPadding(0, padding / 2, 0, padding / 4)
+		}
+		val colorPicker = FolderColorPicker(colorsRow)
+		val colorsTitle = TextView(context).apply {
+			setText(R.string.folder_color)
+			setPadding(0, padding, 0, 0)
+		}
 		val content = LinearLayout(context).apply {
 			orientation = LinearLayout.VERTICAL
 			setPadding(padding, padding / 2, padding, 0)
 			addView(input)
 			addView(track)
+			addView(colorsTitle)
+			addView(HorizontalScrollView(context).apply {
+				isHorizontalScrollBarEnabled = false
+				addView(colorsRow)
+			})
 		}
 		MaterialAlertDialogBuilder(context)
 			.setTitle(R.string.library_new_folder)
 			.setView(content)
 			.setNegativeButton(android.R.string.cancel, null)
 			.setPositiveButton(R.string.library_create) { _, _ ->
-				viewModel.createFolder(input.text?.toString().orEmpty(), track.isChecked)
+				viewModel.createFolder(input.text?.toString().orEmpty(), track.isChecked, colorPicker.color)
 			}
 			.show()
 	}

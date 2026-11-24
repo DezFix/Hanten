@@ -1,15 +1,12 @@
 package hanten.wre.app.favourites.ui.categories.edit
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Filter
-import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -21,16 +18,14 @@ import hanten.wre.app.core.ui.util.DefaultTextWatcher
 import hanten.wre.app.core.util.ext.consumeAllSystemBarsInsets
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.getSerializableCompat
-import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.core.util.ext.setChecked
 import hanten.wre.app.core.util.ext.sortedByOrdinal
 import hanten.wre.app.core.util.ext.systemBarsInsets
 import hanten.wre.app.databinding.ActivityCategoryEditBinding
-import hanten.wre.app.favourites.ui.FolderColors
+import hanten.wre.app.favourites.ui.FolderColorPicker
 import hanten.wre.app.list.domain.ListSortOrder
-import com.google.android.material.R as materialR
 
 @AndroidEntryPoint
 class FavouritesCategoryEditActivity :
@@ -42,6 +37,7 @@ class FavouritesCategoryEditActivity :
 	private val viewModel by viewModels<FavouritesCategoryEditViewModel>()
 	private var selectedSortOrder: ListSortOrder? = null
 	private var selectedColor: Int? = null
+	private lateinit var colorPicker: FolderColorPicker
 	private val sortOrders = ListSortOrder.FAVORITES.sortedByOrdinal()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,42 +144,13 @@ class FavouritesCategoryEditActivity :
 		}
 	}
 
-	/** Color swatches: the first one is "no color" (an empty outlined circle) */
 	private fun initColors() {
-		val density = resources.displayMetrics.density
-		val size = (40 * density).toInt()
-		val gap = (10 * density).toInt()
-		FolderColors.palette.forEach { color ->
-			val view = View(this)
-			view.contentDescription = getString(R.string.folder_color)
-			view.setOnClickListener {
-				selectedColor = color
-				updateColors()
-			}
-			viewBinding.rowColors.addView(view, LinearLayout.LayoutParams(size, size).apply { marginEnd = gap })
-		}
-		updateColors()
+		colorPicker = FolderColorPicker(viewBinding.rowColors) { selectedColor = it }
+		colorPicker.color = selectedColor ?: 0
 	}
 
 	private fun updateColors() {
-		val density = resources.displayMetrics.density
-		val ring = getThemeColor(materialR.attr.colorOnSurface)
-		val outline = getThemeColor(materialR.attr.colorOutline)
-		val current = selectedColor ?: 0
-		FolderColors.palette.forEachIndexed { index, color ->
-			val view = viewBinding.rowColors.getChildAt(index) ?: return
-			val isSelected = color == current
-			view.isSelected = isSelected
-			view.background = GradientDrawable().apply {
-				shape = GradientDrawable.OVAL
-				if (color == 0) {
-					setColor(Color.TRANSPARENT)
-				} else {
-					setColor(color)
-				}
-				setStroke(((if (isSelected) 3f else 1f) * density).toInt(), if (isSelected) ring else outline)
-			}
-		}
+		colorPicker.color = selectedColor ?: 0
 	}
 
 	private fun initSortSpinner() {

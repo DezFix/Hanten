@@ -67,7 +67,7 @@ class FavouritesContainerViewModel @Inject constructor(
 		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, listOf(NewFolderItem))
 
-	fun createFolder(title: String, isTrackerEnabled: Boolean) {
+	fun createFolder(title: String, isTrackerEnabled: Boolean, color: Int = 0) {
 		if (title.isBlank()) return
 		launchJob(Dispatchers.IO) {
 			favouritesRepository.createCategory(
@@ -75,6 +75,7 @@ class FavouritesContainerViewModel @Inject constructor(
 				sortOrder = ListSortOrder.NEWEST,
 				isTrackerEnabled = isTrackerEnabled,
 				isVisibleOnShelf = true,
+				color = color,
 			)
 		}
 	}
