@@ -4,4 +4,5 @@ import android.view.View
 import hanten.wre.app.list.ui.adapter.ListHeaderClickListener
 import hanten.wre.app.list.ui.adapter.ListStateHolderListener
 
-interface ExploreListEventListener : ListStateHolderListener, View.OnClickListener, ListHeaderClickListener
+interface ExploreListEventListener : ListStateHolderListener, View.OnClickListener, ListHeaderClickListener,
+	hanten.wre.app.list.ui.adapter.QuickFilterClickListener

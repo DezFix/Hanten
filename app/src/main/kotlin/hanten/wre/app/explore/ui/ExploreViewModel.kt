@@ -42,6 +42,13 @@ import kotlinx.coroutines.plus
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.core.model.toChipModel
+import hanten.wre.app.core.model.unwrap
+import hanten.wre.app.list.domain.ListFilterOption
+import hanten.wre.app.list.ui.model.QuickFilter
+import hanten.wre.app.mihon.model.MihonMangaSource
+import hanten.wre.app.parsers.model.MangaParserSource
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -144,7 +151,19 @@ class ExploreViewModel @Inject constructor(
 		}
 	}
 
-	private fun observeFilteredSources(): Flow<List<MangaSourceInfo>> = sourcesRepository.observeEnabledSources()
+	/** Hanten 3.0: Catalog language chips; null = all languages */
+	private val selectedLanguage = MutableStateFlow<String?>(null)
+
+	fun toggleLanguage(code: String) {
+		selectedLanguage.value = if (selectedLanguage.value == code) null else code
+	}
+
+	private class SourcesState(val all: List<MangaSourceInfo>, val language: String?)
+
+	private fun observeFilteredSources(): Flow<SourcesState> = combineFlows(
+		sourcesRepository.observeEnabledSources(),
+		selectedLanguage,
+	) { all, lang -> SourcesState(all, lang) }
 
 	private fun createContentFlow(): Flow<List<ListModel>> = combine(
 		observeFilteredSources(),
@@ -162,14 +181,17 @@ class ExploreViewModel @Inject constructor(
 	}
 
 	private fun buildList(
-		sources: List<MangaSourceInfo>,
+		state: SourcesState,
 		recommendation: List<Manga>,
 		isGrid: Boolean,
 		randomLoading: Boolean,
 		allSourcesEnabled: Boolean,
 		hasNewSources: Boolean,
 	): List<ListModel> {
-		val result = ArrayList<ListModel>(sources.size + 3)
+		val languages = state.all.groupBy { it.languageCode() }
+		val language = state.language?.takeIf { it in languages }
+		val sources = if (language == null) state.all else languages.getValue(language)
+		val result = ArrayList<ListModel>(sources.size + 4)
 		result += ExploreButtons(randomLoading)
 		if (recommendation.isNotEmpty()) {
 			result += ListHeader(R.string.suggestions, R.string.more, R.id.nav_suggestions)
@@ -181,6 +203,14 @@ class ExploreViewModel @Inject constructor(
 				buttonTextRes = if (allSourcesEnabled) R.string.manage else R.string.catalog,
 				badge = if (!allSourcesEnabled && hasNewSources) "" else null,
 			)
+			if (languages.size > 1) {
+				result += QuickFilter(
+					languages.keys.sortedWith(compareBy<String> { it.isEmpty() }.thenByDescending { languages.getValue(it).size })
+						.map { code ->
+							ListFilterOption.Language(code, languageTitle(code)).toChipModel(isChecked = code == language)
+						},
+				)
+			}
 			sources.mapTo(result) { MangaSourceItem(it, isGrid) }
 			result += ExploreMoreSources
 		} else {
@@ -192,6 +222,19 @@ class ExploreViewModel @Inject constructor(
 			)
 		}
 		return result
+	}
+
+	private fun MangaSource.languageCode(): String = when (val s = unwrap()) {
+		is MangaParserSource -> s.locale
+		is MihonMangaSource -> s.locale
+		else -> ""
+	}.let { if (it == "all" || it == "multi") "" else it }
+
+	/** The language's own name, like in onboarding: "Русский", "Українська" */
+	private fun languageTitle(code: String): String? {
+		if (code.isEmpty()) return null
+		val locale = Locale.forLanguageTag(code)
+		return locale.getDisplayLanguage(locale).replaceFirstChar { it.titlecase(locale) }.ifEmpty { code }
 	}
 
 	private fun getLoadingStateList() = listOf(

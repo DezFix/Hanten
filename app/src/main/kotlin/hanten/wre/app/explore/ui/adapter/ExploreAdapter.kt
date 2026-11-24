@@ -7,6 +7,7 @@ import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.adapter.emptyHintAD
 import hanten.wre.app.list.ui.adapter.listHeaderAD
 import hanten.wre.app.list.ui.adapter.loadingStateAD
+import hanten.wre.app.list.ui.adapter.quickFilterAD
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.parsers.model.Manga
 
@@ -24,6 +25,7 @@ class ExploreAdapter(
 			exploreRecommendationItemAD(mangaClickListener),
 		)
 		addDelegate(ListItemType.HEADER, listHeaderAD(listener))
+		addDelegate(ListItemType.QUICK_FILTER, quickFilterAD(listener))
 		addDelegate(ListItemType.EXPLORE_SOURCE_LIST, exploreSourceListItemAD(clickListener))
 		addDelegate(ListItemType.EXPLORE_SOURCE_GRID, exploreSourceGridItemAD(clickListener))
 		addDelegate(ListItemType.HINT_EMPTY, emptyHintAD(listener))

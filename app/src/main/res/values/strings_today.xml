@@ -79,4 +79,7 @@
 	<string name="upcoming_summary_chapter">Ch. %1$d · %2$s</string>
 	<string name="upcoming_any_moment">Any moment</string>
 	<string name="upcoming_since">since %s</string>
+	<string name="filter_read_completed">Finished reading</string>
+	<string name="filter_not_started">Not started</string>
+	<string name="filter_tracked">Tracked</string>
 </resources>

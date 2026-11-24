@@ -79,4 +79,7 @@
 	<string name="upcoming_summary_chapter">Гл. %1$d · %2$s</string>
 	<string name="upcoming_any_moment">Вот-вот</string>
 	<string name="upcoming_since">с %s</string>
+	<string name="filter_read_completed">Дочитано</string>
+	<string name="filter_not_started">Не начато</string>
+	<string name="filter_tracked">В трекере</string>
 </resources>

@@ -79,4 +79,7 @@
 	<string name="upcoming_summary_chapter">Розд. %1$d · %2$s</string>
 	<string name="upcoming_any_moment">Ось-ось</string>
 	<string name="upcoming_since">з %s</string>
+	<string name="filter_read_completed">Дочитано</string>
+	<string name="filter_not_started">Не розпочато</string>
+	<string name="filter_tracked">У трекері</string>
 </resources>

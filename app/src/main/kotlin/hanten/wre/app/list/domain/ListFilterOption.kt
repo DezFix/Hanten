@@ -10,6 +10,9 @@ import hanten.wre.app.core.model.unwrap
 import hanten.wre.app.core.parser.external.ExternalMangaSource
 import hanten.wre.app.core.parser.favicon.faviconUri
 import hanten.wre.app.core.model.LocalNovelSource
+import hanten.wre.app.core.model.titleResId
+import hanten.wre.app.parsers.model.ContentType
+import hanten.wre.app.parsers.model.MangaState
 import hanten.wre.app.parsers.model.MangaParserSource
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.model.MangaTag
@@ -48,8 +51,10 @@ sealed interface ListFilterOption {
 		@DrawableRes override val iconResId: Int,
 	) : ListFilterOption {
 
-		COMPLETED(R.string.status_completed, R.drawable.ic_state_finished),
+		COMPLETED(R.string.filter_read_completed, R.drawable.ic_state_finished),
         READING(R.string.status_reading, R.drawable.ic_state_ongoing),
+		NOT_STARTED(R.string.filter_not_started, R.drawable.ic_history),
+		TRACKED(R.string.filter_tracked, R.drawable.ic_services),
 		NEW_CHAPTERS(R.string.new_chapters, R.drawable.ic_updated),
 		FAVORITE(R.string.favourites, R.drawable.ic_heart_outline),
 		NSFW(R.string.nsfw, R.drawable.ic_nsfw),
@@ -75,6 +80,59 @@ sealed interface ListFilterOption {
 
 		override val groupKey: String
 			get() = "_branch"
+	}
+
+	/** Library: content type (manga, manhwa, ranobe…); matched by the sources that give this type */
+	data class Type(
+		val contentType: ContentType,
+		val sourceNames: Set<String>,
+	) : ListFilterOption {
+
+		override val titleResId: Int
+			get() = contentType.titleResId
+
+		override val iconResId: Int
+			get() = 0
+
+		override val titleText: CharSequence?
+			get() = null
+
+		override val groupKey: String
+			get() = "_type"
+	}
+
+	/** Catalog: sources of one language ("" = sources with several languages) */
+	data class Language(
+		val code: String,
+		override val titleText: CharSequence?,
+	) : ListFilterOption {
+
+		override val titleResId: Int
+			get() = if (titleText == null) R.string.various_languages else 0
+
+		override val iconResId: Int
+			get() = 0
+
+		override val groupKey: String
+			get() = "_lang"
+	}
+
+	/** Library: release status reported by the source (ongoing, finished, paused…) */
+	data class State(
+		val state: MangaState,
+	) : ListFilterOption {
+
+		override val titleResId: Int
+			get() = state.titleResId
+
+		override val iconResId: Int
+			get() = 0
+
+		override val titleText: CharSequence?
+			get() = null
+
+		override val groupKey: String
+			get() = "_state"
 	}
 
 	data class Tag(

@@ -143,6 +143,12 @@ abstract class FavouritesDao : MangaQueryBuilder.ConditionCallback {
 	@Query("SELECT manga.source AS count FROM favourites LEFT JOIN manga ON manga.manga_id = favourites.manga_id WHERE favourites.category_id = :categoryId AND favourites.deleted_at = 0 GROUP BY manga.source ORDER BY COUNT(manga.source) DESC LIMIT :limit")
 	abstract suspend fun findPopularSources(categoryId: Long, limit: Int): List<String>
 
+	@Query("SELECT COUNT(*) FROM favourites WHERE deleted_at = 0 AND manga_id IN (SELECT manga_id FROM scrobblings)")
+	abstract suspend fun countTracked(): Int
+
+	@Query("SELECT COUNT(*) FROM favourites WHERE deleted_at = 0 AND category_id = :categoryId AND manga_id IN (SELECT manga_id FROM scrobblings)")
+	abstract suspend fun countTracked(categoryId: Long): Int
+
 	fun dump(): Flow<FavouriteManga> = flow {
 		val window = 10
 		var offset = 0
@@ -234,6 +240,11 @@ abstract class FavouritesDao : MangaQueryBuilder.ConditionCallback {
 		ListFilterOption.Macro.COMPLETED -> "EXISTS(SELECT * FROM history WHERE history.manga_id = favourites.manga_id AND history.percent >= $PROGRESS_COMPLETED)"
 		ListFilterOption.Macro.NEW_CHAPTERS -> "(SELECT chapters_new FROM tracks WHERE tracks.manga_id = favourites.manga_id) > 0"
 		ListFilterOption.Macro.NSFW -> "manga.nsfw = 1"
+		ListFilterOption.Macro.READING -> "EXISTS(SELECT * FROM history WHERE history.manga_id = favourites.manga_id AND history.percent > 0 AND history.percent < $PROGRESS_COMPLETED)"
+		ListFilterOption.Macro.NOT_STARTED -> "NOT EXISTS(SELECT * FROM history WHERE history.manga_id = favourites.manga_id AND history.deleted_at = 0)"
+		ListFilterOption.Macro.TRACKED -> "EXISTS(SELECT * FROM scrobblings WHERE scrobblings.manga_id = favourites.manga_id)"
+		is ListFilterOption.Type -> option.sourceNames.joinToString(prefix = "manga.source IN (", postfix = ")") { sqlEscapeString(it) }
+		is ListFilterOption.State -> "manga.state = ${sqlEscapeString(option.state.name)}"
 		is ListFilterOption.Tag -> "EXISTS(SELECT * FROM manga_tags WHERE favourites.manga_id = manga_tags.manga_id AND tag_id = ${option.tagId})"
 		ListFilterOption.Downloaded -> "EXISTS(SELECT * FROM local_index WHERE local_index.manga_id = favourites.manga_id) OR EXISTS(SELECT * FROM novel_downloads WHERE novel_downloads.manga_id = favourites.manga_id)"
 		is ListFilterOption.Source -> "manga.source = ${sqlEscapeString(option.mangaSource.name)}"

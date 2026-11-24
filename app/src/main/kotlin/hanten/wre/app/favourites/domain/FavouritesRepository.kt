@@ -174,6 +174,11 @@ class FavouritesRepository @Inject constructor(
 		return db.getFavouritesDao().findCategoriesIds(mangaId).toSet()
 	}
 
+	/** Is any title (of the folder, or of the whole library for 0) linked to a tracker */
+	suspend fun hasTracked(categoryId: Long): Boolean = db.getFavouritesDao().run {
+		if (categoryId == 0L) countTracked() else countTracked(categoryId)
+	} > 0
+
 	suspend fun findPopularSources(categoryId: Long, limit: Int): List<MangaSource> {
 		return db.getFavouritesDao().run {
 			if (categoryId == 0L) {

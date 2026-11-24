@@ -267,4 +267,10 @@ class ExploreFragment :
 		}
 		context?.startActivity(Intent(action, uri))
 	}
+
+	override fun onFilterOptionClick(option: hanten.wre.app.list.domain.ListFilterOption) {
+		if (option is hanten.wre.app.list.domain.ListFilterOption.Language) {
+			viewModel.toggleLanguage(option.code)
+		}
+	}
 }
