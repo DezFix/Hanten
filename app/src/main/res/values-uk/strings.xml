@@ -1132,4 +1132,6 @@
     <string name="novel_tts_sleep_off">Вимкнено</string>
     <string name="novel_tts_sleep_minutes">Через %d хв</string>
     <string name="backup_dir_no_access">Немає доступу до папки (обрана на іншому пристрої?). Бекапи зберігаються в %s — обери папку знову</string>
+    <string name="mihon_import_summary">З Mihon: до бібліотеки %1$d тайтлів, папок %2$d, історія %3$d тайтлів, зв\'язків з трекерами %4$d</string>
+    <string name="mihon_import_missing_extensions">Встанови ці розширення («Ще» → «Джерела» → «Розширення»), інакше їхні тайтли не відкриються: %s</string>
 </resources>

@@ -10,6 +10,7 @@ import hanten.wre.app.backups.data.model.CategoryBackup
 import hanten.wre.app.backups.data.model.FavouriteBackup
 import hanten.wre.app.backups.data.model.HistoryBackup
 import hanten.wre.app.backups.data.model.MangaBackup
+import hanten.wre.app.backups.data.model.ScrobblingBackup
 import hanten.wre.app.backups.domain.BackupSection
 import hanten.wre.app.parsers.model.MangaState
 import java.io.BufferedInputStream
@@ -42,6 +43,11 @@ object MihonBackupConverter {
 		val favourites: Int,
 		val categories: Int,
 		val history: Int,
+		val tracking: Int = 0,
+		/** Titles moved, per Mihon source id (the source needs its extension installed in Hanten) */
+		val titlesBySource: Map<Long, Int> = emptyMap(),
+		/** Source names as stored in the backup */
+		val sourceNames: Map<Long, String> = emptyMap(),
 	)
 
 	/** True if the stream starts like a gzip file (.tachibk); Hanten's own backups are zip. Keeps the mark. */
@@ -77,6 +83,8 @@ object MihonBackupConverter {
 
 		val favourites = ArrayList<FavouriteBackup>()
 		val history = ArrayList<HistoryBackup>()
+		val scrobbling = ArrayList<ScrobblingBackup>()
+		val titlesBySource = HashMap<Long, Int>()
 		for ((index, m) in backup.mangas.withIndex()) {
 			val sourceName = sourceName(m.source)
 			val manga = m.toMangaBackup(sourceName)
@@ -104,7 +112,13 @@ object MihonBackupConverter {
 					)
 				}
 			}
-			m.toHistory(manga, sourceName)?.let(history::add)
+			val historyItem = m.toHistory(manga, sourceName)
+			historyItem?.let(history::add)
+			if (m.favorite || historyItem != null) {
+				// trackers need the title row, which only favourites and history create
+				m.tracking.mapNotNullTo(scrobbling) { it.toScrobbling(manga.id) }
+				titlesBySource[m.source] = (titlesBySource[m.source] ?: 0) + 1
+			}
 		}
 
 		ZipOutputStream(output).use { zip ->
@@ -112,13 +126,75 @@ object MihonBackupConverter {
 			zip.writeEntry(BackupSection.CATEGORIES, CategoryBackup.serializer(), categories)
 			zip.writeEntry(BackupSection.FAVOURITES, FavouriteBackup.serializer(), favourites)
 			zip.writeEntry(BackupSection.HISTORY, HistoryBackup.serializer(), history)
+			if (scrobbling.isNotEmpty()) {
+				zip.writeEntry(BackupSection.SCROBBLING, ScrobblingBackup.serializer(), scrobbling)
+			}
 		}
 		return Result(
 			titles = backup.mangas.size,
 			favourites = favourites.distinctBy { it.mangaId }.size,
 			categories = categories.size,
 			history = history.size,
+			tracking = scrobbling.size,
+			titlesBySource = titlesBySource,
+			sourceNames = backup.sources.associate { it.sourceId to it.name },
 		)
+	}
+
+	/**
+	 * Mihon tracker link → Hanten scrobbling link. Mihon sync ids: 1 MAL, 2 AniList, 4 Shikimori
+	 * (Hanten: 3, 2, 1). Other trackers (Kitsu, MangaUpdates…) Hanten does not have.
+	 */
+	private fun MihonTracking.toScrobbling(mangaId: Long): ScrobblingBackup? {
+		val remoteId = mediaId.takeIf { it > 0 } ?: mediaIdInt.toLong().takeIf { it > 0 } ?: return null
+		val (scrobbler, entryId, statusName, ratingScale) = when (syncId) {
+			1 -> Quad(3, remoteId.toInt(), malStatus(status), 10f)
+			2 -> Quad(2, libraryId.toInt(), aniListStatus(status), 100f)
+			4 -> Quad(1, libraryId.toInt(), shikimoriStatus(status), 10f)
+			else -> return null
+		}
+		return ScrobblingBackup(
+			scrobbler = scrobbler,
+			id = entryId,
+			mangaId = mangaId,
+			targetId = remoteId,
+			status = statusName,
+			chapter = lastChapterRead.toInt(),
+			comment = null,
+			rating = (score / ratingScale).coerceIn(0f, 1f),
+		)
+	}
+
+	private data class Quad(val scrobbler: Int, val id: Int, val status: String?, val ratingScale: Float)
+
+	// Mihon status codes per tracker → status strings the Hanten scrobblers use
+	private fun malStatus(s: Int) = when (s) {
+		1, 7 -> "reading"
+		2 -> "completed"
+		3 -> "on_hold"
+		4 -> "dropped"
+		6 -> "plan_to_read"
+		else -> null
+	}
+
+	private fun aniListStatus(s: Int) = when (s) {
+		1 -> "CURRENT"
+		2 -> "COMPLETED"
+		3 -> "PAUSED"
+		4 -> "DROPPED"
+		5 -> "PLANNING"
+		6 -> "REPEATING"
+		else -> null
+	}
+
+	private fun shikimoriStatus(s: Int) = when (s) {
+		1 -> "watching"
+		2 -> "completed"
+		3 -> "on_hold"
+		4 -> "dropped"
+		5 -> "planned"
+		6 -> "rewatching"
+		else -> null
 	}
 
 	private fun MihonManga.toMangaBackup(sourceName: String) = MangaBackup(

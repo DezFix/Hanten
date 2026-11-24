@@ -31,8 +31,9 @@ class MangaDatabaseTest {
 
 	@Test
 	fun migrateAll() {
-		helper.createDatabase(TEST_DB, 1).close()
-		for (migration in migrations) {
+		// exported schemas start at v30 (older ones stayed in Kotatsu's history); 2.8.x installs are on v37
+		helper.createDatabase(TEST_DB, FIRST_SCHEMA).close()
+		for (migration in migrations.filter { it.startVersion >= FIRST_SCHEMA }) {
 			helper.runMigrationsAndValidate(
 				TEST_DB,
 				migration.endVersion,
@@ -53,5 +54,6 @@ class MangaDatabaseTest {
 	private companion object {
 
 		const val TEST_DB = "test-db"
+		const val FIRST_SCHEMA = 30
 	}
 }

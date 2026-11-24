@@ -30,6 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RestoreViewModel @Inject constructor(
+	private val mihonExtensions: hanten.wre.app.mihon.MihonExtensionManager,
 	savedStateHandle: SavedStateHandle,
 	@ApplicationContext context: Context,
 ) : BaseViewModel() {
@@ -46,6 +47,10 @@ class RestoreViewModel @Inject constructor(
 
 	/** Set when a Mihon/Tachiyomi backup was converted: what it contained. */
 	val mihonImport = MutableStateFlow<MihonBackupConverter.Result?>(null)
+
+	/** Import summary shown in the dialog for a Mihon/Tachiyomi backup: what moves and which extensions are missing */
+	val mihonSummary = MutableStateFlow<String?>(null)
+	private val resources = context.resources
 
 	val availableEntries = MutableStateFlow<List<BackupSectionModel>>(emptyList())
 	val backupDate = MutableStateFlow<Date?>(null)
@@ -138,10 +143,26 @@ class RestoreViewModel @Inject constructor(
 			val dir = File(cacheDir, MIHON_IMPORT_DIR).apply { mkdirs() }
 			val file = File(dir, MIHON_IMPORT_FILE)
 			file.outputStream().use { output ->
-				mihonImport.value = MihonBackupConverter.convert(input, output, uncategorizedTitle)
+				val result = MihonBackupConverter.convert(input, output, uncategorizedTitle)
+				mihonImport.value = result
+				mihonSummary.value = buildMihonSummary(result)
 			}
 			return Uri.fromFile(file)
 		}
+	}
+
+	private fun buildMihonSummary(r: MihonBackupConverter.Result): String {
+		val sb = StringBuilder(
+			resources.getString(R.string.mihon_import_summary, r.favourites, r.categories, r.history, r.tracking),
+		)
+		val missing = r.titlesBySource.filterKeys { mihonExtensions.getSourceById(it) == null }
+		if (missing.isNotEmpty()) {
+			val names = missing.entries.sortedByDescending { it.value }.joinToString { (id, count) ->
+				"${r.sourceNames[id] ?: id.toString()} ($count)"
+			}
+			sb.append("\n\n").append(resources.getString(R.string.mihon_import_missing_extensions, names))
+		}
+		return sb.toString()
 	}
 
 	private fun InputStream.readDate(): Date? = runCatching {

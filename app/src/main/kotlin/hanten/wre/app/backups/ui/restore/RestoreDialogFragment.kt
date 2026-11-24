@@ -50,6 +50,9 @@ class RestoreDialogFragment : AlertDialogFragment<DialogRestoreBinding>(), OnLis
             viewModel.isMergeEnabled,
             ::Quadruple,
 		).observe(viewLifecycleOwner, this::onLoadingChanged)
+		viewModel.mihonSummary.observe(viewLifecycleOwner) {
+			requireViewBinding().textViewImportSummary.textAndVisible = it
+		}
         binding.checkboxMerge.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onMergeToggle(isChecked)
         }

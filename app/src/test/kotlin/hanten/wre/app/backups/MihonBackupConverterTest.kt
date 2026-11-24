@@ -8,6 +8,7 @@ import hanten.wre.app.backups.data.mihon.MihonCategory
 import hanten.wre.app.backups.data.mihon.MihonChapter
 import hanten.wre.app.backups.data.mihon.MihonHistory
 import hanten.wre.app.backups.data.mihon.MihonManga
+import hanten.wre.app.backups.data.mihon.MihonTracking
 import org.json.JSONArray
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -36,6 +37,12 @@ class MihonBackupConverterTest {
 					MihonChapter(url = "/c/2", lastPageRead = 7, chapterNumber = 2f),
 				),
 				history = listOf(MihonHistory(url = "/c/2", lastRead = 5_000L)),
+				tracking = listOf(
+					// Shikimori: user rate 900, manga 123, reading, score 8/10
+					MihonTracking(syncId = 4, libraryId = 900L, lastChapterRead = 2f, score = 8f, status = 1, mediaId = 123L),
+					// Kitsu: Hanten has no such tracker
+					MihonTracking(syncId = 3, libraryId = 1L, mediaId = 5L),
+				),
 			),
 			MihonManga(source = 42L, url = "/manga/two", title = "Two"),
 			MihonManga(source = 7L, url = "/manga/gone", title = "Not in library", favorite = false),
@@ -87,6 +94,16 @@ class MihonBackupConverterTest {
 		assertEquals(5_000L, history.getLong("updated_at"))
 		assertEquals(0.5f, history.getDouble("percent").toFloat(), 0.001f)
 		assertTrue(entries.containsKey("index"))
+
+		assertEquals(1, result.tracking)
+		val track = JSONArray(entries.getValue("scrobbling")).getJSONObject(0)
+		assertEquals(1, track.getInt("scrobbler")) // Hanten Shikimori
+		assertEquals(900, track.getInt("id"))
+		assertEquals(123L, track.getLong("target_id"))
+		assertEquals("watching", track.getString("status"))
+		assertEquals(2, track.getInt("chapter"))
+		assertEquals(0.8f, track.getDouble("rating").toFloat(), 0.001f)
+		assertEquals(mapOf(42L to 2), result.titlesBySource)
 	}
 
 	private fun readZip(bytes: ByteArray): Map<String, String> {

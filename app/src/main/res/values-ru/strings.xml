@@ -1161,4 +1161,6 @@
     <string name="search_section_sources">Источники</string>
     <string name="search_section_recent_sources">Недавние источники</string>
     <string name="backup_dir_no_access">Нет доступа к папке (выбрана на другом устройстве?). Бэкапы сохраняются в %s — выбери папку заново</string>
+    <string name="mihon_import_summary">Из Mihon: в библиотеку %1$d тайтлов, папок %2$d, история %3$d тайтлов, связей с трекерами %4$d</string>
+    <string name="mihon_import_missing_extensions">Установи эти расширения («Ещё» → «Источники» → «Расширения»), иначе их тайтлы не откроются: %s</string>
 </resources>

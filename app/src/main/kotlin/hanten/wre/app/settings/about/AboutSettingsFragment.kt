@@ -136,7 +136,8 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 			}
 
 			AppSettings.KEY_LINK_WEBLATE -> {
-				openLink(R.string.url_weblate, preference.title)
+				// Weblate project is gone: translations are offered through a GitHub issue
+				router.openExternalBrowser(getString(R.string.url_github) + "/issues/new?title=Translation", preference.title)
 				true
 			}
 

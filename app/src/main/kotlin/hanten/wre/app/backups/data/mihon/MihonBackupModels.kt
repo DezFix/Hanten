@@ -31,6 +31,7 @@ class MihonManga(
 	@ProtoNumber(13) val dateAdded: Long = 0,
 	@ProtoNumber(16) val chapters: List<MihonChapter> = emptyList(),
 	@ProtoNumber(17) val categories: List<Long> = emptyList(),
+	@ProtoNumber(18) val tracking: List<MihonTracking> = emptyList(),
 	@ProtoNumber(100) val favorite: Boolean = true,
 	@ProtoNumber(104) val history: List<MihonHistory> = emptyList(),
 )
@@ -56,6 +57,17 @@ class MihonCategory(
 class MihonHistory(
 	@ProtoNumber(1) val url: String,
 	@ProtoNumber(2) val lastRead: Long,
+)
+
+@Serializable
+class MihonTracking(
+	@ProtoNumber(1) val syncId: Int,
+	@ProtoNumber(2) val libraryId: Long = 0,
+	@ProtoNumber(3) val mediaIdInt: Int = 0,
+	@ProtoNumber(6) val lastChapterRead: Float = 0f,
+	@ProtoNumber(8) val score: Float = 0f,
+	@ProtoNumber(9) val status: Int = 0,
+	@ProtoNumber(100) val mediaId: Long = 0,
 )
 
 @Serializable

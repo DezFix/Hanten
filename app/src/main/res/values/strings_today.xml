@@ -45,7 +45,7 @@
 	<string name="migrate_kotatsu_title">Hanten, Kotatsu, Futon</string>
 	<string name="migrate_kotatsu_summary">.bk.zip: favourites and categories, history and progress, bookmarks, trackers, reader settings, sources</string>
 	<string name="migrate_mihon_title">Mihon and Tachiyomi</string>
-	<string name="migrate_mihon_summary">.tachibk (also SY, J2K, Komikku): library and categories as folders, chapter progress and history. Reader settings and downloads are not moved</string>
+	<string name="migrate_mihon_summary">.tachibk (also SY, J2K, Komikku): library and categories as folders, chapter progress and history, trackers. Bookmarks, reader settings and downloads are not moved</string>
 	<string name="today_all">All</string>
 	<string name="today_ranobe">Ranobe</string>
 	<string name="check_new_chapters">Check for new chapters</string>

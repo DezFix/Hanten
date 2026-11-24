@@ -1094,4 +1094,6 @@
     <string name="search_section_sources">Sources</string>
     <string name="search_section_recent_sources">Recent sources</string>
     <string name="backup_dir_no_access">No access to this folder (picked on another device?). Backups are saved to %s — pick the folder again</string>
+    <string name="mihon_import_summary">From Mihon: %1$d titles in the library, %2$d folders, history of %3$d titles, %4$d tracker links</string>
+    <string name="mihon_import_missing_extensions">Install these extensions (More → Sources → Extensions), otherwise their titles will not open: %s</string>
 </resources>
