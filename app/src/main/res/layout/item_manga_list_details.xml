@@ -82,7 +82,7 @@
 				app:iconPadding="3dp"
 				app:iconSize="20dp"
 				app:iconSpacing="6dp"
-				app:iconsBackground="@drawable/bg_cover_badge" />
+				app:iconsBackground="@drawable/bg_status_badge" />
 
 			<Space
 				android:layout_width="match_parent"

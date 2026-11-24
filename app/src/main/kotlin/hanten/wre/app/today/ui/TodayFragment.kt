@@ -17,7 +17,9 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.core.model.contentType
 import hanten.wre.app.core.model.getTitle
+import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.ui.BaseFragment
 import hanten.wre.app.core.ui.BaseListAdapter
@@ -63,6 +65,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		binding.recyclerUpdates.adapter = updatesAdapter
 		binding.recyclerRecent.adapter = recentAdapter
 		binding.buttonUpdatesAll.setOnClickListener { router.openFeed() }
+		binding.buttonRecentAll.setOnClickListener { router.openHistory() }
 		// Pull down = look for new chapters in the library (same as the round button in the header)
 		binding.swipeRefresh.isEnabled = viewModel.isTrackerEnabled
 		binding.swipeRefresh.setOnRefreshListener { viewModel.checkNewChapters() }
@@ -74,7 +77,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		viewModel.history.observe(viewLifecycleOwner) { list -> onHistoryChanged(list) }
 		viewModel.recent.observe(viewLifecycleOwner) { list ->
 			recentAdapter.emit(list)
-			binding.textRecentTitle.isVisible = list.isNotEmpty()
+			binding.layoutRecentHeader.isVisible = list.isNotEmpty()
 			binding.recyclerRecent.isVisible = list.isNotEmpty()
 		}
 		viewModel.updates.observe(viewLifecycleOwner) { list ->
@@ -122,7 +125,8 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 	}
 
 	private fun progressText(item: MangaWithHistory): String {
-		val source = item.manga.source.getTitle(requireContext())
+		val type = getString(item.manga.contentType.titleResId)
+		val source = type + " · " + item.manga.source.getTitle(requireContext())
 		val percent = item.history.percent
 		// same rounding as the cover pills, so "Continue" and the library never disagree (1% vs 0%)
 		return if (percent >= 0f) {

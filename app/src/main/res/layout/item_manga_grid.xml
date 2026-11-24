@@ -78,7 +78,7 @@
 			android:clipToPadding="false"
 			android:orientation="vertical"
 			android:paddingBottom="2dp"
-			app:iconsBackground="@drawable/bg_cover_badge"
+			app:iconsBackground="@drawable/bg_status_badge"
 			app:iconsElevation="2dp"
 			app:iconPadding="4dp"
 			app:iconSize="22dp"

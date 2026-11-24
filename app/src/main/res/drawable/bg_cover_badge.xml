@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Hanten 3.0: light round plate under a cover status badge (mockup), readable on any art -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-	android:shape="oval">
-	<solid android:color="#F4EEE3" />
-</shape>
