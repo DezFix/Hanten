@@ -459,7 +459,7 @@
     <string name="periodic_backups_enable">Увімкніть періодичне резервне копіювання</string>
     <string name="frequency_every_2_days">Кожні 2 дні</string>
     <string name="frequency_once_per_week">Раз на тиждень</string>
-    <string name="periodic_backups">Періодичне резервне копіювання</string>
+    <string name="periodic_backups">Бекап за розкладом</string>
     <string name="frequency_twice_per_month">Двічі на місяць</string>
     <string name="frequency_once_per_month">Раз на місяць</string>
     <string name="last_successful_backup">Останнє успішне резервне копіювання: %s</string>
@@ -472,7 +472,7 @@
     <string name="content_type_hentai">Хентай</string>
     <string name="content_type_comics">Комікси</string>
     <string name="catalog">Каталог</string>
-    <string name="manage_sources">Керування джерелами</string>
+    <string name="manage_sources">Мої джерела</string>
     <string name="no_manga_sources_found">За вашим запитом не знайдено доступних джерел манґи</string>
     <string name="manual">Вручну</string>
     <string name="source_enabled">Джерело включено</string>
@@ -896,7 +896,7 @@
 <string name="delete_chapter_confirm">Delete chapter \"%1$s\" from local storage?</string>
     
     
-<string name="extensions_manager">Extensions manager</string>
+<string name="extensions_manager">Розширення</string>
     
 <string name="extensions_manager_summary">Manage, install and uninstall extensions from repositories</string>
     

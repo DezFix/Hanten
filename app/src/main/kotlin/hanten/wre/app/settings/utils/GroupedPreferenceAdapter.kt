@@ -45,8 +45,11 @@ class GroupedPreferenceAdapter(
 			if (isLast) (8 * density).toInt() else 0,
 		)
 		view.layoutParams = lp
-		if (pref.icon == null) {
+		// info hints (no title, not clickable) drop the "i" icon too, so their text lines up with the rows
+		val isHint = !pref.isSelectable && pref.title.isNullOrEmpty()
+		if (pref.icon == null || isHint) {
 			holder.findViewById(android.R.id.icon_frame)?.visibility = View.GONE
+			holder.findViewById(androidx.preference.R.id.icon_frame)?.visibility = View.GONE
 			holder.findViewById(android.R.id.icon)?.visibility = View.GONE
 		}
 		val radius = 20 * density

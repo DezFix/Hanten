@@ -67,7 +67,7 @@
     <string name="search_on_s">Поиск по %s</string>
     <string name="delete_manga">Удалить мангу</string>
     <string name="text_delete_local_manga">Удалить «%s» с устройства навсегда?</string>
-    <string name="reader_settings">Настройки режима чтения</string>
+    <string name="reader_settings">Чтение</string>
     <string name="switch_pages">Листание страниц</string>
     <string name="_continue">Продолжить</string>
     <string name="error">Ошибка</string>
@@ -294,7 +294,7 @@
     <string name="last_2_hours">Последние 2 часа</string>
     <string name="categories_delete_confirm">Вы уверены, что хотите удалить выбранные категории избранного? \nВся манга в них будет потеряна и это не может быть отменено.</string>
     <string name="pages_cache">Кэш страниц</string>
-    <string name="memory_usage_pattern" translatable="false">%1$s - %2$s</string>
+    <string name="memory_usage_pattern" translatable="false">%1$s — %2$s</string>
     <string name="storage_usage">Использование хранилища</string>
     <string name="available">Доступно</string>
     <string name="saved_manga">Сохранённая манга</string>
@@ -454,10 +454,10 @@
     <string name="online_variant">Онлайн вариант</string>
     <string name="frequency_every_day">Каждый день</string>
     <string name="backup_frequency">Частота создания резервных копий</string>
-    <string name="periodic_backups_enable">Включить резервное копирование по расписанию</string>
+    <string name="periodic_backups_enable">Включить бэкап по расписанию</string>
     <string name="frequency_every_2_days">Каждые 2 дня</string>
     <string name="frequency_once_per_week">Раз в неделю</string>
-    <string name="periodic_backups">Резервное копирование по расписанию</string>
+    <string name="periodic_backups">Бэкап по расписанию</string>
     <string name="frequency_twice_per_month">Дважды в месяц</string>
     <string name="frequency_once_per_month">Один раз в месяц</string>
     <string name="backups_output_directory">Каталог для сохранения резервных копий</string>
@@ -469,7 +469,7 @@
     <string name="content_type_hentai">Хентай</string>
     <string name="content_type_comics">Комиксы</string>
     <string name="catalog">Каталог</string>
-    <string name="manage_sources">Управление источниками</string>
+    <string name="manage_sources">Мои источники</string>
     <string name="no_manga_sources_found">Не найдено доступных источников по вашему запросу</string>
     <string name="manual">Вручную</string>
     <string name="source_enabled">Источник включён</string>
@@ -531,7 +531,7 @@
     <string name="next_chapter">Следующая глава</string>
     <string name="switch_pages_volume_buttons">Включить кнопки громкости</string>
     <string name="switch_pages_volume_buttons_summary">Использовать кнопки громкости для переключения страниц</string>
-    <string name="reader_actions">Действия в режиме чтения</string>
+    <string name="reader_actions">Действия при нажатии</string>
     <string name="reader_actions_summary">Настройка действий для сенсорных областей экрана</string>
     <string name="config_reset_confirm">Сбросить настройки до значений по умолчанию? Это действие нельзя отменить.</string>
     <string name="use_two_pages_landscape">Использовать двухстраничный макет в альбомной ориентации (бета)</string>
@@ -906,7 +906,7 @@
     
 <string name="frequency_every_6_hours">Каждые 6 часов</string>
     
-<string name="extensions_manager">Менеджер расширений</string>
+<string name="extensions_manager">Расширения</string>
     
 <string name="extensions_manager_summary">Управление, установка и удаление расширений из репозиториев</string>
     
