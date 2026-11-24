@@ -34,6 +34,27 @@
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="@tools:sample/lorem[22]" />
 
+	<!-- Hanten 3.0: "already in the library from another source"; tap opens that title -->
+	<TextView
+		android:id="@+id/textView_duplicate"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/screen_padding"
+		android:layout_marginTop="12dp"
+		android:background="@drawable/bg_card_warning"
+		android:drawablePadding="10dp"
+		android:padding="12dp"
+		android:textAppearance="?attr/textAppearanceBodyMedium"
+		android:visibility="gone"
+		app:drawableStartCompat="@drawable/ic_alert_outline"
+		android:textColor="?colorOnTertiaryContainer"
+		app:drawableTint="?colorOnTertiaryContainer"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/coversStack"
+		tools:text="Уже есть в библиотеке: «Название» (Senkuro). Нажми, чтобы открыть"
+		tools:visibility="visible" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recyclerView_categories"
 		android:layout_width="0dp"
@@ -49,7 +70,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/coversStack"
+		app:layout_constraintTop_toBottomOf="@id/textView_duplicate"
 		tools:ignore="UnusedAttribute"
 		tools:listitem="@layout/item_category_checkable" />
 

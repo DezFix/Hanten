@@ -82,4 +82,11 @@
 	<string name="filter_read_completed">Finished reading</string>
 	<string name="filter_not_started">Not started</string>
 	<string name="filter_tracked">Tracked</string>
+	<string name="track_skip_finished">Skip finished</string>
+	<string name="track_skip_finished_summary">Titles that are complete or dropped get no new chapters, so the check is faster</string>
+	<string name="track_skip_not_started">Skip not started</string>
+	<string name="track_skip_not_started_summary">Do not check what you have never opened in the reader</string>
+	<string name="track_skip_with_new">Skip titles with unread new chapters</string>
+	<string name="track_skip_with_new_summary">If new chapters are already there and not read yet, do not check again for now</string>
+	<string name="favourite_duplicate">Already in your library: “%1$s” (%2$s). Tap to open</string>
 </resources>

@@ -82,4 +82,11 @@
 	<string name="filter_read_completed">Дочитано</string>
 	<string name="filter_not_started">Не начато</string>
 	<string name="filter_tracked">В трекере</string>
+	<string name="track_skip_finished">Пропускать завершённые</string>
+	<string name="track_skip_finished_summary">Тайтлы, которые вышли целиком или брошены: новых глав у них не будет, проверка быстрее</string>
+	<string name="track_skip_not_started">Пропускать не начатые</string>
+	<string name="track_skip_not_started_summary">Не проверять то, что ещё ни разу не открывал в читалке</string>
+	<string name="track_skip_with_new">Пропускать с непрочитанными новыми</string>
+	<string name="track_skip_with_new_summary">Если новые главы уже есть и ещё не прочитаны, пока не проверять снова</string>
+	<string name="favourite_duplicate">Уже есть в библиотеке: «%1$s» (%2$s). Нажми, чтобы открыть</string>
 </resources>

@@ -82,4 +82,11 @@
 	<string name="filter_read_completed">Дочитано</string>
 	<string name="filter_not_started">Не розпочато</string>
 	<string name="filter_tracked">У трекері</string>
+	<string name="track_skip_finished">Пропускати завершені</string>
+	<string name="track_skip_finished_summary">Тайтли, що вийшли повністю або покинуті: нових розділів не буде, перевірка швидша</string>
+	<string name="track_skip_not_started">Пропускати не розпочаті</string>
+	<string name="track_skip_not_started_summary">Не перевіряти те, що ще жодного разу не відкривав у читалці</string>
+	<string name="track_skip_with_new">Пропускати з непрочитаними новими</string>
+	<string name="track_skip_with_new_summary">Якщо нові розділи вже є і ще не прочитані, поки не перевіряти знову</string>
+	<string name="favourite_duplicate">Вже є в бібліотеці: «%1$s» (%2$s). Натисни, щоб відкрити</string>
 </resources>

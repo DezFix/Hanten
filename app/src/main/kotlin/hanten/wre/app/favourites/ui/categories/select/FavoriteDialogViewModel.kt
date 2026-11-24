@@ -26,6 +26,7 @@ import hanten.wre.app.favourites.ui.categories.select.model.MangaCategoryItem
 import hanten.wre.app.list.ui.model.EmptyState
 import hanten.wre.app.list.ui.model.ListModel
 import hanten.wre.app.list.ui.model.LoadingState
+import hanten.wre.app.parsers.model.Manga
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +38,29 @@ class FavoriteDialogViewModel @Inject constructor(
 
 	val manga = savedStateHandle.require<List<ParcelableManga>>(AppRouter.KEY_MANGA_LIST).map {
 		it.manga
+	}
+
+	/**
+	 * Hanten 3.0: the same title is already in the library from another source (Mihon idea).
+	 * Only for a single title that is not in the library yet; matched by the name or an alternative name.
+	 */
+	val duplicate = MutableStateFlow<Manga?>(null)
+
+	init {
+		val single = manga.singleOrNull()
+		if (single != null) {
+			launchJob(Dispatchers.IO) {
+				if (favouritesRepository.getCategoriesIds(single.id).isNotEmpty()) return@launchJob
+				val names = single.allNames()
+				duplicate.value = favouritesRepository.getAllManga().firstOrNull { other ->
+					other.id != single.id && other.allNames().any { it in names }
+				}
+			}
+		}
+	}
+
+	private fun Manga.allNames(): Set<String> = (altTitles + title).mapNotNullTo(HashSet()) { name ->
+		name.lowercase().filter { it.isLetterOrDigit() }.takeIf { it.length >= 3 }
 	}
 
 	private val refreshTrigger = MutableStateFlow(Any())

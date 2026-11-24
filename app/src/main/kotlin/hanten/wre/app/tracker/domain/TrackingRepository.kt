@@ -20,6 +20,7 @@ import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.list.domain.ListFilterOption
 import hanten.wre.app.parsers.config.ConfigKey
 import hanten.wre.app.parsers.model.Manga
+import hanten.wre.app.parsers.model.MangaState
 import hanten.wre.app.parsers.util.ifZero
 import hanten.wre.app.tracker.data.TrackEntity
 import hanten.wre.app.tracker.data.TrackLogEntity
@@ -80,10 +81,13 @@ class TrackingRepository @Inject constructor(
 	}
 
 	suspend fun getTracks(offset: Int, limit: Int): List<MangaTracking> {
+		val skipFinished = settings.isTrackSkipFinished
+		val skipWithNew = settings.isTrackSkipWithNew
+		val startedIds = if (settings.isTrackSkipNotStarted) db.getHistoryDao().findAllIds().toHashSet() else null
 		return db.getTracksDao().findAll(offset = offset, limit = limit)
 			.filter { track ->
 				val manga = track.manga.toManga(emptySet(), null)
-				!isUpdateCheckingDisabled(manga)
+				!isUpdateCheckingDisabled(manga) && !isSkippedBySmartUpdates(manga, track.track, skipFinished, skipWithNew, startedIds)
 			}
 			.map {
 				MangaTracking(
@@ -94,6 +98,20 @@ class TrackingRepository @Inject constructor(
 					newChapters = it.track.newChapters,
 				)
 			}
+	}
+
+	/** Smart updates: finished titles get no chapters; unread new ones and not started titles can wait */
+	private fun isSkippedBySmartUpdates(
+		manga: Manga,
+		track: TrackEntity,
+		skipFinished: Boolean,
+		skipWithNew: Boolean,
+		startedIds: Set<Long>?,
+	): Boolean = when {
+		skipFinished && (manga.state == MangaState.FINISHED || manga.state == MangaState.ABANDONED) -> true
+		skipWithNew && track.newChapters > 0 -> true
+		startedIds != null && manga.id !in startedIds -> true
+		else -> false
 	}
 
 	private fun isUpdateCheckingDisabled(manga: Manga): Boolean {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: soft warning card (duplicate in the library and similar notices) -->
+<shape
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+
+	<corners android:radius="16dp" />
+	<solid android:color="?colorTertiaryContainer" />
+</shape>

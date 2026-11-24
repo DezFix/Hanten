@@ -82,6 +82,12 @@ class ExploreViewModel @Inject constructor(
 	val onShowSuggestionsTip = MutableEventFlow<Unit>()
 	private val isRandomLoading = MutableStateFlow(false)
 
+	/**
+	 * Hanten 3.0: Catalog language chips; null = all languages.
+	 * Must be declared before [content]: it is read while [content] is being built.
+	 */
+	private val selectedLanguage = MutableStateFlow<String?>(null)
+
 	val content: StateFlow<List<ListModel>> = isLoading.flatMapLatest { loading ->
 		if (loading) {
 			flowOf(getLoadingStateList())
@@ -150,9 +156,6 @@ class ExploreViewModel @Inject constructor(
 			(it as? MangaSourceItem)?.takeIf { x -> x.id in ids }?.source
 		}
 	}
-
-	/** Hanten 3.0: Catalog language chips; null = all languages */
-	private val selectedLanguage = MutableStateFlow<String?>(null)
 
 	fun toggleLanguage(code: String) {
 		selectedLanguage.value = if (selectedLanguage.value == code) null else code

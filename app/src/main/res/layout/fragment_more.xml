@@ -78,7 +78,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="16dp"
-			android:columnCount="3"
+			android:columnCount="2"
 			android:useDefaultMargins="false" />
 
 		<com.google.android.material.materialswitch.MaterialSwitch

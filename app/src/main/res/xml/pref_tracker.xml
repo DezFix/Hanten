@@ -51,6 +51,27 @@
 			android:key="track_categories"
 			android:title="@string/favourites_categories" />
 
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:dependency="tracker_enabled"
+			android:key="track_skip_finished"
+			android:summary="@string/track_skip_finished_summary"
+			android:title="@string/track_skip_finished" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:dependency="tracker_enabled"
+			android:key="track_skip_not_started"
+			android:summary="@string/track_skip_not_started_summary"
+			android:title="@string/track_skip_not_started" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:dependency="tracker_enabled"
+			android:key="track_skip_with_new"
+			android:summary="@string/track_skip_with_new_summary"
+			android:title="@string/track_skip_with_new" />
+
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/prefs_group_new_chapters">

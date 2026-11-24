@@ -16,6 +16,8 @@ import hanten.wre.app.core.ui.AlertDialogFragment
 import hanten.wre.app.core.ui.list.OnListItemClickListener
 import hanten.wre.app.core.util.ext.getDisplayMessage
 import hanten.wre.app.core.util.ext.joinToStringWithLimit
+import androidx.core.view.isVisible
+import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.observeEvent
 import hanten.wre.app.databinding.DialogFavoriteBinding
@@ -48,6 +50,21 @@ class FavoriteDialog : AlertDialogFragment<DialogFavoriteBinding>(),
 		binding.recyclerViewCategories.adapter = adapter
 		viewModel.content.observe(viewLifecycleOwner, adapter)
 		viewModel.onError.observeEvent(viewLifecycleOwner, ::onError)
+		viewModel.duplicate.observe(viewLifecycleOwner) { other ->
+			val view = viewBinding?.textViewDuplicate ?: return@observe
+			view.isVisible = other != null
+			if (other != null) {
+				view.text = getString(
+					R.string.favourite_duplicate,
+					other.title,
+					other.source.getTitle(view.context),
+				)
+				view.setOnClickListener {
+					router.openDetails(other)
+					dismissAllowingStateLoss()
+				}
+			}
+		}
 		bindHeader()
 	}
 

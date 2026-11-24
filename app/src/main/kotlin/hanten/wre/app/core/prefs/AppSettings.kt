@@ -297,6 +297,16 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 	val zoomMode: ZoomMode
 		get() = prefs.getEnumValue(KEY_ZOOM_MODE, ZoomMode.FIT_CENTER)
 
+	/** Smart updates (Hanten 3.0): titles the new chapters check skips */
+	val isTrackSkipFinished: Boolean
+		get() = prefs.getBoolean(KEY_TRACK_SKIP_FINISHED, true)
+
+	val isTrackSkipNotStarted: Boolean
+		get() = prefs.getBoolean(KEY_TRACK_SKIP_NOT_STARTED, false)
+
+	val isTrackSkipWithNew: Boolean
+		get() = prefs.getBoolean(KEY_TRACK_SKIP_WITH_NEW, false)
+
 	val trackSources: Set<String>
 		get() = prefs.getStringSet(KEY_TRACK_SOURCES, null) ?: setOf(TRACK_FAVOURITES)
 
@@ -849,6 +859,9 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 		const val KEY_PREFERRED_BRANCHES = "preferred_branches"
 		const val KEY_TRACKER_FREQUENCY = "tracker_freq"
 		const val KEY_TRACK_SOURCES = "track_sources"
+		const val KEY_TRACK_SKIP_FINISHED = "track_skip_finished"
+		const val KEY_TRACK_SKIP_NOT_STARTED = "track_skip_not_started"
+		const val KEY_TRACK_SKIP_WITH_NEW = "track_skip_with_new"
 		const val KEY_TRACK_CATEGORIES = "track_categories"
 		const val KEY_TRACK_WARNING = "track_warning"
 		const val KEY_TRACKER_NOTIFICATIONS = "tracker_notifications"
