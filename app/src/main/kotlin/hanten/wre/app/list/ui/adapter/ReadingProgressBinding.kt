@@ -38,8 +38,8 @@ fun ReadingProgress.getShortText(): String = when {
 	else -> cardPercent(percent) + "%"
 }
 
-/** Like [ReadingProgress.percentToString], but a started title never reads as "0%" and an unfinished one never as "100%". */
-private fun cardPercent(value: Float): String {
+/** Like [ReadingProgress.percentToString] (also used in the title card), but a started title never reads as "0%" and an unfinished one never as "100%". */
+fun cardPercent(value: Float): String {
 	if (ReadingProgress.isCompleted(value)) return "100"
 	val whole = (value.coerceIn(0f, 1f) * 100f).toInt()
 	return when {

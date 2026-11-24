@@ -102,7 +102,7 @@ import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.scrobbling.ScrobblingItemDecoration
 import hanten.wre.app.details.ui.scrobbling.ScrollingInfoAdapter
 import hanten.wre.app.download.ui.worker.DownloadStartedObserver
-import hanten.wre.app.list.domain.ReadingProgress
+import hanten.wre.app.list.ui.adapter.cardPercent
 import hanten.wre.app.main.ui.owners.BottomSheetOwner
 import hanten.wre.app.parsers.model.ContentRating
 import hanten.wre.app.parsers.model.Manga
@@ -614,8 +614,7 @@ class DetailsActivity :
 		textViewProgress.textAndVisible = if (info.percent <= 0f) {
 			null
 		} else {
-			val displayPercent = if (ReadingProgress.isCompleted(info.percent)) 100 else (info.percent * 100f).toInt()
-			getString(R.string.percent_string_pattern, displayPercent.toString())
+			getString(R.string.percent_string_pattern, cardPercent(info.percent))
 		}
 
 		progress.setProgressCompat(
