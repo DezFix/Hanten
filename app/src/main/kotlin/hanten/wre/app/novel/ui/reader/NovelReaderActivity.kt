@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.combine
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
-import android.speech.tts.UtteranceProgressListener
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -29,6 +27,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
+import hanten.wre.app.novel.tts.NovelTts
+import android.speech.tts.TextToSpeech
 import hanten.wre.app.novel.data.model.NovelTheme
 import hanten.wre.app.bookmarks.domain.Bookmark
 import hanten.wre.app.bookmarks.domain.BookmarksRepository
@@ -120,9 +120,8 @@ class NovelReaderActivity :
 	private var safeBottomPx = 0
 	private var systemTopInset = 0
 	private var systemBottomInset = 0
-	private var tts: TextToSpeech? = null
-	private var isTtsSpeaking = false
-	private var isTtsReady = false
+	private val isTtsSpeaking: Boolean
+		get() = NovelTts.state.value.status == NovelTts.Status.SPEAKING
 	private var searchDialog: AlertDialog? = null
 	private var searchStatusView: TextView? = null
 	private var searchJob: Job? = null
@@ -155,7 +154,7 @@ class NovelReaderActivity :
 			),
 		)
 		setupControls()
-		setupTts()
+		NovelTts.state.observe(this) { setTtsSpeaking(it.status == NovelTts.Status.SPEAKING) }
 		applyReaderColors()
 		observeViewModel()
 		screenOrientationHelper.applySettings()
@@ -192,11 +191,11 @@ class NovelReaderActivity :
 	}
 
 	override fun onDestroy() {
-		viewBinding.root.removeCallbacks(ttsSleepRunnable)
 		bookmarkJob?.cancel()
-		tts?.stop()
-		tts?.shutdown()
-		tts = null
+		// leaving the reader stops reading aloud; going to the background or turning the screen off does not
+		if (isFinishing) {
+			NovelTts.stop(this)
+		}
 		viewBinding.webView.destroy()
 		super.onDestroy()
 	}
@@ -376,46 +375,21 @@ class NovelReaderActivity :
 		}
 	}
 
-	private fun setupTts() {
-		tts = TextToSpeech(this) { status ->
-			isTtsReady = status == TextToSpeech.SUCCESS
-			if (isTtsReady) {
-				tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-					override fun onStart(utteranceId: String?) = Unit
-
-					override fun onDone(utteranceId: String?) {
-						if (utteranceId == "novel-last") {
-							runOnUiThread { setTtsSpeaking(false) }
-						}
-					}
-
-					@Deprecated("Deprecated in Java")
-					override fun onError(utteranceId: String?) {
-						runOnUiThread { setTtsSpeaking(false) }
-					}
-				})
-			}
-		}
-	}
-
 	private fun toggleTts() {
-		val engine = tts
-		if (engine == null || !isTtsReady) {
-			Toast.makeText(this, R.string.novel_tts_unavailable, Toast.LENGTH_SHORT).show()
-			return
-		}
-		if (isTtsSpeaking) {
-			engine.stop()
-			setTtsSpeaking(false)
-			return
+		when (NovelTts.state.value.status) {
+			NovelTts.Status.SPEAKING -> {
+				NovelTts.pause(this)
+				return
+			}
+
+			NovelTts.Status.PAUSED -> {
+				NovelTts.resume(this)
+				return
+			}
+
+			NovelTts.Status.IDLE -> Unit
 		}
 		val language = Locale.forLanguageTag(contentLanguage())
-		val availability = engine.isLanguageAvailable(language)
-		if (availability == TextToSpeech.LANG_MISSING_DATA || availability == TextToSpeech.LANG_NOT_SUPPORTED) {
-			Toast.makeText(this, R.string.novel_tts_unavailable, Toast.LENGTH_SHORT).show()
-			return
-		}
-		engine.language = language
 		viewBinding.webView.evaluateJavascript(
 			"(function(){try{return window.getTextFromCurrentParagraph();}catch(x){" +
 				"var e=document.getElementById('content')||document.body;return e?e.innerText:'';}})()",
@@ -428,12 +402,8 @@ class NovelReaderActivity :
 				return@evaluateJavascript
 			}
 			val maxLength = (TextToSpeech.getMaxSpeechInputLength() - 100).coerceIn(500, TTS_CHUNK_LENGTH)
-			val chunks = splitForSpeech(text, maxLength)
-			chunks.forEachIndexed { index, chunk ->
-				val id = if (index == chunks.lastIndex) "novel-last" else "novel-$index"
-				engine.speak(chunk, if (index == 0) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD, null, id)
-			}
-			setTtsSpeaking(true)
+			val title = viewBinding.toolbar.title?.toString().orEmpty()
+			NovelTts.start(this, title, language, splitForSpeech(text, maxLength))
 		}
 	}
 
@@ -470,13 +440,6 @@ class NovelReaderActivity :
 		return -1
 	}
 
-	private val ttsSleepRunnable = Runnable {
-		if (isTtsSpeaking) {
-			tts?.stop()
-			setTtsSpeaking(false)
-		}
-	}
-
 	/** Long press on the TTS button: stop reading aloud after N minutes. */
 	private fun showTtsSleepTimerDialog() {
 		val minutes = intArrayOf(0, 15, 30, 45, 60, 90)
@@ -486,10 +449,9 @@ class NovelReaderActivity :
 		MaterialAlertDialogBuilder(this)
 			.setTitle(R.string.novel_tts_sleep_timer)
 			.setItems(labels) { _, which ->
-				viewBinding.root.removeCallbacks(ttsSleepRunnable)
 				val value = minutes[which]
+				NovelTts.setSleepTimer(this, value)
 				if (value > 0) {
-					viewBinding.root.postDelayed(ttsSleepRunnable, value * 60_000L)
 					Toast.makeText(this, getString(R.string.novel_tts_sleep_minutes, value), Toast.LENGTH_SHORT).show()
 					if (!isTtsSpeaking) {
 						toggleTts()
@@ -501,7 +463,6 @@ class NovelReaderActivity :
 	}
 
 	private fun setTtsSpeaking(value: Boolean) {
-		isTtsSpeaking = value
 		viewBinding.buttonTts.setIconResource(if (value) R.drawable.ic_action_pause else R.drawable.ic_play)
 		viewBinding.buttonTts.setContentDescriptionAndTooltip(
 			if (value) R.string.novel_tts_stop else R.string.novel_tts,

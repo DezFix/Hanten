@@ -24,4 +24,9 @@
 	<string name="prefs_group_reading">Reading</string>
 	<string name="prefs_group_other">Other</string>
 	<string name="folder_color">Folder color</string>
+	<string name="novel_tts_pause">Pause</string>
+	<string name="novel_tts_continue">Continue</string>
+	<string name="novel_tts_reading">Reading aloud</string>
+	<string name="novel_tts_paused">Paused</string>
+	<string name="novel_tts_channel">Reading ranobe aloud</string>
 </resources>

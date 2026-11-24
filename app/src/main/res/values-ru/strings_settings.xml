@@ -24,4 +24,9 @@
 	<string name="prefs_group_reading">Чтение</string>
 	<string name="prefs_group_other">Прочее</string>
 	<string name="folder_color">Цвет папки</string>
+	<string name="novel_tts_pause">Пауза</string>
+	<string name="novel_tts_continue">Продолжить</string>
+	<string name="novel_tts_reading">Читаю вслух</string>
+	<string name="novel_tts_paused">На паузе</string>
+	<string name="novel_tts_channel">Озвучка ранобэ</string>
 </resources>
