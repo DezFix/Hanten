@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import hanten.wre.app.core.util.ext.getThemeColor
+import hanten.wre.app.core.ui.list.CardGroupDecoration
 import hanten.wre.app.R
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
@@ -74,6 +76,7 @@ class SourcesManageFragment :
 		sourcesAdapter = SourceConfigAdapter(this)
 		with(binding.recyclerView) {
 			setHasFixedSize(true)
+			addItemDecoration(CardGroupDecoration(context))
 			adapter = sourcesAdapter
 			reorderHelper = ItemTouchHelper(SourcesReorderCallback()).also {
 				it.attachToRecyclerView(this)
@@ -266,8 +269,19 @@ class SourcesManageFragment :
 
 		override fun isLongPressDragEnabled() = true
 
+		override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+			super.onSelectedChanged(viewHolder, actionState)
+			// rows have no own background (they sit on a shared card), give the dragged one a solid fill
+			if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+				viewHolder?.itemView?.run {
+					setBackgroundColor(context.getThemeColor(com.google.android.material.R.attr.colorSurfaceContainerHigh))
+				}
+			}
+		}
+
 		override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
 			super.clearView(recyclerView, viewHolder)
+			viewHolder.itemView.background = null
 			viewModel.saveSourcesOrder(sourcesAdapter?.items ?: return)
 		}
 	}

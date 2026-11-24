@@ -14,6 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
+import hanten.wre.app.core.ui.list.CardGroupDecoration
 import hanten.wre.app.R
 import hanten.wre.app.core.model.getTitle
 import hanten.wre.app.core.model.titleResId
@@ -54,6 +55,7 @@ class SourcesCatalogActivity : BaseActivity<ActivitySourcesCatalogBinding>(),
 		with(viewBinding.recyclerView) {
 			setHasFixedSize(true)
 			addItemDecoration(TypedListSpacingDecoration(context, false))
+			addItemDecoration(CardGroupDecoration(context))
 			adapter = sourcesAdapter
 		}
 		viewBinding.chipsFilter.onChipClickListener = this
