@@ -80,7 +80,15 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 			return if (raw.isNullOrEmpty()) {
 				listOf(NavItem.TODAY, NavItem.FAVORITES, NavItem.EXPLORE, NavItem.MORE)
 			} else {
-				raw.mapNotNull { x -> NavItem.entries.find(x) }.ifEmpty { listOf(NavItem.EXPLORE) }
+				val items = raw.mapNotNull { x -> NavItem.entries.find(x) }.toMutableList()
+				if (NavItem.MORE !in items) {
+					// saved by 2.x / Kotatsu (e.g. restored from an old backup): settings live only in
+					// the More tab in 3.0, so add More (and Today, the 3.0 home) or settings are unreachable
+					if (NavItem.TODAY !in items) items.add(0, NavItem.TODAY)
+					while (items.size >= NAV_MAX_ITEMS) items.removeAt(items.lastIndex)
+					items.add(NavItem.MORE)
+				}
+				items
 			}
 		}
 		set(value) {
@@ -918,6 +926,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_LOCAL_NOVEL_DIRS = "local_novel_dirs"
 		const val KEY_DISABLE_NSFW = "no_nsfw"
 			const val KEY_NAV_MAIN = "nav_main"
+			private const val NAV_MAX_ITEMS = 6 // MainNavigationDelegate.MAX_ITEM_COUNT
 		const val KEY_NAV_LABELS = "nav_labels"
 		const val KEY_NAV_PINNED = "nav_pinned"
 		const val KEY_MAIN_FAB = "main_fab"

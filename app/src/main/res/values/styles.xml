@@ -294,6 +294,11 @@
 
 	<style name="PreferenceThemeOverlay.Hanten">
 		<item name="singleLineTitle">false</item>
+		<item name="preferenceCategoryStyle">@style/Preference.Category.Hanten</item>
+	</style>
+
+	<style name="Preference.Category.Hanten" parent="Preference.Category.Material">
+		<item name="android:layout">@layout/preference_category_hanten</item>
 	</style>
 
 	<style name="Preference.Slider" parent="Preference.SeekBarPreference.Material">

@@ -20,6 +20,9 @@ import hanten.wre.app.settings.search.SettingsSearchViewModel
 @AndroidEntryPoint
 class RootSettingsFragment : BasePreferenceFragment(0) {
 
+	override val isGroupedCards: Boolean
+		get() = false
+
 	private val viewModel: RootSettingsViewModel by viewModels()
 	private val activityViewModel: SettingsSearchViewModel by activityViewModels()
 

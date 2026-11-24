@@ -4,36 +4,42 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:title="@string/services">
 
-	<Preference
-		android:enabled="@bool/is_sync_enabled"
-		android:key="sync"
-		android:persistent="false"
-		android:summary="@string/sync_title"
-		android:title="@string/sync" />
+	<PreferenceCategory android:title="@string/prefs_group_account">
 
-	<PreferenceScreen
-		android:enabled="false"
-		android:fragment="hanten.wre.app.settings.SyncSettingsFragment"
-		android:key="sync_settings"
-		android:title="@string/sync_settings" />
+		<Preference
+			android:enabled="@bool/is_sync_enabled"
+			android:key="sync"
+			android:persistent="false"
+			android:summary="@string/sync_title"
+			android:title="@string/sync" />
 
-	<PreferenceScreen
-		android:fragment="hanten.wre.app.settings.SuggestionsSettingsFragment"
-		android:key="suggestions"
-		android:title="@string/suggestions"
-		app:allowDividerAbove="true" />
+		<PreferenceScreen
+			android:enabled="false"
+			android:fragment="hanten.wre.app.settings.SyncSettingsFragment"
+			android:key="sync_settings"
+			android:title="@string/sync_settings" />
 
-	<hanten.wre.app.settings.utils.SplitSwitchPreference
-		android:defaultValue="false"
-		android:key="stats_on"
-		android:title="@string/reading_stats"
-		app:allowDividerAbove="true" />
+	</PreferenceCategory>
 
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reading_time"
-		android:summary="@string/reading_time_estimation_summary"
-		android:title="@string/reading_time_estimation" />
+	<PreferenceCategory android:title="@string/prefs_group_reading">
+
+		<PreferenceScreen
+			android:fragment="hanten.wre.app.settings.SuggestionsSettingsFragment"
+			android:key="suggestions"
+			android:title="@string/suggestions" />
+
+		<hanten.wre.app.settings.utils.SplitSwitchPreference
+			android:defaultValue="false"
+			android:key="stats_on"
+			android:title="@string/reading_stats" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reading_time"
+			android:summary="@string/reading_time_estimation_summary"
+			android:title="@string/reading_time_estimation" />
+
+	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/tracking">
 
@@ -56,11 +62,14 @@
 			app:icon="@drawable/ic_shikimori" />
 
 	</PreferenceCategory>
-<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="error_reports"
-		android:summary="@string/error_reports_summary"
-		android:title="@string/error_reports"
-		app:allowDividerAbove="true" />
+	<PreferenceCategory android:title="@string/prefs_group_other">
+
+	<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="error_reports"
+			android:summary="@string/error_reports_summary"
+			android:title="@string/error_reports" />
+
+	</PreferenceCategory>
 
 </PreferenceScreen>

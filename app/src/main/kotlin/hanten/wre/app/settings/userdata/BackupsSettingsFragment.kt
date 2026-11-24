@@ -25,6 +25,9 @@ import hanten.wre.app.settings.utils.LayoutPreference
 class BackupsSettingsFragment : BasePreferenceFragment(R.string.backup_screen_title),
     ActivityResultCallback<Uri?> {
 
+	override val isGroupedCards: Boolean
+		get() = false
+
     private val viewModel: BackupsSettingsViewModel by viewModels()
 
     private val backupSelectCall = registerForActivityResult(

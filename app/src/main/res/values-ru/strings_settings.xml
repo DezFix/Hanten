@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: group titles in the settings sections -->
+<resources>
+	<string name="prefs_group_reading_mode">Режим чтения</string>
+	<string name="prefs_group_resume">Продолжение чтения</string>
+	<string name="prefs_group_zoom">Масштаб</string>
+	<string name="prefs_group_controls">Управление</string>
+	<string name="prefs_group_image">Изображение</string>
+	<string name="prefs_group_screen">Экран</string>
+	<string name="prefs_group_info">Информация на экране</string>
+	<string name="prefs_group_pages">Страницы и загрузка</string>
+	<string name="prefs_group_catalog">Каталог</string>
+	<string name="prefs_group_add_sources">Добавление источников</string>
+	<string name="prefs_group_content">Содержимое</string>
+	<string name="prefs_group_links">Ссылки и зеркала</string>
+	<string name="prefs_group_check">Когда проверять</string>
+	<string name="prefs_group_what_to_check">Что проверять</string>
+	<string name="prefs_group_new_chapters">Новые главы</string>
+	<string name="prefs_group_save_place">Куда сохранять</string>
+	<string name="prefs_group_format">Формат и сеть</string>
+	<string name="prefs_group_preload">Предзагрузка</string>
+	<string name="prefs_group_connection">Подключение</string>
+	<string name="prefs_group_account">Синхронизация</string>
+	<string name="prefs_group_reading">Чтение</string>
+	<string name="prefs_group_other">Прочее</string>
+</resources>

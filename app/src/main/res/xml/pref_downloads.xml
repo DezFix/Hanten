@@ -4,42 +4,49 @@
 	android:title="@string/downloads"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<Preference
-		android:key="local_manga_dirs"
-		android:persistent="false"
-		android:title="@string/local_manga_directories" />
+	<PreferenceCategory android:title="@string/prefs_group_save_place">
 
-	<Preference
-		android:key="local_storage"
-		android:persistent="false"
-		android:title="@string/manga_save_location" />
+		<Preference
+			android:key="local_manga_dirs"
+			android:persistent="false"
+			android:title="@string/local_manga_directories" />
 
-	<ListPreference
-		android:entries="@array/download_formats"
-		android:key="downloads_format"
-		android:title="@string/preferred_download_format"
-		app:useSimpleSummaryProvider="true" />
+		<Preference
+			android:key="local_storage"
+			android:persistent="false"
+			android:title="@string/manga_save_location" />
 
-	<ListPreference
-		android:entries="@array/metered_network_options"
-		android:key="downloads_metered_network"
-		android:title="@string/download_over_cellular"
-		app:useSimpleSummaryProvider="true" />
+	</PreferenceCategory>
 
-	<Preference
-		android:icon="@drawable/ic_info_outline"
-		android:key="tracker_notifications_info"
-		android:persistent="false"
-		android:selectable="false"
-		android:summary="@string/downloads_settings_info" />
+	<PreferenceCategory android:title="@string/prefs_group_format">
 
-	<Preference
-		android:key="ignore_dose"
-		android:persistent="false"
-		android:summary="@string/disable_battery_optimization_summary_downloads"
-		android:title="@string/disable_battery_optimization"
-		app:allowDividerAbove="true"
-		app:isPreferenceVisible="false" />
+		<ListPreference
+			android:entries="@array/download_formats"
+			android:key="downloads_format"
+			android:title="@string/preferred_download_format"
+			app:useSimpleSummaryProvider="true" />
+
+		<ListPreference
+			android:entries="@array/metered_network_options"
+			android:key="downloads_metered_network"
+			android:title="@string/download_over_cellular"
+			app:useSimpleSummaryProvider="true" />
+
+		<Preference
+			android:icon="@drawable/ic_info_outline"
+			android:key="tracker_notifications_info"
+			android:persistent="false"
+			android:selectable="false"
+			android:summary="@string/downloads_settings_info" />
+
+		<Preference
+			android:key="ignore_dose"
+			android:persistent="false"
+			android:summary="@string/disable_battery_optimization_summary_downloads"
+			android:title="@string/disable_battery_optimization"
+			app:isPreferenceVisible="false" />
+
+	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pages_saving">
 

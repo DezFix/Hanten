@@ -4,223 +4,252 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:title="@string/reader_settings">
 
-	<ListPreference
-		android:entries="@array/reader_modes"
-		android:key="reader_mode"
-		android:title="@string/default_mode"
-		app:useSimpleSummaryProvider="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reader_mode_detect"
-		android:summary="@string/detect_reader_mode_summary"
-		android:title="@string/detect_reader_mode" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_smart_resume"
-		android:summary="@string/smart_resume_summary"
-		android:title="@string/smart_resume"
-		app:allowDividerAbove="true" />
-
-	<ListPreference
-		android:defaultValue="PERCENTAGE"
-		android:dependency="reader_smart_resume"
-		android:entries="@array/smart_resume_modes"
-		android:entryValues="@array/smart_resume_mode_values"
-		android:key="reader_smart_resume_mode"
-		android:title="@string/smart_resume_rule"
-		app:useSimpleSummaryProvider="true" />
-
-	<EditTextPreference
-		android:defaultValue="90"
-		android:dependency="reader_smart_resume"
-		android:dialogMessage="@string/smart_resume_percentage_help"
-		android:dialogTitle="@string/smart_resume_threshold"
-		android:key="reader_smart_resume_percentage"
-		android:title="@string/smart_resume_threshold" />
-
-	<EditTextPreference
-		android:defaultValue="1"
-		android:dependency="reader_smart_resume"
-		android:dialogMessage="@string/smart_resume_pages_help"
-		android:dialogTitle="@string/smart_resume_threshold"
-		android:key="reader_smart_resume_pages"
-		android:title="@string/smart_resume_threshold" />
-
-	<hanten.wre.app.settings.utils.HelpSwitchPreference
-		android:defaultValue="false"
-		android:dependency="reader_smart_resume"
-		android:key="reader_smart_resume_wait"
-		android:summary="@string/smart_resume_wait_summary"
-		android:title="@string/smart_resume_wait" />
-
-	<ListPreference
-		android:entries="@array/zoom_modes"
-		android:key="zoom_mode"
-		android:title="@string/scale_mode"
-		app:allowDividerAbove="true"
-		app:useSimpleSummaryProvider="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_zoom_buttons"
-		android:summary="@string/reader_zoom_buttons_summary"
-		android:title="@string/reader_zoom_buttons" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="webtoon_zoom"
-		android:summary="@string/webtoon_zoom_summary"
-		android:title="@string/webtoon_zoom" />
-
-	<hanten.wre.app.settings.utils.SliderPreference
-		android:dependency="webtoon_zoom"
-		android:key="webtoon_zoom_out"
-		android:stepSize="10"
-		android:title="@string/default_webtoon_zoom_out"
-		android:valueFrom="0"
-		android:valueTo="50"
-		app:defaultValue="0"
-		app:tickVisible="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="webtoon_gaps"
-		android:summary="@string/webtoon_gaps_summary"
-		android:title="@string/webtoon_gaps" />
-
-	<MultiSelectListPreference
-		android:entries="@array/reader_controls"
-		android:key="reader_controls"
-		android:title="@string/reader_controls_in_bottom_bar"
-		app:allowDividerAbove="true" />
-
-	<Preference
-		android:key="reader_tap_actions"
-		android:persistent="false"
-		android:summary="@string/reader_actions_summary"
-		android:title="@string/reader_actions" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_taps_ltr"
-		android:summary="@string/reader_control_ltr_summary"
-		android:title="@string/reader_control_ltr" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_volume_buttons"
-		android:summary="@string/switch_pages_volume_buttons_summary"
-		android:title="@string/switch_pages_volume_buttons" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_navigation_inverted"
-		android:summary="@string/reader_navigation_inverted_summary"
-		android:title="@string/reader_navigation_inverted" />
-
-	<ListPreference
-		android:entries="@array/reader_animation"
-		android:key="reader_animation2"
-		android:title="@string/pages_animation"
-		app:useSimpleSummaryProvider="true" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="webtoon_pull_gesture"
-        android:summary="@string/enable_pull_gesture_summary"
-        android:title="@string/enable_pull_gesture_title" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="enhanced_colors"
-		android:summary="@string/enhanced_colors_summary"
-		android:title="@string/enhanced_colors"
-		app:allowDividerAbove="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_optimize"
-		android:summary="@string/reader_optimize_summary"
-		android:title="@string/reader_optimize" />
-
-	<MultiSelectListPreference
-		android:entries="@array/reader_crop"
-		android:entryValues="@array/values_reader_crop"
-		android:key="reader_crop"
-		android:title="@string/crop_pages" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reader_fullscreen"
-		android:summary="@string/reader_fullscreen_summary"
-		android:title="@string/fullscreen_mode"
-		app:allowDividerAbove="true" />
-
-	<ListPreference
-		android:entries="@array/screen_orientations"
-		android:key="reader_orientation"
-		android:title="@string/screen_orientation"
-		app:useSimpleSummaryProvider="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reader_screen_on"
-		android:summary="@string/keep_screen_on_summary"
-		android:title="@string/keep_screen_on" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="reader_multitask"
-		android:summary="@string/reader_multitask_summary"
-		android:title="@string/reader_multitask" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reader_bar"
-		android:summary="@string/reader_info_bar_summary"
-		android:title="@string/reader_info_bar"
-		app:allowDividerAbove="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:dependency="reader_bar"
-		android:key="reader_bar_transparent"
-		android:title="@string/reader_info_bar_transparent" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="reader_chapter_toast"
-		android:summary="@string/reader_chapter_toast_summary"
-		android:title="@string/reader_chapter_toast" />
-
-	<ListPreference
-		android:entries="@array/reader_backgrounds"
-		android:key="reader_background"
-		android:title="@string/background"
-		app:allowDividerAbove="true"
-		app:useSimpleSummaryProvider="true" />
-
-	<SwitchPreferenceCompat
-		android:defaultValue="false"
-		android:key="pages_numbers"
-		android:summary="@string/show_pages_numbers_summary"
-		android:title="@string/show_pages_numbers" />
-
-	<ListPreference
-		android:defaultValue="2"
-		android:entries="@array/network_policy"
-		android:entryValues="@array/values_network_policy"
-		android:key="pages_preload"
-		android:title="@string/preload_pages"
-		app:useSimpleSummaryProvider="true" />
-
-	<PreferenceCategory
-		android:title="@string/novel_settings_title"
-		app:allowDividerAbove="true">
+	<PreferenceCategory android:title="@string/prefs_group_reading_mode">
 
 		<ListPreference
+			android:entries="@array/reader_modes"
+			android:key="reader_mode"
+			android:title="@string/default_mode"
+			app:useSimpleSummaryProvider="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reader_mode_detect"
+			android:summary="@string/detect_reader_mode_summary"
+			android:title="@string/detect_reader_mode" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_resume">
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_smart_resume"
+			android:summary="@string/smart_resume_summary"
+			android:title="@string/smart_resume"
+	 />
+
+		<ListPreference
+			android:defaultValue="PERCENTAGE"
+			android:dependency="reader_smart_resume"
+			android:entries="@array/smart_resume_modes"
+			android:entryValues="@array/smart_resume_mode_values"
+			android:key="reader_smart_resume_mode"
+			android:title="@string/smart_resume_rule"
+			app:useSimpleSummaryProvider="true" />
+
+		<EditTextPreference
+			android:defaultValue="90"
+			android:dependency="reader_smart_resume"
+			android:dialogMessage="@string/smart_resume_percentage_help"
+			android:dialogTitle="@string/smart_resume_threshold"
+			android:key="reader_smart_resume_percentage"
+			android:title="@string/smart_resume_threshold" />
+
+		<EditTextPreference
+			android:defaultValue="1"
+			android:dependency="reader_smart_resume"
+			android:dialogMessage="@string/smart_resume_pages_help"
+			android:dialogTitle="@string/smart_resume_threshold"
+			android:key="reader_smart_resume_pages"
+			android:title="@string/smart_resume_threshold" />
+
+		<hanten.wre.app.settings.utils.HelpSwitchPreference
+			android:defaultValue="false"
+			android:dependency="reader_smart_resume"
+			android:key="reader_smart_resume_wait"
+			android:summary="@string/smart_resume_wait_summary"
+			android:title="@string/smart_resume_wait" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_zoom">
+
+		<ListPreference
+			android:entries="@array/zoom_modes"
+			android:key="zoom_mode"
+			android:title="@string/scale_mode"
+			app:useSimpleSummaryProvider="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_zoom_buttons"
+			android:summary="@string/reader_zoom_buttons_summary"
+			android:title="@string/reader_zoom_buttons" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="webtoon_zoom"
+			android:summary="@string/webtoon_zoom_summary"
+			android:title="@string/webtoon_zoom" />
+
+		<hanten.wre.app.settings.utils.SliderPreference
+			android:dependency="webtoon_zoom"
+			android:key="webtoon_zoom_out"
+			android:stepSize="10"
+			android:title="@string/default_webtoon_zoom_out"
+			android:valueFrom="0"
+			android:valueTo="50"
+			app:defaultValue="0"
+			app:tickVisible="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="webtoon_gaps"
+			android:summary="@string/webtoon_gaps_summary"
+			android:title="@string/webtoon_gaps" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_controls">
+
+		<MultiSelectListPreference
+			android:entries="@array/reader_controls"
+			android:key="reader_controls"
+			android:title="@string/reader_controls_in_bottom_bar"
+	 />
+
+		<Preference
+			android:key="reader_tap_actions"
+			android:persistent="false"
+			android:summary="@string/reader_actions_summary"
+			android:title="@string/reader_actions" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_taps_ltr"
+			android:summary="@string/reader_control_ltr_summary"
+			android:title="@string/reader_control_ltr" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_volume_buttons"
+			android:summary="@string/switch_pages_volume_buttons_summary"
+			android:title="@string/switch_pages_volume_buttons" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_navigation_inverted"
+			android:summary="@string/reader_navigation_inverted_summary"
+			android:title="@string/reader_navigation_inverted" />
+
+		<hanten.wre.app.settings.utils.SegmentedListPreference
+			android:entries="@array/reader_animation"
+			android:key="reader_animation2"
+			android:title="@string/pages_animation"
+			app:useSimpleSummaryProvider="true" />
+
+	    <SwitchPreferenceCompat
+	        android:defaultValue="false"
+	        android:key="webtoon_pull_gesture"
+	        android:summary="@string/enable_pull_gesture_summary"
+	        android:title="@string/enable_pull_gesture_title" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_image">
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="enhanced_colors"
+			android:summary="@string/enhanced_colors_summary"
+			android:title="@string/enhanced_colors"
+	 />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_optimize"
+			android:summary="@string/reader_optimize_summary"
+			android:title="@string/reader_optimize" />
+
+		<MultiSelectListPreference
+			android:entries="@array/reader_crop"
+			android:entryValues="@array/values_reader_crop"
+			android:key="reader_crop"
+			android:title="@string/crop_pages" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_screen">
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reader_fullscreen"
+			android:summary="@string/reader_fullscreen_summary"
+			android:title="@string/fullscreen_mode"
+	 />
+
+		<ListPreference
+			android:entries="@array/screen_orientations"
+			android:key="reader_orientation"
+			android:title="@string/screen_orientation"
+			app:useSimpleSummaryProvider="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reader_screen_on"
+			android:summary="@string/keep_screen_on_summary"
+			android:title="@string/keep_screen_on" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="reader_multitask"
+			android:summary="@string/reader_multitask_summary"
+			android:title="@string/reader_multitask" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_info">
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reader_bar"
+			android:summary="@string/reader_info_bar_summary"
+			android:title="@string/reader_info_bar"
+	 />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:dependency="reader_bar"
+			android:key="reader_bar_transparent"
+			android:title="@string/reader_info_bar_transparent" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="reader_chapter_toast"
+			android:summary="@string/reader_chapter_toast_summary"
+			android:title="@string/reader_chapter_toast" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/prefs_group_pages">
+
+		<ListPreference
+			android:entries="@array/reader_backgrounds"
+			android:key="reader_background"
+			android:title="@string/background"
+			app:useSimpleSummaryProvider="true" />
+
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="pages_numbers"
+			android:summary="@string/show_pages_numbers_summary"
+			android:title="@string/show_pages_numbers" />
+
+		<hanten.wre.app.settings.utils.SegmentedListPreference
+			android:defaultValue="2"
+			android:entries="@array/network_policy"
+			android:entryValues="@array/values_network_policy"
+			android:key="pages_preload"
+			android:title="@string/preload_pages"
+			app:useSimpleSummaryProvider="true" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/novel_settings_title">
+
+		<hanten.wre.app.settings.utils.SegmentedListPreference
 			android:defaultValue="CONTINUOUS_SCROLL"
 			android:entries="@array/novel_reading_modes"
 			android:entryValues="@array/values_novel_reading_modes"
@@ -228,7 +257,7 @@
 			android:title="@string/novel_reading_mode"
 			app:useSimpleSummaryProvider="true" />
 
-		<ListPreference
+		<hanten.wre.app.settings.utils.SegmentedListPreference
 			android:defaultValue="DARK"
 			android:entries="@array/novel_themes"
 			android:entryValues="@array/values_novel_themes"

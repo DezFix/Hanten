@@ -33,6 +33,9 @@ import kotlin.random.Random
 @AndroidEntryPoint
 class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
+	override val isGroupedCards: Boolean
+		get() = false
+
 	private val viewModel by viewModels<AboutSettingsViewModel>()
 
 	@Inject

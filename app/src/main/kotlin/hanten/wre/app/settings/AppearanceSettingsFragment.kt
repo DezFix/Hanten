@@ -61,6 +61,9 @@ class AppearanceSettingsFragment :
     BasePreferenceFragment(R.string.appearance),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+    override val isGroupedCards: Boolean
+        get() = false
+
     private val customThemeFilePicker = registerForActivityResult(
         ActivityResultContracts.OpenDocument(),
     ) { uri ->

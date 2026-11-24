@@ -48,7 +48,8 @@ class NavTabsPreference @JvmOverloads constructor(
 			chip.isCheckable = true
 			chip.isChecked = isOn
 			chip.isCheckedIconVisible = false
-			chip.isEnabled = isOn || selected.size < max
+			// More holds the settings: it can't be switched off
+			chip.isEnabled = item != NavItem.MORE && (isOn || selected.size < max)
 			chip.setOnClickListener { toggle(settings, item) }
 			group.addView(chip)
 		}
@@ -58,6 +59,7 @@ class NavTabsPreference @JvmOverloads constructor(
 
 	private fun toggle(settings: AppSettings, item: NavItem) {
 		val current = settings.mainNavItems.toMutableList()
+		if (item == NavItem.MORE) return
 		if (item in current) {
 			if (current.size > 1) current.remove(item)
 		} else if (current.size < MainNavigationDelegate.MAX_ITEM_COUNT) {

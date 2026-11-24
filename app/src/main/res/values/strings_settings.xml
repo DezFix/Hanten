@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: group titles in the settings sections -->
+<resources>
+	<string name="prefs_group_reading_mode">Reading mode</string>
+	<string name="prefs_group_resume">Resume reading</string>
+	<string name="prefs_group_zoom">Zoom</string>
+	<string name="prefs_group_controls">Controls</string>
+	<string name="prefs_group_image">Image</string>
+	<string name="prefs_group_screen">Screen</string>
+	<string name="prefs_group_info">On-screen info</string>
+	<string name="prefs_group_pages">Pages and loading</string>
+	<string name="prefs_group_catalog">Catalog</string>
+	<string name="prefs_group_add_sources">Adding sources</string>
+	<string name="prefs_group_content">Content</string>
+	<string name="prefs_group_links">Links and mirrors</string>
+	<string name="prefs_group_check">When to check</string>
+	<string name="prefs_group_what_to_check">What to check</string>
+	<string name="prefs_group_new_chapters">New chapters</string>
+	<string name="prefs_group_save_place">Where to save</string>
+	<string name="prefs_group_format">Format and network</string>
+	<string name="prefs_group_preload">Preloading</string>
+	<string name="prefs_group_connection">Connection</string>
+	<string name="prefs_group_account">Sync</string>
+	<string name="prefs_group_reading">Reading</string>
+	<string name="prefs_group_other">Other</string>
+</resources>

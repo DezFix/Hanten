@@ -4,75 +4,87 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/remote_sources">
 
-    <ListPreference
-        android:key="sources_sort_order"
-        android:title="@string/sort_order"
-        app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory android:title="@string/prefs_group_catalog">
 
-    <SwitchPreferenceCompat
-        android:defaultValue="true"
-        android:key="sources_grid"
-        android:title="@string/show_in_grid_view" />
+        <ListPreference
+            android:key="sources_sort_order"
+            android:title="@string/sort_order"
+            app:useSimpleSummaryProvider="true" />
 
-    <PreferenceScreen
-        android:fragment="hanten.wre.app.settings.sources.manage.SourcesManageFragment"
-        android:key="remote_sources"
-        android:persistent="false"
-        android:title="@string/manage_sources" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="sources_grid"
+            android:title="@string/show_in_grid_view" />
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="sources_enabled_all"
-        android:summary="@string/enable_all_sources_summary"
-        android:title="@string/enable_all_sources"
-        app:allowDividerAbove="true" />
+        <PreferenceScreen
+            android:fragment="hanten.wre.app.settings.sources.manage.SourcesManageFragment"
+            android:key="remote_sources"
+            android:persistent="false"
+            android:title="@string/manage_sources" />
 
-    <Preference
-        android:key="sources_catalog"
-        android:persistent="false"
-        android:title="@string/sources_catalog" />
+    </PreferenceCategory>
 
-    <Preference
-        android:key="extension_downloader"
-        android:persistent="false"
-        android:summary="@string/extensions_manager_summary"
-        android:title="@string/extensions_manager" />
+    <PreferenceCategory android:title="@string/prefs_group_add_sources">
 
-    <SwitchPreferenceCompat
-        android:defaultValue="true"
-        android:key="no_nsfw"
-        android:summary="@string/disable_nsfw_summary"
-        android:title="@string/disable_nsfw" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="sources_enabled_all"
+            android:summary="@string/enable_all_sources_summary"
+            android:title="@string/enable_all_sources" />
 
-    <ListPreference
-        android:entries="@array/incognito_nsfw_options"
-        android:key="incognito_nsfw"
-        android:title="@string/incognito_for_nsfw"
-        app:useSimpleSummaryProvider="true" />
+        <Preference
+            android:key="sources_catalog"
+            android:persistent="false"
+            android:title="@string/sources_catalog" />
 
-    <EditTextPreference
-        android:key="preferred_branches"
-        android:summary="@string/preferred_branches_summary"
-        android:title="@string/preferred_branches"
-        app:allowDividerAbove="true" />
+        <Preference
+            android:key="extension_downloader"
+            android:persistent="false"
+            android:summary="@string/extensions_manager_summary"
+            android:title="@string/extensions_manager" />
 
-    <Preference
-        android:key="tags_blacklist"
-        android:title="@string/tags_blacklist"
-        android:summary="@string/tags_blacklist_summary"
-        app:allowDividerAbove="true" />
+    </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="mirror_switching"
-        android:summary="@string/mirror_switching_summary"
-        android:title="@string/mirror_switching"
-        app:allowDividerAbove="true" />
+    <PreferenceCategory android:title="@string/prefs_group_content">
 
-    <SwitchPreferenceCompat
-        android:key="handle_links"
-        android:persistent="false"
-        android:summary="@string/handle_links_summary"
-        android:title="@string/handle_links" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="no_nsfw"
+            android:summary="@string/disable_nsfw_summary"
+            android:title="@string/disable_nsfw" />
+
+        <ListPreference
+            android:entries="@array/incognito_nsfw_options"
+            android:key="incognito_nsfw"
+            android:title="@string/incognito_for_nsfw"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="preferred_branches"
+            android:summary="@string/preferred_branches_summary"
+            android:title="@string/preferred_branches" />
+
+        <Preference
+            android:key="tags_blacklist"
+            android:title="@string/tags_blacklist"
+            android:summary="@string/tags_blacklist_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefs_group_links">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="mirror_switching"
+            android:summary="@string/mirror_switching_summary"
+            android:title="@string/mirror_switching" />
+
+        <SwitchPreferenceCompat
+            android:key="handle_links"
+            android:persistent="false"
+            android:summary="@string/handle_links_summary"
+            android:title="@string/handle_links" />
+
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

@@ -10,6 +10,7 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import androidx.preference.get
@@ -29,6 +30,8 @@ import hanten.wre.app.core.util.ext.parentView
 import hanten.wre.app.core.util.ext.start
 import hanten.wre.app.core.util.ext.systemBarsInsets
 import hanten.wre.app.settings.SettingsActivity
+import hanten.wre.app.settings.utils.GroupedPreferenceAdapter
+import hanten.wre.app.settings.utils.LayoutPreference
 import javax.inject.Inject
 import com.google.android.material.R as materialR
 
@@ -47,6 +50,23 @@ abstract class BasePreferenceFragment(@StringRes private val titleId: Int) :
 	override val recyclerView: RecyclerView?
 		get() = listView
 
+	/** Hanten 3.0: draw rows as rounded cards grouped by category (off for screens with own blocks) */
+	protected open val isGroupedCards: Boolean
+		get() = true
+
+	/** Rows that keep their own look and are never put into a card */
+	protected open fun isCardPreference(preference: Preference): Boolean =
+		preference !is PreferenceCategory &&
+			preference !is LayoutPreference &&
+			preference.layoutResource != R.layout.preference_toggle_header
+
+	override fun onCreateAdapter(preferenceScreen: PreferenceScreen): RecyclerView.Adapter<*> =
+		if (isGroupedCards) {
+			GroupedPreferenceAdapter(preferenceScreen, ::isCardPreference)
+		} else {
+			super.onCreateAdapter(preferenceScreen)
+		}
+
 	override fun onAttach(context: Context) {
 		super.onAttach(context)
 		val entryPoint = EntryPointAccessors.fromApplication<BaseActivityEntryPoint>(context)
@@ -59,6 +79,9 @@ abstract class BasePreferenceFragment(@StringRes private val titleId: Int) :
 		val themedContext = (view.parentView ?: view).context
 		view.setBackgroundColor(themedContext.getThemeColor(android.R.attr.colorBackground))
 		listView.clipToPadding = false
+		if (isGroupedCards) {
+			setDivider(null)
+		}
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {

@@ -69,6 +69,7 @@ class NavConfigViewModel @Inject constructor(
 	}
 
 	fun removeItem(item: NavItem) {
+		if (item == NavItem.MORE) return // settings are reachable only from More
 		val newList = items.value.toMutableList()
 		newList.remove(item)
 		if (newList.isEmpty()) {

@@ -104,14 +104,14 @@ data class NovelReaderSettings(
 				customTextColor = prefs.getInt(KEY_TEXT_COLOR, Color.parseColor("#E0E0E0")),
 				fontFamily = prefs.getString(KEY_FONT_FAMILY, "serif") ?: "serif",
 				customFontPath = prefs.getString(KEY_CUSTOM_FONT_PATH, null),
-				lineSpacingMultiplier = prefs.getFloat(KEY_LINE_SPACING, 1.6f),
-				paragraphMarginEm = prefs.getFloat(KEY_PARA_MARGIN, 0f),
-				textIndentEm = prefs.getFloat(KEY_TEXT_INDENT, 1.25f),
+				lineSpacingMultiplier = prefs.getFloatCompat(KEY_LINE_SPACING, 1.6f),
+				paragraphMarginEm = prefs.getFloatCompat(KEY_PARA_MARGIN, 0f),
+				textIndentEm = prefs.getFloatCompat(KEY_TEXT_INDENT, 1.25f),
 				hyphens = prefs.getBoolean(KEY_HYPHENS, true),
 				pageMarginDp = prefs.getIntCompat(KEY_PAGE_MARGIN, 18),
 				textAlignment = prefs.getEnumValue(KEY_TEXT_ALIGN, NovelTextAlign.JUSTIFY),
 				readingMode = prefs.getEnumValue(KEY_READING_MODE, NovelReadingMode.CONTINUOUS_SCROLL),
-				autoScrollSpeed = prefs.getFloat(KEY_AUTO_SCROLL_SPEED, 0f),
+				autoScrollSpeed = prefs.getFloatCompat(KEY_AUTO_SCROLL_SPEED, 0f),
 			)
 		}
 
