@@ -590,6 +590,12 @@ class AppRouter private constructor(
 
     fun showWelcomeSheet() = startActivity(OnboardingActivity::class.java)
 
+    /** Run the first-start setup again from More; it changes sources only if the user changes something */
+    fun showOnboardingAgain() {
+        val context = contextOrNull() ?: return
+        startActivity(Intent(context, OnboardingActivity::class.java).putExtra(OnboardingActivity.EXTRA_RERUN, true))
+    }
+
     fun showChapterPagesSheet() {
         ChaptersPagesSheet().showDistinct()
     }

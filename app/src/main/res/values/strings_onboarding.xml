@@ -26,4 +26,20 @@
 	<string name="profile_name_hint">Nickname</string>
 	<string name="profile_avatar">Avatar</string>
 	<string name="profile_color">Color</string>
+	<string name="onboarding_kind_manga">Manga</string>
+	<string name="onboarding_kind_manga_hint">Japanese comics, page by page</string>
+	<string name="onboarding_kind_webtoon">Manhwa and manhua</string>
+	<string name="onboarding_kind_webtoon_hint">Korean and Chinese comics, vertical scroll</string>
+	<string name="onboarding_kind_novel">Ranobe and books</string>
+	<string name="onboarding_kind_novel_hint">Text, EPUB, read aloud</string>
+	<string name="onboarding_kind_other">Comics and 18+</string>
+	<string name="onboarding_kind_other_hint">Western comics, hentai and the rest</string>
+	<string name="onboarding_popular_sources">Popular sources</string>
+	<string name="onboarding_sources_count">Sources enabled: %d. The rest are in the Catalog.</string>
+	<string name="onboarding_trackers">Trackers (optional)</string>
+	<string name="onboarding_import_kotatsu_hint">.bk.zip file</string>
+	<string name="onboarding_import_mihon_hint">.tachibk file · Mihon, SY, J2K, Komikku</string>
+	<string name="onboarding_import_dirs_hint">Folders with manga you already downloaded</string>
+	<string name="onboarding_rerun">Setup again</string>
+	<string name="onboarding_rerun_hint">Sources, languages, import</string>
 </resources>

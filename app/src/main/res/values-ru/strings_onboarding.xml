@@ -26,4 +26,20 @@
 	<string name="profile_name_hint">Ник</string>
 	<string name="profile_avatar">Аватар</string>
 	<string name="profile_color">Цвет</string>
+	<string name="onboarding_kind_manga">Манга</string>
+	<string name="onboarding_kind_manga_hint">Японские комиксы, листаем страницы</string>
+	<string name="onboarding_kind_webtoon">Манхва и маньхуа</string>
+	<string name="onboarding_kind_webtoon_hint">Корейские и китайские, вертикальная лента</string>
+	<string name="onboarding_kind_novel">Ранобэ и книги</string>
+	<string name="onboarding_kind_novel_hint">Текст, EPUB, озвучка</string>
+	<string name="onboarding_kind_other">Комиксы и 18+</string>
+	<string name="onboarding_kind_other_hint">Западные комиксы, хентай и прочее</string>
+	<string name="onboarding_popular_sources">Популярные источники</string>
+	<string name="onboarding_sources_count">Включено источников: %d. Остальные — в Каталоге.</string>
+	<string name="onboarding_trackers">Трекеры (необязательно)</string>
+	<string name="onboarding_import_kotatsu_hint">Файл .bk.zip</string>
+	<string name="onboarding_import_mihon_hint">Файл .tachibk · Mihon, SY, J2K, Komikku</string>
+	<string name="onboarding_import_dirs_hint">Папки с уже скачанной мангой</string>
+	<string name="onboarding_rerun">Пройти настройку заново</string>
+	<string name="onboarding_rerun_hint">Источники, языки, перенос</string>
 </resources>

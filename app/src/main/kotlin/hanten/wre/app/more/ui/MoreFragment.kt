@@ -73,6 +73,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_storage, R.string.storage_and_network, R.string.more_hint_storage) { openStorageSettings() },
 		Entry(R.drawable.ic_services, R.string.services, R.string.more_hint_services) { openServicesSettings() },
 		Entry(R.drawable.ic_backup_restore, R.string.backup_restore, R.string.more_hint_backup) { openBackupSettings() },
+		Entry(R.drawable.ic_manga_source, R.string.onboarding_rerun, R.string.onboarding_rerun_hint) { showOnboardingAgain() },
 		Entry(R.drawable.ic_info_outline, R.string.about, R.string.more_hint_about) { openAboutSettings() },
 	)
 

@@ -13,7 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -24,10 +24,8 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import hanten.wre.app.R
-import hanten.wre.app.core.model.titleResId
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
-import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.core.ui.BaseActivity
 import hanten.wre.app.core.ui.widgets.ChipsView
 import hanten.wre.app.core.util.ext.getDisplayName
@@ -35,9 +33,11 @@ import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.core.util.ext.tryLaunch
 import hanten.wre.app.databinding.ActivityOnboardingBinding
+import hanten.wre.app.databinding.ItemOnboardingOptionBinding
 import hanten.wre.app.filter.ui.model.FilterProperty
-import hanten.wre.app.parsers.model.ContentType
 import hanten.wre.app.profile.ProfileStyle
+import hanten.wre.app.scrobbling.common.domain.model.ScrobblerService
+import hanten.wre.app.scrobbling.common.ui.ScrobblerAuthHelper
 import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -58,6 +58,9 @@ class OnboardingActivity :
 
 	@Inject
 	lateinit var settings: AppSettings
+
+	@Inject
+	lateinit var scrobblerAuthHelper: ScrobblerAuthHelper
 
 	private val viewModel by viewModels<WelcomeViewModel>()
 	private val backupSelectCall = registerForActivityResult(ActivityResultContracts.OpenDocument(), this)
@@ -80,18 +83,19 @@ class OnboardingActivity :
 			buttonBack.setOnClickListener(this@OnboardingActivity)
 			buttonSkip.setOnClickListener(this@OnboardingActivity)
 			buttonHaveBackup.setOnClickListener(this@OnboardingActivity)
-			buttonRestore.setOnClickListener(this@OnboardingActivity)
-			buttonRestoreMihon.setOnClickListener(this@OnboardingActivity)
-			buttonDirectories.setOnClickListener(this@OnboardingActivity)
-			chipsType.onChipClickListener = this@OnboardingActivity
+			buttonShikimori.setOnClickListener(this@OnboardingActivity)
+			buttonAnilist.setOnClickListener(this@OnboardingActivity)
 			chipsLocales.onChipClickListener = this@OnboardingActivity
-			chipsListMode.onChipClickListener = this@OnboardingActivity
 		}
+		setupImportOptions()
 		createDots()
 		setupProfile()
 		viewModel.locales.observe(this, ::onLocalesChanged)
-		viewModel.types.observe(this, ::onTypesChanged)
-		viewModel.listMode.observe(this, ::onListModeChanged)
+		viewModel.kinds.observe(this, ::onKindsChanged)
+		viewModel.popularSources.observe(this, ::onPopularSourcesChanged)
+		viewModel.enabledCount.observe(this) {
+			viewBinding.textSourcesCount.text = getString(R.string.onboarding_sources_count, it)
+		}
 		showStep(step, animate = false)
 	}
 
@@ -111,11 +115,24 @@ class OnboardingActivity :
 			R.id.button_next -> if (step == LAST_STEP) finish() else showStep(step + 1)
 			R.id.button_back -> showStep(step - 1)
 			R.id.button_skip, R.id.button_have_backup -> showStep(LAST_STEP)
-			R.id.button_restore, R.id.button_restore_mihon -> if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
-				Snackbar.make(v, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
-			}
+			R.id.button_shikimori -> startTrackerAuth(v, ScrobblerService.SHIKIMORI)
+			R.id.button_anilist -> startTrackerAuth(v, ScrobblerService.ANILIST)
+		}
+	}
 
-			R.id.button_directories -> router.openDirectoriesSettings()
+	private fun startTrackerAuth(v: View, service: ScrobblerService) {
+		if (scrobblerAuthHelper.isAuthorized(service)) {
+			router.openScrobblerSettings(service)
+			return
+		}
+		scrobblerAuthHelper.startAuth(this, service).onFailure {
+			Snackbar.make(v, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
+		}
+	}
+
+	private fun pickBackup(v: View) {
+		if (!backupSelectCall.tryLaunch(arrayOf("*/*"))) {
+			Snackbar.make(v, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
 		}
 	}
 
@@ -126,11 +143,7 @@ class OnboardingActivity :
 	}
 
 	override fun onChipClick(chip: Chip, data: Any?) {
-		when (data) {
-			is ContentType -> viewModel.setTypeChecked(data, !chip.isChecked)
-			is Locale -> viewModel.setLocaleChecked(data, !chip.isChecked)
-			is ListMode -> viewModel.setListMode(data)
-		}
+		if (data is Locale) viewModel.setLocaleChecked(data, !chip.isChecked)
 	}
 
 	private fun showStep(index: Int, animate: Boolean = true) {
@@ -258,42 +271,129 @@ class OnboardingActivity :
 		)
 	}
 
-	private fun onTypesChanged(value: FilterProperty<ContentType>) {
-		viewBinding.chipsType.setChips(
-			value.availableItems.map {
-				ChipsView.ChipModel(
-					title = getString(it.titleResId),
-					isChecked = it in value.selectedItems,
-					data = it,
-				)
-			},
-		)
-	}
-
-	private fun onListModeChanged(selected: ListMode) {
-		viewBinding.chipsListMode.setChips(
-			ListMode.entries.map {
-				ChipsView.ChipModel(
-					title = getString(it.titleResId),
-					isChecked = it == selected,
-					data = it,
-				)
-			},
-		)
-	}
-
-	@get:StringRes
-	private val ListMode.titleResId: Int
-		get() = when (this) {
-			ListMode.LIST -> R.string.list
-			ListMode.DETAILED_LIST -> R.string.detailed_list
-			ListMode.GRID -> R.string.grid
+	private fun onKindsChanged(selected: Set<ReadingKind>) {
+		val container = viewBinding.listKinds
+		container.removeAllViews()
+		ReadingKind.entries.forEach { kind ->
+			val (glyph, title, hint) = when (kind) {
+				ReadingKind.MANGA -> Triple("漫", R.string.onboarding_kind_manga, R.string.onboarding_kind_manga_hint)
+				ReadingKind.WEBTOON -> Triple("韓", R.string.onboarding_kind_webtoon, R.string.onboarding_kind_webtoon_hint)
+				ReadingKind.NOVEL -> Triple("文", R.string.onboarding_kind_novel, R.string.onboarding_kind_novel_hint)
+				ReadingKind.OTHER -> Triple("18", R.string.onboarding_kind_other, R.string.onboarding_kind_other_hint)
+			}
+			val isOn = kind in selected
+			addOption(container, glyph, getString(title), getString(hint), isOn, isCard = true) {
+				viewModel.setKindChecked(kind, !isOn)
+			}
 		}
+	}
 
-	private companion object {
+	private fun onPopularSourcesChanged(items: List<PopularSourceModel>) {
+		val binding = viewBinding
+		binding.textSourcesTitle.isVisible = items.isNotEmpty()
+		binding.listSources.isVisible = items.isNotEmpty()
+		binding.listSources.removeAllViews()
+		items.forEach { item ->
+			val glyph = item.title.filter { it.isLetterOrDigit() }.take(2)
+			addOption(binding.listSources, glyph, item.title, item.subtitle, item.isChecked, isCard = false) {
+				viewModel.setSourceChecked(item.source, !item.isChecked)
+			}
+		}
+	}
 
-		const val KEY_STEP = "step"
-		const val LAST_STEP = 4
-		const val ACTIVE_DOT_SCALE = 4.5f
+	private fun setupImportOptions() {
+		val container = viewBinding.listImport
+		addOption(
+			container, "H", getString(R.string.onboarding_import_kotatsu),
+			getString(R.string.onboarding_import_kotatsu_hint), null, isCard = true, onClick = ::pickBackup,
+		)
+		addOption(
+			container, "M", getString(R.string.onboarding_import_mihon),
+			getString(R.string.onboarding_import_mihon_hint), null, isCard = true, onClick = ::pickBackup,
+		)
+		addOption(
+			container, "↓", getString(R.string.local_manga_directories),
+			getString(R.string.onboarding_import_dirs_hint), null, isCard = true,
+		) { router.openDirectoriesSettings() }
+	}
+
+	/**
+	 * One mockup choice row. [isChecked] null = an action row (arrow instead of a check mark).
+	 * Cards are separate rounded blocks; other rows sit inside a shared rounded list.
+	 */
+	private fun addOption(
+		container: LinearLayout,
+		glyph: String,
+		title: String,
+		hint: String?,
+		isChecked: Boolean?,
+		isCard: Boolean,
+		onClick: (View) -> Unit,
+	) {
+		val row = ItemOnboardingOptionBinding.inflate(layoutInflater, container, false)
+		row.textGlyph.text = glyph
+		row.textTitle.text = title
+		row.textHint.text = hint
+		row.textHint.isVisible = !hint.isNullOrEmpty()
+		val primary = getThemeColor(appcompatR.attr.colorPrimary)
+		val outline = getThemeColor(materialR.attr.colorOutline)
+		val density = resources.displayMetrics.density
+		when (isChecked) {
+			true -> {
+				row.imageCheck.setImageResource(R.drawable.ic_check)
+				row.imageCheck.imageTintList = ColorStateList.valueOf(getThemeColor(materialR.attr.colorOnPrimary))
+				row.imageCheck.setPadding((3 * density).toInt(), (3 * density).toInt(), (3 * density).toInt(), (3 * density).toInt())
+				row.imageCheck.background = GradientDrawable().apply {
+					if (isCard) shape = GradientDrawable.OVAL else cornerRadius = 6 * density
+					setColor(primary)
+				}
+			}
+
+			false -> {
+				row.imageCheck.setImageDrawable(null)
+				row.imageCheck.background = GradientDrawable().apply {
+					if (isCard) shape = GradientDrawable.OVAL else cornerRadius = 6 * density
+					setStroke((2 * density).toInt(), outline)
+				}
+			}
+
+			null -> {
+				row.imageCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_expand_more))
+				row.imageCheck.rotation = -90f
+				row.imageCheck.imageTintList = ColorStateList.valueOf(outline)
+			}
+		}
+		if (isCard) {
+			row.root.background = GradientDrawable().apply {
+				cornerRadius = 20 * density
+				setColor(
+					getThemeColor(
+						if (isChecked == true) materialR.attr.colorPrimaryContainer else materialR.attr.colorSurfaceContainer,
+					),
+				)
+				setStroke((2 * density).toInt(), if (isChecked == true) primary else Color.TRANSPARENT)
+			}
+		} else {
+			(row.root.layoutParams as? LinearLayout.LayoutParams)?.topMargin = 0
+			val tile = (40 * density).toInt()
+			row.textGlyph.layoutParams = row.textGlyph.layoutParams.apply {
+				width = tile
+				height = tile
+			}
+			row.textGlyph.textSize = 14f
+		}
+		if (isChecked != null) {
+			row.root.isSelected = isChecked
+		}
+		row.root.setOnClickListener(onClick)
+		container.addView(row.root)
+	}
+
+	companion object {
+
+		const val EXTRA_RERUN = "rerun"
+		private const val KEY_STEP = "step"
+		private const val LAST_STEP = 4
+		private const val ACTIVE_DOT_SCALE = 4.5f
 	}
 }

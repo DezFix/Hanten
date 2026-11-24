@@ -212,26 +212,12 @@
 					android:layout_height="wrap_content"
 					android:text="@string/onboarding_kinds_subtitle" />
 
-				<hanten.wre.app.core.ui.widgets.ChipsView
-					android:id="@+id/chips_type"
+				<LinearLayout
+					android:id="@+id/list_kinds"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="20dp"
-					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
-
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="28dp"
-					android:text="@string/list_mode"
-					android:textAppearance="?textAppearanceTitleMedium" />
-
-				<hanten.wre.app.core.ui.widgets.ChipsView
-					android:id="@+id/chips_list_mode"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="12dp"
-					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+					android:layout_marginTop="10dp"
+					android:orientation="vertical" />
 			</LinearLayout>
 
 			<!-- Step 3: languages -->
@@ -261,6 +247,32 @@
 					android:layout_height="wrap_content"
 					android:layout_marginTop="20dp"
 					app:chipStyle="@style/Widget.Hanten.Chip.Filter" />
+
+				<TextView
+					android:id="@+id/text_sources_title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="24dp"
+					android:text="@string/onboarding_popular_sources"
+					android:textAppearance="?textAppearanceTitleMedium"
+					android:textStyle="bold" />
+
+				<LinearLayout
+					android:id="@+id/list_sources"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:background="@drawable/bg_more_section"
+					android:orientation="vertical"
+					android:paddingVertical="4dp" />
+
+				<TextView
+					android:id="@+id/text_sources_count"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:textAppearance="?textAppearanceBodyMedium"
+					android:textColor="?colorOnSurfaceVariant" />
 			</LinearLayout>
 
 			<!-- Step 4: move the library over -->
@@ -284,32 +296,47 @@
 					android:layout_height="wrap_content"
 					android:text="@string/onboarding_import_subtitle" />
 
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_restore"
-					style="@style/Widget.Hanten.Onboarding.Option"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="20dp"
-					android:text="@string/onboarding_import_kotatsu"
-					app:icon="@drawable/ic_backup_restore" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_restore_mihon"
-					style="@style/Widget.Hanten.Onboarding.Option"
+				<LinearLayout
+					android:id="@+id/list_import"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="10dp"
-					android:text="@string/onboarding_import_mihon"
-					app:icon="@drawable/ic_backup_restore" />
+					android:orientation="vertical" />
 
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/button_directories"
-					style="@style/Widget.Hanten.Onboarding.Option"
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="24dp"
+					android:text="@string/onboarding_trackers"
+					android:textAppearance="?textAppearanceTitleMedium"
+					android:textStyle="bold" />
+
+				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="10dp"
-					android:text="@string/local_manga_directories"
-					app:icon="@drawable/ic_storage" />
+					android:orientation="horizontal">
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_shikimori"
+						style="@style/Widget.Material3.Button.OutlinedButton"
+						android:layout_width="0dp"
+						android:layout_height="52dp"
+						android:layout_marginEnd="6dp"
+						android:layout_weight="1"
+						android:text="@string/shikimori"
+						app:shapeAppearance="?shapeAppearanceCornerLarge" />
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_anilist"
+						style="@style/Widget.Material3.Button.OutlinedButton"
+						android:layout_width="0dp"
+						android:layout_height="52dp"
+						android:layout_marginStart="6dp"
+						android:layout_weight="1"
+						android:text="@string/anilist"
+						app:shapeAppearance="?shapeAppearanceCornerLarge" />
+				</LinearLayout>
 
 				<TextView
 					android:layout_width="match_parent"
