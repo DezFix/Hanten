@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.TwoStatePreference
 import com.google.android.material.color.DynamicColors
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,8 +62,10 @@ class AppearanceSettingsFragment :
     BasePreferenceFragment(R.string.appearance),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    override val isGroupedCards: Boolean
-        get() = false
+    // Hanten 3.0: custom blocks on top keep their look; plain rows (tab order, language, categories) are cards
+    override fun isCardPreference(preference: Preference): Boolean =
+        super.isCardPreference(preference) &&
+            (preference.parent is PreferenceCategory || preference.key == "nav_main" || preference.key == "app_locale")
 
     private val customThemeFilePicker = registerForActivityResult(
         ActivityResultContracts.OpenDocument(),

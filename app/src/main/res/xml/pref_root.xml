@@ -48,7 +48,7 @@
         android:fragment="hanten.wre.app.settings.userdata.BackupsSettingsFragment"
         android:icon="@drawable/ic_backup_restore"
         android:key="userdata"
-        android:title="@string/backup_restore" />
+        android:title="@string/backup_screen_title" />
 
     <PreferenceScreen
         android:fragment="hanten.wre.app.settings.about.AboutSettingsFragment"

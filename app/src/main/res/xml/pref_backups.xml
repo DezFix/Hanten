@@ -2,7 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/backup_restore">
+    android:title="@string/backup_screen_title">
 
     <!-- Hanten 3.0: big buttons per mockup; the rows below stay for settings search and are hidden in code -->
     <hanten.wre.app.settings.utils.LayoutPreference
@@ -45,8 +45,11 @@
 
     <PreferenceScreen
         android:fragment="hanten.wre.app.backups.ui.periodical.PeriodicalBackupSettingsFragment"
+        android:icon="@drawable/ic_timer"
         android:key="backup_periodic"
+        android:layout="@layout/preference_card"
         android:persistent="false"
+        android:summary="@string/periodic_backups_enable"
         android:title="@string/periodic_backups" />
 
 </PreferenceScreen>
