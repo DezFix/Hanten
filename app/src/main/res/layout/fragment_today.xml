@@ -19,6 +19,22 @@
 		android:paddingTop="8dp"
 		android:paddingBottom="96dp">
 
+		<!-- seasonal greeting (hanami, Tanabata, Halloween, New Year): easter egg, hidden the rest of the year -->
+		<TextView
+			android:id="@+id/text_season"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginBottom="10dp"
+			android:background="@drawable/bg_season_chip"
+			android:paddingHorizontal="14dp"
+			android:paddingVertical="6dp"
+			android:textAppearance="?textAppearanceLabelLarge"
+			android:textColor="?colorOnTertiaryContainer"
+			android:visibility="gone"
+			tools:text="🌸 Сезон ханами"
+			tools:visibility="visible" />
+
 		<com.google.android.material.card.MaterialCardView
 			android:id="@+id/card_continue"
 			style="@style/Widget.Hanten.CardView"
@@ -115,6 +131,104 @@
 						android:layout_height="wrap_content"
 						app:cornerRadius="14dp"
 						android:text="@string/read" />
+				</LinearLayout>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- Ko-fi: 14 days after the first launch; «Не сейчас» = again in 60 days, the cross = never -->
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/card_kofi"
+			style="@style/Widget.Hanten.CardView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginTop="12dp"
+			android:visibility="gone"
+			app:cardBackgroundColor="?colorSecondaryContainer"
+			app:cardCornerRadius="22dp"
+			tools:visibility="visible">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingStart="16dp"
+				android:paddingTop="8dp"
+				android:paddingEnd="8dp"
+				android:paddingBottom="12dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center_vertical"
+					android:orientation="horizontal">
+
+					<FrameLayout
+						android:layout_width="40dp"
+						android:layout_height="40dp"
+						android:background="@drawable/bg_donate_icon">
+
+						<ImageView
+							android:layout_width="22dp"
+							android:layout_height="22dp"
+							android:layout_gravity="center"
+							android:importantForAccessibility="no"
+							android:src="@drawable/ic_heart"
+							app:tint="?colorOnPrimary" />
+					</FrameLayout>
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="12dp"
+						android:layout_weight="1"
+						android:text="@string/kofi_banner_title"
+						android:textAppearance="?textAppearanceTitleMedium"
+						android:textColor="?colorOnSecondaryContainer"
+						android:textStyle="bold" />
+
+					<ImageButton
+						android:id="@+id/button_kofi_close"
+						android:layout_width="40dp"
+						android:layout_height="40dp"
+						android:background="?selectableItemBackgroundBorderless"
+						android:contentDescription="@string/kofi_banner_never"
+						android:src="@drawable/ic_close_small"
+						app:tint="?colorOnSecondaryContainer" />
+				</LinearLayout>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginEnd="8dp"
+					android:text="@string/kofi_banner_text"
+					android:textAppearance="?textAppearanceBodyMedium"
+					android:textColor="?colorOnSecondaryContainer" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:layout_marginEnd="8dp"
+					android:gravity="end|center_vertical"
+					android:orientation="horizontal">
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_kofi_later"
+						style="@style/Widget.Material3.Button.TextButton"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/kofi_banner_later"
+						android:textColor="?colorOnSecondaryContainer" />
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/button_kofi_support"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="8dp"
+						android:text="@string/kofi_banner_support"
+						app:cornerRadius="14dp" />
 				</LinearLayout>
 			</LinearLayout>
 		</com.google.android.material.card.MaterialCardView>

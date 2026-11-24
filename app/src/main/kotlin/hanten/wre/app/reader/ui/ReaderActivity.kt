@@ -48,6 +48,8 @@ import hanten.wre.app.core.model.parcelable.ParcelableManga
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.LocalState
+import hanten.wre.app.extras.ReadingEggs
 import hanten.wre.app.core.prefs.ReaderMode
 import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.ui.dialog.buildAlertDialog
@@ -92,6 +94,9 @@ class ReaderActivity :
 
     @Inject
     lateinit var settings: AppSettings
+
+    @Inject
+    lateinit var localState: LocalState
 
     @Inject
     lateinit var tapGridSettings: TapGridSettings
@@ -545,6 +550,10 @@ class ReaderActivity :
             return
         }
         val chapterTitle = uiState.getChapterTitle(resources)
+        // easter eggs: the reader moved on to the next chapter (1000th → fireworks)
+        val isMilestone = previous != null && !uiState.incognito &&
+            uiState.chapterIndex == previous.chapterIndex + 1 &&
+            ReadingEggs.onChapterFinished(this, settings, localState)
         supportActionBar?.subtitle = when {
             uiState.incognito -> getString(R.string.incognito_mode)
             uiState.totalPages > 0 -> getString(
@@ -556,7 +565,11 @@ class ReaderActivity :
 
             else -> chapterTitle
         }
-        if (
+        if (isMilestone) {
+            viewBinding.toastView.showTemporary(getString(R.string.chapter_milestone_1000), MILESTONE_TOAST_DURATION)
+        } else if (previous == null && ReadingEggs.shouldShowNightReminder(settings, localState)) {
+            viewBinding.toastView.showTemporary(getString(R.string.night_reminder), MILESTONE_TOAST_DURATION)
+        } else if (
             settings.isReaderChapterToastEnabled &&
             chapterTitle != previous?.getChapterTitle(resources) &&
             chapterTitle.isNotEmpty()
@@ -634,5 +647,6 @@ class ReaderActivity :
     companion object {
 
         private const val TOAST_DURATION = 2000L
+        private const val MILESTONE_TOAST_DURATION = 4000L
     }
 }

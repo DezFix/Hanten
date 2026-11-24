@@ -25,6 +25,9 @@ enum class ColorScheme(
 	MAMIMI(R.style.ThemeOverlay_Hanten_Mamimi, R.string.theme_name_mamimi),
 	KANADE(R.style.ThemeOverlay_Hanten_Kanade, R.string.theme_name_kanade),
 	ITSUKA(R.style.ThemeOverlay_Hanten_Itsuka, R.string.theme_name_itsuka),
+
+	/** Easter egg: listed only after the volume-key code (AppSettings.isRetroThemeUnlocked). */
+	RETRO(R.style.ThemeOverlay_Hanten_Retro, R.string.theme_name_retro),
 	CUSTOM(R.style.ThemeOverlay_Hanten_Custom_Light, R.string.theme_name_custom),
 	;
 
@@ -40,6 +43,7 @@ enum class ColorScheme(
 		fun getAvailableList(): List<ColorScheme> {
 			val list = ColorScheme.entries.toMutableList()
 			list.remove(CUSTOM)
+			list.remove(RETRO)
 			if (!DynamicColors.isDynamicColorAvailable()) {
 				list.remove(MONET)
 				list.remove(EXPRESSIVE)

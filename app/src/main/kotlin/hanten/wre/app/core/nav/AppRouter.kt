@@ -1,5 +1,9 @@
 package hanten.wre.app.core.nav
 
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
+import hanten.wre.app.core.prefs.AnimationLevel
 import android.accounts.Account
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -146,8 +150,26 @@ class AppRouter private constructor(
 
     fun openSearch(source: MangaSource, query: String) = openList(source, MangaListFilter(query = query), null)
 
-    fun openDetails(manga: Manga, sourceTitle: String? = null) {
-        startActivity(detailsIntent(contextOrNull() ?: return, manga, sourceTitle))
+    /**
+     * [itemView]: the tapped list card; when it has a loaded cover and animations are FULL,
+     * the cover flies into the title card (shared element transition).
+     */
+    fun openDetails(manga: Manga, sourceTitle: String? = null, itemView: View? = null) {
+        val context = contextOrNull() ?: return
+        val intent = detailsIntent(context, manga, sourceTitle)
+        val host = activity ?: fragment?.activity
+        val cover = itemView?.let { it as? ImageView ?: it.findViewById<View>(R.id.imageView_cover) as? ImageView }
+        if (host != null && cover != null && cover.drawable != null && cover.isAttachedToWindow &&
+            AnimationLevel.effective(context, settings) == AnimationLevel.FULL
+        ) {
+            val name = "cover_" + manga.id
+            ViewCompat.setTransitionName(cover, name)
+            intent.putExtra(KEY_COVER_TRANSITION, name)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(host, cover, name)
+            startActivity(intent, options.toBundle())
+        } else {
+            startActivity(intent)
+        }
     }
 
     fun openDetails(mangaId: Long) {
@@ -898,6 +920,7 @@ class AppRouter private constructor(
             .build()
 
         const val KEY_DATA = "data"
+        const val KEY_COVER_TRANSITION = "cover_transition"
         const val KEY_SCROLL_TO_STATS = "scroll_to_stats"
         const val ACTION_SETTINGS_SEARCH = "${BuildConfig.APPLICATION_ID}.action.SETTINGS_SEARCH"
         const val KEY_ENTRIES = "entries"

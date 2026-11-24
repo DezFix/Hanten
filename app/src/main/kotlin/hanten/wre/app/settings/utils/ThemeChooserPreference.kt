@@ -120,6 +120,10 @@ class ThemeChooserPreference @JvmOverloads constructor(
 	private fun buildItems(): List<ThemeItem> {
 		val result = ArrayList<ThemeItem>()
 		ColorScheme.getAvailableList().mapTo(result) { ThemeItem(it, null) }
+		val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
+		if (prefs.getBoolean(hanten.wre.app.core.prefs.AppSettings.KEY_RETRO_UNLOCKED, false)) {
+			result.add(ThemeItem(ColorScheme.RETRO, null))
+		}
 		if (DynamicColors.isDynamicColorAvailable()) {
 			store.themes.mapTo(result) { ThemeItem(ColorScheme.CUSTOM, it) }
 		}

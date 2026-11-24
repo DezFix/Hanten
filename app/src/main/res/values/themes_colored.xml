@@ -491,4 +491,53 @@
 		<item name="colorSurfaceContainerHigh">@color/sakura_surfaceContainerHigh</item>
 		<item name="colorSurfaceContainerHighest">@color/sakura_surfaceContainerHighest</item>
 	</style>
+	<!-- Retro (easter egg) -->
+	<style name="ThemeOverlay.Hanten.Retro">
+		<item name="colorPrimary">@color/retro_primary</item>
+		<item name="colorOnPrimary">@color/retro_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/retro_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/retro_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/retro_secondary</item>
+		<item name="colorOnSecondary">@color/retro_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/retro_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/retro_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/retro_tertiary</item>
+		<item name="colorOnTertiary">@color/retro_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/retro_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/retro_onTertiaryContainer</item>
+		<item name="colorError">@color/retro_error</item>
+		<item name="colorOnError">@color/retro_onError</item>
+		<item name="colorErrorContainer">@color/retro_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/retro_onErrorContainer</item>
+		<item name="android:colorBackground">@color/retro_background</item>
+		<item name="colorOnBackground">@color/retro_onBackground</item>
+		<item name="colorSurface">@color/retro_surface</item>
+		<item name="colorOnSurface">@color/retro_onSurface</item>
+		<item name="colorSurfaceVariant">@color/retro_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/retro_onSurfaceVariant</item>
+		<item name="colorOutline">@color/retro_outline</item>
+		<item name="colorOutlineVariant">@color/retro_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/retro_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/retro_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/retro_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/retro_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/retro_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/retro_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/retro_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/retro_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/retro_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/retro_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/retro_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/retro_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/retro_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/retro_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/retro_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/retro_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/retro_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/retro_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/retro_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/retro_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/retro_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/retro_surfaceContainerHighest</item>
+	</style>
 </resources>

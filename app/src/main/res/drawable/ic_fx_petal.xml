@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: sakura petal for easter eggs and the pull-to-refresh effect (tinted in code) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M12,22C7.5,18.5 4.5,14.6 4.5,10.4C4.5,6.1 7.4,2.6 9.6,2.6C10.6,2.6 11.4,3.4 12,4.6C12.6,3.4 13.4,2.6 14.4,2.6C16.6,2.6 19.5,6.1 19.5,10.4C19.5,14.6 16.5,18.5 12,22Z" />
+</vector>

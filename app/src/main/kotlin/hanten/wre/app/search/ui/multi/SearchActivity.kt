@@ -1,5 +1,6 @@
 package hanten.wre.app.search.ui.multi
 
+import hanten.wre.app.extras.Celebrations
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
@@ -90,6 +91,12 @@ class SearchActivity :
 
 		viewModel.list.observe(this, adapter)
 		viewModel.onError.observeEvent(this, SnackbarErrorObserver(viewBinding.recyclerView, null))
+		// easter egg: «ня» → cat paws
+		if (savedInstanceState == null && settings.isEasterEggsEnabled &&
+			viewModel.query.trim().trimEnd('~', '!').lowercase() in NYA_WORDS
+		) {
+			viewBinding.recyclerView.postDelayed({ Celebrations.paws(this) }, 300)
+		}
 	}
 
 	// region Hanten 3.0 header: editable query, search kind and filters as chips (were a toolbar menu)
@@ -174,7 +181,7 @@ class SearchActivity :
 			val sourceTitle = viewModel.list.value.filterIsInstance<SearchResultsListModel>()
 				.find { it.source == manga.source }
 				?.getTitle(this)
-			router.openDetails(manga, sourceTitle)
+			router.openDetails(manga, sourceTitle, view)
 		}
 	}
 
@@ -255,5 +262,10 @@ class SearchActivity :
 
 	private fun collectSelectedItems(): Set<Manga> {
 		return viewModel.getItems(selectionController.peekCheckedIds())
+	}
+
+	private companion object {
+
+		val NYA_WORDS = setOf("ня", "nya", "nyan", "ня-ня", "няя", "няшка")
 	}
 }

@@ -7,14 +7,23 @@
 	android:layout_height="wrap_content"
 	android:gravity="center_horizontal"
 	android:orientation="vertical"
-	android:paddingTop="16dp"
+	android:paddingTop="4dp"
 	android:paddingBottom="12dp">
 
-	<ImageView
-		android:layout_width="96dp"
-		android:layout_height="96dp"
-		android:contentDescription="@string/app_name"
-		android:src="@mipmap/ic_launcher" />
+	<!-- easter egg: tapping the icon changes the hanten pattern behind it -->
+	<FrameLayout
+		android:id="@+id/frame_icon_pattern"
+		android:layout_width="128dp"
+		android:layout_height="128dp">
+
+		<ImageView
+			android:id="@+id/image_app_icon"
+			android:layout_width="96dp"
+			android:layout_height="96dp"
+			android:layout_gravity="center"
+			android:contentDescription="@string/app_name"
+			android:src="@mipmap/ic_launcher" />
+	</FrameLayout>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -27,7 +36,7 @@
 		android:textSize="24sp"
 		android:textStyle="bold" />
 
-	<!-- tapping the version 8 times still starts the unicorn easter egg -->
+	<!-- tapping the version 7 times lets sakura petals fall (easter egg) -->
 	<TextView
 		android:id="@+id/text_version"
 		android:layout_width="wrap_content"

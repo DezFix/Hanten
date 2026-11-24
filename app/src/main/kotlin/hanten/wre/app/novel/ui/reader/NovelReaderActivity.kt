@@ -36,6 +36,8 @@ import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
 import hanten.wre.app.core.nav.ReaderIntent
 import hanten.wre.app.core.network.MangaHttpClient
 import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.LocalState
+import hanten.wre.app.extras.ReadingEggs
 import hanten.wre.app.core.ui.BaseFullscreenActivity
 import hanten.wre.app.core.util.MimeTypes
 import hanten.wre.app.core.util.ext.getParcelableExtraCompat
@@ -84,6 +86,9 @@ class NovelReaderActivity :
 
 	@Inject
 	lateinit var appSettings: AppSettings
+
+	@Inject
+	lateinit var localState: LocalState
 
 	@Inject
 	@MangaHttpClient
@@ -139,6 +144,9 @@ class NovelReaderActivity :
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		if (savedInstanceState == null && ReadingEggs.shouldShowNightReminder(appSettings, localState)) {
+			Toast.makeText(this, R.string.night_reminder, Toast.LENGTH_LONG).show()
+		}
 		setContentView(ActivityNovelReaderBinding.inflate(layoutInflater))
 		readerSettings = NovelReaderSettings.load(this)
 		isAutoScrollActive = savedInstanceState?.getBoolean(STATE_AUTO_SCROLL_ACTIVE) ?: false

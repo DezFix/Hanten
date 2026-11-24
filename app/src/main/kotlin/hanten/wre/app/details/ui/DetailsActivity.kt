@@ -1,5 +1,7 @@
 package hanten.wre.app.details.ui
 
+import androidx.core.view.ViewCompat
+import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.model.isNovel
 import hanten.wre.app.details.ui.pager.ChaptersPagesSheet
 import android.content.res.ColorStateList
@@ -149,6 +151,7 @@ class DetailsActivity :
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityDetailsBinding.inflate(layoutInflater))
 		infoBinding = LayoutDetailsTableBinding.bind(viewBinding.root)
+		setupCoverTransition()
 		setDisplayHomeAsUp(isEnabled = true, showUpAsClose = false)
 		supportActionBar?.setDisplayShowTitleEnabled(false)
 		viewBinding.chipFavorite?.setOnClickListener(this)
@@ -629,6 +632,25 @@ class DetailsActivity :
 	private fun onTagsChanged(tags: Collection<ChipsView.ChipModel>) {
 		viewBinding.chipsTags.isVisible = tags.isNotEmpty()
 		viewBinding.chipsTags.setChips(tags)
+	}
+
+	/** Cover flight from the list (AppRouter.openDetails): wait until the cover is drawn, at most ~400 ms. */
+	private fun setupCoverTransition() {
+		val name = intent.getStringExtra(AppRouter.KEY_COVER_TRANSITION) ?: return
+		val cover = viewBinding.imageViewCover
+		ViewCompat.setTransitionName(cover, name)
+		supportPostponeEnterTransition()
+		var attempts = 0
+		val starter = object : Runnable {
+			override fun run() {
+				if (cover.drawable != null || ++attempts >= 13 || isFinishing) {
+					supportStartPostponedEnterTransition()
+				} else {
+					cover.postDelayed(this, 30L)
+				}
+			}
+		}
+		cover.post(starter)
 	}
 
 	private fun loadCover(imageUrl: String?) {

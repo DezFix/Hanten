@@ -12,40 +12,30 @@
 		android:layout_height="wrap_content"
 		android:fitsSystemWindows="false">
 
-		<com.google.android.material.appbar.CollapsingToolbarLayout
-			android:id="@+id/collapsingToolbarLayout"
-			style="?attr/collapsingToolbarLayoutMediumStyle"
+		<!-- Hanten 3.0: plain toolbar, title next to the back arrow like the settings screens -->
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@id/toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
-			app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-			app:toolbarId="@id/toolbar">
+			android:layout_height="wrap_content">
 
-			<com.google.android.material.appbar.MaterialToolbar
-				android:id="@id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				app:layout_collapseMode="pin">
+			<hanten.wre.app.core.image.CoilImageView
+				android:id="@+id/imageView_avatar"
+				android:layout_width="28dp"
+				android:layout_height="28dp"
+				android:layout_gravity="center_vertical|end"
+				android:layout_marginHorizontal="@dimen/toolbar_button_margin"
+				android:background="?selectableItemBackgroundBorderless"
+				android:padding="1dp"
+				android:scaleType="centerCrop"
+				app:errorDrawable="@drawable/ic_shortcut_default"
+				app:fallbackDrawable="@drawable/ic_shortcut_default"
+				app:placeholderDrawable="@drawable/bg_badge_empty"
+				app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Circle"
+				app:strokeColor="?colorOutline"
+				app:strokeWidth="1dp"
+				tools:src="@tools:sample/avatars" />
 
-				<hanten.wre.app.core.image.CoilImageView
-					android:id="@+id/imageView_avatar"
-					android:layout_width="28dp"
-					android:layout_height="28dp"
-					android:layout_gravity="center_vertical|end"
-					android:layout_marginHorizontal="@dimen/toolbar_button_margin"
-					android:background="?selectableItemBackgroundBorderless"
-					android:padding="1dp"
-					android:scaleType="centerCrop"
-					app:errorDrawable="@drawable/ic_shortcut_default"
-					app:fallbackDrawable="@drawable/ic_shortcut_default"
-					app:placeholderDrawable="@drawable/bg_badge_empty"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Circle"
-					app:strokeColor="?colorOutline"
-					app:strokeWidth="1dp"
-					tools:src="@tools:sample/avatars" />
-
-			</com.google.android.material.appbar.MaterialToolbar>
-
-		</com.google.android.material.appbar.CollapsingToolbarLayout>
+		</com.google.android.material.appbar.MaterialToolbar>
 
 	</com.google.android.material.appbar.AppBarLayout>
 

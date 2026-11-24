@@ -152,6 +152,24 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/motion_and_fun">
+
+        <ListPreference
+            android:defaultValue="FULL"
+            android:entries="@array/animation_levels"
+            android:entryValues="@array/animation_level_values"
+            android:key="hanten_animations"
+            android:title="@string/animations"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="hanten_easter_eggs"
+            android:summary="@string/easter_eggs_summary"
+            android:title="@string/easter_eggs" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/privacy">
 
         <SwitchPreferenceCompat

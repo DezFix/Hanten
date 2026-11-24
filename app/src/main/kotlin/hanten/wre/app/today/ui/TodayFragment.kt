@@ -36,19 +36,33 @@ import hanten.wre.app.core.util.ext.getThemeColor
 import hanten.wre.app.core.util.ext.observe
 import hanten.wre.app.databinding.FragmentTodayBinding
 import hanten.wre.app.history.domain.model.MangaWithHistory
+import hanten.wre.app.databinding.ItemUpcomingBinding
+import hanten.wre.app.upcoming.domain.UpcomingItem
+import hanten.wre.app.upcoming.ui.bindUpcoming
+import hanten.wre.app.core.prefs.AnimationLevel
+import hanten.wre.app.core.prefs.AppSettings
+import hanten.wre.app.core.prefs.LocalState
+import hanten.wre.app.extras.Celebrations
+import hanten.wre.app.extras.Season
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 /**
  * Home tab (Hanten 3.0 mockup): continue reading, new chapters from the library ("All" opens the updates list),
  * ranobe in progress and recently read. The header gets a round "check for new chapters" button.
- */import hanten.wre.app.databinding.ItemUpcomingBinding
-import hanten.wre.app.upcoming.domain.UpcomingItem
-import hanten.wre.app.upcoming.ui.bindUpcoming
+ */
 
 @AndroidEntryPoint
 class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 
 	private val viewModel by viewModels<TodayViewModel>()
+
+	@Inject
+	lateinit var settings: AppSettings
+
+	@Inject
+	lateinit var localState: LocalState
 
 	override fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
 		FragmentTodayBinding.inflate(inflater, container, false)
@@ -58,7 +72,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		val coverWidth = resources.getDimensionPixelSize(R.dimen.today_cover_width)
 		val listener = object : OnListItemClickListener<MangaListModel> {
 			override fun onItemClick(item: MangaListModel, view: View) {
-				router.openDetails(item.toMangaWithOverride())
+				router.openDetails(item.toMangaWithOverride(), itemView = view)
 			}
 		}
 		val updatesAdapter = BaseListAdapter<ListModel>()
@@ -72,7 +86,14 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		binding.buttonUpcomingAll.setOnClickListener { router.openUpcoming() }
 		// Pull down = look for new chapters in the library (same as the round button in the header)
 		binding.swipeRefresh.isEnabled = viewModel.isTrackerEnabled
-		binding.swipeRefresh.setOnRefreshListener { viewModel.checkNewChapters() }
+		binding.swipeRefresh.setOnRefreshListener {
+			if (AnimationLevel.effective(requireContext(), settings) == AnimationLevel.FULL) {
+				activity?.let(Celebrations::petalPuff)
+			}
+			viewModel.checkNewChapters()
+		}
+		bindKofiBanner(binding)
+		bindSeason(binding)
 		viewModel.isCheckingUpdates.observe(viewLifecycleOwner) { binding.swipeRefresh.isRefreshing = it }
 		if (viewModel.isTrackerEnabled) {
 			requireActivity().addMenuProvider(this, viewLifecycleOwner)
@@ -162,6 +183,46 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		}
 	}
 
+	/**
+	 * Ko-fi banner: 14 days after the first launch, never in incognito; «Не сейчас» hides it for 60 days,
+	 * the cross and «Поддержать» hide it for good. Dates live only on this device ([LocalState]).
+	 */
+	private fun bindKofiBanner(binding: FragmentTodayBinding) {
+		val now = System.currentTimeMillis()
+		val showFrom = maxOf(localState.firstLaunchAt + TimeUnit.DAYS.toMillis(KOFI_FIRST_DAYS), localState.kofiNextShowAt)
+		binding.cardKofi.isVisible = !localState.isKofiDismissedForever &&
+			!settings.isIncognitoModeEnabled &&
+			now >= showFrom
+		binding.buttonKofiSupport.setOnClickListener {
+			localState.isKofiDismissedForever = true
+			binding.cardKofi.isVisible = false
+			router.openExternalBrowser(getString(R.string.url_donate), getString(R.string.donate_title))
+		}
+		binding.buttonKofiLater.setOnClickListener {
+			localState.kofiNextShowAt = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(KOFI_LATER_DAYS)
+			binding.cardKofi.isVisible = false
+		}
+		binding.buttonKofiClose.setOnClickListener {
+			localState.isKofiDismissedForever = true
+			binding.cardKofi.isVisible = false
+		}
+	}
+
+	private fun bindSeason(binding: FragmentTodayBinding) {
+		val season = Season.current().takeIf { settings.isEasterEggsEnabled }
+		binding.textSeason.isVisible = season != null
+		if (season == null) return
+		binding.textSeason.setText(season.greetingResId)
+		val today = Season.dayKey()
+		if (localState.seasonalEffectDay != today &&
+			AnimationLevel.effective(requireContext(), settings) != AnimationLevel.OFF
+		) {
+			localState.seasonalEffectDay = today
+			binding.root.postDelayed({ activity?.let(season::play) }, 600)
+		}
+		binding.textSeason.setOnClickListener { activity?.let(season::play) }
+	}
+
 	private fun updateEmptyState() {
 		val binding = viewBinding ?: return
 		val history = viewModel.history.value ?: return
@@ -171,5 +232,11 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		// The New chapters block stays on the home screen whenever new chapters are checked
 		binding.layoutUpdatesHeader.isVisible = viewModel.isTrackerEnabled && !isEmpty
 		binding.textUpdatesEmpty.isVisible = viewModel.isTrackerEnabled && !isEmpty && updates.isEmpty()
+	}
+
+	private companion object {
+
+		const val KOFI_FIRST_DAYS = 14L
+		const val KOFI_LATER_DAYS = 60L
 	}
 }

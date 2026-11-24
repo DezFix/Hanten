@@ -89,4 +89,31 @@
 	<string name="track_skip_with_new">Пропускати з непрочитаними новими</string>
 	<string name="track_skip_with_new_summary">Якщо нові розділи вже є і ще не прочитані, поки не перевіряти знову</string>
 	<string name="favourite_duplicate">Вже є в бібліотеці: «%1$s» (%2$s). Натисни, щоб відкрити</string>
+	<!-- Hanten 3.0: Ko-fi banner, easter eggs, animations -->
+	<string name="kofi_banner_title">Подобається Hanten?</string>
+	<string name="kofi_banner_text">Hanten безкоштовний і без реклами, його робить одна людина у вільний час. Кава на Ko-fi допомагає продовжувати.</string>
+	<string name="kofi_banner_later">Не зараз</string>
+	<string name="kofi_banner_support">Підтримати</string>
+	<string name="kofi_banner_never">Більше не показувати</string>
+	<string name="season_hanami">🌸 Сезон ханамі</string>
+	<string name="season_tanabata">✨ Танабата: загадай бажання</string>
+	<string name="season_halloween">🎃 Гелловін! Почитаймо щось моторошне?</string>
+	<string name="season_new_year">❄️ З Новим роком!</string>
+	<string name="night_reminder">Ще один розділ — і спати? 🌙</string>
+	<string name="chapter_milestone_1000">1000 розділів у Hanten! 🎆</string>
+	<string name="shake_random_title">Випадковий тайтл з бібліотеки</string>
+	<string name="shake_library_empty">Бібліотека порожня — нема з чого обрати</string>
+	<string name="retro_theme_unlocked">Відкрито тему «Ретро»!</string>
+	<string name="retro_theme_off">Повернули тему Hanten</string>
+	<string name="theme_name_retro">Ретро</string>
+	<string name="motion_and_fun">Анімації та пасхалки</string>
+	<string name="animations">Анімації</string>
+	<string name="animations_full">Повні</string>
+	<string name="animations_reduced">Зменшені</string>
+	<string name="animations_off">Вимкнені</string>
+	<string name="easter_eggs">Пасхалки</string>
+	<string name="easter_eggs_summary">Маленькі сюрпризи: сезонні привітання, струсни телефон — випадковий тайтл, і не тільки</string>
+	<string name="update_version_line">%1$s · у тебе %2$s</string>
+	<string name="update_whats_new">Що нового</string>
+	<string name="update_later">Пізніше</string>
 </resources>

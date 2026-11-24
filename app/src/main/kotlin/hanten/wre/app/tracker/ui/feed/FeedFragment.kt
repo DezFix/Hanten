@@ -128,7 +128,7 @@ class FeedFragment :
 	}
 
 	override fun onItemClick(item: MangaListModel, view: View) {
-		router.openDetails(item.toMangaWithOverride())
+		router.openDetails(item.toMangaWithOverride(), itemView = view)
 	}
 
 	override fun onReadClick(manga: Manga, view: View) = Unit

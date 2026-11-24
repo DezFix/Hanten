@@ -15,6 +15,7 @@ import hanten.wre.app.core.ui.BaseViewModel
 import hanten.wre.app.core.util.ext.MutableEventFlow
 import hanten.wre.app.core.util.ext.call
 import hanten.wre.app.explore.data.MangaSourcesRepository
+import hanten.wre.app.favourites.domain.FavouritesRepository
 import hanten.wre.app.history.data.HistoryRepository
 import hanten.wre.app.main.domain.ReadingResumeEnabledUseCase
 import hanten.wre.app.parsers.model.Manga
@@ -28,9 +29,13 @@ class MainViewModel @Inject constructor(
 	private val settings: AppSettings,
 	readingResumeEnabledUseCase: ReadingResumeEnabledUseCase,
 	private val sourcesRepository: MangaSourcesRepository,
+	private val favouritesRepository: FavouritesRepository,
 ) : BaseViewModel() {
 
 	val onOpenReader = MutableEventFlow<Manga>()
+
+	/** Easter egg: shake the phone → a random title from the library (null = the library is empty). */
+	val onRandomTitle = MutableEventFlow<Manga?>()
 	val onFirstStart = MutableEventFlow<Unit>()
 
 	val isResumeEnabled = readingResumeEnabledUseCase()
@@ -71,6 +76,12 @@ class MainViewModel @Inject constructor(
 			val manga = historyRepository.getLastOrNull()
 				?: throw EmptyHistoryException()
 			onOpenReader.call(manga)
+		}
+	}
+
+	fun openRandomFavourite() {
+		launchJob(Dispatchers.IO) {
+			onRandomTitle.call(favouritesRepository.getAllManga().randomOrNull())
 		}
 	}
 

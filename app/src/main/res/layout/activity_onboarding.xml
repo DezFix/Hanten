@@ -168,12 +168,20 @@
 					android:text="@string/profile_avatar"
 					android:textAppearance="?textAppearanceTitleSmall" />
 
-				<LinearLayout
-					android:id="@+id/row_avatars"
+				<HorizontalScrollView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="10dp"
-					android:orientation="horizontal" />
+					android:clipToPadding="false"
+					android:scrollbars="none">
+
+					<LinearLayout
+						android:id="@+id/row_avatars"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:paddingVertical="2dp"
+						android:orientation="horizontal" />
+				</HorizontalScrollView>
 
 				<TextView
 					android:layout_width="match_parent"

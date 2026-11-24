@@ -60,8 +60,27 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 		get() = prefs.getString(KEY_THEME, null)?.toIntOrNull()
 			?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 
-	val colorScheme: ColorScheme
+	var colorScheme: ColorScheme
 		get() = prefs.getEnumValue(KEY_COLOR_THEME, ColorScheme.default)
+		set(value) = prefs.edit { putEnumValue(KEY_COLOR_THEME, value) }
+
+	/** Hanten 3.0: how much motion the UI shows (cover flight, theme reveal, petals, skeleton pulse). */
+	val animationLevel: AnimationLevel
+		get() = prefs.getEnumValue(KEY_ANIMATIONS, AnimationLevel.FULL)
+
+	/** Hanten 3.0: small surprises (sakura, shake for a random title, night reminder...). */
+	val isEasterEggsEnabled: Boolean
+		get() = prefs.getBoolean(KEY_EASTER_EGGS, true)
+
+	/** The Retro theme appears in the theme list only after the volume-key code. */
+	var isRetroThemeUnlocked: Boolean
+		get() = prefs.getBoolean(KEY_RETRO_UNLOCKED, false)
+		set(value) = prefs.edit { putBoolean(KEY_RETRO_UNLOCKED, value) }
+
+	/** The theme that was on before the Retro code, to go back to it with the same code. */
+	var colorSchemeBeforeRetro: ColorScheme
+		get() = prefs.getEnumValue(KEY_THEME_BEFORE_RETRO, ColorScheme.default)
+		set(value) = prefs.edit { putEnumValue(KEY_THEME_BEFORE_RETRO, value) }
 
 	val isAmoledTheme: Boolean
 		get() = prefs.getBoolean(KEY_THEME_AMOLED, false)
@@ -830,6 +849,10 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 		const val KEY_COLOR_THEME = "color_theme"
 		const val KEY_THEME_AMOLED = "amoled_theme"
 		const val KEY_ACCENT_COLOR = "accent_color"
+		const val KEY_ANIMATIONS = "hanten_animations"
+		const val KEY_EASTER_EGGS = "hanten_easter_eggs"
+		const val KEY_RETRO_UNLOCKED = "hanten_retro_unlocked"
+		const val KEY_THEME_BEFORE_RETRO = "hanten_theme_before_retro"
 		const val KEY_CORNER_STYLE = "corner_style"
 		const val KEY_OFFLINE_DISABLED = "no_offline"
 		const val KEY_PAGES_CACHE_CLEAR = "pages_cache_clear"

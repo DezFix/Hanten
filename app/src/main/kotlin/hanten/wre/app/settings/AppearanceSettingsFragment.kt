@@ -1,5 +1,6 @@
 package hanten.wre.app.settings
 
+import hanten.wre.app.extras.ThemeReveal
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -158,6 +159,7 @@ class AppearanceSettingsFragment :
     override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
         when (key) {
             AppSettings.KEY_THEME -> {
+                activity?.let { ThemeReveal.capture(it, settings) }
                 AppCompatDelegate.setDefaultNightMode(settings.theme)
             }
 
@@ -215,6 +217,7 @@ class AppearanceSettingsFragment :
         restartScheduled = true
         viewLifecycleOwner.lifecycle.postDelayed(400) {
             restartScheduled = false
+            activity?.let { ThemeReveal.capture(it, settings) }
             activityRecreationHandle.recreateAll()
         }
     }

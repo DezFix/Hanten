@@ -1,13 +1,10 @@
 package hanten.wre.app.settings.about
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,13 +19,13 @@ import hanten.wre.app.core.github.AppUpdateFlow
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.BasePreferenceFragment
+import hanten.wre.app.core.prefs.LocalState
+import hanten.wre.app.core.util.ext.getThemeColor
+import hanten.wre.app.extras.Celebrations
+import hanten.wre.app.extras.HantenPatternDrawable
 import hanten.wre.app.settings.utils.LayoutPreference
 import kotlinx.coroutines.launch
-import nl.dionsegijn.konfetti.core.models.Shape
-import nl.dionsegijn.konfetti.xml.KonfettiView
-import nl.dionsegijn.konfetti.xml.image.DrawableImage
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
@@ -41,13 +38,18 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 	@Inject
 	lateinit var updateFlow: AppUpdateFlow
 
+	@Inject
+	lateinit var appSettings: AppSettings
+
+	@Inject
+	lateinit var localState: LocalState
+
 	private val installPermissionLauncher: ActivityResultLauncher<Intent> =
 		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 			updateFlow.handlePermissionResult(requireActivity(), listView, installPermissionLauncher)
 		}
 
 	private var versionClickCount = 0
-	private lateinit var konfettiView: KonfettiView
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 		addPreferencesFromResource(R.xml.pref_about)
@@ -61,15 +63,17 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 		findPreference<Preference>("check_updates")?.isVisible = false
 		findPreference<Preference>("about_donate")?.isVisible = false
 		findPreference<LayoutPreference>("about_header")?.run {
-			clickableIds = intArrayOf(R.id.text_version, R.id.button_check_updates)
+			clickableIds = intArrayOf(R.id.text_version, R.id.button_check_updates, R.id.image_app_icon)
 			onBind = { view ->
 				view.findViewById<TextView>(R.id.text_version)?.text =
 					getString(R.string.about_version_line, BuildConfig.VERSION_NAME)
+				bindIconPattern(view)
 			}
 			onViewClick = { v ->
 				when (v.id) {
 					R.id.button_check_updates -> checkForUpdates()
 					R.id.text_version -> onVersionClick()
+					R.id.image_app_icon -> onIconClick(v)
 				}
 			}
 		}
@@ -79,46 +83,37 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 		}
 	}
 
+	/** Easter egg: 7 taps on the version line — sakura petals fall over the screen. */
 	private fun onVersionClick() {
+		if (!appSettings.isEasterEggsEnabled) return
 		versionClickCount++
-		if (versionClickCount == 8) {
+		if (versionClickCount == VERSION_TAPS) {
 			versionClickCount = 0
-			triggerEasterEgg()
+			activity?.let { Celebrations.sakuraRain(it) }
 		}
 	}
 
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		val list = super.onCreateView(inflater, container, savedInstanceState)
-		konfettiView = KonfettiView(requireContext()).apply {
-			layoutParams = FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT
+	/** Easter egg: tapping the icon changes the hanten pattern behind it (kept on this device). */
+	private fun onIconClick(icon: View) {
+		if (!appSettings.isEasterEggsEnabled) return
+		localState.aboutPattern = (localState.aboutPattern + 1) % (HantenPatternDrawable.COUNT + 1)
+		(icon.parent as? View)?.let { bindIconPattern(it) }
+	}
+
+	private fun bindIconPattern(view: View) {
+		val frame = view.findViewById<View>(R.id.frame_icon_pattern) ?: return
+		val index = localState.aboutPattern - 1
+		frame.background = if (index < 0 || !appSettings.isEasterEggsEnabled) {
+			null
+		} else {
+			val ctx = frame.context
+			HantenPatternDrawable(
+				pattern = index,
+				background = ctx.getThemeColor(com.google.android.material.R.attr.colorPrimaryContainer),
+				foreground = ctx.getThemeColor(androidx.appcompat.R.attr.colorPrimary),
 			)
-			// Ensure it doesn't consume clicks
-			isClickable = false
-			isFocusable = false
 		}
-		return FrameLayout(requireContext()).apply {
-			layoutParams = ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT
-			)
-			addView(list)
-			addView(konfettiView)
-		}
-	}
-
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-	}
-
-	override fun onDestroyView() {
-		(view as? ViewGroup)?.removeView(konfettiView)
-		super.onDestroyView()
+		view.findViewById<ImageView>(R.id.image_app_icon)?.isClickable = appSettings.isEasterEggsEnabled
 	}
 
 	override fun onPreferenceTreeClick(preference: Preference): Boolean {
@@ -197,27 +192,6 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 		}
 	}
 
-	private fun triggerEasterEgg() {
-		val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.unicorn)
-		if (drawable == null) {
-			Snackbar.make(listView, "Failed to load unicorn drawable", Snackbar.LENGTH_SHORT).show()
-			return
-		}
-
-		val coreImage = DrawableImage(drawable, drawable.intrinsicWidth, drawable.intrinsicHeight)
-		val drawableShape = Shape.DrawableShape(coreImage, tint = false, applyAlpha = true)
-
-		val presets = listOf(
-			Presets.festive(drawableShape),
-			Presets.explode(drawableShape),
-			Presets.parade(drawableShape),
-			Presets.rain(drawableShape)
-		)
-
-		val randomPreset = presets[Random.nextInt(presets.size)]
-		konfettiView.start(randomPreset)
-	}
-
 	private fun openLink(
 		@StringRes url: Int,
 		title: CharSequence?
@@ -226,5 +200,10 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 	} else {
 		Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
 		false
+	}
+
+	private companion object {
+
+		const val VERSION_TAPS = 7
 	}
 }

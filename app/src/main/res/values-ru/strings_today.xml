@@ -89,4 +89,31 @@
 	<string name="track_skip_with_new">Пропускать с непрочитанными новыми</string>
 	<string name="track_skip_with_new_summary">Если новые главы уже есть и ещё не прочитаны, пока не проверять снова</string>
 	<string name="favourite_duplicate">Уже есть в библиотеке: «%1$s» (%2$s). Нажми, чтобы открыть</string>
+	<!-- Hanten 3.0: Ko-fi banner, easter eggs, animations -->
+	<string name="kofi_banner_title">Нравится Hanten?</string>
+	<string name="kofi_banner_text">Hanten бесплатный и без рекламы, его делает один человек в свободное время. Кофе на Ko-fi помогает продолжать.</string>
+	<string name="kofi_banner_later">Не сейчас</string>
+	<string name="kofi_banner_support">Поддержать</string>
+	<string name="kofi_banner_never">Больше не показывать</string>
+	<string name="season_hanami">🌸 Сезон ханами</string>
+	<string name="season_tanabata">✨ Танабата: загадай желание</string>
+	<string name="season_halloween">🎃 Хэллоуин! Почитаем что-нибудь жуткое?</string>
+	<string name="season_new_year">❄️ С Новым годом!</string>
+	<string name="night_reminder">Ещё одну главу — и спать? 🌙</string>
+	<string name="chapter_milestone_1000">1000 глав в Hanten! 🎆</string>
+	<string name="shake_random_title">Случайный тайтл из библиотеки</string>
+	<string name="shake_library_empty">Библиотека пуста — не из чего выбрать</string>
+	<string name="retro_theme_unlocked">Открыта тема «Ретро»!</string>
+	<string name="retro_theme_off">Вернули тему Hanten</string>
+	<string name="theme_name_retro">Ретро</string>
+	<string name="motion_and_fun">Анимации и пасхалки</string>
+	<string name="animations">Анимации</string>
+	<string name="animations_full">Полные</string>
+	<string name="animations_reduced">Уменьшенные</string>
+	<string name="animations_off">Выключены</string>
+	<string name="easter_eggs">Пасхалки</string>
+	<string name="easter_eggs_summary">Маленькие сюрпризы: сезонные приветствия, встряхни телефон — случайный тайтл, и не только</string>
+	<string name="update_version_line">%1$s · у тебя %2$s</string>
+	<string name="update_whats_new">Что нового</string>
+	<string name="update_later">Позже</string>
 </resources>

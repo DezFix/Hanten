@@ -89,4 +89,31 @@
 	<string name="track_skip_with_new">Skip titles with unread new chapters</string>
 	<string name="track_skip_with_new_summary">If new chapters are already there and not read yet, do not check again for now</string>
 	<string name="favourite_duplicate">Already in your library: “%1$s” (%2$s). Tap to open</string>
+	<!-- Hanten 3.0: Ko-fi banner, easter eggs, animations -->
+	<string name="kofi_banner_title">Like Hanten?</string>
+	<string name="kofi_banner_text">Hanten is free and has no ads, it is made by one person in their spare time. A coffee on Ko-fi helps keep it going.</string>
+	<string name="kofi_banner_later">Not now</string>
+	<string name="kofi_banner_support">Support</string>
+	<string name="kofi_banner_never">Do not show again</string>
+	<string name="season_hanami">🌸 Hanami season</string>
+	<string name="season_tanabata">✨ Tanabata: make a wish</string>
+	<string name="season_halloween">🎃 Happy Halloween! Something spooky to read?</string>
+	<string name="season_new_year">❄️ Happy New Year!</string>
+	<string name="night_reminder">One more chapter and then bed? 🌙</string>
+	<string name="chapter_milestone_1000">1000 chapters in Hanten! 🎆</string>
+	<string name="shake_random_title">A random title from your library</string>
+	<string name="shake_library_empty">The library is empty, nothing to pick from</string>
+	<string name="retro_theme_unlocked">Retro theme unlocked!</string>
+	<string name="retro_theme_off">Back to the Hanten theme</string>
+	<string name="theme_name_retro">Retro</string>
+	<string name="motion_and_fun">Animations and surprises</string>
+	<string name="animations">Animations</string>
+	<string name="animations_full">Full</string>
+	<string name="animations_reduced">Reduced</string>
+	<string name="animations_off">Off</string>
+	<string name="easter_eggs">Easter eggs</string>
+	<string name="easter_eggs_summary">Little surprises: seasonal greetings, shake the phone for a random title and more</string>
+	<string name="update_version_line">%1$s · you have %2$s</string>
+	<string name="update_whats_new">What is new</string>
+	<string name="update_later">Later</string>
 </resources>

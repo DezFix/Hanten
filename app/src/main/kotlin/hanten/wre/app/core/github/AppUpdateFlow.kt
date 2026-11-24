@@ -2,35 +2,28 @@ package hanten.wre.app.core.github
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.provider.Settings
 import android.text.format.Formatter
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.color.MaterialColors
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hanten.wre.app.BuildConfig
 import hanten.wre.app.R
 import hanten.wre.app.core.os.AppValidator
+import hanten.wre.app.databinding.SheetAppUpdateBinding
 import hanten.wre.app.core.util.ext.printStackTraceDebug
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -65,96 +58,54 @@ class AppUpdateFlow @Inject constructor(
 		release
 	}
 
+	/** Hanten 3.0: «Доступно обновление» as a bottom sheet in the app style; the download runs inside it. */
 	fun showUpdateDialog(
 		activity: FragmentActivity,
 		anchor: View,
 		permissionLauncher: ActivityResultLauncher<Intent>,
 		release: AppRelease,
+	) = showUpdateSheet(activity, anchor, permissionLauncher, release, startDownload = false)
+
+	private fun showUpdateSheet(
+		activity: FragmentActivity,
+		anchor: View,
+		permissionLauncher: ActivityResultLauncher<Intent>,
+		release: AppRelease,
+		startDownload: Boolean,
 	) {
-		val density = activity.resources.displayMetrics.density
-		val pad = (20 * density).toInt()
-		val titleLayout = LinearLayout(activity).apply {
-			orientation = LinearLayout.VERTICAL
-			gravity = Gravity.CENTER_HORIZONTAL
-			setPadding(pad, pad, pad, (4 * density).toInt())
-		}
-		val iconSize = (56 * density).toInt()
-		titleLayout.addView(
-			AppCompatImageView(activity).apply {
-				setImageResource(R.mipmap.ic_launcher)
-				layoutParams = LinearLayout.LayoutParams(iconSize, iconSize).apply {
-					bottomMargin = (12 * density).toInt()
-				}
-			},
+		val binding = SheetAppUpdateBinding.inflate(activity.layoutInflater)
+		val dialog = BottomSheetDialog(activity)
+		dialog.setContentView(binding.root)
+		dialog.behavior.skipCollapsed = true
+		dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+		binding.textVersion.text = activity.getString(
+			R.string.update_version_line,
+			release.tag.trimStart('v', 'V'),
+			BuildConfig.VERSION_NAME,
 		)
-		titleLayout.addView(
-			TextView(activity).apply {
-				text = activity.getString(R.string.update_available_heading)
-				textAlignment = View.TEXT_ALIGNMENT_CENTER
-				textSize = 20f
-				setTypeface(typeface, Typeface.BOLD)
-			},
-		)
-		val changelog = release.changelog.ifBlank { activity.getString(R.string.update_no_changelog) }
-		val changelogView = TextView(activity).apply {
-			text = changelog
-			val innerPad = (12 * density).toInt()
-			setPadding(innerPad, innerPad, innerPad, innerPad)
+		binding.textChangelog.text = release.changelog.ifBlank { activity.getString(R.string.update_no_changelog) }
+		val maxChangelogHeight = (activity.resources.displayMetrics.heightPixels * 0.4f).toInt()
+		binding.scrollChangelog.post {
+			if (binding.scrollChangelog.height > maxChangelogHeight) {
+				binding.scrollChangelog.updateLayoutParams { height = maxChangelogHeight }
+			}
 		}
-		changelogView.background = GradientDrawable().apply {
-			shape = GradientDrawable.RECTANGLE
-			cornerRadius = 16 * density
-			setColor(
-				MaterialColors.getColor(
-					changelogView,
-					com.google.android.material.R.attr.colorSurfaceContainerHigh,
-				),
-			)
+		binding.buttonLater.setOnClickListener { dialog.dismiss() }
+		binding.buttonSkip.setOnClickListener {
+			prefs().edit().putString(KEY_SKIPPED_UPDATE_TAG, release.tag).apply()
+			dialog.dismiss()
 		}
-		val bodyLayout = LinearLayout(activity).apply {
-			orientation = LinearLayout.VERTICAL
-			setPadding(pad, (8 * density).toInt(), pad, 0)
-			addView(
-				changelogView,
-				LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT,
-				),
-			)
-		}
-		val dialog = MaterialAlertDialogBuilder(activity)
-			.setCustomTitle(titleLayout)
-			.setView(bodyLayout)
-			.setPositiveButton(R.string.update_install_now) { _, _ ->
+		binding.buttonInstall.setOnClickListener {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !activity.packageManager.canRequestPackageInstalls()) {
+				dialog.dismiss()
 				startUpdate(activity, anchor, permissionLauncher, release)
+			} else {
+				downloadInSheet(activity, anchor, permissionLauncher, release, binding, dialog)
 			}
-			.setNegativeButton(R.string.update_skip_version) { _, _ ->
-				prefs().edit().putString(KEY_SKIPPED_UPDATE_TAG, release.tag).apply()
-			}
-			.show()
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.let { button ->
-			button.background = GradientDrawable().apply {
-				shape = GradientDrawable.RECTANGLE
-				cornerRadius = 20 * density
-				setColor(
-					MaterialColors.getColor(
-						button,
-						com.google.android.material.R.attr.colorPrimaryContainer,
-					),
-				)
-			}
-			button.setTextColor(
-				MaterialColors.getColor(
-					button,
-					com.google.android.material.R.attr.colorOnPrimaryContainer,
-				),
-			)
-			button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_download, 0, 0, 0)
-			button.compoundDrawablePadding = (8 * density).toInt()
 		}
-		dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.let { button ->
-			button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_skip, 0, 0, 0)
-			button.compoundDrawablePadding = (8 * density).toInt()
+		dialog.show()
+		if (startDownload) {
+			downloadInSheet(activity, anchor, permissionLauncher, release, binding, dialog)
 		}
 	}
 
@@ -211,62 +162,51 @@ class AppUpdateFlow @Inject constructor(
 		anchor: View,
 		permissionLauncher: ActivityResultLauncher<Intent>,
 		release: AppRelease,
+	) = showUpdateSheet(activity, anchor, permissionLauncher, release, startDownload = true)
+
+	private fun downloadInSheet(
+		activity: FragmentActivity,
+		anchor: View,
+		permissionLauncher: ActivityResultLauncher<Intent>,
+		release: AppRelease,
+		binding: SheetAppUpdateBinding,
+		dialog: BottomSheetDialog,
 	) {
 		val apkUrl = release.apkUrl
 		if (apkUrl.isNullOrEmpty()) {
+			dialog.dismiss()
 			activity.startActivity(Intent(Intent.ACTION_VIEW, release.pageUrl.toUri()))
 			return
 		}
 		val safeTag = release.tag.replace(Regex("[^A-Za-z0-9._-]"), "_")
 		val destFile = File(File(activity.cacheDir, DIR_UPDATES), "Hanten-$safeTag.apk")
-		val density = activity.resources.displayMetrics.density
-		val padding = (24 * density).toInt()
-		val layout = LinearLayout(activity).apply {
-			orientation = LinearLayout.VERTICAL
-			setPadding(padding, (padding / 2), padding, 0)
-		}
-		val progress = LinearProgressIndicator(activity).apply {
-			isIndeterminate = true
-			layoutParams = ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-			)
-		}
-		val percentView = TextView(activity).apply {
-			text = activity.getString(R.string.update_download_progress, 0, "", "")
-		}
-		layout.addView(progress)
-		layout.addView(percentView)
-		var downloadJob: Job? = null
-		val dialog = MaterialAlertDialogBuilder(activity)
-			.setTitle(activity.getString(R.string.update_downloading_title, release.tag))
-			.setView(layout)
-			.setNegativeButton(R.string.update_cancel) { _, _ ->
-				downloadJob?.cancel()
-			}
-			.setCancelable(false)
-			.show()
-		downloadJob = activity.lifecycleScope.launch {
+		binding.layoutActions.isVisible = false
+		binding.layoutProgress.isVisible = true
+		binding.textTitle.text = activity.getString(R.string.update_downloading_title, release.tag)
+		binding.textProgress.text = activity.getString(R.string.update_download_progress, 0, "", "")
+		binding.progress.isIndeterminate = true
+		dialog.setCancelable(false)
+		val downloadJob = activity.lifecycleScope.launch {
 			try {
 				val file = withContext(Dispatchers.IO) {
 					destFile.parentFile?.listFiles()?.forEach { old ->
 						if (old != destFile) old.delete()
 					}
 					downloader.downloadUpdate(apkUrl, destFile) { done, total ->
-						layout.post {
+						binding.root.post {
 							if (total != null && total > 0) {
 								val pct = ((done * 100) / total).toInt().coerceIn(0, 100)
-								progress.isIndeterminate = false
-								progress.max = 100
-								progress.progress = pct
-								percentView.text = activity.getString(
+								binding.progress.isIndeterminate = false
+								binding.progress.max = 100
+								binding.progress.setProgressCompat(pct, true)
+								binding.textProgress.text = activity.getString(
 									R.string.update_download_progress,
 									pct,
 									formatSize(activity, done),
 									formatSize(activity, total),
 								)
 							} else {
-								percentView.text = formatSize(activity, done)
+								binding.textProgress.text = formatSize(activity, done)
 							}
 						}
 					}
@@ -282,6 +222,7 @@ class AppUpdateFlow @Inject constructor(
 				showDownloadError(activity, anchor, release, e)
 			}
 		}
+		binding.buttonCancel.setOnClickListener { downloadJob.cancel() }
 	}
 
 	private fun installUpdate(

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0: cat paw for the «ня» search easter egg (tinted in code) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M12,12.5C15.2,12.5 18,15.3 18,18C18,20.2 16.4,21 14.8,21C13.7,21 12.9,20.4 12,20.4C11.1,20.4 10.3,21 9.2,21C7.6,21 6,20.2 6,18C6,15.3 8.8,12.5 12,12.5Z" />
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M4.6,8.6m-2.2,0a2.2,2.6 0,1 1,4.4 0a2.2,2.6 0,1 1,-4.4 0" />
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M9,5m-2.2,0a2.2,2.7 0,1 1,4.4 0a2.2,2.7 0,1 1,-4.4 0" />
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M15,5m-2.2,0a2.2,2.7 0,1 1,4.4 0a2.2,2.7 0,1 1,-4.4 0" />
+	<path
+		android:fillColor="#FFFFFFFF"
+		android:pathData="M19.4,8.6m-2.2,0a2.2,2.6 0,1 1,4.4 0a2.2,2.6 0,1 1,-4.4 0" />
+</vector>

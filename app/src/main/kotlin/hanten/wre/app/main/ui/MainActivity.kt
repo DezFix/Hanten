@@ -97,6 +97,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import android.widget.Toast
+import hanten.wre.app.extras.ShakeDetector
 import com.google.android.material.R as materialR
 
 @AndroidEntryPoint
@@ -173,6 +175,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 			onFirstStart()
 		}
 
+		lifecycle.addObserver(
+			ShakeDetector(this, isEnabled = { settings.isEasterEggsEnabled }) { viewModel.openRandomFavourite() },
+		)
+
 		viewBinding.bottomNav?.addOnLayoutChangeListener(this)
 		viewBinding.searchView.addTransitionListener(this)
 		viewBinding.searchView.addTransitionListener(exitCallback)
@@ -181,6 +187,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		lifecycleScope.launch {
 			lifecycle.withResumed {
 				viewModel.onOpenReader.observeEvent(this@MainActivity, this@MainActivity::onOpenReader)
+				viewModel.onRandomTitle.observeEvent(this@MainActivity, this@MainActivity::onRandomTitle)
 				viewModel.onError.observeEvent(this@MainActivity, SnackbarErrorObserver(viewBinding.container, null))
 				viewModel.isLoading.observe(this@MainActivity, this@MainActivity::onLoadingStateChanged)
 				viewModel.isResumeEnabled.observe(this@MainActivity, this@MainActivity::onResumeEnabledChanged)
@@ -190,6 +197,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 				searchSuggestionViewModel.isIncognitoModeEnabled.observe(this@MainActivity, this@MainActivity::onIncognitoModeChanged)
 				initSearch()
 			}
+		}
+	}
+
+	private fun onRandomTitle(manga: Manga?) {
+		if (manga == null) {
+			Toast.makeText(this, R.string.shake_library_empty, Toast.LENGTH_SHORT).show()
+		} else {
+			Toast.makeText(this, R.string.shake_random_title, Toast.LENGTH_SHORT).show()
+			router.openDetails(manga)
 		}
 	}
 

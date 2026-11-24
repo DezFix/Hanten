@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +32,7 @@ import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.prefs.ColorScheme
 import hanten.wre.app.core.ui.util.ActionModeDelegate
 import hanten.wre.app.core.util.ext.isWebViewUnavailable
+import hanten.wre.app.extras.ThemeReveal
 import hanten.wre.app.main.ui.protect.ScreenshotPolicyHelper
 import androidx.appcompat.R as appcompatR
 
@@ -51,6 +53,9 @@ abstract class BaseActivity<B : ViewBinding> :
 	val actionModeDelegate = ActionModeDelegate()
 
 	private lateinit var entryPoint: BaseActivityEntryPoint
+
+	private var retroCodeStep = 0
+	private var retroCodeLastAt = 0L
 
 	override fun attachBaseContext(newBase: Context) {
 		entryPoint = EntryPointAccessors.fromApplication<BaseActivityEntryPoint>(newBase.applicationContext)
@@ -117,6 +122,7 @@ abstract class BaseActivity<B : ViewBinding> :
 	override fun onPostCreate(savedInstanceState: Bundle?) {
 		super.onPostCreate(savedInstanceState)
 		onBackPressedDispatcher.addCallback(actionModeDelegate)
+		ThemeReveal.playIfPending(this)
 	}
 
 	override fun onNewIntent(intent: Intent) {
@@ -160,16 +166,61 @@ abstract class BaseActivity<B : ViewBinding> :
 		return true
 	}
 
-	override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-		if (BuildConfig.DEBUG) {
-			if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-				ActivityCompat.recreate(this)
-				return true
-			} else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-				throw RuntimeException("Test crash")
-			}
+	override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+		if (ev.actionMasked == MotionEvent.ACTION_DOWN) {
+			ThemeReveal.onTouch(ev.rawX, ev.rawY)
 		}
-		return super.onKeyDown(keyCode, event)
+		return super.dispatchTouchEvent(ev)
+	}
+
+	/**
+	 * Easter egg: volume up, up, down, down (within a few seconds) unlocks and switches on the Retro theme;
+	 * the same code again goes back to the Hanten theme. The keys still change the volume as usual.
+	 */
+	override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+		val keyCode = event.keyCode
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) &&
+			event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0 &&
+			entryPoint.settings.isEasterEggsEnabled
+		) {
+			onRetroCodeKey(keyCode)
+		}
+		return super.dispatchKeyEvent(event)
+	}
+
+	private fun onRetroCodeKey(keyCode: Int) {
+		val now = System.currentTimeMillis()
+		if (now - retroCodeLastAt > RETRO_CODE_TIMEOUT_MS) {
+			retroCodeStep = 0
+		}
+		retroCodeLastAt = now
+		retroCodeStep = if (keyCode == RETRO_CODE[retroCodeStep]) {
+			retroCodeStep + 1
+		} else if (keyCode == RETRO_CODE[0]) {
+			1
+		} else {
+			0
+		}
+		if (retroCodeStep == RETRO_CODE.size) {
+			retroCodeStep = 0
+			val settings = entryPoint.settings
+			val toRetro = settings.colorScheme != ColorScheme.RETRO
+			settings.isRetroThemeUnlocked = true
+			Toast.makeText(
+				this,
+				if (toRetro) R.string.retro_theme_unlocked else R.string.retro_theme_off,
+				Toast.LENGTH_SHORT,
+			).show()
+			ThemeReveal.capture(this, settings)
+			if (toRetro) {
+				settings.colorSchemeBeforeRetro = settings.colorScheme
+				settings.colorScheme = ColorScheme.RETRO
+			} else {
+				settings.colorScheme = settings.colorSchemeBeforeRetro.takeIf { it != ColorScheme.RETRO }
+					?: ColorScheme.default
+			}
+			entryPoint.activityRecreationHandle.recreateAll()
+		}
 	}
 
 	protected fun isDarkAmoledTheme(): Boolean {
@@ -223,4 +274,15 @@ abstract class BaseActivity<B : ViewBinding> :
 	}
 
 	protected fun hasViewBinding() = ::viewBinding.isInitialized
+
+	private companion object {
+
+		const val RETRO_CODE_TIMEOUT_MS = 2500L
+		val RETRO_CODE = intArrayOf(
+			KeyEvent.KEYCODE_VOLUME_UP,
+			KeyEvent.KEYCODE_VOLUME_UP,
+			KeyEvent.KEYCODE_VOLUME_DOWN,
+			KeyEvent.KEYCODE_VOLUME_DOWN,
+		)
+	}
 }
