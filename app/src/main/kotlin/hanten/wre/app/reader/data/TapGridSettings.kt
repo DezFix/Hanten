@@ -24,6 +24,23 @@ class TapGridSettings @Inject constructor(@ApplicationContext context: Context) 
 		if (!prefs.getBoolean(KEY_INIT, false)) {
 			initPrefs(withDefaultValues = true)
 		}
+		migrateLongTapMenu()
+	}
+
+	/**
+	 * Hanten 3.0: a long press in the middle no longer opens the reader menu by default (readers dozing off
+	 * with a finger on the screen got the mode sheet). Removed once for everyone who still has the old default;
+	 * it can be turned back on in the tap zones settings.
+	 */
+	private fun migrateLongTapMenu() {
+		if (prefs.getBoolean(KEY_LONG_MENU_MIGRATED, false)) return
+		val key = getPrefKey(TapGridArea.CENTER, isLongTap = true)
+		prefs.edit {
+			if (prefs.getEnumValue(key, TapAction::class.java) == TapAction.SHOW_MENU) {
+				remove(key)
+			}
+			putBoolean(KEY_LONG_MENU_MIGRATED, true)
+		}
 	}
 
 	fun getTapAction(area: TapGridArea, isLongTap: Boolean): TapAction? {
@@ -62,6 +79,7 @@ class TapGridSettings @Inject constructor(@ApplicationContext context: Context) 
 				initDefaultActions(this)
 			}
 			putBoolean(KEY_INIT, true)
+			putBoolean(KEY_LONG_MENU_MIGRATED, true)
 		}
 	}
 
@@ -78,7 +96,6 @@ class TapGridSettings @Inject constructor(@ApplicationContext context: Context) 
 		editor.putEnumValue(getPrefKey(TapGridArea.BOTTOM_LEFT, false), TapAction.PAGE_PREV)
 
 		editor.putEnumValue(getPrefKey(TapGridArea.CENTER, false), TapAction.TOGGLE_UI)
-		editor.putEnumValue(getPrefKey(TapGridArea.CENTER, true), TapAction.SHOW_MENU)
 
 		editor.putEnumValue(getPrefKey(TapGridArea.TOP_RIGHT, false), TapAction.PAGE_NEXT)
 		editor.putEnumValue(getPrefKey(TapGridArea.CENTER_RIGHT, false), TapAction.PAGE_NEXT)
@@ -91,5 +108,6 @@ class TapGridSettings @Inject constructor(@ApplicationContext context: Context) 
 		private const val PREFS_NAME = "tap_grid"
 		private const val KEY_INIT = "_init"
 		private const val SUFFIX_LONG = "_long"
+		private const val KEY_LONG_MENU_MIGRATED = "_no_long_menu"
 	}
 }
