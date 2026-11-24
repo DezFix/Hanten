@@ -44,4 +44,12 @@
 		<item quantity="one">page</item>
 		<item quantity="other">pages</item>
 	</plurals>
+	<plurals name="upcoming_every_days">
+		<item quantity="one">≈ every day</item>
+		<item quantity="other">≈ every %d days</item>
+	</plurals>
+	<plurals name="upcoming_late_days">
+		<item quantity="one">%d day late</item>
+		<item quantity="other">%d days late</item>
+	</plurals>
 </resources>

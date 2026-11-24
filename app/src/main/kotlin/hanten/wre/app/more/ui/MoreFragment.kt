@@ -58,8 +58,8 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_history, R.string.history) { openHistory() },
 		Entry(R.drawable.ic_bookmark, R.string.bookmarks) { openBookmarks() },
 		Entry(R.drawable.ic_storage, R.string.on_device) { openList(LocalMangaSource, null, null) },
-		Entry(R.drawable.ic_feed, R.string.feed) { openFeed() },
-		Entry(R.drawable.ic_updated, R.string.more_updates) { openMangaUpdates() },
+		// «Лента» is reachable from Today («Новые главы → Все»); «Обновления» showed the same in another form
+		Entry(R.drawable.ic_updated, R.string.upcoming_title) { openUpcoming() },
 	)
 
 	private val sections = listOf(

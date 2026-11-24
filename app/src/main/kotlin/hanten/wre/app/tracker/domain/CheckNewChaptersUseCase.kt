@@ -6,6 +6,7 @@ import hanten.wre.app.BuildConfig
 import hanten.wre.app.core.model.getPreferredBranch
 import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.parser.CachingMangaRepository
+import hanten.wre.app.core.parser.MangaDataRepository
 import hanten.wre.app.core.parser.MangaRepository
 import hanten.wre.app.core.util.MultiMutex
 import hanten.wre.app.core.util.ext.printStackTraceDebug
@@ -27,6 +28,7 @@ class CheckNewChaptersUseCase @Inject constructor(
 	private val historyRepository: HistoryRepository,
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	private val localMangaRepository: LocalMangaRepository,
+	private val mangaDataRepository: MangaDataRepository,
 ) {
 
 	private val mutex = MultiMutex<Long>()
@@ -74,6 +76,10 @@ class CheckNewChaptersUseCase @Inject constructor(
 
 	private suspend fun invokeImpl(track: MangaTracking): MangaUpdates = runCatchingCancellable {
 		val details = getFullManga(track.manga)
+		// keep the chapter list with dates: «Скоро выйдет» estimates the next chapter from it
+		runCatchingCancellable {
+			mangaDataRepository.updateStoredManga(details)
+		}.onFailure { it.printStackTraceDebug("CheckNewChaptersUseCase::store") }
 		compare(track, details, getBranch(details, track.lastChapterId))
 	}.getOrElse { error ->
 		MangaUpdates.Failure(

@@ -260,6 +260,11 @@ class AppRouter private constructor(
         startActivity(Intent(context, hanten.wre.app.tracker.ui.feed.FeedActivity::class.java))
     }
 
+    fun openUpcoming() {
+        val context = contextOrNull() ?: return
+        startActivity(Intent(context, hanten.wre.app.upcoming.ui.UpcomingActivity::class.java))
+    }
+
     fun openMangaUpdates() {
         startActivity(mangaUpdatesIntent(contextOrNull() ?: return))
     }

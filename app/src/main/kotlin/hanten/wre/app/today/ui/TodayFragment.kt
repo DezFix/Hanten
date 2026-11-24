@@ -41,7 +41,10 @@ import kotlin.math.roundToInt
 /**
  * Home tab (Hanten 3.0 mockup): continue reading, new chapters from the library ("All" opens the updates list),
  * ranobe in progress and recently read. The header gets a round "check for new chapters" button.
- */
+ */import hanten.wre.app.databinding.ItemUpcomingBinding
+import hanten.wre.app.upcoming.domain.UpcomingItem
+import hanten.wre.app.upcoming.ui.bindUpcoming
+
 @AndroidEntryPoint
 class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 
@@ -66,6 +69,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		binding.recyclerRecent.adapter = recentAdapter
 		binding.buttonUpdatesAll.setOnClickListener { router.openFeed() }
 		binding.buttonRecentAll.setOnClickListener { router.openHistory() }
+		binding.buttonUpcomingAll.setOnClickListener { router.openUpcoming() }
 		// Pull down = look for new chapters in the library (same as the round button in the header)
 		binding.swipeRefresh.isEnabled = viewModel.isTrackerEnabled
 		binding.swipeRefresh.setOnRefreshListener { viewModel.checkNewChapters() }
@@ -75,6 +79,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		}
 
 		viewModel.history.observe(viewLifecycleOwner) { list -> onHistoryChanged(list) }
+		viewModel.upcoming.observe(viewLifecycleOwner) { list -> onUpcomingChanged(list) }
 		viewModel.recent.observe(viewLifecycleOwner) { list ->
 			recentAdapter.emit(list)
 			binding.layoutRecentHeader.isVisible = list.isNotEmpty()
@@ -141,6 +146,19 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		val accent = requireContext().getThemeColor(androidx.appcompat.R.attr.colorPrimary)
 		return SpannableStringBuilder(title).append(' ').inSpans(ForegroundColorSpan(accent)) {
 			append("· ").append(count.toString())
+		}
+	}
+
+	private fun onUpcomingChanged(list: List<UpcomingItem>) {
+		val binding = viewBinding ?: return
+		binding.layoutUpcomingHeader.isVisible = list.isNotEmpty()
+		binding.cardUpcoming.isVisible = list.isNotEmpty()
+		val rows = binding.layoutUpcomingRows
+		rows.removeAllViews()
+		for (item in list) {
+			val row = ItemUpcomingBinding.inflate(layoutInflater, rows, false)
+			row.bindUpcoming(item) { router.openDetails(it.manga) }
+			rows.addView(row.root)
 		}
 	}
 

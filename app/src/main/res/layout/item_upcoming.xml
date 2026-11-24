@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanten 3.0 «Скоро выйдет» row: cover, title, next chapter and rhythm, expected date. Rows of a day share a card. -->
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/card_row"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="?selectableItemBackground"
+	android:gravity="center_vertical"
+	android:orientation="horizontal"
+	android:paddingHorizontal="12dp"
+	android:paddingVertical="8dp">
+
+	<hanten.wre.app.image.ui.CoverImageView
+		android:id="@+id/imageView_cover"
+		android:layout_width="44dp"
+		android:layout_height="62dp"
+		android:scaleType="centerCrop"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Hanten.Cover.Medium"
+		tools:src="@tools:sample/backgrounds/scenic" />
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="12dp"
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/textView_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ellipsize="end"
+			android:maxLines="2"
+			android:textAppearance="?attr/textAppearanceTitleSmall"
+			tools:text="@tools:sample/lorem" />
+
+		<TextView
+			android:id="@+id/textView_summary"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:textAppearance="?attr/textAppearanceBodySmall"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Гл. 45 · ≈ раз в 7 дней" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/textView_date"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?attr/textAppearanceLabelLarge"
+		android:textColor="?colorPrimary"
+		tools:text="27 нояб." />
+</LinearLayout>

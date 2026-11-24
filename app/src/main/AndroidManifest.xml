@@ -322,6 +322,9 @@
 			android:name="hanten.wre.app.alternatives.ui.AlternativesActivity"
 			android:label="@string/alternatives" />
 		<activity
+			android:name="hanten.wre.app.upcoming.ui.UpcomingActivity"
+			android:label="@string/upcoming_title" />
+		<activity
 			android:name="hanten.wre.app.tracker.ui.debug.TrackerDebugActivity"
 			android:label="@string/tracker_debug_info" />
 		<activity

@@ -67,4 +67,16 @@
 	<string name="more_hint_backup">Авто, Mihon, Kotatsu</string>
 	<string name="more_hint_about">Версия, обновления</string>
 	<string name="more_incognito_hint">История не сохраняется</string>
+	<string name="upcoming_title">Скоро выйдет</string>
+	<string name="upcoming_hint">Примерно: по датам прошлых глав. Обновляется при проверке новых глав.</string>
+	<string name="upcoming_late">Задерживается</string>
+	<string name="upcoming_tomorrow">Завтра</string>
+	<string name="upcoming_later">Позже</string>
+	<string name="upcoming_check_now">Проверить новые главы</string>
+	<string name="upcoming_checking">Проверяю…</string>
+	<string name="upcoming_empty_title">Пока нечего предсказать</string>
+	<string name="upcoming_empty_text">Прогноз строится по датам глав тайтлов из библиотеки. Запусти проверку новых глав — после неё здесь появятся тайтлы, которые выходят регулярно.</string>
+	<string name="upcoming_summary_chapter">Гл. %1$d · %2$s</string>
+	<string name="upcoming_any_moment">Вот-вот</string>
+	<string name="upcoming_since">с %s</string>
 </resources>

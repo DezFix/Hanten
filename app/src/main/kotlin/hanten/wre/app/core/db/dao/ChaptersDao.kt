@@ -20,6 +20,13 @@ abstract class ChaptersDao {
 	@Query("SELECT manga_id AS mangaId, MAX(upload_date) AS maxUploadDate FROM chapters GROUP BY manga_id")
 	abstract suspend fun getMaxUploadDates(): List<MangaMaxUploadDate>
 
+	/** Dated chapters of library titles: input for the «Скоро выйдет» forecast */
+	@Query(
+		"SELECT manga_id AS mangaId, upload_date AS uploadDate, number, branch FROM chapters " +
+			"WHERE upload_date > 0 AND manga_id IN (SELECT manga_id FROM favourites WHERE deleted_at = 0)",
+	)
+	abstract suspend fun getLibraryChapterDates(): List<ChapterDate>
+
 	@Query("DELETE FROM chapters WHERE manga_id = :mangaId")
 	abstract suspend fun deleteAll(mangaId: Long)
 
@@ -39,4 +46,11 @@ abstract class ChaptersDao {
 data class MangaMaxUploadDate(
 	val mangaId: Long,
 	val maxUploadDate: Long,
+)
+
+data class ChapterDate(
+	val mangaId: Long,
+	val uploadDate: Long,
+	val number: Float,
+	val branch: String?,
 )

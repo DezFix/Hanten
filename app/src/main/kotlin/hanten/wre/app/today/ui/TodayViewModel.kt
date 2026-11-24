@@ -19,6 +19,11 @@ import hanten.wre.app.list.domain.MangaListMapper
 import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.tracker.domain.TrackingRepository
 import hanten.wre.app.tracker.work.TrackWorker
+import hanten.wre.app.upcoming.domain.GetUpcomingUseCase
+import hanten.wre.app.upcoming.domain.UpcomingItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 import javax.inject.Inject
 
 /**
@@ -32,6 +37,7 @@ class TodayViewModel @Inject constructor(
 	settings: AppSettings,
 	private val mangaListMapper: MangaListMapper,
 	private val trackScheduler: TrackWorker.Scheduler,
+	private val getUpcoming: GetUpcomingUseCase,
 ) : BaseViewModel() {
 
 	val isTrackerEnabled = settings.isTrackerEnabled
@@ -64,8 +70,24 @@ class TodayViewModel @Inject constructor(
 		flowOf(emptyList())
 	}.stateIn<List<MangaListModel>>(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, emptyList())
 
+	/** The nearest expected chapters for the «Скоро выйдет» block (late ones only on its own screen) */
+	val upcoming = MutableStateFlow<List<UpcomingItem>>(emptyList())
+
+	init {
+		loadUpcoming()
+		// a finished check brings fresh chapter dates
+		launchJob(Dispatchers.Default) {
+			isCheckingUpdates.drop(1).filter { !it }.collect { loadUpcoming() }
+		}
+	}
+
+	private fun loadUpcoming() = launchJob(Dispatchers.Default) {
+		upcoming.value = getUpcoming().filterNot { it.forecast.isLate }.take(UPCOMING_LIMIT)
+	}
+
 	private companion object {
 
+		const val UPCOMING_LIMIT = 3
 		const val HISTORY_LIMIT = 13
 		const val UPDATES_LIMIT = 20
 	}

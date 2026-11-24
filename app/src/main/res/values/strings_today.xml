@@ -67,4 +67,16 @@
 	<string name="more_hint_backup">Auto, Mihon, Kotatsu</string>
 	<string name="more_hint_about">Version, updates</string>
 	<string name="more_incognito_hint">History is not saved</string>
+	<string name="upcoming_title">Coming soon</string>
+	<string name="upcoming_hint">Approximate: based on the dates of previous chapters. Updated when new chapters are checked.</string>
+	<string name="upcoming_late">Running late</string>
+	<string name="upcoming_tomorrow">Tomorrow</string>
+	<string name="upcoming_later">Later</string>
+	<string name="upcoming_check_now">Check for new chapters</string>
+	<string name="upcoming_checking">Checking…</string>
+	<string name="upcoming_empty_title">Nothing to predict yet</string>
+	<string name="upcoming_empty_text">The forecast uses chapter dates of titles in your library. Run a check for new chapters and titles that update regularly will show up here.</string>
+	<string name="upcoming_summary_chapter">Ch. %1$d · %2$s</string>
+	<string name="upcoming_any_moment">Any moment</string>
+	<string name="upcoming_since">since %s</string>
 </resources>

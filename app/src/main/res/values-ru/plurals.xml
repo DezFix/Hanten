@@ -61,4 +61,16 @@
 		<item quantity="many">страниц</item>
 		<item quantity="other">страницы</item>
 	</plurals>
+	<plurals name="upcoming_every_days">
+		<item quantity="one">≈ раз в %d день</item>
+		<item quantity="few">≈ раз в %d дня</item>
+		<item quantity="many">≈ раз в %d дней</item>
+		<item quantity="other">≈ раз в %d дня</item>
+	</plurals>
+	<plurals name="upcoming_late_days">
+		<item quantity="one">на %d день</item>
+		<item quantity="few">на %d дня</item>
+		<item quantity="many">на %d дней</item>
+		<item quantity="other">на %d дня</item>
+	</plurals>
 </resources>

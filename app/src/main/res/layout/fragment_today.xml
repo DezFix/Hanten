@@ -164,6 +164,50 @@
 			android:paddingHorizontal="10dp"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+		<!-- «Скоро выйдет»: the nearest expected chapters (forecast from chapter dates) -->
+		<LinearLayout
+			android:id="@+id/layout_upcoming_header"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:paddingEnd="8dp"
+			android:visibility="gone">
+
+			<TextView
+				style="@style/TextAppearance.Hanten.Today.Section"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/upcoming_title" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button_upcoming_all"
+				style="@style/Widget.Material3.Button.TextButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="12dp"
+				android:text="@string/today_all" />
+		</LinearLayout>
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/card_upcoming"
+			style="@style/Widget.Material3.CardView.Filled"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:visibility="gone"
+			app:cardBackgroundColor="?colorSurfaceContainerLow"
+			app:cardCornerRadius="20dp">
+
+			<LinearLayout
+				android:id="@+id/layout_upcoming_rows"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="4dp" />
+		</com.google.android.material.card.MaterialCardView>
+
 		<LinearLayout
 			android:id="@+id/layout_recent_header"
 			android:layout_width="match_parent"

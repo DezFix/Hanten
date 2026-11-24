@@ -67,4 +67,16 @@
 	<string name="more_hint_backup">Авто, Mihon, Kotatsu</string>
 	<string name="more_hint_about">Версія, оновлення</string>
 	<string name="more_incognito_hint">Історія не зберігається</string>
+	<string name="upcoming_title">Скоро вийде</string>
+	<string name="upcoming_hint">Приблизно: за датами минулих розділів. Оновлюється під час перевірки нових розділів.</string>
+	<string name="upcoming_late">Затримується</string>
+	<string name="upcoming_tomorrow">Завтра</string>
+	<string name="upcoming_later">Пізніше</string>
+	<string name="upcoming_check_now">Перевірити нові розділи</string>
+	<string name="upcoming_checking">Перевіряю…</string>
+	<string name="upcoming_empty_title">Поки нічого передбачити</string>
+	<string name="upcoming_empty_text">Прогноз будується за датами розділів тайтлів із бібліотеки. Запусти перевірку нових розділів — після неї тут з’являться тайтли, що виходять регулярно.</string>
+	<string name="upcoming_summary_chapter">Розд. %1$d · %2$s</string>
+	<string name="upcoming_any_moment">Ось-ось</string>
+	<string name="upcoming_since">з %s</string>
 </resources>
