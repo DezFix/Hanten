@@ -32,6 +32,7 @@ import hanten.wre.app.core.util.ext.systemBarsInsets
 import hanten.wre.app.settings.SettingsActivity
 import hanten.wre.app.settings.utils.GroupedPreferenceAdapter
 import hanten.wre.app.settings.utils.LayoutPreference
+import hanten.wre.app.settings.utils.PreferenceTypeGuard
 import javax.inject.Inject
 import com.google.android.material.R as materialR
 
@@ -59,6 +60,12 @@ abstract class BasePreferenceFragment(@StringRes private val titleId: Int) :
 		preference !is PreferenceCategory &&
 			preference !is LayoutPreference &&
 			preference.layoutResource != R.layout.preference_toggle_header
+
+	/** Fix values of a wrong type (old backups) before the rows read them, instead of crashing */
+	override fun addPreferencesFromResource(preferencesResId: Int) {
+		PreferenceTypeGuard.sanitize(requireContext(), preferenceManager.sharedPreferences, preferencesResId)
+		super.addPreferencesFromResource(preferencesResId)
+	}
 
 	override fun onCreateAdapter(preferenceScreen: PreferenceScreen): RecyclerView.Adapter<*> =
 		if (isGroupedCards) {

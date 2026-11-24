@@ -767,11 +767,27 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 
 	fun getAllValues(): Map<String, *> = prefs.all
 
-    fun upsertAll(m: Map<String, *>, isMerge: Boolean = false) = prefs.edit {
-        if (!isMerge) {
-            clear()
-        }
-		putAll(m)
+    fun upsertAll(m: Map<String, *>, isMerge: Boolean = false) {
+		// A backup is JSON: 17.0f comes back as Int 17 and 1.6 as Double (which putAll used to drop).
+		// Keep the type the app already uses for the key, so readers don't crash on getFloat/getInt.
+		val known = prefs.all
+		val fixed = m.mapValues { (key, value) -> coerceBackupValue(value, known[key]) }
+		prefs.edit {
+			if (!isMerge) {
+				clear()
+			}
+			putAll(fixed)
+		}
+	}
+
+	private fun coerceBackupValue(value: Any?, current: Any?): Any? = when {
+		value !is Number -> value
+		current is Float -> value.toFloat()
+		current is Int -> value.toInt()
+		current is Long -> value.toLong()
+		current is String -> value.toString()
+		value is Double -> value.toFloat()
+		else -> value
 	}
 
 	private fun isBackgroundNetworkRestricted(): Boolean {
