@@ -21,6 +21,7 @@ import hanten.wre.app.core.model.isLocal
 import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.os.AppShortcutManager
+import hanten.wre.app.core.prefs.AppSettings
 import hanten.wre.app.core.ui.dialog.buildAlertDialog
 import hanten.wre.app.core.util.ext.isHttpUrl
 
@@ -29,6 +30,7 @@ class DetailsMenuProvider(
 	private val viewModel: DetailsViewModel,
 	private val snackbarHost: View,
 	private val appShortcutManager: AppShortcutManager,
+	private val settings: AppSettings,
 ) : MenuProvider, ActivityResultCallback<ActivityResult> {
 
 	private val activityForResultLauncher = activity.registerForActivityResult(
@@ -57,6 +59,12 @@ class DetailsMenuProvider(
 		menu.findItem(R.id.action_scrobbling).isVisible = viewModel.isScrobblingAvailable
 		menu.findItem(R.id.action_online).isVisible = viewModel.remoteManga.value != null
 		menu.findItem(R.id.action_stats).isVisible = viewModel.isStatsAvailable.value
+		menu.findItem(R.id.action_showcase)?.run {
+			isVisible = manga != null
+			setTitle(
+				if (manga != null && manga.id in settings.profileShowcase) R.string.showcase_remove else R.string.showcase_add,
+			)
+		}
 	}
 
 	override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -108,6 +116,26 @@ class DetailsMenuProvider(
 				}
 			}
 
+			R.id.action_showcase -> {
+				val showcase = settings.profileShowcase
+				when {
+					manga.id in showcase -> {
+						settings.profileShowcase = showcase - manga.id
+						Snackbar.make(snackbarHost, R.string.showcase_removed, Snackbar.LENGTH_SHORT).show()
+					}
+
+					showcase.size >= SHOWCASE_SIZE -> {
+						Snackbar.make(snackbarHost, R.string.showcase_full, Snackbar.LENGTH_LONG).show()
+					}
+
+					else -> {
+						settings.profileShowcase = showcase + manga.id
+						Snackbar.make(snackbarHost, R.string.showcase_added, Snackbar.LENGTH_SHORT).show()
+					}
+				}
+				activity.invalidateOptionsMenu()
+			}
+
 			R.id.action_edit_override -> {
 				val intent = AppRouter.overrideEditIntent(activity, manga)
 				activityForResultLauncher.launch(intent)
@@ -122,5 +150,10 @@ class DetailsMenuProvider(
 		if (result.resultCode == Activity.RESULT_OK) {
 			viewModel.reload()
 		}
+	}
+
+	private companion object {
+
+		const val SHOWCASE_SIZE = 3
 	}
 }

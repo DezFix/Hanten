@@ -236,6 +236,7 @@ class DetailsActivity :
 			viewModel = viewModel,
 			snackbarHost = viewBinding.scrollView,
 			appShortcutManager = shortcutManager,
+			settings = settings,
 		)
 		addMenuProvider(menuProvider)
 	}

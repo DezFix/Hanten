@@ -1,5 +1,10 @@
 package hanten.wre.app.more.ui
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import hanten.wre.app.parsers.util.runCatchingCancellable
+import hanten.wre.app.profile.domain.ProfileProgressRepository
+import hanten.wre.app.profile.domain.ReaderLevel
 import hanten.wre.app.databinding.ItemMoreRowBinding
 import androidx.core.text.inSpans
 import android.text.style.RelativeSizeSpan
@@ -44,6 +49,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 
 	@Inject
 	lateinit var settings: AppSettings
+
+	@Inject
+	lateinit var progressRepository: ProfileProgressRepository
 
 	private class Entry(
 		@DrawableRes val icon: Int,
@@ -134,6 +142,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	override fun onResume() {
 		super.onResume()
 		bindProfile()
+		bindLevel()
 		viewBinding?.switchIncognito?.isChecked = settings.isIncognitoModeEnabled
 	}
 
@@ -153,6 +162,17 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 				resources.getDimensionPixelSize(R.dimen.profile_choice_ring),
 				binding.root.context.getThemeColor(appcompatR.attr.colorPrimary),
 			)
+		}
+	}
+
+	/** «Ур. 18 · Сэмпай» under the nickname (the local-only hint stays for a fresh profile). */
+	private fun bindLevel() {
+		viewLifecycleOwner.lifecycleScope.launch {
+			val stats = runCatchingCancellable { progressRepository.load() }.getOrNull() ?: return@launch
+			if (stats.xp <= 0L) return@launch
+			val level = ReaderLevel.fromXp(stats.xp)
+			viewBinding?.textProfileHint?.text =
+				getString(R.string.level_short, level.level, getString(level.rank.titleResId))
 		}
 	}
 

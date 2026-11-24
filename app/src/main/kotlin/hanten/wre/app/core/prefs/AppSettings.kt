@@ -232,6 +232,14 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 		get() = prefs.getInt(KEY_PROFILE_COLOR, 0)
 		set(value) = prefs.edit { putInt(KEY_PROFILE_COLOR, value) }
 
+	/** Profile showcase: up to 3 manga ids, in order (Hanten 3.0). */
+	var profileShowcase: List<Long>
+		get() = prefs.getString(KEY_PROFILE_SHOWCASE, null)
+			?.split(',')
+			?.mapNotNull { it.trim().toLongOrNull() }
+			.orEmpty()
+		set(value) = prefs.edit { putString(KEY_PROFILE_SHOWCASE, value.distinct().take(3).joinToString(",")) }
+
 	val isTrackerEnabled: Boolean
 		get() = prefs.getBoolean(KEY_TRACKER_ENABLED, true)
 
@@ -945,6 +953,7 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 		const val KEY_PROFILE_NAME = "profile_name"
 		const val KEY_PROFILE_AVATAR = "profile_avatar"
 		const val KEY_PROFILE_COLOR = "profile_color"
+		const val KEY_PROFILE_SHOWCASE = "profile_showcase"
 		const val KEY_DOH = "doh"
 		const val KEY_EXIT_CONFIRM = "exit_confirm"
 		const val KEY_INCOGNITO_MODE = "incognito"

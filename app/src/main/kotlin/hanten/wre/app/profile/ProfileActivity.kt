@@ -1,5 +1,8 @@
 package hanten.wre.app.profile
 
+import hanten.wre.app.core.parser.MangaDataRepository
+import hanten.wre.app.profile.domain.ProfileProgressRepository
+import hanten.wre.app.profile.domain.ReadingProgressStats
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -84,6 +87,14 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
 	@Inject
 	lateinit var favouritesRepository: FavouritesRepository
 
+	@Inject
+	lateinit var progressRepository: ProfileProgressRepository
+
+	@Inject
+	lateinit var mangaDataRepository: MangaDataRepository
+
+	private lateinit var progressBinder: ProfileProgressBinder
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityProfileBinding.inflate(layoutInflater))
@@ -96,6 +107,11 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
 		favouritesRepository.observeMangaCount().observe(this) {
 			viewBinding.statTitles.textValue.text = it.toString()
 		}
+		progressBinder = ProfileProgressBinder(
+			binding = viewBinding,
+			onShowcaseClick = { manga -> router.openDetails(manga) },
+			onShowcaseLongClick = ::confirmShowcaseRemove,
+		)
 		bindProfile()
 		loadStats()
 		// the bar floats over the banner; once the banner scrolls away it gets a solid fill so text does not show under it
@@ -204,6 +220,40 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
 		if (ring != 0) {
 			setStroke(resources.getDimensionPixelSize(R.dimen.profile_choice_ring), ring)
 		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+		// levels, achievements and the showcase can change after reading or editing a title card
+		loadProgress()
+	}
+
+	private fun loadProgress() {
+		lifecycleScope.launch {
+			val stats = runCatchingCancellable { progressRepository.load() }
+				.onFailure { it.printStackTraceDebug() }
+				.getOrDefault(ReadingProgressStats.EMPTY)
+			progressBinder.bindLevel(stats)
+			progressBinder.bindAchievements(stats)
+			val showcase = runCatchingCancellable {
+				withContext(Dispatchers.IO) {
+					settings.profileShowcase.mapNotNull { id -> mangaDataRepository.findMangaById(id, withChapters = false) }
+				}
+			}.onFailure { it.printStackTraceDebug() }.getOrNull().orEmpty()
+			progressBinder.bindShowcase(showcase)
+		}
+	}
+
+	private fun confirmShowcaseRemove(manga: Manga) {
+		com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+			.setTitle(manga.title)
+			.setMessage(R.string.showcase_remove_question)
+			.setNegativeButton(android.R.string.cancel, null)
+			.setPositiveButton(R.string.showcase_remove) { _, _ ->
+				settings.profileShowcase = settings.profileShowcase - manga.id
+				loadProgress()
+			}
+			.show()
 	}
 
 	private fun loadStats() {

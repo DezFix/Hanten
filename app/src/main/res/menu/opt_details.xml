@@ -38,6 +38,12 @@
 		app:showAsAction="never" />
 
 	<item
+		android:id="@+id/action_showcase"
+		android:orderInCategory="49"
+		android:title="@string/showcase_add"
+		app:showAsAction="never" />
+
+	<item
 		android:id="@+id/action_stats"
 		android:orderInCategory="50"
 		android:title="@string/statistics"
