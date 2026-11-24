@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="local_storage">Локальное хранилище</string>
+    <string name="local_storage">На устройстве</string>
     <string name="favourites">Избранное</string>
     <string name="history">История</string>
     <string name="error_occurred">Произошла ошибка</string>
@@ -37,7 +37,7 @@
     <string name="downloads">Загрузки</string>
     <string name="by_name">Имя</string>
     <string name="popular">Популярная</string>
-    <string name="updated">Обновлённая</string>
+    <string name="updated">Недавно обновлённые</string>
     <string name="newest">Новая</string>
     <string name="by_rating">Рейтинг</string>
     <string name="sort_order">Порядок сортировки</string>
@@ -92,7 +92,7 @@
     <string name="text_empty_holder_primary">Как-то здесь пусто…</string>
     <string name="text_search_holder_secondary">Попробуйте переформулировать запрос.</string>
     <string name="text_history_holder_primary">То, что вы прочитаете, будет отображено здесь</string>
-    <string name="text_history_holder_secondary">Найдите, что почитать в разделе «Обзор»</string>
+    <string name="text_history_holder_secondary">Найди, что почитать, во вкладке «Каталог»</string>
     <string name="text_local_holder_primary">Сохраните что-нибудь</string>
     <string name="text_local_holder_secondary">Сохраните что-нибудь из онлайн-каталога или импортируйте из файла.</string>
     <string name="manga_shelf">Полка</string>
@@ -369,7 +369,7 @@
     <string name="enable">Включить</string>
     <string name="more">Ещё</string>
     <string name="cancel_all_downloads_confirm">Все активные загрузки будут отменены, частично загруженные данные будут утеряны</string>
-    <string name="text_downloads_list_holder">У Вас нет ни одной загрузки</string>
+    <string name="text_downloads_list_holder">Загрузок пока нет</string>
     <string name="downloads_resumed">Загрузки возобновлены</string>
     <string name="downloads_paused">Загрузки приостановлены</string>
     <string name="downloads_removed">Загрузки удалены</string>

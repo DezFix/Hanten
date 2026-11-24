@@ -92,14 +92,19 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
 		viewBinding.buttonEdit.setOnClickListener(this)
 		viewBinding.buttonName.setOnClickListener(this)
 		initStats()
-		viewBinding.statHours.textLabel.setText(R.string.profile_stat_hours)
-		viewBinding.statPages.textLabel.setText(R.string.profile_stat_pages)
 		viewBinding.statTitles.textLabel.setText(R.string.profile_stat_titles)
 		favouritesRepository.observeMangaCount().observe(this) {
 			viewBinding.statTitles.textValue.text = it.toString()
 		}
 		bindProfile()
 		loadStats()
+		// the bar floats over the banner; once the banner scrolls away it gets a solid fill so text does not show under it
+		val barColor = getThemeColor(android.R.attr.colorBackground)
+		viewBinding.scrollView.setOnScrollChangeListener(androidx.core.widget.NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+			val range = (viewBinding.appbar.height * 2).coerceAtLeast(1)
+			val alpha = (scrollY.toFloat() / range).coerceIn(0f, 1f)
+			viewBinding.appbar.setBackgroundColor(ColorUtils.setAlphaComponent(barColor, (alpha * 255).toInt()))
+		})
 	}
 
 	override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {
@@ -207,12 +212,18 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),
 				withContext(Dispatchers.IO) { statsRepository.getPeriodTotals(0L, emptySet()) }
 			}.onFailure { it.printStackTraceDebug() }.getOrNull()
 			val hours = TimeUnit.MILLISECONDS.toHours(totals?.duration ?: 0L)
+			val pages = totals?.pages ?: 0
 			viewBinding.statHours.textValue.text = hours.toString()
-			viewBinding.statPages.textValue.text = (totals?.pages ?: 0).toString()
+			viewBinding.statHours.textLabel.text = resources.getQuantityString(R.plurals.profile_stat_hours, hours.toInt())
+			viewBinding.statPages.textValue.text = pages.toString()
+			viewBinding.statPages.textLabel.text = resources.getQuantityString(R.plurals.profile_stat_pages, pages.toInt())
 
 			val tags = runCatchingCancellable {
-				withContext(Dispatchers.IO) { historyRepository.getPopularTags(GENRES_LIMIT) }
+				withContext(Dispatchers.IO) { historyRepository.getPopularTags(GENRES_LIMIT * 3) }
 			}.onFailure { it.printStackTraceDebug() }.getOrNull().orEmpty()
+				// the same genre comes from several sources as separate tags: show it once
+				.distinctBy { it.title.trim().lowercase() }
+				.take(GENRES_LIMIT)
 			val chips = viewBinding.chipsGenres
 			chips.removeAllViews()
 			for (tag in tags) {

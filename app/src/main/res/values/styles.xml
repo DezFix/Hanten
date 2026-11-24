@@ -532,8 +532,8 @@
 		<item name="tabGravity">start</item>
 		<item name="tabMode">scrollable</item>
 		<item name="tabMinWidth">0dp</item>
-		<item name="tabPaddingStart">14dp</item>
-		<item name="tabPaddingEnd">14dp</item>
+		<item name="tabPaddingStart">10dp</item>
+		<item name="tabPaddingEnd">10dp</item>
 		<item name="tabIndicatorFullWidth">true</item>
 		<item name="tabIndicatorHeight">3dp</item>
 		<item name="tabTextAppearance">@style/TextAppearance.Hanten.DetailsTab</item>

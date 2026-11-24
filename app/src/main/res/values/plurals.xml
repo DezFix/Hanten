@@ -36,4 +36,12 @@
 		<item quantity="one">%1$d minute</item>
 		<item quantity="other">%1$d minutes</item>
 	</plurals>
+	<plurals name="profile_stat_hours">
+		<item quantity="one">hour</item>
+		<item quantity="other">hours</item>
+	</plurals>
+	<plurals name="profile_stat_pages">
+		<item quantity="one">page</item>
+		<item quantity="other">pages</item>
+	</plurals>
 </resources>

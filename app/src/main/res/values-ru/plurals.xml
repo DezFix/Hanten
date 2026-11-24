@@ -49,4 +49,16 @@
         <item quantity="many">%1$d минут</item>
         <item quantity="other">%1$d минут</item>
     </plurals>
+	<plurals name="profile_stat_hours">
+		<item quantity="one">час</item>
+		<item quantity="few">часа</item>
+		<item quantity="many">часов</item>
+		<item quantity="other">часа</item>
+	</plurals>
+	<plurals name="profile_stat_pages">
+		<item quantity="one">страница</item>
+		<item quantity="few">страницы</item>
+		<item quantity="many">страниц</item>
+		<item quantity="other">страницы</item>
+	</plurals>
 </resources>

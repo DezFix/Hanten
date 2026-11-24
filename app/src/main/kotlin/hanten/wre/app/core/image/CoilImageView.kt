@@ -61,6 +61,10 @@ open class CoilImageView @JvmOverloads constructor(
 	var fallbackDrawable: Drawable? = null
 
 	private var currentRequest: Disposable? = null
+	private var lastRequest: ImageRequest? = null
+
+	/** A load cut short by detaching: restarted on attach, or the image stays empty when nothing rebinds the view */
+	private var interruptedRequest: ImageRequest? = null
 	private var currentImageData: Any = NullRequestData
 	private var networkWaitingJob: Job? = null
 
@@ -94,11 +98,24 @@ open class CoilImageView @JvmOverloads constructor(
 		// A request whose lifecycle is not resolved keeps its target alive until the network
 		// answers, so a pending favicon/cover load would retain the whole detached hierarchy
 		// (fragment onDestroyView -> RecyclerView leak). Rebinding always enqueues a new request.
+		if (currentRequest?.job?.isActive == true) {
+			interruptedRequest = lastRequest
+		}
 		currentRequest?.dispose()
 		currentRequest = null
 		networkWaitingJob?.cancel()
 		networkWaitingJob = null
 		super.onDetachedFromWindow()
+	}
+
+	override fun onAttachedToWindow() {
+		super.onAttachedToWindow()
+		// e.g. the Today card: its data did not change, so nobody binds it again after a tab switch
+		val interrupted = interruptedRequest ?: return
+		interruptedRequest = null
+		if (currentRequest == null && interrupted.data == currentImageData) {
+			enqueueRequest(interrupted, force = true)
+		}
 	}
 
 	override fun onError(request: ImageRequest, result: ErrorResult) {
@@ -145,6 +162,8 @@ open class CoilImageView @JvmOverloads constructor(
 		networkWaitingJob = null
 		CoilUtils.dispose(this)
 		currentRequest = null
+		lastRequest = null
+		interruptedRequest = null
 		currentImageData = NullRequestData
 		setImageDrawable(null)
 	}
@@ -163,6 +182,8 @@ open class CoilImageView @JvmOverloads constructor(
 		networkWaitingJob?.cancel()
 		networkWaitingJob = null
 		currentImageData = request.data
+		lastRequest = request
+		interruptedRequest = null
 		return coil.enqueue(request).also { currentRequest = it }
 	}
 

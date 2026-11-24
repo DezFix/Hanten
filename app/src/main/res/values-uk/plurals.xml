@@ -54,4 +54,16 @@
         <item quantity="many">%1$d хвилин</item>
         <item quantity="other">%1$d хвилин</item>
     </plurals>
+	<plurals name="profile_stat_hours">
+		<item quantity="one">година</item>
+		<item quantity="few">години</item>
+		<item quantity="many">годин</item>
+		<item quantity="other">години</item>
+	</plurals>
+	<plurals name="profile_stat_pages">
+		<item quantity="one">сторінка</item>
+		<item quantity="few">сторінки</item>
+		<item quantity="many">сторінок</item>
+		<item quantity="other">сторінки</item>
+	</plurals>
 </resources>
