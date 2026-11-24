@@ -126,7 +126,7 @@
     <string name="about">О программе</string>
     <string name="app_version">Версия %s</string>
     <string name="right_to_left">Справа налево</string>
-    <string name="create_category">Создать категорию</string>
+    <string name="create_category">Новая папка</string>
     <string name="scale_mode">Масштабирование</string>
     <string name="zoom_mode_fit_center">Вписать в экран</string>
     <string name="zoom_mode_fit_height">Подогнать по высоте</string>
@@ -226,7 +226,7 @@
     <string name="notifications_enable">Включить уведомления</string>
     <string name="name">Название</string>
     <string name="edit">Изменить</string>
-    <string name="edit_category">Изменить категорию</string>
+    <string name="edit_category">Изменить папку</string>
     <string name="tracking">Отслеживание</string>
     <string name="empty_favourite_categories">Нет категорий избранного</string>
     <string name="bookmark_add">Добавить закладку</string>

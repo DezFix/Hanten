@@ -138,7 +138,7 @@
     <string name="about">About</string>
     <string name="app_version">Version %s</string>
     <string name="right_to_left">Right-to-left</string>
-    <string name="create_category">New category</string>
+    <string name="create_category">New folder</string>
     <string name="scale_mode">Scale mode</string>
     <string name="zoom_mode_fit_center">Fit center</string>
     <string name="zoom_mode_fit_height">Fit to height</string>
@@ -253,7 +253,7 @@
     <string name="notifications_enable">Enable notifications</string>
     <string name="name">Name</string>
     <string name="edit">Edit</string>
-    <string name="edit_category">Edit category</string>
+    <string name="edit_category">Edit folder</string>
     <string name="tracking">Tracking</string>
     <string name="empty_favourite_categories">No favorite categories</string>
     <string name="logout">Log out</string>

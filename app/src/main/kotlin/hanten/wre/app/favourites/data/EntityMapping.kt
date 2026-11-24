@@ -14,6 +14,7 @@ fun FavouriteCategoryEntity.toFavouriteCategory(id: Long = categoryId.toLong()) 
 	createdAt = Instant.ofEpochMilli(createdAt),
 	isTrackingEnabled = track,
 	isVisibleInLibrary = isVisibleInLibrary,
+	color = color,
 )
 
 fun FavouriteManga.toManga() = manga.toManga(tags.toMangaTags(), null)

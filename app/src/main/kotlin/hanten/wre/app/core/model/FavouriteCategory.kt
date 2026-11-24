@@ -16,6 +16,8 @@ data class FavouriteCategory(
 	val createdAt: Instant,
 	val isTrackingEnabled: Boolean,
 	val isVisibleInLibrary: Boolean,
+	/** Folder color (ARGB), 0 = none */
+	val color: Int = 0,
 ) : Parcelable, ListModel {
 
 	override fun areItemsTheSame(other: ListModel): Boolean {

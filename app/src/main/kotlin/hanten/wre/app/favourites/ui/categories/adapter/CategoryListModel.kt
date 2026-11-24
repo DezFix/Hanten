@@ -39,6 +39,7 @@ class CategoryListModel(
 		if (category.order != other.category.order) return false
 		if (category.createdAt != other.category.createdAt) return false
 		if (category.isTrackingEnabled != other.category.isTrackingEnabled) return false
+		if (category.color != other.category.color) return false
 		return category.isVisibleInLibrary == other.category.isVisibleInLibrary
 	}
 
@@ -54,6 +55,7 @@ class CategoryListModel(
 		result = 31 * result + category.createdAt.hashCode()
 		result = 31 * result + category.isTrackingEnabled.hashCode()
 		result = 31 * result + category.isVisibleInLibrary.hashCode()
+		result = 31 * result + category.color
 		return result
 	}
 

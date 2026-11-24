@@ -14,6 +14,8 @@ class CategoryBackup(
 	@SerialName("order") val order: String = ListSortOrder.NEWEST.name,
 	@SerialName("track") val track: Boolean = true,
 	@SerialName("show_in_lib") val isVisibleInLibrary: Boolean = true,
+	// Hanten-only; Kotatsu/Futon ignore unknown keys, their backups simply have no color
+	@SerialName("color") val color: Int = 0,
 ) {
 
 	constructor(entity: FavouriteCategoryEntity) : this(
@@ -24,6 +26,7 @@ class CategoryBackup(
 		order = entity.order,
 		track = entity.track,
 		isVisibleInLibrary = entity.isVisibleInLibrary,
+		color = entity.color,
 	)
 
 	fun toEntity() = FavouriteCategoryEntity(
@@ -35,5 +38,6 @@ class CategoryBackup(
 		track = track,
 		isVisibleInLibrary = isVisibleInLibrary,
 		deletedAt = 0L,
+		color = color,
 	)
 }

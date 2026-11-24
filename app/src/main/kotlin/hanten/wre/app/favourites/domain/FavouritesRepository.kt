@@ -189,6 +189,7 @@ class FavouritesRepository @Inject constructor(
 		sortOrder: ListSortOrder,
 		isTrackerEnabled: Boolean,
 		isVisibleOnShelf: Boolean,
+		color: Int = 0,
 	): FavouriteCategory {
 		val entity = FavouriteCategoryEntity(
 			title = title,
@@ -199,6 +200,7 @@ class FavouritesRepository @Inject constructor(
 			track = isTrackerEnabled,
 			deletedAt = 0L,
 			isVisibleInLibrary = isVisibleOnShelf,
+			color = color,
 		)
 		val id = db.getFavouriteCategoriesDao().insert(entity)
 		val category = entity.toFavouriteCategory(id)
@@ -211,8 +213,9 @@ class FavouritesRepository @Inject constructor(
 		sortOrder: ListSortOrder,
 		isTrackerEnabled: Boolean,
 		isVisibleOnShelf: Boolean,
+		color: Int,
 	) {
-		db.getFavouriteCategoriesDao().update(id, title, sortOrder.name, isTrackerEnabled, isVisibleOnShelf)
+		db.getFavouriteCategoriesDao().update(id, title, sortOrder.name, isTrackerEnabled, isVisibleOnShelf, color)
 	}
 
 	suspend fun updateCategory(id: Long, isVisibleInLibrary: Boolean) {

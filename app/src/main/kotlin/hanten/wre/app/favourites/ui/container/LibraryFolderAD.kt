@@ -1,6 +1,8 @@
 package hanten.wre.app.favourites.ui.container
 
+import android.content.res.ColorStateList
 import androidx.core.graphics.drawable.toDrawable
+import androidx.appcompat.R as appcompatR
 import androidx.core.view.isVisible
 import com.google.android.material.R as materialR
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
@@ -44,12 +46,21 @@ private fun libraryFolderAD(
 	val emptyTile = context.getThemeColor(materialR.attr.colorSurfaceContainerHighest).toDrawable()
 	arrayOf(binding.imageViewCover1, binding.imageViewCover2, binding.imageViewCover3).forEach {
 		it.fallbackDrawable = emptyTile
+		// a cover that failed to load is just an empty slot here, not a dark red tile
+		it.errorDrawable = emptyTile
 	}
+	val accent = context.getThemeColor(appcompatR.attr.colorPrimary)
+	val strokeWidth = (2 * context.resources.displayMetrics.density).toInt()
 	itemView.setOnClickListener { listener.onFolderClick(item.category) }
 	itemView.setOnLongClickListener { listener.onFolderLongClick(item.category) }
 
 	bind {
 		binding.textViewTitle.text = item.category.title
+		// Folder color: tinted folder icon and a thin frame; no color = theme accent, no frame
+		val color = item.category.color
+		binding.imageViewFolder.imageTintList = ColorStateList.valueOf(if (color != 0) color else accent)
+		binding.root.strokeWidth = if (color != 0) strokeWidth else 0
+		if (color != 0) binding.root.setStrokeColor(ColorStateList.valueOf(color))
 		binding.textViewCount.text = item.mangaCount.toString()
 		// Bell = new chapters are checked for this folder
 		binding.imageViewTracking.isVisible = item.isTrackerEnabled

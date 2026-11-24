@@ -31,8 +31,8 @@ abstract class FavouriteCategoriesDao {
 
 	suspend fun delete(id: Long) = setDeletedAt(id, System.currentTimeMillis())
 
-	@Query("UPDATE favourite_categories SET title = :title, `order` = :order, `track` = :tracker, `show_in_lib` = :onShelf WHERE category_id = :id")
-	abstract suspend fun update(id: Long, title: String, order: String, tracker: Boolean, onShelf: Boolean)
+	@Query("UPDATE favourite_categories SET title = :title, `order` = :order, `track` = :tracker, `show_in_lib` = :onShelf, `color` = :color WHERE category_id = :id")
+	abstract suspend fun update(id: Long, title: String, order: String, tracker: Boolean, onShelf: Boolean, color: Int)
 
 	@Query("UPDATE favourite_categories SET `order` = :order WHERE category_id = :id")
 	abstract suspend fun updateOrder(id: Long, order: String)
