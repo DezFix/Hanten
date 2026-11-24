@@ -62,8 +62,12 @@ class ExternalBackupStorage @Inject constructor(
 
 	@CheckResult
 	suspend fun delete(victim: BackupFile) = runInterruptible(Dispatchers.IO) {
-		val df = DocumentFile.fromSingleUri(context, victim.uri)
-		df != null && df.delete()
+		if (victim.uri.scheme == "file") {
+			File(checkNotNull(victim.uri.path)).delete()
+		} else {
+			val df = DocumentFile.fromSingleUri(context, victim.uri)
+			df != null && df.delete()
+		}
 	}
 
 	suspend fun getLastBackupDate() = listOrNull()?.maxOfOrNull { it.dateTime }
@@ -85,12 +89,18 @@ class ExternalBackupStorage @Inject constructor(
 		return result
 	}
 
+	/**
+	 * The folder the user picked, or the app's own folder when none is picked or this device has no access
+	 * to it (a folder link restored from a backup made on another phone or install).
+	 */
 	@Blocking
 	private fun getRootOrThrow(): DocumentFile {
-		val uri = checkNotNull(settings.periodicalBackupDirectory) {
-			"Backup directory is not specified"
+		val picked = settings.periodicalBackupDirectory?.let { DocumentFile.fromTreeUri(context, it) }
+		if (picked != null && picked.canWrite()) {
+			return picked
 		}
-		val root = DocumentFile.fromTreeUri(context, uri)
-		return checkNotNull(root) { "Cannot obtain DocumentFile from $uri" }
+		val fallback = BackupUtils.getPeriodicBackupDir(context)
+		check(fallback.isDirectory || fallback.mkdirs()) { "Cannot create backup directory ${fallback.path}" }
+		return DocumentFile.fromFile(fallback)
 	}
 }

@@ -35,7 +35,8 @@ class PeriodicalBackupService : CoroutineIntentService() {
 	lateinit var settings: AppSettings
 
 	override suspend fun IntentJobContext.processIntent(intent: Intent) {
-		if (!settings.isPeriodicalBackupEnabled || settings.periodicalBackupDirectory == null) {
+		// no folder picked → ExternalBackupStorage writes to the app's own folder (shown on the settings screen)
+		if (!settings.isPeriodicalBackupEnabled) {
 			return
 		}
 		val lastBackupDate = externalBackupStorage.getLastBackupDate()

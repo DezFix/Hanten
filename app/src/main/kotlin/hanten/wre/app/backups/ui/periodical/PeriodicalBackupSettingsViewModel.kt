@@ -66,7 +66,7 @@ class PeriodicalBackupSettingsViewModel @Inject constructor(
 		backupsDirectory.value = if (dir != null) {
 			dir.toUserFriendlyString()
 		} else {
-			BackupUtils.getAppBackupDir(appContext).path
+			BackupUtils.getPeriodicBackupDir(appContext).path
 		}
 	}
 

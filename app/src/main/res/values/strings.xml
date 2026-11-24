@@ -1093,4 +1093,5 @@
     <string name="search_section_authors">Authors</string>
     <string name="search_section_sources">Sources</string>
     <string name="search_section_recent_sources">Recent sources</string>
+    <string name="backup_dir_no_access">No access to this folder (picked on another device?). Backups are saved to %s — pick the folder again</string>
 </resources>

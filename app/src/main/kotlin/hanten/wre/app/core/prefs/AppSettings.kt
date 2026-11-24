@@ -46,7 +46,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppSettings @Inject constructor(@ApplicationContext context: Context) {
+class AppSettings @Inject constructor(@ApplicationContext private val context: Context) {
 
 	private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 	private val connectivityManager = context.connectivityManager
@@ -771,11 +771,19 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
 		// A backup is JSON: 17.0f comes back as Int 17 and 1.6 as Double (which putAll used to drop).
 		// Keep the type the app already uses for the key, so readers don't crash on getFloat/getInt.
 		val known = prefs.all
-		val fixed = m.mapValues { (key, value) -> coerceBackupValue(value, known[key]) }
+		// Folder links (content://…) only work on the device that granted them: keep this device's own value
+		val grantedUris = context.contentResolver.persistedUriPermissions.mapTo(HashSet()) { it.uri.toString() }
+		val fixed = m.filter { (_, value) ->
+			value !is String || !value.startsWith("content://") || value in grantedUris
+		}.mapValues { (key, value) -> coerceBackupValue(value, known[key]) }
+		val kept = known.filter { (key, value) ->
+			key !in fixed && value is String && value.startsWith("content://")
+		}
 		prefs.edit {
 			if (!isMerge) {
 				clear()
 			}
+			putAll(kept)
 			putAll(fixed)
 		}
 	}

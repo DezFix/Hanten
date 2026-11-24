@@ -28,6 +28,9 @@ object BackupUtils {
 		getExternalFilesDir(DIR_BACKUPS) ?: File(filesDir, DIR_BACKUPS)
 	}
 
+	/** Where periodic backups go when no folder is picked (kept apart from the temp files in [getAppBackupDir]) */
+	fun getPeriodicBackupDir(context: Context) = File(getAppBackupDir(context), "periodic")
+
 	fun parseBackupDateTime(fileName: String): Date? = try {
 		val value = fileName.substringAfterLast('_').substringBefore('.')
 		Date.from(

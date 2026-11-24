@@ -12,6 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import hanten.wre.app.backups.domain.BackupUtils
 import hanten.wre.app.R
 import hanten.wre.app.core.exceptions.resolve.SnackbarErrorObserver
 import hanten.wre.app.core.nav.router
@@ -84,7 +85,10 @@ class PeriodicalBackupSettingsFragment : BasePreferenceFragment(R.string.periodi
 	private fun bindOutputSummary(path: String?) {
 		val preference = findPreference<Preference>(AppSettings.KEY_BACKUP_PERIODICAL_OUTPUT) ?: return
 		preference.summary = when (path) {
-			null -> getString(R.string.invalid_value_message)
+			null -> getString(
+				R.string.backup_dir_no_access,
+				BackupUtils.getPeriodicBackupDir(requireContext()).path,
+			)
 			"" -> null
 			else -> path
 		}
