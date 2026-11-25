@@ -36,6 +36,7 @@ import hanten.wre.app.download.data.repository.DownloadQueueRepository
 import hanten.wre.app.core.util.ext.toFileNameSafe
 import hanten.wre.app.local.data.LocalMangaRepository
 import hanten.wre.app.core.util.ext.printStackTraceDebug
+import hanten.wre.app.download.ui.worker.DownloadSchedulerWorker
 import hanten.wre.app.parsers.model.Manga
 import hanten.wre.app.parsers.util.runCatchingCancellable
 import java.io.File
@@ -59,8 +60,8 @@ class NovelDownloadWorker @AssistedInject constructor(
 
 	override suspend fun doWork(): Result {
 		setForeground(getForegroundInfo())
+		val mangaId = inputData.getLong(KEY_MANGA_ID, 0L)
 		return try {
-			val mangaId = inputData.getLong(KEY_MANGA_ID, 0L)
 			val chapterIds = inputData.getLongArray(KEY_CHAPTER_IDS)?.toList().orEmpty()
 			val manga = mangaDataRepository.findMangaById(mangaId, withChapters = true)
 				?: return Result.failure()
@@ -99,7 +100,7 @@ class NovelDownloadWorker @AssistedInject constructor(
 				setProgress(progressData(manga, done, total))
 			}
 			if (total > 0 && failed == total) {
-				return Result.failure()
+				return failAndPause(mangaId)
 			}
 			exportEpub(manga)
 			downloadQueueRepository.removeFromQueueByManga(manga.id)
@@ -107,13 +108,30 @@ class NovelDownloadWorker @AssistedInject constructor(
 		} catch (e: CancellationException) {
 			throw e
 		} catch (e: IOException) {
-			if (runAttemptCount < MAX_ATTEMPTS) Result.retry() else Result.failure()
+			if (runAttemptCount < MAX_ATTEMPTS) Result.retry() else failAndPause(mangaId)
 		} catch (e: Throwable) {
 			e.printStackTraceDebug("NovelDownloadWorker::doWork")
-			Result.failure()
+			failAndPause(mangaId)
 		} finally {
 			NotificationManagerCompat.from(applicationContext).cancel(id.hashCode())
+			// Let the queue move on right away instead of the scheduler polling for us
+			DownloadSchedulerWorker.enqueue(WorkManager.getInstance(applicationContext), delay = 1000)
 		}
+	}
+
+	/**
+	 * A failed novel keeps its queue row (to be retried by the user), but paused: otherwise the scheduler
+	 * starts the same failing download again and again, keeping the phone awake.
+	 */
+	private suspend fun failAndPause(mangaId: Long): Result {
+		runCatchingCancellable {
+			downloadQueueRepository.getQueue()
+				.filter { it.mangaId == mangaId }
+				.forEach { downloadQueueRepository.updatePaused(it.id, true) }
+		}.onFailure {
+			it.printStackTraceDebug("NovelDownloadWorker::failAndPause")
+		}
+		return Result.failure()
 	}
 
 	override suspend fun getForegroundInfo(): ForegroundInfo {

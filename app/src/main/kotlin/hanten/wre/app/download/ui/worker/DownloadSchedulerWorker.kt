@@ -49,8 +49,15 @@ class DownloadSchedulerWorker @AssistedInject constructor(
             Log.d("DownloadScheduler", "Active works: ${activeWorks.map { it.id to it.state }}")
 
             if (activeWorks.isNotEmpty()) {
-                Log.d("DownloadScheduler", "A download is already queued or running, scheduling check in 30s")
-                scheduleNextCheck(30, TimeUnit.SECONDS)
+                // Every download worker triggers the scheduler when it ends, so polling is only a safety net.
+                // While a download runs the phone is awake anyway; a work waiting for charging, Wi-Fi or a
+                // retry backoff must not wake the app every 30 s for hours (battery drain).
+                val isRunning = activeWorks.any { it.state == WorkInfo.State.RUNNING }
+                if (isRunning) {
+                    scheduleNextCheck(30, TimeUnit.SECONDS)
+                } else {
+                    scheduleNextCheck(15, TimeUnit.MINUTES)
+                }
                 return@runCatchingCancellable Result.success()
             }
 

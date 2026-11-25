@@ -181,4 +181,7 @@
 	<string name="reports_yes">Включить</string>
 	<string name="reports_no">Не надо</string>
 	<string name="reports_thanks">Спасибо! Отчёты включены</string>
+	<string name="details_titles">Названия</string>
+	<string name="details_title_copied">Скопировано</string>
+	<string name="details_titles_copy_all">Копировать все</string>
 </resources>

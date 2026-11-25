@@ -127,7 +127,7 @@
 							android:ellipsize="end"
 							android:maxLines="4"
 							android:textAppearance="@style/TextAppearance.Hanten.DetailsTitle"
-							android:textIsSelectable="true"
+							android:background="?selectableItemBackground"
 							tools:text="@tools:sample/lorem" />
 
 						<hanten.wre.app.core.ui.widgets.SelectableTextView
@@ -401,22 +401,53 @@
 						app:constraint_referenced_ids="recyclerView_scrobbling,textView_scrobbling_title,button_scrobbling_more"
 						tools:visibility="visible" />
 
-					<TextView
-						android:id="@+id/textView_related_works"
+					<!-- «Похожее»: tracker relations as text, then similar titles from the source as a card row -->
+					<LinearLayout
+						android:id="@+id/layout_similar"
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
-						android:layout_marginHorizontal="@dimen/margin_normal"
-						android:layout_marginTop="@dimen/margin_normal"
-						android:autoLink="none"
-						android:lineSpacingMultiplier="1.2"
-						android:textAppearance="?attr/textAppearanceBodyMedium"
-						android:textColor="?colorOnSurfaceVariant"
-						android:visibility="gone"
+						android:orientation="vertical"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling"
-						tools:text="Сиквел: «Название»"
-						tools:visibility="visible" />
+						app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling">
+
+						<TextView
+							android:id="@+id/textView_related_works"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginHorizontal="@dimen/margin_normal"
+							android:layout_marginTop="@dimen/margin_normal"
+							android:autoLink="none"
+							android:lineSpacingMultiplier="1.2"
+							android:textAppearance="?attr/textAppearanceBodyMedium"
+							android:textColor="?colorOnSurfaceVariant"
+							android:visibility="gone"
+							tools:text="Сиквел: «Название»"
+							tools:visibility="visible" />
+
+						<TextView
+							android:id="@+id/textView_similar_title"
+							style="@style/TextAppearance.Hanten.Today.Section"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:text="@string/details_tab_similar"
+							android:visibility="gone"
+							tools:visibility="visible" />
+
+						<androidx.recyclerview.widget.RecyclerView
+							android:id="@+id/recyclerView_similar"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clipToPadding="false"
+							android:nestedScrollingEnabled="false"
+							android:orientation="horizontal"
+							android:overScrollMode="never"
+							android:paddingHorizontal="10dp"
+							android:visibility="gone"
+							app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+							tools:listitem="@layout/item_manga_grid"
+							tools:visibility="visible" />
+					</LinearLayout>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 			</androidx.core.widget.NestedScrollView>

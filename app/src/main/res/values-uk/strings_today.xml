@@ -181,4 +181,7 @@
 	<string name="reports_yes">Увімкнути</string>
 	<string name="reports_no">Не треба</string>
 	<string name="reports_thanks">Дякуємо! Звіти увімкнено</string>
+	<string name="details_titles">Назви</string>
+	<string name="details_title_copied">Скопійовано</string>
+	<string name="details_titles_copy_all">Копіювати все</string>
 </resources>

@@ -181,4 +181,7 @@
 	<string name="reports_yes">Turn on</string>
 	<string name="reports_no">No, thanks</string>
 	<string name="reports_thanks">Thanks! Reports are on</string>
+	<string name="details_titles">Titles</string>
+	<string name="details_title_copied">Copied</string>
+	<string name="details_titles_copy_all">Copy all</string>
 </resources>

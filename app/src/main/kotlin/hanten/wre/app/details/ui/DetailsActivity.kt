@@ -11,19 +11,23 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.StaticLayout
 import android.text.TextPaint
+import android.util.TypedValue
 import android.text.style.ClickableSpan
 import android.text.SpannedString
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.core.text.method.LinkMovementMethodCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -104,7 +108,13 @@ import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.scrobbling.ScrobblingItemDecoration
 import hanten.wre.app.details.ui.scrobbling.ScrollingInfoAdapter
 import hanten.wre.app.download.ui.worker.DownloadStartedObserver
+import hanten.wre.app.core.ui.BaseListAdapter
+import hanten.wre.app.list.ui.adapter.ListItemType
 import hanten.wre.app.list.ui.adapter.cardPercent
+import hanten.wre.app.list.ui.adapter.mangaGridItemAD
+import hanten.wre.app.list.ui.model.ListModel
+import hanten.wre.app.list.ui.model.MangaListModel
+import hanten.wre.app.list.ui.size.StaticItemSizeResolver
 import hanten.wre.app.main.ui.owners.BottomSheetOwner
 import hanten.wre.app.parsers.model.ContentRating
 import hanten.wre.app.parsers.model.Manga
@@ -187,7 +197,7 @@ class DetailsActivity :
 				appBar = viewBinding.appbar,
 				infoScroll = viewBinding.scrollView,
 				infoContainer = viewBinding.swipeRefreshLayout,
-				similarTarget = viewBinding.textViewRelatedWorks,
+				similarTarget = viewBinding.layoutSimilar,
 				containers = buildMap {
 					viewBinding.containerChapters?.let { put(ChaptersPagesSheet.TAB_CHAPTERS, it) }
 					viewBinding.containerPages?.let { put(ChaptersPagesSheet.TAB_PAGES, it) }
@@ -222,6 +232,24 @@ class DetailsActivity :
 		viewModel.scrobblingInfo.observe(this, ::onScrobblingInfoChanged)
 		viewModel.localSize.observe(this, ::onLocalSizeChanged)
 		viewModel.relatedWorks.observe(this, ::onRelatedWorksChanged)
+		val similarAdapter = BaseListAdapter<ListModel>().addDelegate(
+			ListItemType.MANGA_GRID,
+			mangaGridItemAD(
+				StaticItemSizeResolver(resources.getDimensionPixelSize(R.dimen.today_cover_width)),
+				object : OnListItemClickListener<MangaListModel> {
+					override fun onItemClick(item: MangaListModel, view: View) {
+						router.openDetails(item.toMangaWithOverride(), itemView = view)
+					}
+				},
+			),
+		)
+		viewBinding.recyclerViewSimilar.adapter = similarAdapter
+		viewModel.similarManga.observe(this) { list ->
+			similarAdapter.emit(list)
+			viewBinding.textViewSimilarTitle.isVisible = list.isNotEmpty()
+			viewBinding.recyclerViewSimilar.isVisible = list.isNotEmpty()
+			updateSimilarTab()
+		}
 		viewModel.favouriteCategories.observe(this, ::onFavoritesChanged)
 		val menuInvalidator = MenuInvalidator(this)
 		viewModel.isStatsAvailable.observe(this, menuInvalidator)
@@ -310,16 +338,69 @@ class DetailsActivity :
 				)
 			}
 
-			R.id.textView_title -> {
-				val title = viewModel.getMangaOrNull()?.title?.nullIfEmpty() ?: return
-				buildAlertDialog(this) {
-					setMessage(title)
-					setNegativeButton(R.string.close, null)
-					setPositiveButton(androidx.preference.R.string.copy) { _, _ ->
-						copyToClipboard(getString(R.string.content_type_manga), title)
-					}
-				}.show()
+			R.id.textView_title -> showTitlesDialog()
+		}
+	}
+
+	/** All known titles of the work; a tap copies one, the button copies them all. */
+	private fun showTitlesDialog() {
+		val manga = viewModel.getMangaOrNull() ?: return
+		val titles = (listOf(manga.title) + manga.altTitles)
+			.map { it.trim() }
+			.filter { it.isNotEmpty() }
+			.distinct()
+		if (titles.isEmpty()) return
+		val label = getString(R.string.details_titles)
+		buildAlertDialog(this) {
+			setTitle(label)
+			setItems(titles.toTypedArray()) { _, which ->
+				copyToClipboard(label, titles[which])
+				Toast.makeText(this@DetailsActivity, R.string.details_title_copied, Toast.LENGTH_SHORT).show()
 			}
+			setNegativeButton(R.string.close, null)
+			if (titles.size > 1) {
+				setPositiveButton(R.string.details_titles_copy_all) { _, _ ->
+					copyToClipboard(label, titles.joinToString("\n"))
+					Toast.makeText(this@DetailsActivity, R.string.details_title_copied, Toast.LENGTH_SHORT).show()
+				}
+			}
+		}.show()
+	}
+
+	/**
+	 * Long titles: shrink the header title (22sp down to 14sp) until it fits in [TITLE_MAX_LINES]
+	 * and no single word has to be broken across lines.
+	 */
+	private fun fitTitle(textView: TextView) {
+		val text = textView.text?.toString().orEmpty()
+		val width = textView.width - textView.paddingLeft - textView.paddingRight
+		if (text.isEmpty() || width <= 0) return
+		val paint = TextPaint(textView.paint)
+		val dm = resources.displayMetrics
+		val words = text.split(' ', '\n').filter { it.isNotEmpty() }
+		var sizeSp = TITLE_MAX_SP
+		var lines = TITLE_MAX_LINES
+		while (true) {
+			paint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sizeSp, dm)
+			val longestWord = words.maxOfOrNull { paint.measureText(it) } ?: 0f
+			val layout = StaticLayout.Builder.obtain(text, 0, text.length, paint, width)
+				.setLineSpacing(0f, textView.lineSpacingMultiplier)
+				.setIncludePad(textView.includeFontPadding)
+				.build()
+			if (longestWord <= width && layout.lineCount <= TITLE_MAX_LINES) break
+			if (sizeSp <= TITLE_MIN_SP) {
+				// Light-novel-length titles: even the smallest size needs more lines, so let the header
+				// grow a bit; anything longer is ellipsized (the full title is in the titles dialog).
+				lines = layout.lineCount.coerceIn(TITLE_MAX_LINES, TITLE_MAX_LINES_LONG)
+				break
+			}
+			sizeSp -= 1f
+		}
+		if (textView.maxLines != lines) {
+			textView.maxLines = lines
+		}
+		if (textView.textSize != TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sizeSp, dm)) {
+			textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp)
 		}
 	}
 
@@ -425,9 +506,9 @@ class DetailsActivity :
 
 	private fun onRelatedWorksChanged(related: List<ScrobblerRelated>) {
 		val textView = viewBinding.textViewRelatedWorks
-		tabsController?.setSimilarVisible(related.isNotEmpty())
 		if (related.isEmpty()) {
 			textView.isGone = true
+			updateSimilarTab()
 			return
 		}
 		val linkColor = getThemeColor(androidx.appcompat.R.attr.colorPrimary, Color.LTGRAY)
@@ -463,6 +544,13 @@ class DetailsActivity :
 		textView.text = text
 		textView.movementMethod = LinkMovementMethodCompat.getInstance()
 		textView.isVisible = true
+		updateSimilarTab()
+	}
+
+	private fun updateSimilarTab() {
+		tabsController?.setSimilarVisible(
+			viewBinding.textViewRelatedWorks.isVisible || viewBinding.recyclerViewSimilar.isVisible,
+		)
 	}
 
 	private fun onLoadingStateChanged(isLoading: Boolean) {
@@ -486,6 +574,9 @@ class DetailsActivity :
 		val manga = details.toManga()
 		with(viewBinding) {
 			textViewTitle.text = manga.title
+			if (textHeaderType != null) {
+				textViewTitle.doOnLayout { fitTitle(it as TextView) }
+			}
 			if (textHeaderType == null) {
 				// tablet layout: the old subtitle (type + alternative titles)
 				textViewSubtitle.textAndVisible = buildString {
@@ -704,6 +795,11 @@ class DetailsActivity :
 	}
 
 	companion object {
+
+		private const val TITLE_MAX_SP = 22f
+		private const val TITLE_MIN_SP = 14f
+		private const val TITLE_MAX_LINES = 4
+		private const val TITLE_MAX_LINES_LONG = 7
 
 		private const val FAV_LABEL_LIMIT = 16
 	}

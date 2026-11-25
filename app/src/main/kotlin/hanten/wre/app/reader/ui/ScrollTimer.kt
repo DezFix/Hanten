@@ -3,6 +3,7 @@ package hanten.wre.app.reader.ui
 import android.content.res.Resources
 import android.os.SystemClock
 import android.view.MotionEvent
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.assisted.Assisted
@@ -38,6 +39,7 @@ class ScrollTimer @AssistedInject constructor(
 ) {
 
 	private val coroutineScope = lifecycleOwner.lifecycleScope
+	private val lifecycle = lifecycleOwner.lifecycle
 	private var job: Job? = null
 	private var delayMs: Long = 10L
 	var pageSwitchDelay: Long = 100L
@@ -122,6 +124,8 @@ class ScrollTimer @AssistedInject constructor(
 					delay((delayMs * (1f + speedFactor * 2)).toLong())
 				}
 				if (!listener.isReaderResumed()) {
+					// Reader in background: sleep until it is back instead of ticking every few ms
+					lifecycle.currentStateFlow.first { it.isAtLeast(Lifecycle.State.RESUMED) }
 					continue
 				}
 				if (!listener.scrollBy(scrollDelta, false)) {

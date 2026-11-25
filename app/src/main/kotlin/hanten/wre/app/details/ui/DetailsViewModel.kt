@@ -20,6 +20,7 @@ import hanten.wre.app.details.domain.DetailsInteractor
 import hanten.wre.app.details.domain.DetailsLoadUseCase
 import hanten.wre.app.details.domain.ProgressUpdateUseCase
 import hanten.wre.app.details.domain.ReadingTimeUseCase
+import hanten.wre.app.details.domain.RelatedMangaUseCase
 import hanten.wre.app.details.ui.model.HistoryInfo
 import hanten.wre.app.details.ui.model.MangaBranch
 import hanten.wre.app.details.ui.pager.ChaptersPagesViewModel
@@ -27,7 +28,9 @@ import hanten.wre.app.novel.data.offline.NovelDownloadScheduler
 import hanten.wre.app.novel.data.offline.NovelOfflineRepository
 import hanten.wre.app.download.ui.worker.DownloadWorker
 import hanten.wre.app.history.data.HistoryRepository
+import hanten.wre.app.core.prefs.ListMode
 import hanten.wre.app.list.domain.MangaListMapper
+import hanten.wre.app.list.ui.model.MangaListModel
 import hanten.wre.app.local.data.LocalStorageChanges
 import hanten.wre.app.local.domain.DeleteLocalMangaUseCase
 import hanten.wre.app.local.domain.model.LocalManga
@@ -47,6 +50,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
@@ -81,6 +85,7 @@ class DetailsViewModel @Inject constructor(
 	private val detailsLoadUseCase: DetailsLoadUseCase,
 	private val progressUpdateUseCase: ProgressUpdateUseCase,
 	private val readingTimeUseCase: ReadingTimeUseCase,
+	private val relatedMangaUseCase: RelatedMangaUseCase,
 	statsRepository: StatsRepository,
 	novelOfflineRepository: NovelOfflineRepository,
 	novelDownloadScheduler: NovelDownloadScheduler,
@@ -187,6 +192,20 @@ class DetailsViewModel @Inject constructor(
 			}
 			emptyList()
 		}.flowOn(Dispatchers.IO)
+		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
+
+	/** Similar titles suggested by the source itself (the parser searches it by title). */
+	val similarManga: StateFlow<List<MangaListModel>> = manga
+		.distinctUntilChangedBy { it?.id }
+		.mapLatest { m ->
+			if (m == null) return@mapLatest emptyList()
+			val result = relatedMangaUseCase(m).orEmpty()
+				.filterNot { it.id == m.id }
+				.distinctBy { it.id }
+				.take(SIMILAR_LIMIT)
+			mangaListMapper.toListModelList(result, ListMode.GRID)
+		}.flowOn(Dispatchers.IO)
+		.withErrorHandling()
 		.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Lazily, emptyList())
 
 	val tags = manga.mapLatest {
@@ -318,4 +337,9 @@ class DetailsViewModel @Inject constructor(
 		val rating: Float,
 		val status: ScrobblingStatus?,
 	)
+
+	private companion object {
+
+		const val SIMILAR_LIMIT = 20
+	}
 }
