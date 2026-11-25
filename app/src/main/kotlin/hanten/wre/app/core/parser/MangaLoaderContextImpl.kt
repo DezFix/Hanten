@@ -13,6 +13,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.asResponseBody
 import okio.Buffer
+import hanten.wre.app.core.util.ext.sanitizeHeaderValue
+import hanten.wre.app.parsers.util.nullIfEmpty
 import hanten.wre.app.core.exceptions.InteractiveActionRequiredException
 import hanten.wre.app.core.image.BitmapDecoderCompat
 import hanten.wre.app.core.network.MangaHttpClient
@@ -153,6 +155,11 @@ class MangaLoaderContextImpl @Inject constructor(
     }
 
     private fun obtainWebViewUserAgent(): String {
+        // The static call needs no WebView instance and no main thread: before, the first parser request
+        // blocked the UI while a WebView was created just to read this string.
+        runCatching {
+            android.webkit.WebSettings.getDefaultUserAgent(androidContext).sanitizeHeaderValue().trim().nullIfEmpty()
+        }.getOrNull()?.let { return it }
         val mainDispatcher = Dispatchers.Main.immediate
         return if (!mainDispatcher.isDispatchNeeded(EmptyCoroutineContext)) {
             webViewExecutor.getDefaultUserAgentSync()

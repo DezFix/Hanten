@@ -30,7 +30,6 @@ import hanten.wre.app.core.nav.AppRouter
 import hanten.wre.app.core.nav.router
 import hanten.wre.app.core.ui.BaseActivity
 import hanten.wre.app.core.ui.model.titleRes
-import hanten.wre.app.core.ui.util.FadingAppbarMediator
 import hanten.wre.app.core.util.ViewBadge
 import hanten.wre.app.core.util.ext.consumeSystemBarsInsets
 import hanten.wre.app.core.util.ext.end
@@ -52,7 +51,6 @@ import hanten.wre.app.parsers.model.MangaListFilter
 import hanten.wre.app.parsers.model.MangaSource
 import hanten.wre.app.parsers.model.SortOrder
 import hanten.wre.app.remotelist.ui.RemoteListFragment
-import kotlin.math.absoluteValue
 import com.google.android.material.R as materialR
 
 @AndroidEntryPoint
@@ -75,9 +73,6 @@ class MangaListActivity :
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(ActivityMangaListBinding.inflate(layoutInflater))
-		viewBinding.collapsingToolbarLayout?.let { collapsingToolbarLayout ->
-			FadingAppbarMediator(viewBinding.appbar, collapsingToolbarLayout).bind()
-		}
 		val filter = intent.getParcelableExtraCompat<ParcelableMangaListFilter>(AppRouter.KEY_FILTER)?.filter
 		val sortOrder = intent.getSerializableExtraCompat<SortOrder>(AppRouter.KEY_SORT_ORDER)
 		source = MangaSource(intent.getStringExtra(AppRouter.KEY_SOURCE))
@@ -99,11 +94,8 @@ class MangaListActivity :
 
 	override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
 		val container = viewBinding.containerFilterHeader ?: return
-		container.background = if (verticalOffset.absoluteValue < appBarLayout.totalScrollRange) {
-			container.context.getThemeColor(materialR.attr.backgroundColor).toDrawable()
-		} else {
-			viewBinding.collapsingToolbarLayout?.contentScrim
-		}
+		// the filter chips stay pinned under the toolbar that scrolls away: keep them on the screen background
+		container.background = container.context.getThemeColor(materialR.attr.backgroundColor).toDrawable()
 	}
 
 	/**
