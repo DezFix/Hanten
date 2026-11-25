@@ -51,6 +51,7 @@ class FaviconFetcher(
 	private val imageLoader: ImageLoader,
 	private val mangaRepositoryFactory: MangaRepository.Factory,
 	private val localStorageCache: LocalStorageCache,
+	private val faviconsLoader: FaviconsLoader,
 ) : Fetcher {
 
 	override suspend fun fetch(): FetchResult? {
@@ -87,7 +88,7 @@ class FaviconFetcher(
 				)
 			}
 		}
-		var favicons = repository.getFavicons()
+		var favicons = faviconsLoader.load(repository)
 		var lastError: Exception? = null
 		while (favicons.isNotEmpty()) {
 			currentCoroutineContext().ensureActive()
@@ -179,6 +180,7 @@ class FaviconFetcher(
 	class Factory @Inject constructor(
 		private val mangaRepositoryFactory: MangaRepository.Factory,
 		@FaviconCache private val faviconCache: LocalStorageCache,
+		private val faviconsLoader: FaviconsLoader,
 	) : Fetcher.Factory<CoilUri> {
 
 		override fun create(
@@ -186,7 +188,7 @@ class FaviconFetcher(
 			options: Options,
 			imageLoader: ImageLoader
 		): Fetcher? = if (data.scheme == URI_SCHEME_FAVICON) {
-			FaviconFetcher(data.toAndroidUri(), options, imageLoader, mangaRepositoryFactory, faviconCache)
+			FaviconFetcher(data.toAndroidUri(), options, imageLoader, mangaRepositoryFactory, faviconCache, faviconsLoader)
 		} else {
 			null
 		}

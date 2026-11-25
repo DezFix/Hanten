@@ -15,24 +15,25 @@ public class FaviconParser(
 
 	public suspend fun parseFavicons(): Favicons = withContext(Dispatchers.Default) {
 		val url = "https://$domain"
-		val doc = webClient.httpGet(url).parseHtml()
 		val result = HashSet<Favicon>()
-		val manifestLink = doc.getElementsByAttributeValue("rel", "manifest").firstOrNull()
-			?.attrAsAbsoluteUrlOrNull("href")
+		// Read everything from the page first, so its DOM is not kept in memory while the manifest loads
+		val manifestLink = run {
+			val doc = webClient.httpGet(url).parseHtml()
+			doc.getElementsByAttributeValueContaining("rel", "icon").mapNotNullTo(result) { link ->
+				parseLink(link)
+			}
+			doc.getElementsByAttributeValue("rel", "apple-touch-icon").mapNotNullTo(result) { link ->
+				parseLink(link)
+			}
+			doc.getElementsByAttributeValue("rel", "manifest").firstOrNull()
+				?.attrAsAbsoluteUrlOrNull("href")
+		}
 		if (manifestLink != null) {
 			runCatchingCancellable {
 				parseManifest(manifestLink)
 			}.onSuccess { manifest ->
 				result += manifest
 			}
-		}
-		val links = doc.getElementsByAttributeValueContaining("rel", "icon")
-		links.mapNotNullTo(result) { link ->
-			parseLink(link)
-		}
-		val touchIcons = doc.getElementsByAttributeValue("rel", "apple-touch-icon")
-		touchIcons.mapNotNullTo(result) { link ->
-			parseLink(link)
 		}
 		if (result.isEmpty()) {
 			result.add(createFallback())
