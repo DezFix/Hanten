@@ -1,1 +1,1 @@
-Manga reader with online catalogues (Hanten — fork of Kotatsu & Futon, hanten.wre.app)
+Manga, manhwa and light novel reader with Russian and Ukrainian sources

@@ -1,18 +1,21 @@
-Hanten is a free and open source manga reader for Android. Fork of Kotatsu (KotatsuApp/Kotatsu) and Futon (AppFuton/Futon), package hanten.wre.app.
+Hanten is a free and open source manga, manhwa and light novel reader for Android. No ads, no account.
 
-<strong>Main Features:</strong>
+<strong>Main features:</strong>
 
-- Online manga catalogs (1200+ sources) via DezFix/hanten-parsers + Tachiyomi keiyoushi extensions
-- Search by name, genres and filters
-- Favorites with categories
-- History, bookmarks, incognito
-- Download and offline CBZ support
-- Material You UI for phones/tablets/desktop
-- Standard and Webtoon reader with gestures
-- Updates feed, recommendations
+- Today screen: continue reading, new chapters, "Coming soon" (estimated date of the next chapter) and recent reads
+- 130+ Russian and Ukrainian sources (Senkuro, Remanga, MangaLib, RanobeLib and more) plus other languages, via DezFix/hanten-parsers
+- Tachiyomi keiyoushi extensions support
+- Library with colored folders, Reading / Not started / Finished filters and progress on every cover
+- Search by name, genres and filters; similar titles and alternative sources
+- Manga reader (standard and webtoon, gestures) and novel reader with themes and background text-to-speech
+- Chapter downloads for offline reading, CBZ archives
+- New chapter notifications with smart updates
+- Profile with reading level, titles, achievements and statistics
 - Tracking: Shikimori, AniList, MyAnimeList, Kitsu
-- Password/fingerprint protection
-- Auto-sync
+- Move from other apps: Mihon / Tachiyomi (.tachibk), Kotatsu and Futon backups
+- History, bookmarks, incognito, password or fingerprint lock
+- Themes, accent color, corner style, bottom bar order
+- Direct in-app updates from GitHub Releases
 - Android 6.0+
-- Direct in-app updates from GitHub Releases (no store, no Hanten)
 
+Hanten is a fork of Kotatsu and Futon. Thanks to their developers.

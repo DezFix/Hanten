@@ -1,11 +1,11 @@
 # Документация Hanten
 
-В workspace два независимых проекта:
+Hanten состоит из двух репозиториев:
 
 - **Hanten** — Android-приложение (этот репозиторий), CI в
-  `Hanten/.github/workflows/`;
-- **hanten-parsers** — библиотека парсеров источников, CI в
-  `hanten-parsers/.github/workflows/ci.yml`: компиляция + чистые JVM-тесты,
+  `.github/workflows/`;
+- **[hanten-parsers](https://github.com/DezFix/hanten-parsers)** — библиотека парсеров источников (подключается через JitPack), CI в
+  `.github/workflows/ci.yml`: компиляция + чистые JVM-тесты,
   RU/UA live sweep — вручную. Поддерживаемый scope — только русские и
   украинские источники.
 
@@ -14,16 +14,13 @@
 | Документ | Для кого | Что внутри |
 |---|---|---|
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | новый разработчик | карта репозитория, слои, БД, сеть, парсеры, потоки reader/download/tracker/backup, куда добавлять код |
-| [CODE_REVIEW.md](./CODE_REVIEW.md) | мейнтейнер, ревьюер | баги P0–P2, мёртвый код, безопасность, расхождения документации, порядок фиксов |
-| [ROADMAP.md](./ROADMAP.md) | продукт/мейнтейнер | чего не хватает относительно Mihon/Kotatsu/Komikku/Panels/Suwayomi, приоритеты |
-| [SECURITY.md](./SECURITY.md) | мейнтейнер, релиз-инженер | secret-scan, история токенов, бэкапы, сеть, Mihon, чеклист перед релизом |
-| [FUTON_PORT.md](./FUTON_PORT.md) | мейнтейнер | что забрать из Futon, какие источники разбирать отдельно, отчёт агента |
-| [NOVEL_ROADMAP.md](./NOVEL_ROADMAP.md) | продукт/мейнтейнер | паритет новелл с мангой, улучшения читалки, этапы 2.6–2.8 |
+| [SECURITY.md](./SECURITY.md) | мейнтейнер, релиз-инженер | секреты, бэкапы, сеть, Mihon, приватность, чеклист перед релизом |
+| [LEGAL.md](./LEGAL.md) | все | позиция проекта по контенту и DMCA |
+| [../CHANGELOG.md](../CHANGELOG.md) | все | изменения по версиям |
 | [../AGENTS.md](../AGENTS.md) | все | стиль кода, команды, паттерны Hilt/Flow/Worker |
-| [../CI.md](../CI.md) | релиз-инженер | подпись, keystore, GitHub Actions |
-| [../DESIGN.md](../DESIGN.md) | дизайнер/UI | дизайн-система (целевая, не всё реализовано) |
+| [../CI.md](../CI.md) | релиз-инженер | подпись, keystore, GitHub Actions, выпуск релиза по тегу |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | контрибьютор | процесс PR |
-| [../../hanten-parsers/CONTRIBUTING.md](../../hanten-parsers/CONTRIBUTING.md) | автор парсеров | как писать и тестировать источник |
+| [hanten-parsers/CONTRIBUTING.md](https://github.com/DezFix/hanten-parsers/blob/master/CONTRIBUTING.md) | автор парсеров | как писать и тестировать источник |
 
 Быстрые команды:
 

@@ -63,9 +63,8 @@ Hanten/
 │       ├── debug/                   # debug-only код, LeakCanary, StrictMode
 │       ├── nightly/                 # неиспользуемый nightly-вариант
 │       └── release/                 # release-заглушки
-├── docs/                            # этот документ + review + roadmap
+├── docs/                            # архитектура, безопасность, юридическое
 ├── metadata/                        # скриншоты и store-метаданные
-├── DESIGN.md                        # дизайн-система (частично не реализована)
 ├── AGENTS.md                        # правила для AI-агентов
 ├── CI.md                            # сборка/подпись/релизы
 └── CONTRIBUTING.md
@@ -509,7 +508,6 @@ CI есть у **двух** проектов, но это разные репо�
 - `AGENTS.md` — стиль кода, команды, паттерны.
 - `CONTRIBUTING.md` — процесс PR и правила.
 - `CI.md` — подпись, релиз, keystore.
-- `DESIGN.md` — дизайн-система (не всё реализовано).
 - `hanten-parsers/CONTRIBUTING.md` — как писать парсеры.
-- `docs/CODE_REVIEW.md` — найденные баги и мёртвый код.
-- `docs/ROADMAP.md` — чего не хватает относительно конкурентов.
+- `docs/SECURITY.md` — секреты, бэкапы, сеть, чеклист перед релизом.
+- `CHANGELOG.md` — что менялось от версии к версии.
