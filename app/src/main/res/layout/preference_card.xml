@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Hanten 3.0: a preference row drawn as a rounded card (Backup import sources, About credits) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:paddingStart="?android:attr/listPreferredItemPaddingStart"
@@ -20,7 +21,7 @@
 		android:paddingVertical="12dp">
 
 		<FrameLayout
-			android:id="@android:id/icon_frame"
+			android:id="@id/icon_frame"
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			android:layout_marginEnd="12dp"
@@ -32,7 +33,7 @@
 				android:layout_height="22dp"
 				android:layout_gravity="center"
 				android:importantForAccessibility="no"
-				android:tint="?colorPrimary" />
+				app:tint="?colorPrimary" />
 		</FrameLayout>
 
 		<LinearLayout

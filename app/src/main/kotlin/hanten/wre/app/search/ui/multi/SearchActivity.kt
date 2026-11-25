@@ -148,7 +148,7 @@ class SearchActivity :
 			return
 		}
 		router.openSearch(query = query, kind = kind)
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
 			overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
 		} else {
 			@Suppress("DEPRECATION")

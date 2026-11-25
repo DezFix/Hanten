@@ -1069,6 +1069,7 @@
     <string name="appearance_accent">Accent</string>
     <string name="appearance_corners">Corners</string>
     <string name="appearance_nav">Bottom menu</string>
+    <string name="nav_more_pinned">The More tab holds the settings, so it can\'t be removed. You can move it</string>
     <string name="appearance_nav_hint">Selected %1$d of %2$d. Change the order below</string>
     <string name="appearance_nav_order">Tab order</string>
     <string name="backup_action_create">Create backup</string>

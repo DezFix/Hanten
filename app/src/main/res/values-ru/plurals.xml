@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <plurals name="items">
         <item quantity="one">%1$d элемент</item>
         <item quantity="few">%1$d элемента</item>
@@ -49,13 +49,13 @@
         <item quantity="many">%1$d минут</item>
         <item quantity="other">%1$d минут</item>
     </plurals>
-	<plurals name="profile_stat_hours">
+	<plurals name="profile_stat_hours" tools:ignore="ImpliedQuantity">
 		<item quantity="one">час</item>
 		<item quantity="few">часа</item>
 		<item quantity="many">часов</item>
 		<item quantity="other">часа</item>
 	</plurals>
-	<plurals name="profile_stat_pages">
+	<plurals name="profile_stat_pages" tools:ignore="ImpliedQuantity">
 		<item quantity="one">страница</item>
 		<item quantity="few">страницы</item>
 		<item quantity="many">страниц</item>

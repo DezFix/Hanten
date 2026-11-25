@@ -38,6 +38,8 @@ fun navConfigAD(
 			setCompoundDrawablesRelativeWithIntrinsicBounds(item.item.icon, 0, 0, 0)
 		}
 		binding.textViewHint.setTextAndVisible(item.disabledHintResId)
+		// More holds the settings and can't be removed, only moved
+		binding.imageViewRemove.visibility = if (item.item == NavItem.MORE) View.INVISIBLE else View.VISIBLE
 	}
 }
 

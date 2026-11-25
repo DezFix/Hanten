@@ -1136,6 +1136,7 @@
     <string name="appearance_accent">Акцент</string>
     <string name="appearance_corners">Скругление</string>
     <string name="appearance_nav">Нижнее меню</string>
+    <string name="nav_more_pinned">Во вкладке «Ещё» настройки, её нельзя убрать. Двигать можно</string>
     <string name="appearance_nav_hint">Выбрано %1$d из %2$d. Порядок меняется ниже</string>
     <string name="appearance_nav_order">Порядок вкладок</string>
     <string name="backup_action_create">Создать бэкап</string>

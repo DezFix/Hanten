@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.app.ServiceCompat
+import hanten.wre.app.core.util.ext.printStackTraceDebug
 import hanten.wre.app.R
 
 /**
@@ -174,8 +175,11 @@ class NovelTtsService : Service() {
 	}
 
 	private fun notifyState(isSpeaking: Boolean) {
-		runCatching {
+		try {
 			NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, buildNotification(isSpeaking))
+		} catch (e: SecurityException) {
+			// notifications permission was revoked: speech keeps going without the player update
+			e.printStackTraceDebug()
 		}
 	}
 

@@ -3,6 +3,7 @@ package hanten.wre.app.settings.utils
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
+import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.chip.Chip
@@ -48,9 +49,16 @@ class NavTabsPreference @JvmOverloads constructor(
 			chip.isCheckable = true
 			chip.isChecked = isOn
 			chip.isCheckedIconVisible = false
-			// More holds the settings: it can't be switched off
-			chip.isEnabled = item != NavItem.MORE && (isOn || selected.size < max)
-			chip.setOnClickListener { toggle(settings, item) }
+			// More holds the settings: it stays on (looks active) and only explains why on tap
+			chip.isEnabled = item == NavItem.MORE || isOn || selected.size < max
+			chip.setOnClickListener {
+				if (item == NavItem.MORE) {
+					chip.isChecked = true
+					Toast.makeText(context, R.string.nav_more_pinned, Toast.LENGTH_SHORT).show()
+				} else {
+					toggle(settings, item)
+				}
+			}
 			group.addView(chip)
 		}
 	}
