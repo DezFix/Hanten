@@ -354,6 +354,55 @@
 					android:textAppearance="?textAppearanceBodyMedium"
 					android:textColor="?colorOnSurfaceVariant" />
 			</LinearLayout>
+
+			<!-- Step 5: anonymous error reports (Bugsink), on by default -->
+			<LinearLayout
+				android:id="@+id/step_reports"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingVertical="24dp"
+				android:visibility="gone">
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/reports_title" />
+
+				<TextView
+					style="@style/TextAppearance.Hanten.Onboarding.Subtitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/reports_subtitle" />
+
+				<com.google.android.material.card.MaterialCardView
+					style="@style/Widget.Hanten.CardView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
+					app:cardBackgroundColor="?colorSurfaceContainerHigh"
+					app:cardCornerRadius="20dp">
+
+					<com.google.android.material.materialswitch.MaterialSwitch
+						android:id="@+id/switch_error_reports"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:checked="true"
+						android:minHeight="64dp"
+						android:paddingHorizontal="18dp"
+						android:text="@string/reports_switch"
+						android:textAppearance="?textAppearanceTitleMedium" />
+				</com.google.android.material.card.MaterialCardView>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="14dp"
+					android:text="@string/reports_details"
+					android:textAppearance="?textAppearanceBodyMedium"
+					android:textColor="?colorOnSurfaceVariant" />
+			</LinearLayout>
 		</FrameLayout>
 	</androidx.core.widget.NestedScrollView>
 

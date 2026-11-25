@@ -48,6 +48,11 @@ class LocalState @Inject constructor(@ApplicationContext context: Context) {
 		get() = prefs.getInt(KEY_CHAPTERS, 0)
 		set(value) = prefs.edit { putInt(KEY_CHAPTERS, value) }
 
+	/** The error reports question (onboarding step or the Today card) was answered on this device. */
+	var isErrorReportsAsked: Boolean
+		get() = prefs.getBoolean(KEY_REPORTS_ASKED, false)
+		set(value) = prefs.edit { putBoolean(KEY_REPORTS_ASKED, value) }
+
 	/** Pattern index behind the icon on About (tap the icon to change it). */
 	var aboutPattern: Int
 		get() = prefs.getInt(KEY_ABOUT_PATTERN, 0)
@@ -63,5 +68,6 @@ class LocalState @Inject constructor(@ApplicationContext context: Context) {
 		const val KEY_SEASON_DAY = "seasonal_effect_day"
 		const val KEY_CHAPTERS = "chapters_finished"
 		const val KEY_ABOUT_PATTERN = "about_pattern"
+		const val KEY_REPORTS_ASKED = "error_reports_asked"
 	}
 }

@@ -84,12 +84,24 @@ open class BaseApp : Application(), Configuration.Provider {
 		setupActivityLifecycleCallbacks()
 		PreferredBranches.update(settings.preferredBranches)
 		settings.subscribe(preferredBranchesListener)
+		settings.subscribe(errorReportsListener)
 		mihonExtensionManager.initialize()
 		processLifecycleScope.launch(Dispatchers.IO) {
 			setupDatabaseObservers()
 			localStorageChanges.collect(localMangaIndexProvider.get())
 		}
 		workScheduleManager.init()
+	}
+
+	// Anonymous error reports switched in onboarding, on Today or in Services: apply at once
+	private val errorReportsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+		if (key == AppSettings.KEY_ERROR_REPORTS) {
+			if (settings.isErrorReportsEnabled) {
+				if (!io.sentry.Sentry.isEnabled()) initializeSentry()
+			} else if (io.sentry.Sentry.isEnabled()) {
+				io.sentry.Sentry.close()
+			}
+		}
 	}
 
 	// Kept as a field: SharedPreferences holds listeners weakly.

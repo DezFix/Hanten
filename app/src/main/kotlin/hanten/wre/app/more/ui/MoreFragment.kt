@@ -82,6 +82,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		Entry(R.drawable.ic_backup_restore, R.string.backup_screen_title, R.string.more_hint_backup) { openBackupSettings() },
 		Entry(R.drawable.ic_manga_source, R.string.onboarding_rerun, R.string.onboarding_rerun_hint) { showOnboardingAgain() },
 		Entry(R.drawable.ic_info_outline, R.string.about, R.string.more_hint_about) { openAboutSettings() },
+	) + listOfNotNull(
+		// debug / nightly builds: LeakCanary, Work Inspector, test parser (was in the old settings root)
+		Entry(R.drawable.ic_bug_report, R.string.debug, R.string.more_hint_debug) { openDebugSettings() }
+			.takeIf { AppRouter.isDebugMenuAvailable },
 	)
 
 	override fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?) =

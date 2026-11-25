@@ -172,4 +172,13 @@
 	<string name="showcase_removed">Прибрано з вітрини</string>
 	<string name="showcase_full">На вітрині вже 3 тайтли — прибери один у профілі</string>
 	<string name="showcase_remove_question">Прибрати цей тайтл з вітрини профілю?</string>
+	<string name="more_hint_debug">LeakCanary, задачі</string>
+	<string name="reports_title">Допоможи знаходити помилки</string>
+	<string name="reports_subtitle">Якщо Hanten впаде або зависне, короткий анонімний звіт підкаже розробнику, де саме.</string>
+	<string name="reports_switch">Надсилати анонімні звіти про помилки</string>
+	<string name="reports_details">Лише технічні дані про збій: модель телефону, версії Android і застосунку, екран і рядок коду. Ні бібліотеки, ні історії, ні акаунтів, ні того, що ти читаєш. Вимкнути можна будь-коли: Ще → Служби.</string>
+	<string name="reports_card_text">Надсилати анонімні звіти про падіння і зависання? Лише технічні дані, без бібліотеки та історії. Вимикається в Ще → Служби.</string>
+	<string name="reports_yes">Увімкнути</string>
+	<string name="reports_no">Не треба</string>
+	<string name="reports_thanks">Дякуємо! Звіти увімкнено</string>
 </resources>

@@ -62,12 +62,15 @@ class OnboardingActivity :
 	@Inject
 	lateinit var scrobblerAuthHelper: ScrobblerAuthHelper
 
+	@Inject
+	lateinit var localState: hanten.wre.app.core.prefs.LocalState
+
 	private val viewModel by viewModels<WelcomeViewModel>()
 	private val backupSelectCall = registerForActivityResult(ActivityResultContracts.OpenDocument(), this)
 	private var step = 0
 
 	private val steps: List<View>
-		get() = with(viewBinding) { listOf(stepWelcome, stepProfile, stepKinds, stepLanguages, stepImport) }
+		get() = with(viewBinding) { listOf(stepWelcome, stepProfile, stepKinds, stepLanguages, stepImport, stepReports) }
 
 	private val backCallback = object : OnBackPressedCallback(false) {
 		override fun handleOnBackPressed() = showStep(step - 1)
@@ -88,6 +91,8 @@ class OnboardingActivity :
 			chipsLocales.onChipClickListener = this@OnboardingActivity
 		}
 		setupImportOptions()
+		// on by default for a new install; a re-run shows the current choice
+		viewBinding.switchErrorReports.isChecked = !localState.isErrorReportsAsked || settings.isErrorReportsEnabled
 		createDots()
 		setupProfile()
 		viewModel.locales.observe(this, ::onLocalesChanged)
@@ -112,7 +117,13 @@ class OnboardingActivity :
 
 	override fun onClick(v: View) {
 		when (v.id) {
-			R.id.button_next -> if (step == LAST_STEP) finish() else showStep(step + 1)
+			R.id.button_next -> if (step == LAST_STEP) {
+				settings.isErrorReportsEnabled = viewBinding.switchErrorReports.isChecked
+				localState.isErrorReportsAsked = true
+				finish()
+			} else {
+				showStep(step + 1)
+			}
 			R.id.button_back -> showStep(step - 1)
 			R.id.button_skip, R.id.button_have_backup -> showStep(LAST_STEP)
 			R.id.button_shikimori -> startTrackerAuth(v, ScrobblerService.SHIKIMORI)
@@ -393,7 +404,7 @@ class OnboardingActivity :
 
 		const val EXTRA_RERUN = "rerun"
 		private const val KEY_STEP = "step"
-		private const val LAST_STEP = 4
+		private const val LAST_STEP = 5
 		private const val ACTIVE_DOT_SCALE = 4.5f
 	}
 }

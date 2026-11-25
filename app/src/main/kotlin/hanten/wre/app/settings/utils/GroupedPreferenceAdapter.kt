@@ -47,19 +47,23 @@ class GroupedPreferenceAdapter(
 		view.layoutParams = lp
 		// info hints (no title, not clickable) drop the "i" icon too, so their text lines up with the rows
 		val isHint = !pref.isSelectable && pref.title.isNullOrEmpty()
-		if (pref.icon == null || isHint) {
-			holder.findViewById(android.R.id.icon_frame)?.visibility = View.GONE
-			holder.findViewById(androidx.preference.R.id.icon_frame)?.visibility = View.GONE
-			holder.findViewById(android.R.id.icon)?.visibility = View.GONE
-		}
+		// recycled rows: restore the icon space when this row has an icon (it was hidden for a previous row)
+		val iconVisibility = if (pref.icon == null || isHint) View.GONE else View.VISIBLE
+		holder.findViewById(android.R.id.icon_frame)?.visibility = iconVisibility
+		holder.findViewById(androidx.preference.R.id.icon_frame)?.visibility = iconVisibility
+		holder.findViewById(android.R.id.icon)?.visibility = iconVisibility
 		val radius = 20 * density
 		val top = if (isFirst) radius else 0f
 		val bottom = if (isLast) radius else 0f
 		val radii = floatArrayOf(top, top, top, top, bottom, bottom, bottom, bottom)
 		val context = view.context
+		val colors = themeColors ?: ThemeColors(
+			surface = context.getThemeColor(materialR.attr.colorSurfaceContainerLow),
+			highlight = context.getThemeColor(android.R.attr.colorControlHighlight),
+		).also { themeColors = it }
 		val shape = GradientDrawable().apply {
 			cornerRadii = radii
-			setColor(context.getThemeColor(materialR.attr.colorSurfaceContainerLow))
+			setColor(colors.surface)
 		}
 		view.background = if (pref.isSelectable) {
 			val mask = GradientDrawable().apply {
@@ -67,7 +71,7 @@ class GroupedPreferenceAdapter(
 				setColor(0xFFFFFFFF.toInt())
 			}
 			RippleDrawable(
-				ColorStateList.valueOf(context.getThemeColor(android.R.attr.colorControlHighlight)),
+				ColorStateList.valueOf(colors.highlight),
 				shape,
 				mask,
 			)
@@ -75,6 +79,11 @@ class GroupedPreferenceAdapter(
 			shape
 		}
 	}
+
+	/** Theme colors read once per adapter instead of on every bind (fewer styled-attribute lookups while scrolling). */
+	private class ThemeColors(val surface: Int, val highlight: Int)
+
+	private var themeColors: ThemeColors? = null
 
 	private fun isCardAt(position: Int): Boolean {
 		if (position < 0 || position >= itemCount) return false

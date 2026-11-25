@@ -151,6 +151,9 @@ class SettingsActivity :
 			AppRouter.ACTION_READER -> ReaderSettingsFragment()
 			AppRouter.ACTION_APPEARANCE -> AppearanceSettingsFragment()
 			AppRouter.ACTION_ABOUT -> AboutSettingsFragment()
+			AppRouter.ACTION_DEBUG -> runCatching {
+				supportFragmentManager.fragmentFactory.instantiate(classLoader, AppRouter.DEBUG_SETTINGS_FRAGMENT)
+			}.getOrNull()
 			AppRouter.ACTION_STORAGE -> StorageAndNetworkSettingsFragment()
 			AppRouter.ACTION_SERVICES -> ServicesSettingsFragment()
 			AppRouter.ACTION_SUGGESTIONS -> SuggestionsSettingsFragment()

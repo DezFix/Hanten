@@ -172,4 +172,13 @@
 	<string name="showcase_removed">Убрано с витрины</string>
 	<string name="showcase_full">На витрине уже 3 тайтла — убери один в профиле</string>
 	<string name="showcase_remove_question">Убрать этот тайтл с витрины профиля?</string>
+	<string name="more_hint_debug">LeakCanary, задачи</string>
+	<string name="reports_title">Помоги находить ошибки</string>
+	<string name="reports_subtitle">Если Hanten упадёт или зависнет, короткий анонимный отчёт подскажет разработчику, где именно.</string>
+	<string name="reports_switch">Отправлять анонимные отчёты об ошибках</string>
+	<string name="reports_details">Только технические данные о сбое: модель телефона, версии Android и приложения, экран и строка кода. Ни библиотеки, ни истории, ни аккаунтов, ни того, что ты читаешь. Выключить можно в любой момент: Ещё → Службы.</string>
+	<string name="reports_card_text">Отправлять анонимные отчёты о падениях и зависаниях? Только технические данные, без библиотеки и истории. Выключается в Ещё → Службы.</string>
+	<string name="reports_yes">Включить</string>
+	<string name="reports_no">Не надо</string>
+	<string name="reports_thanks">Спасибо! Отчёты включены</string>
 </resources>

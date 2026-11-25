@@ -689,10 +689,16 @@ class AppSettings @Inject constructor(@ApplicationContext private val context: C
 	val isStatsEnabled: Boolean
 		get() = prefs.getBoolean(KEY_STATS_ENABLED, false)
 
+	/**
+	 * The Services switch writes only [KEY_ERROR_REPORTS], so once that key exists it alone decides
+	 * (before, an old "crash analytics" key kept reports on after the switch was turned off).
+	 */
 	var isErrorReportsEnabled: Boolean
-		get() = prefs.getBoolean(KEY_ERROR_REPORTS, false) ||
-			prefs.getBoolean(KEY_CRASH_ANALYTICS_ENABLED, false) ||
-			prefs.getBoolean(KEY_SOURCE_ERROR_REPORTS, false)
+		get() = if (prefs.contains(KEY_ERROR_REPORTS)) {
+			prefs.getBoolean(KEY_ERROR_REPORTS, false)
+		} else {
+			prefs.getBoolean(KEY_CRASH_ANALYTICS_ENABLED, false) || prefs.getBoolean(KEY_SOURCE_ERROR_REPORTS, false)
+		}
 		set(value) {
 			prefs.edit {
 				putBoolean(KEY_ERROR_REPORTS, value)

@@ -93,6 +93,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 			viewModel.checkNewChapters()
 		}
 		bindKofiBanner(binding)
+		bindReportsCard(binding)
 		bindSeason(binding)
 		viewModel.isCheckingUpdates.observe(viewLifecycleOwner) { binding.swipeRefresh.isRefreshing = it }
 		if (viewModel.isTrackerEnabled) {
@@ -205,6 +206,24 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(), MenuProvider {
 		binding.buttonKofiClose.setOnClickListener {
 			localState.isKofiDismissedForever = true
 			binding.cardKofi.isVisible = false
+		}
+	}
+
+	/** One-time question about anonymous error reports for people who installed before the onboarding step. */
+	private fun bindReportsCard(binding: FragmentTodayBinding) {
+		if (!localState.isErrorReportsAsked && settings.isErrorReportsEnabled) {
+			localState.isErrorReportsAsked = true
+		}
+		binding.cardReports.isVisible = !localState.isErrorReportsAsked
+		binding.buttonReportsYes.setOnClickListener {
+			settings.isErrorReportsEnabled = true
+			localState.isErrorReportsAsked = true
+			binding.cardReports.isVisible = false
+			Snackbar.make(binding.root, R.string.reports_thanks, Snackbar.LENGTH_SHORT).show()
+		}
+		binding.buttonReportsNo.setOnClickListener {
+			localState.isErrorReportsAsked = true
+			binding.cardReports.isVisible = false
 		}
 	}
 

@@ -309,6 +309,11 @@ class AppRouter private constructor(
         startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_APPEARANCE))
     }
 
+    /** Debug and nightly builds only: LeakCanary, Work Inspector, test parser (see [isDebugMenuAvailable]). */
+    fun openDebugSettings() {
+        startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_DEBUG))
+    }
+
     fun openAboutSettings() {
         startActivity(Intent(contextOrNull() ?: return, SettingsActivity::class.java).setAction(ACTION_ABOUT))
     }
@@ -960,6 +965,13 @@ class AppRouter private constructor(
         const val ACTION_PERIODIC_BACKUP = "${BuildConfig.APPLICATION_ID}.action.MANAGE_PERIODIC_BACKUP"
         const val ACTION_APPEARANCE = "${BuildConfig.APPLICATION_ID}.action.MANAGE_APPEARANCE"
         const val ACTION_ABOUT = "${BuildConfig.APPLICATION_ID}.action.ABOUT"
+        const val ACTION_DEBUG = "${BuildConfig.APPLICATION_ID}.action.DEBUG"
+        const val DEBUG_SETTINGS_FRAGMENT = "hanten.wre.app.settings.DebugSettingsFragment"
+
+        /** The debug settings screen exists only in the debug and nightly source sets. */
+        val isDebugMenuAvailable: Boolean by lazy {
+            runCatching { Class.forName(DEBUG_SETTINGS_FRAGMENT) }.isSuccess
+        }
         const val ACTION_STORAGE = "${BuildConfig.APPLICATION_ID}.action.MANAGE_STORAGE"
         const val ACTION_SERVICES = "${BuildConfig.APPLICATION_ID}.action.MANAGE_SERVICES"
 
