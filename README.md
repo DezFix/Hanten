@@ -1,8 +1,8 @@
 <div align="center">
 
-# Hanten — свободная читалка манги для Android
+# Hanten — манга, манхва и ранобэ для Android
 
-**Манга, манхва и ранобэ в одном приложении • Без рекламы и аккаунтов • Прямые обновления из GitHub Releases**
+**Версия 3.0 — новый интерфейс • Без рекламы и аккаунтов • Обновления прямо из GitHub Releases**
 
 *Вырос из [Kotatsu](https://github.com/KotatsuApp/Kotatsu) и [Futon](https://github.com/AppFuton/Futon) — спасибо им, подробности в разделе [«Благодарности»](#благодарности).*
 
@@ -16,27 +16,33 @@
 [![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDezFix%2Fhanten-parsers%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C)](https://github.com/DezFix/hanten-parsers)
 [![License](https://img.shields.io/github/license/DezFix/Hanten)](https://github.com/DezFix/Hanten/blob/devel/LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/DezFix/Hanten?sort=date&display_name=tag&style=flat)](https://github.com/DezFix/Hanten/releases/latest)
-<a href="https://hosted.weblate.org/engage/hanten/"><img src="https://hosted.weblate.org/widget/hanten/svg-badge.svg" alt="Состояние перевода"></a>
 
 </div>
+
+### Что нового в 3.0
+
+Интерфейс собран заново: вкладка «Сегодня», библиотека с цветными папками, новый каталог, карточка тайтла,
+обе читалки, «Ещё» с профилем и настройки карточками. Все функции 2.x на месте, бэкапы 2.x открываются в 3.0.
+Полный список — в [CHANGELOG](./CHANGELOG.md).
 
 ### Основные возможности
 
 <div align="left">
 
-* Онлайн-[каталоги манги](https://github.com/DezFix/hanten-parsers) (130+ источников, включая Senkuro) с приоритетной поддержкой русских и украинских источников
+* **«Сегодня»** — продолжить чтение, новые главы, «Скоро выйдет» (примерная дата следующей главы) и недавнее на одном экране
+* Онлайн-[каталоги манги и ранобэ](https://github.com/DezFix/hanten-parsers) — 130+ русских и украинских источников (Senkuro, Реманга, MangaLib, RanobeLib и другие), а также источники на других языках
 * Поддержка расширений [Tachiyomi keiyoushi](https://github.com/keiyoushi/extensions)
-* Поиск манги по названию, жанрам и другим фильтрам
-* Избранное с пользовательскими категориями
-* История чтения, закладки и режим инкогнито
-* Скачивание манги для чтения офлайн. Поддерживаются сторонние CBZ-архивы
-* Удобный интерфейс в стиле Material You, оптимизирован для телефонов, планшетов и ПК
-* Настраиваемая читалка с режимами для обычной манги и вебтуна, поддержка жестов
-* Уведомления о новых главах с лентой обновлений, рекомендации манги (с фильтрами)
-* Интеграция с сервисами отслеживания: Shikimori, AniList, MyAnimeList, Kitsu
-* Защита доступа к приложению паролем / отпечатком пальца
-* Автоматическая синхронизация данных между устройствами на одном аккаунте
-* Поддержка старых устройств на Android 6.0+
+* Библиотека с цветными папками, фильтрами «Читаю», «Не начато», «Дочитано», по типу и статусу, прогресс на каждой обложке
+* Поиск по названию, жанрам и фильтрам, «Похожее» и альтернативные источники для тайтла
+* Читалка манги (обычный режим и вебтун, жесты) и читалка ранобэ с темами и озвучкой в фоне
+* Скачивание глав для чтения офлайн, сторонние CBZ-архивы
+* Уведомления о новых главах, умные обновления (можно пропускать завершённые и не начатые тайтлы)
+* Профиль: уровень за чтение, титулы, достижения, статистика
+* Трекеры: Shikimori, AniList, MyAnimeList, Kitsu
+* Переезд из других приложений: бэкапы Mihon / Tachiyomi (`.tachibk`), Kotatsu и Futon
+* История, закладки, режим инкогнито, защита паролем / отпечатком
+* Темы, акцентный цвет, скругление углов, порядок вкладок нижнего меню
+* Android 6.0+
 
 </div>
 
@@ -134,7 +140,7 @@ Hanten — самостоятельное приложение, но оно не
 * **[Kotatsu-Redo](https://github.com/Kotatsu-Redo/kotatsu-parsers-redo)** — развитие и поддержка парсеров
 * **[Kototoro](https://github.com/Kototoro-app/Kototoro)** — гайд по интеграции расширений Tachiyomi
 * **[keiyoushi](https://github.com/keiyoushi/extensions)** — каталог расширений Tachiyomi
-* **Переводчикам** Kotatsu и Hanten на [Weblate](https://hosted.weblate.org/engage/hanten/) и всем, кто сообщал об ошибках
+* **Переводчикам** Kotatsu и Hanten и всем, кто сообщал об ошибках. Помочь с переводом можно через [GitHub](https://github.com/DezFix/Hanten)
 
 Лицензии и авторство заимствованного кода — в файле [NOTICE](./NOTICE). Hanten распространяется по GPL v3, как и Kotatsu.
 
