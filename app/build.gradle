@@ -29,8 +29,8 @@ android {
 		applicationId 'hanten.wre.app'
 		minSdk = 23
 		targetSdk = 36
-		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 20803
-        versionName project.hasProperty('versionName') ? project.property('versionName') : '2.8.3'
+		versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 30000
+        versionName project.hasProperty('versionName') ? project.property('versionName') : '3.0.0'
         generatedDensities = []
 		// The app's GitHub repository lives in one place (gradle.properties: hanten.repo / hanten.branch),
 		// so moving to a new repository is a one-line change. Update checks read releases from it.
