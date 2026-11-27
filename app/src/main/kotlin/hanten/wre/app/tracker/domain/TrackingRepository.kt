@@ -180,10 +180,14 @@ class TrackingRepository @Inject constructor(
 			val track = getOrCreateTrack(updates.manga.id).mergeWith(updates)
 			db.getTracksDao().upsert(track)
 			if (isNewChapters) {
+				val now = System.currentTimeMillis()
+				// The feed is sorted and grouped by this time: use the release date of the newest chapter,
+				// not the moment the worker happened to check this manga
+				val releasedAt = updates.newChapters.maxOf { it.uploadDate }
 				val logEntity = TrackLogEntity(
 					mangaId = updates.manga.id,
 					chapters = updates.newChapters.joinToString("\n") { x -> x.name },
-					createdAt = System.currentTimeMillis(),
+					createdAt = if (releasedAt in 1..now) releasedAt else now,
 					isUnread = true,
 				)
 				db.getTrackLogsDao().insert(logEntity)

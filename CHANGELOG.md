@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 The format is based on "Keep a Changelog" and follows semantic versioning where possible.
 
+## 3.0.2
+
+### Исправлено
+- Карточка тайтла: исправлен вылет в блоке «Отслеживание» (при раскрытии описания и обновлении списка).
+- Лента новых глав: записи идут в порядке выхода глав, а не в том порядке, в каком их нашла проверка.
+
 ## 3.0.1
 
 ### Исправлено

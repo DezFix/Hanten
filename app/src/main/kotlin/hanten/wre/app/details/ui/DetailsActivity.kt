@@ -34,6 +34,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import coil3.ImageLoader
 import coil3.request.ImageRequest
@@ -314,7 +316,10 @@ class DetailsActivity :
 
                 if (tv.context.isAnimationsEnabled) {
 					tv.parentView?.let {
-						TransitionManager.beginDelayedTransition(it)
+						TransitionManager.beginDelayedTransition(
+							it,
+							AutoTransition().excludeChildren(RecyclerView::class.java, true),
+						)
 					}
 				}
 				if (tv.maxLines in 1 until Integer.MAX_VALUE) {
@@ -565,6 +570,9 @@ class DetailsActivity :
 		} else {
 			adapter = ScrollingInfoAdapter(router)
 			adapter.items = scrobblings
+			// HANTEN-9: item animations here crash with "Tmp detached view should be removed"
+			// when the list updates while the parent is being laid out/transitioned
+			viewBinding.recyclerViewScrobbling.itemAnimator = null
 			viewBinding.recyclerViewScrobbling.adapter = adapter
 			viewBinding.recyclerViewScrobbling.addItemDecoration(ScrobblingItemDecoration())
 		}

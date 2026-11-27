@@ -23,7 +23,7 @@ abstract class TrackLogsDao : MangaQueryBuilder.ConditionCallback {
 		MangaQueryBuilder("track_logs", this)
 			.filters(filterOptions)
 			.limit(limit)
-			.orderBy("created_at DESC")
+			.orderBy("track_logs.created_at DESC, track_logs.id DESC")
 			.build(),
 	)
 
